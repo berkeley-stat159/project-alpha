@@ -22,17 +22,12 @@
 \begin{document}
 \maketitle
 
-Identify a published fMRI paper and the accompanying data
-\cite{lindquist2008statistical}.  You should explain the basic idea of the
-paper in a paragraph.  You should also perform basic sanity check on the data
-(e.g., can you downloaded, can you load the files, confirm that you have the
-correct number of subjects).
+\section{Summary:}
+We plan to study the curated Open fMRI data set and paper entitled “The generality of self-control”. We have downloaded the data and were able to load it and confirm that it had the correct number of subjects. This paper and its associated fMRI studies are concerned with the relationship between impaired and normal self control as well as the similarities and differences across the brain relating to self-control. The entire paper explores multiple studies (of multiple study types), but we will just focus on the third study, which compares four different types of self control: motor control (stop-signal tasks: two-choice reaction time left/right),  control over risk-taking behavior (balloon analog risk tasks: choose inflate/deflate balloon for some pricing vs retiring balloon- potential balloon explosion would loose all money), control to be able to delay gratification (temporal discounting: selecting immediate or delayed payment series for subject to choose from), and emotional control (emotional regulation: respond to neutral/aversive image.). Participants were paid to encourage cooperation with the studies. A great deal of black box preprocessing was done on the collected fMRI data to eliminate faulty trials and noise. 
 
-Briefly explain what approach you intend to take for exploring
-the data and paper.  If you intend to ``reproduce'' some aspect of the paper,
-explain in exactly what sense you mean to do this.  If you are thinking about
-validating the data describe the assumpution used in the analysis and indicate
-how you might check them.
+\section{Approach:}
+Our approach for exploring the data is primarily reproduction of the paper’s analytical approaches, with some further statistical analyses, hopefully with additional results and findings. We found that the paper’s analytical approach was not especially sophisticated, and involved simple procedures like ANOVA contrasts and Pearson’s correlations. While most of the data cleaning was done using packaged software that we may not be able to reproduce easily, we thought it would be relatively straightforward to reproduce these processes and also to augment the analyses with our own ideas, including concepts from machine learning. For example, we could easily consider using other correlation methods besides the Pearson correlation, which is not as robust for non-linear relationships with non-normally distributed data. We could also use alternative procedures for handling multiple testing to see if we can draw different conclusions from the data. Logistic regression was performed on the temporal discounting data, but we could use other methods for classification, including more flexible or non-parameterized methods that may be more appropriate if the data structure is complex. The paper largely considers only one “snapshot” in time per participant per study, which is interesting, but we could explore using more than one “snapshot”, thereby increasing our feature space. 
+
 
 \bibliography{proposal}
 
