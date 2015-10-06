@@ -1,0 +1,27 @@
+Dictionary
+
+Temporal Choice Task (one trial) is task004.
+# why: k is related to the temporal choice metric
+
+behav variables:
+	input_k: The parameter for discounting per individual
+	logit_k: 
+	rt_hard_plus: 
+	rt_hard_minus:
+	rt_easy_plus: 
+	rt_easy_minus abs(input-log):
+	%del_resp:
+	%consis_hard+ : 
+	%consis_hard- :
+	%consis_easy+ :
+	%consis_easy- :
+	%consis_logit numTRs: 
+	rt_hard_all: 
+	rt_easy_all:
+	
+model conditions:
+	cond001:
+	cond002:
+	cond003:
+	cond004:
+	cond005:
