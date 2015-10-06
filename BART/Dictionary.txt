@@ -1,0 +1,18 @@
+Dictionary 
+
+BART is task001.
+# why: pumps = Balloons, we see that the behavior variables can come from "4.2.4 Behavioral Data Analysis" section.
+
+
+behav variables: 
+	NumPumps = "Average number of pumps for each balloon" # continous
+	AmtWon = "amount of money won" - average across run
+	NumExpl = "number of exploded balloons" # discrete
+	NumTRs = number of trials
+
+model conditions:
+	cond001 = "the model included events for inflating the balloon (all but" 
+		"the last inflation of each trial)"
+	cond002 = "the last inflation before an explosion" (at the very least 
+		 associated with explosions- length matches number of explosion)
+	cond003 = "cashing out" ?
