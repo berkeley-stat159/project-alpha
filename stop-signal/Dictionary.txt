@@ -1,0 +1,28 @@
+Dictionary
+
+Emotional Control Task (two trials) is task003:
+# why: Negative and Neutral Values
+
+behav variables:
+	1_Att_Neut:
+	1_Att_Neg:
+	1_Supp_Neg: 
+	1_ANeg-SNeg: 
+	1_NumTRs:
+	2_Att_Neut: 
+	2_Att_Neg: 
+	2_Supp_Neg:
+	2_ANeg-SNeg:
+	2_NumTRs:
+	AVG_1_2_ANeg-SNeg: 
+	Att_Neut_Postscan_Rating: 
+	Att_Neg_Postscan_Rating: 
+	Suppr_Neg_Postscan_Rating: 
+	All_Neg_Postscan_Rating:
+
+model conditions:
+	cond001:
+	cond002:
+	cond003:
+	cond004:
+	cond005:
