@@ -1,0 +1,26 @@
+Dictionary 
+
+Stop Signal Task (two trials) is task002:
+# why: SS in variables
+
+behav variables:
+	MedGoRT:
+	QuantGoRT: 
+	StDevGoRT:
+	Ladd1Mean:
+	Ladd2Mean:
+	AvgSSD:
+	PctDimErr: 
+	PctGoResp:
+	SSRT_32steps: 
+	SSRTquantile:
+	PctInhibLadd1: 
+	PctInhibLadd2:
+	NumTRs_run1:
+	NumTRs_run2:
+
+model conditions:
+	cond001:
+	cond002:
+	cond003:
+	cond004:
