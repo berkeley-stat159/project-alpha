@@ -9,13 +9,15 @@ behav variables:
 	rt_hard_plus: 
 	rt_hard_minus:
 	rt_easy_plus: 
-	rt_easy_minus abs(input-log):
+	rt_easy_minus: 
+	abs(input-log):
 	%del_resp:
 	%consis_hard+ : 
 	%consis_hard- :
 	%consis_easy+ :
 	%consis_easy- :
-	%consis_logit numTRs: 
+	%consis_logit:
+	numTRs: Total number of trials 
 	rt_hard_all: 
 	rt_easy_all:
 	
