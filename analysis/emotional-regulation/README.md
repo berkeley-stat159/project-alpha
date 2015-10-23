@@ -1,2 +1,0 @@
-# Emotional Regulation Task
-
