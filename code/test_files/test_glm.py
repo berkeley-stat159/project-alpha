@@ -13,6 +13,7 @@ import sys
 from numpy.testing import assert_almost_equal, assert_array_equal
 
 # Path to the subject 009 fMRI data used in class. 
+# You need to add the convolution, .nii, and condition files. 
 # Assume that this is in the data folder for our project. 
 pathtoclassdata = "../../data/"
 
