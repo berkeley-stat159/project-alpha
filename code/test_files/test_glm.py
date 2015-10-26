@@ -8,14 +8,15 @@ Run with:
 import numpy as np
 import numpy.linalg as npl
 import nibabel as nib
+import os
 import sys
 from numpy.testing import assert_almost_equal, assert_array_equal
 
-# Path to the subject 009 fMRI data used in class.  
-pathtoclassdata = "/home/oski/"
-# Path to functions. 
-pathtofunctions = "/home/oski/s159/project-alpha/code/functions/"
-sys.path.append(pathtofunctions)
+# Path to the subject 009 fMRI data used in class. 
+# Assume that this is in the data folder for our project. 
+pathtoclassdata = "../../data/"
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
 
 # Load our GLM functions. 
 from glm import glm
