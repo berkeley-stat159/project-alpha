@@ -13,7 +13,7 @@ import sys
 # Paths. Use your own. 
 pathtomodules = "/home/oski/modules/"
 pathtofunctions = "/home/oski/s159/project-alpha/code/functions/"
-pathtodata = "/home/oski/s159/project-alpha/data/ds009/sub001/"
+pathtodata = "../../data/ds009/sub001/"
 
 sys.path.append(pathtomodules)
 sys.path.append(pathtofunctions)

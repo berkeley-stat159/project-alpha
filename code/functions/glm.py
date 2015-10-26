@@ -23,7 +23,7 @@ def glm(data_4d, conv):
     """
     assert(len(conv) == data_4d.shape[-1])
     X = np.ones((len(conv), 2))
-    X[:, 0] = conv
+    X[:, 1] = conv
     data_2d = np.reshape(data_4d, (-1, data_4d.shape[-1]))
     B = npl.pinv(X).dot(data_2d.T)
     
