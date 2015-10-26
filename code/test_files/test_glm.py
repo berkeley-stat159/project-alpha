@@ -29,7 +29,7 @@ def test_glm():
     convolved = np.loadtxt(pathtoclassdata + "ds114_sub009_t2r1_conv.txt")[4:]
     # Create design matrix. 
     actual_design = np.ones((len(convolved), 2))
-    actual_design[:, 0] = convolved
+    actual_design[:, 1] = convolved
     
     # Calculate betas, copied from the exercise. 
     data_2d = np.reshape(data, (-1, data.shape[-1]))
