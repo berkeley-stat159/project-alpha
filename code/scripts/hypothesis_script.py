@@ -1,6 +1,6 @@
-""" Script for GLM functions.
+""" Script for Hypothesis testing functions.
 Run with: 
-    python glm_script.py
+    python hypothesis_script.py
 """
 
 # Loading modules.
@@ -60,6 +60,8 @@ n_to_remove = len(hrf_at_trs) - 1
 convolved = convolved[:-n_to_remove]
 
 #=================================================
+
+""" Run hypothesis testing script"""
 
 B,t,df,p = t_stat(data, convolved, np.array([0,1]))
 

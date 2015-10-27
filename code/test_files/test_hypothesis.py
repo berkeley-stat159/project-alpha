@@ -1,8 +1,9 @@
-""" Tests for glm function in glm module
-This checks the glm function with the procedure in the "Basic linear 
-modeling" exercise from Day 14. 
+""" Tests for hypothesis testing function in hypothesis_test module
+This checks the hypothesis testing which closely follows the "General
+Linear Models Lecture from class"
+
 Run with:
-    nosetests test_glm.py
+    nosetests test_hypothesis.py
 """
 # Loading modules.
 import numpy as np
@@ -13,7 +14,7 @@ from numpy.testing import assert_almost_equal, assert_array_equal
 
 # Path to the subject 009 fMRI data used in class.  
 # Path to functions. 
-pathtoclassdata = "../../data/ds114/"
+pathtoclassdata = "../../../data/ds114/"
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
 
