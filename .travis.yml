@@ -1,0 +1,31 @@
+# vim ft=yaml
+language: python
+
+env:
+  global:
+    - DEPENDS="requirements.txt"
+    - COVERAGE=1
+
+python:
+  - 3.4
+  - 2.7
+
+install:
+  - source tools/travis_tools.sh
+  - virtualenv --python=python venv
+  - source venv/bin/activate
+  - python --version # just to check
+  - retry pip install nose # always
+  - sudo apt-get install libblas-dev liblapack-dev libatlas3gf-base
+  - wheelhouse_pip_install ${DEPENDS}
+  - if [ "${COVERAGE}" == "1" ]; then
+    pip install coverage;
+    pip install coveralls;
+    fi
+
+script:
+  - make coverage
+
+
+after_success:
+  - if [ "${COVERAGE}" == "1" ]; then coveralls; fi
