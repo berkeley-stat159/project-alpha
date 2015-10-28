@@ -1,26 +1,28 @@
-""" Script for GLM functions.
+""" Script for Hypothesis testing functions.
 Run with: 
-    python glm_script.py
+    python hypothesis_script.py
 """
 
 # Loading modules.
+import os
 import numpy as np
 from scipy.stats import gamma
 import matplotlib.pyplot as plt
 import nibabel as nib
-import os
 import sys
+import numpy.linalg as npl
 
-# Relative path to subject 1 data
-pathtodata = "../../data/ds009/sub001/"
+# Paths. Use your own. 
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
+pathtodata = "../../../data/ds009/sub001/"
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 # Load events2neural from the stimuli module.
 from stimuli import events2neural
 
 # Load our GLM functions. 
-from glm import glm, glm_diagnostics
+from glm import glm
+from hypothesis import t_stat
 
 # Load the image data for subject 1.
 img = nib.load(pathtodata+"BOLD/task001_run001/bold.nii.gz")
@@ -57,18 +59,10 @@ convolved = np.convolve(events, hrf_at_trs)
 n_to_remove = len(hrf_at_trs) - 1
 convolved = convolved[:-n_to_remove]
 
-# Now get the estimated coefficients and design matrix for doing
-# regression on the convolved time course. 
-B, X = glm(data, convolved)
+#=================================================
 
-# Some diagnostics. 
-MRSS, fitted, residuals = glm_diagnostics(B, X, data)
+""" Run hypothesis testing script"""
 
-# Print out the mean MRSS.
-print(np.mean(MRSS))
+B,t,df,p = t_stat(data, convolved, np.array([0,1]))
 
-# Plot the time course for a single voxel with the fitted values. 
-# Looks pretty bad. 
-plt.plot(data[42, 32, 19])
-plt.plot(fitted[42, 32, 19])
-plt.savefig("glm_plot.png")
+print(t,p)

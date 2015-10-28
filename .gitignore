@@ -1,4 +1,8 @@
 .DS_Store
+# Data files
+data/ds009/
+data/ds114/
+data/our_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
