@@ -8,15 +8,13 @@ import numpy as np
 from scipy.stats import gamma
 import matplotlib.pyplot as plt
 import nibabel as nib
+import os
 import sys
 
-# Paths. Use your own. 
-pathtomodules = "/home/oski/modules/"
-pathtofunctions = "/home/oski/s159/project-alpha/code/functions/"
+# Relative path to subject 1 data
 pathtodata = "../../data/ds009/sub001/"
 
-sys.path.append(pathtomodules)
-sys.path.append(pathtofunctions)
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
 
 # Load events2neural from the stimuli module.
 from stimuli import events2neural
