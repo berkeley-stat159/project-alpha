@@ -23,12 +23,17 @@ def test_check_hashes():
         assert not data.check_hashes(d)
 
 def test_get_hashes(): 
+    # Download class data to current directory. 
     url = 'http://www.jarrodmillman.com/rcsds/_downloads/ds107_sub001_highres.nii'
     file_name = 'ds107_sub001_highres.nii'
     ds107 = urlopen(url)
     output = open(file_name,'wb')
     output.write(ds107.read())
     output.close()
+    # Now get all hashes of all files in current directory.
     file_hashes = get_hashes.get_all_hashes('.')
+    # The class data should be in the dictionary of hashes, with the 
+    # correct hash. 
     assert(file_hashes['./ds107_sub001_highres.nii'] == 'fd733636ae8abe8f0ffbfadedd23896c')
+    # Delete the file. 
     os.remove('ds107_sub001_highres.nii')
