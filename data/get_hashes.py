@@ -2,7 +2,6 @@ import os
 import sys
 import json
 
-#sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from . import data
 
 def get_all_hashes(data_dir):
