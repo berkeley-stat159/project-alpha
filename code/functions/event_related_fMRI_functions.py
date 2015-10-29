@@ -78,6 +78,7 @@ def convolution(times,on_off,hrf_function):
 
 
 
+
 # second take into account the desired number of cuts
 
 def convolution_specialized(real_times,on_off,hrf_function,record_cuts):
@@ -108,4 +109,5 @@ def convolution_specialized(real_times,on_off,hrf_function,record_cuts):
 		output_vector[i]= sum([on_off[j]*hrf_function(record_cuts[i]-real_times[j]) for j in range(len(real_times))])
 
 	return output_vector
+
 
