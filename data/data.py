@@ -5,6 +5,10 @@ import os
 import json
 
 
+with open('ds009_hashes.json', 'r') as fp:
+        d = json.load(fp)
+
+
 def generate_file_md5(filename, blocksize=2**20):
     m = hashlib.md5()
     with open(filename, "rb") as f:
@@ -29,6 +33,4 @@ def check_hashes(d):
 
 
 if __name__ == "__main__":
-    with open('ds009_hashes.json', 'r') as fp:
-        d = json.load(fp)
     check_hashes(d)
