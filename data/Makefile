@@ -1,5 +1,6 @@
 data:
-	wget http://www.jarrodmillman.com/rcsds/_downloads/ds107_sub001_highres.nii
+	wget http://openfmri.s3.amazonaws.com/tarballs/ds009_raw.tgz
+	tar zxvf ds009_raw.tgz
 
 validate:
 	python data.py
