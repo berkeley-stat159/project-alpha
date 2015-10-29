@@ -21,7 +21,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from hypothesis import t_stat
 
 
-"""def test_hypothesis1():
+def test_hypothesis1():
     img = nib.load(pathtoclassdata + "ds114_sub009_t2r1.nii")
     data = img.get_data()[..., 4:]
     # Read in the convolutions. 
@@ -33,7 +33,7 @@ from hypothesis import t_stat
     
     assert_almost_equal(beta,beta2)
     assert t.all() == t2.all()
-    assert beta.shape[1] == np.prod(data.shape[0:-1])"""
+    assert beta.shape[1] == np.prod(data.shape[0:-1])
 
 
 def test_hypothesis2():
