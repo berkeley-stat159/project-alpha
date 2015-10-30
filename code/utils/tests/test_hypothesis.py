@@ -14,7 +14,7 @@ from numpy.testing import assert_almost_equal, assert_array_equal
 
 # Path to the subject 009 fMRI data used in class.  
 # Path to functions. 
-pathtoclassdata = "../../../data/ds114/"
+pathtoclassdata = "/data/ds114/"
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 # Load our t_stat functions. 
