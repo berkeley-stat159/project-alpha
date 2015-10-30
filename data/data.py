@@ -2,9 +2,7 @@ from __future__ import print_function, division
 
 import hashlib
 import os
-
-
-d = {'ds107_sub001_highres.nii': "fd733636ae8abe8f0ffbfadedd23896c"}
+import json
 
 
 def generate_file_md5(filename, blocksize=2**20):
@@ -31,4 +29,6 @@ def check_hashes(d):
 
 
 if __name__ == "__main__":
+    with open('ds009_hashes.json', 'r') as fp:
+        d = json.load(fp)
     check_hashes(d)
