@@ -15,7 +15,7 @@ install:
   - virtualenv --python=python venv
   - source venv/bin/activate
   - python --version # just to check
-  - retry pip install nose # always'
+  - retry pip install nose # always
   - cd data && make test_data && cd ..
   - sudo apt-get install libblas-dev liblapack-dev libatlas3gf-base
   - wheelhouse_pip_install ${DEPENDS}
