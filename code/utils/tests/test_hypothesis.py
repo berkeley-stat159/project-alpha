@@ -14,8 +14,8 @@ from numpy.testing import assert_almost_equal, assert_array_equal
 
 # Path to the subject 009 fMRI data used in class.  
 # Path to functions. 
-pathtoclassdata = "../../data/ds114/"
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
+pathtoclassdata = "../../../data/ds114/"
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 # Load our t_stat functions. 
 from hypothesis import t_stat
@@ -33,7 +33,7 @@ def test_hypothesis1():
     
     assert_almost_equal(beta,beta2)
     assert t.all() == t2.all()
-    assert beta.shape[1] == np.prod(data.shape[0:-1]) 
+    assert beta.shape[1] == np.prod(data.shape[0:-1])
 
 
 def test_hypothesis2():

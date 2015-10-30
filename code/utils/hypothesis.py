@@ -1,3 +1,4 @@
+#hypothesis testing function
 from scipy.stats import t as t_dist
 from glm import glm
 import numpy as np
