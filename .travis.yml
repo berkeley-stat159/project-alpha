@@ -24,7 +24,6 @@ install:
     fi
 
 script:
-  - cd data && make test_data && cd ..	
   - make coverage
 
 
