@@ -1,5 +1,5 @@
-% Project Aleph Progress Report
-% Ross Barnowski, Matthew Brett, Jarrod Millman
+% Project Alpha Progress Report
+% Kent Chen, Rachel Lee, Ben LeRoy, Jane Liang, Hiro Udagawa
 % November 12, 2015
 
 # Background
@@ -7,7 +7,7 @@
 ## The Paper
 
 - from OpenFMRI.org
-- ds001
+- "The Generality of Self-Control" (Jessica Cohen, Russell Poldrack)
 
 ## The Data
 
