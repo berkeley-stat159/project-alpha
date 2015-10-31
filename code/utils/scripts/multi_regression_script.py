@@ -171,6 +171,8 @@ plt.imshow(present_3d(B_np[...,2]),interpolation='nearest', cmap='seismic')
 # instead of cmap="gray"
 plt.title("Condition 2 (pop) beta Brain Image")
 plt.colorbar()
+zero_out=max(abs(np.min(present_3d(B_np[...,2]))),np.max(present_3d(B_np[...,2])))
+plt.clim(-zero_out,zero_out)
 plt.savefig(location_of_images+'mr_cond2_beta_brain.png')
 plt.close()
 
@@ -184,6 +186,8 @@ plt.close()
 
 plt.imshow(present_3d(B_np[...,3]),interpolation='nearest', cmap='seismic')
 # instead of cmap="gray"
+zero_out=max(abs(np.min(present_3d(B_np[...,3]))),np.max(present_3d(B_np[...,3])))
+plt.clim(-zero_out,zero_out)
 plt.title("Condition 3 (save) beta Brain Image")
 plt.colorbar()
 plt.savefig(location_of_images+'mr_cond3_beta_brain.png')
@@ -203,6 +207,14 @@ plt.colorbar()
 plt.savefig(location_of_images+'mr_cond1_beta_brain.png')
 plt.close()
 
-    
+
+difference_12=present_3d(B_np[...,1])-present_3d(B_np[...,2])
+plt.imshow(difference_12,interpolation='nearest', cmap='seismic')
+plt.title("Differences between Condition 1 and 2")
+zero_out=max(abs(np.min(difference_12)),np.max(difference_12))
+plt.clim(-zero_out,zero_out)
+plt.colorbar()
+plt.savefig(location_of_images+'mr_cond1-cond2_beta_brain.png')
+plt.close()
 
 
