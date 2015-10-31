@@ -1,0 +1,73 @@
+
+########################################
+########################################
+# Initial Pros vs Cons for each method #
+########################################
+########################################
+
+###############
+# np.convolve #
+###############
+
+## PROS
+# 1. same length as data.shape[-1] (time dimension)
+# 2. fast utilizes Fast Fourier Transform
+
+## CONS
+# 1. Doesn't take into account the variation of time instances
+# 2. Makes assumption of block stimulus
+
+####################
+# (my) convolution #
+####################
+
+## PROS
+# 1. Takes into account the strengths of event-based fMRI studies (variance 
+#	allows for more views of the HRF in more detail)
+# 2. Doesn't make assumptions of the time a stimuli lasts, or length of time 
+#	between events
+
+## CONS
+# 2. Slightly slower (not enough runs to really matter - 1 per subject per trial
+#	 (24 * 6 max))
+
+
+################
+# Both methods #
+################
+
+# CONS
+# 1. Both rely on provided hrf estimation
+# 2. Both assume at independence of the hrf with respect to time and that it 
+#	experiences linear addition
+
+# 3. Currently, both assume all different types of conditions have the same hrf 
+#	response (applitude and shape)
+
+
+###################################
+###################################
+# Goals event_related_HRF_script: #
+###################################
+###################################
+
+# What would we like to see (as the debate between np.convolve and my 
+#	convolution function):
+# i. That the new function can do similar things (with similar assumptions that 
+#	np.convolve can do)
+# ii. Comparision of the two functions on actual data set with nueral response. 
+#	(Neural Response)
+# iii. Comparision of the two functions to a random voxel Hemoglobin response. 
+#	(Actual Heomoglobin response)
+ 
+# The script creates 3 Image files 
+# i. test_comparision.png 
+#	An example showing that my two functions can compete in np.convolve's domain
+# ii. convolution_vs_neural_stimulus.png 
+# 	A comparision on our data set differentiated neural stimulus and response 
+# 	estimations for the functions
+# iii. convolution_vs_voxel_HR.png
+#   A voxel's time series vs all the predicted HR functions (all are 
+#	standardized) This voxel was cherry picked after using linear regression on 
+#	the voxels against my HR function (the voxel had a very high \beta value)
+
