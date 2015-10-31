@@ -18,7 +18,7 @@ from numpy.testing import assert_almost_equal, assert_array_equal
 # in a directory called 'ds114'. 
 pathtoclassdata = "../../../data/ds114/"
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
 
 # Load our GLM functions. 
 from glm import glm
