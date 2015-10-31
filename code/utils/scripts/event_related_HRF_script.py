@@ -72,11 +72,12 @@ import os
 location_of_project="../../../"
 location_of_data=location_of_project+"data/ds009/" 
 location_of_subject001=location_of_data+"sub001/" 
-location_of_functions= "../"
+location_of_functions= "../functions/"
 location_of_our_data=location_of_project+"data/our_data/"
 condition_location=location_of_subject001+"model/model001/onsets/task001_run001/"
 bold_location=location_of_subject001+"BOLD/task001_run001/"
 location_to_class_data=location_of_project+"data/ds114/"
+location_of_images=location_of_project+"images/"
 
 
 ##########################
@@ -168,7 +169,7 @@ plt.title("Examining if 'convolution' can do the same thing as 'np.convolve' ")
 plt.xlabel("Time")
 plt.ylabel("Predicted Hemoglobin response")
 plt.legend(loc='lower right', shadow=True,fontsize="smaller")
-plt.savefig('../../Images/test_comparision.png')
+plt.savefig(location_of_images+'test_comparision.png')
 plt.close()
 print("********")
 print("i. c. Plot completed")
@@ -292,7 +293,7 @@ plt.legend(loc='lower right', shadow=True,fontsize="smaller")
 # zoom: if you're exploring this yourself, don't run this (zoom in yourself silly :)  )
 plt.xlim(0,50)
 plt.ylim(-1,1.5)
-plt.savefig('../../Images/convolution_vs_neural_stimulus.png')
+plt.savefig(location_of_images+"convolution_vs_neural_stimulus.png")
 plt.close()
 print("********")
 print("ii. d. Plot completed")
@@ -356,7 +357,7 @@ plt.title("Comparing predicted HR to real response for random voxel (standardize
 plt.legend(loc='lower right', shadow=True,fontsize="smaller")
 plt.xlim(0,50)
 plt.ylim(-3,2)
-plt.savefig('../../Images//convolution_vs_voxel_HR.png')
+plt.savefig(location_of_images+'convolution_vs_voxel_HR.png')
 plt.close()
 
 print("********")
