@@ -20,7 +20,7 @@ from numpy.testing import assert_almost_equal, assert_array_equal
 location_of_project="../../../"
 location_of_data=location_of_project+"data/ds009/" 
 location_of_subject001=location_of_data+"sub001/" 
-location_of_functions= "../"
+location_of_functions= "../functions/"
 location_to_class_data=location_of_project+"data/ds114/"
 
 # path to functions
