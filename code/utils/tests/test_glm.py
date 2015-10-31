@@ -21,7 +21,7 @@ pathtoclassdata = "../../../data/ds114/"
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
 
 # Load our GLM functions. 
-from glm import glm
+from glm import glm, glm_multiple
 
 
 def test_glm():
