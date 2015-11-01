@@ -39,7 +39,7 @@ def glm_diagnostics(B_4d, design, data_4d):
     ----------
     B_4d: numpy array of 4 dimensions
         The estimated coefficients
-    design: numpy array of 2 dimensions
+    design: numpy array
         The design matrix used to get the estimated coefficients
     data_4d: numpy array of 4 dimensions 
         The corresponding image data
