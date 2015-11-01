@@ -15,7 +15,7 @@ import numpy.linalg as npl
 # Paths. Use your own. 
 
 pathtodata = "../../../data/ds009/sub001/"
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
 
 # Load events2neural from the stimuli module.
 from stimuli import events2neural
