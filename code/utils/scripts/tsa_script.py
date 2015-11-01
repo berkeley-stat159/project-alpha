@@ -39,6 +39,7 @@ plt.close()
 # Box-Cox method to find best power transformation.
 bc = stats.boxcox(voxel)
 bc[1] # Lambda pretty close to 0, so try log transformation.  
+print("Log transforming data.")
 
 # Log transform the data. 
 lvoxel = np.log(voxel)
@@ -60,6 +61,7 @@ plt.close()
 qqplot(diff1, line='q')
 plt.close()
 # QQplot still shows some deviations from normality at tails. 
+print("Using first difference to gain approximate stationarity.")
 
 # Assume that the first difference is approximately normal.
 # Autocorrelation plot. First lag is significant. 
@@ -97,6 +99,7 @@ plt.close()
 
 # Use first half of the observations to predict the second half.
 # Not bad! 
+print("Suggested model is ARIMA(1,1,1).")
 preds = arima111.predict(start=len(diff1)//2)
 plt.plot(diff1[len(diff1)//2:])
 plt.plot(preds)
