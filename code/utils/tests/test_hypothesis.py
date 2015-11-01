@@ -18,7 +18,7 @@ pathtoclassdata = "../../../data/ds114/"
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
 
 # Load our t_stat functions. 
-from hypothesis import t_stat
+from hypothesis import t_stat,t_stat_mult_regression_single,t_stat_mult_regression
 
 
 def test_hypothesis1():
@@ -38,7 +38,8 @@ def test_hypothesis1():
 
 def test_hypothesis2():
     # example from http://www.jarrodmillman.com/rcsds/lectures/glm_intro.html
-    # it should be pointed out that hypothesis just looks at simple linear regression
+    # it should be pointed out that hypothesis just looks at simple linear 
+    # regression
 
     psychopathy = [11.416,   4.514,  12.204,  14.835,
     8.416,   6.563,  17.343, 13.02,
@@ -55,6 +56,25 @@ def test_hypothesis2():
     assert np.round(p,6)==np.array([[ 0.042295]])
 
 
+def test_hypothesis_3():
+    # new multiple-regression
+    img = nib.load(pathtoclassdata + "ds114_sub009_t2r1.nii")
+    data = img.get_data()[..., 4:]
+    # Read in the convolutions. 
+    convolved = np.loadtxt(pathtoclassdata + "ds114_sub009_t2r1_conv.txt")[4:]
+    # Create design matrix. 
+    X=np.ones((convolved.shape[0],2))
+    X[:,1]=convolved
+
+
+    beta,t,df,p = t_stat(data, convolved,[0,1])
+    beta2, t2,df2,p2 = t_stat_mult_regression_single(data, X,np.array([0,1]))
+
+    beta3, t3,df3,p3 = t_stat_mult_regression(data, X)
+
+
+    assert_array_equal(t,t2)
+    assert_array_equal(t,np.atleast_2d(t3[1,:]))
     
-    
+
     
