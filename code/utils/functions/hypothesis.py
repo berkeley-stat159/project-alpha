@@ -162,13 +162,13 @@ def t_stat_mult_regression(data_4d, X):
     -------
     beta: estimated beta values
     
-    t: numpy array of 1 dimension (spe)
+    t: numpy array of 2 dimensions
         t-value of the betas
     
     df: int
         degrees of freedom
     
-    p: numpy array of 1 dimension
+    p: numpy array of 2 dimensions
         p-value corresponding to the t-value and degrees of freedom
     """
 
