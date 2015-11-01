@@ -39,7 +39,7 @@ def glm_diagnostics(B_4d, design, data_4d):
     ----------
     B_4d: numpy array of 4 dimensions
         The estimated coefficients
-    design: numpy array of 2 dimensions
+    design: numpy array
         The design matrix used to get the estimated coefficients
     data_4d: numpy array of 4 dimensions 
         The corresponding image data
@@ -61,3 +61,34 @@ def glm_diagnostics(B_4d, design, data_4d):
     fitted_4d = np.reshape(fitted.T, data_4d.shape)
     residuals_4d = np.reshape(residuals.T, data_4d.shape)
     return MRSS_3d, fitted_4d, residuals_4d
+
+
+
+# new multiple regression function (takes in slightly different things)
+def glm_multiple(data_4d, X):
+    """
+    Return a tuple of the estimated coefficients in 4 dimensions and 
+    the design matrix. 
+    
+    Parameters
+    ----------
+    data_4d: numpy array of 4 dimensions 
+        The image data of one subject
+    X: numpy array of 2 dimensions
+        model matrix of the form ([1, x_1, x_2,...])
+        
+
+    Note that the fourth dimension of `data_4d` (time or the number 
+    of volumes) must be the same as the number of rows of `X`. 
+    
+    Returns
+    -------
+    glm_results : tuple
+        Estimated coefficients in 4 dimensions and the design matrix (same as put in).
+    """
+    assert(X.shape[0] == data_4d.shape[-1])
+    data_2d = np.reshape(data_4d, (-1, data_4d.shape[-1]))
+    B = npl.pinv(X).dot(data_2d.T)
+
+    B_4d = np.reshape(B.T, data_4d.shape[:-1] + (-1,))
+    return B_4d, X
