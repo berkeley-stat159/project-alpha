@@ -15,54 +15,77 @@ import numpy.linalg as npl
 # Paths. Use your own. 
 
 pathtodata = "../../../data/ds009/sub001/"
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+condition_location=pathtodata+"model/model001/onsets/task001_run001/"
+sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
-# Load events2neural from the stimuli module.
+# Load events2neural from the stimuli module
 from stimuli import events2neural
 
 # Load our GLM functions. 
 from glm import glm
 from hypothesis import t_stat
 
+# Load our convolution and hrf function
+from event_related_fMRI_functions import hrf_single, convolution_specialized
+
 # Load the image data for subject 1.
 img = nib.load(pathtodata+"BOLD/task001_run001/bold.nii.gz")
 data = img.get_data()
 data = data[...,6:] # Knock off the first 6 observations.
 
+cond1=np.loadtxt(condition_location+"cond001.txt")
+cond2=np.loadtxt(condition_location+"cond002.txt")
+cond3=np.loadtxt(condition_location+"cond003.txt")
 
-""" This stuff is a bit of a hack to get a naive convolved time 
-course using TR = 2. 
-Hopefully, we'll have a better, more integrated way of getting 
-the convolutions soon, with its own script for generating them. 
-"""
-# hrf function. Shouldn't be in script for final version. 
-def hrf(times):
-     """ Return values for HRF at given times """
-     # Gamma pdf for the peak
-     peak_values = gamma.pdf(times, 6)
-     # Gamma pdf for the undershoot
-     undershoot_values = gamma.pdf(times, 12)
-     # Combine them
-     values = peak_values - 0.35 * undershoot_values
-     # Scale max to 0.6
-     return values / np.max(values) * 0.6
+#######################
+# a. (my) convolution #
+#######################
+
+all_stimuli=np.array(sorted(list(cond2[:,0])+list(cond3[:,0])+list(cond1[:,0]))) # could also just x_s_array
+my_hrf = convolution_specialized(all_stimuli,np.ones(len(all_stimuli)),hrf_single,np.linspace(0,239*2-2,239))
+
+
+##################
+# b. np.convolve #
+##################
 
 # Suppose that TR=2. We know this is not a good assumption.
 # Also need to look into the hrf function. 
+# initial needed values
 TR = 2
-tr_times = np.arange(0, 30, 2)
-hrf_at_trs = hrf(tr_times)
-n_vols = data.shape[-1]
-events = events2neural(pathtodata+"model/model001/onsets/task001_run001/cond001.txt", TR, n_vols)
-events = np.abs(events-1) # Swapping 0s and 1s. 
-convolved = np.convolve(events, hrf_at_trs)
-n_to_remove = len(hrf_at_trs) - 1
-convolved = convolved[:-n_to_remove]
+tr_times = np.arange(0, 30, TR)
+hrf_at_trs = np.array([hrf_single(x) for x in tr_times])
+n_vols=data.shape[-1]
+
+# creating the .txt file for the events2neural function
+cond_all=np.row_stack((cond1,cond2,cond3))
+cond_all=sorted(cond_all,key= lambda x:x[0])
+np.savetxt(condition_location+"cond_all.txt",cond_all)
+
+neural_prediction = events2neural(condition_location+"cond_all.txt",TR,n_vols)
+convolved = np.convolve(neural_prediction, hrf_at_trs) # hrf_at_trs sample data
+N = len(neural_prediction)  # N == n_vols == 173
+M = len(hrf_at_trs)  # M == 12
+np_hrf=convolved[:N]
+
+
+
+
+
 
 #=================================================
 
 """ Run hypothesis testing script"""
 
-B,t,df,p = t_stat(data, convolved, np.array([0,1]))
+B_my,t_my,df,p_my = t_stat(data, my_hrf, np.array([0,1]))
 
-print(t,p)
+print("'my' convolution single regression (t,p):")
+print(t_my,p_my)
+print("means of (t,p) for 'my' convolution: (" +str(np.mean(t_my))+str(np.mean(p_my)) +")")
+
+B_np,t_np,df,p_np = t_stat(data, np_hrf, np.array([0,1]))
+
+print("np convolution single regression (t,p):")
+print(t_np,p_np)
+print("means of (t,p) for np convolution: (" +str(np.mean(t_np))+str(np.mean(p_np)) +")")
+
