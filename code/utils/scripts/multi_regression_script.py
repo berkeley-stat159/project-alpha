@@ -71,7 +71,7 @@ from event_related_fMRI_functions import convolution_specialized
 # ii. importing events2neural for np.convolve built-in function
 from stimuli import events2neural
 # iii. import glm_multiple for multiple regression
-from glm import glm_multiple
+from glm import glm_multiple, glm_diagnostics
 # iv. import image viewing tool
 from Image_Visualizing import present_3d
 
@@ -217,4 +217,16 @@ plt.colorbar()
 plt.savefig(location_of_images+'mr_cond1-cond2_beta_brain.png')
 plt.close()
 
+
+
+
+
+
+MRSS_my, fitted_my, residuals_my = glm_diagnostics(B_my, X_my, data)
+print("MRSS using multiple regression: "+str(np.mean(MRSS_my)))
+
+plt.plot(data[41, 47, 2])
+plt.plot(fitted_my[41, 47, 2])
+plt.savefig(location_of_images+"fitted_vs_actual_mult_regression.png")
+plt.close()
 
