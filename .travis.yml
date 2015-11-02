@@ -18,7 +18,7 @@ install:
   - retry pip install nose # always
   - cd data && make test_data && cd ..
   - sudo apt-get install libblas-dev liblapack-dev libatlas3gf-base
-  - wheelhouse_pip_install ${DEPENDS}
+  - pip installl ${DEPENDS}
   - if [ "${COVERAGE}" == "1" ]; then
     pip install coverage;
     pip install coveralls;
