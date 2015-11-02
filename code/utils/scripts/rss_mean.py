@@ -7,23 +7,14 @@ import matplotlib.pyplot as plt
 import nibabel as nib
 from glm import glm, glm_diagnostics
 from stimuli import events2neural
-from event_related_fMRI_functions import convultion
+from event_related_fMRI_functions import hrf_single, convolution_specialized
 
 pathtodata = "../../../data/ds009/"
 sub_list = os.listdir(pathtodata)[1:]
 
 rss_mean = np.zeros((64, 64, 34,24))
 
-def hrf(times):
-    """ Return values for HRF at given times """
-    # Gamma pdf for the peak
-    peak_values = gamma.pdf(times, 6)
-    # Gamma pdf for the undershoot
-    undershoot_values = gamma.pdf(times, 12)
-    # Combine them
-    values = peak_values - 0.35 * undershoot_values
-    # Scale max to 0.6
-    return values / np.max(values) * 0.6
+
     
 for i in os.listdir(pathtodata)[1:]:
     img = nib.load(pathtodata+ i+ "/BOLD/task001_run001/bold.nii.gz")
@@ -32,21 +23,30 @@ for i in os.listdir(pathtodata)[1:]:
     
     # Suppose that TR=2. We know this is not a good assumption.
     # Also need to look into the hrf function. 
+    cond1=np.loadtxt(pathtodata+ i+ "/model/model001/onsets/task001_run001/cond001.txt")
+    cond2=np.loadtxt(pathtodata+ i+ "/model/model001/onsets/task001_run001/cond002.txt")
+    cond3=np.loadtxt(pathtodata+ i+ "/model/model001/onsets/task001_run001/cond003.txt")
+    
     TR = 2
-    tr_times = np.arange(0, 30, 2)
-    hrf_at_trs = hrf(tr_times)
-    n_vols = data.shape[-1]
-    events = events2neural(pathtodata+ i+ "/model/model001/onsets/task001_run001/cond001.txt", TR, n_vols)
-    events = np.abs(events-1) # Swapping 0s and 1s. 
-    convolved = np.convolve(events, hrf_at_trs)
-    n_to_remove = len(hrf_at_trs) - 1
-    convolved = convolved[:-n_to_remove]
+    tr_times = np.arange(0, 30, TR)
+    hrf_at_trs = np.array([hrf_single(x) for x in tr_times])
+    n_vols=data.shape[-1]
 
+    # creating the .txt file for the events2neural function
+    cond_all=np.row_stack((cond1,cond2,cond3))
+    cond_all=sorted(cond_all,key= lambda x:x[0])
+    np.savetxt(pathtodata+ i+ "/model/model001/onsets/task001_run001/cond_all.txt",cond_all)
+
+    neural_prediction = events2neural(pathtodata+ i+ "/model/model001/onsets/task001_run001/cond_all.txt",TR,n_vols)
+    convolved = np.convolve(neural_prediction, hrf_at_trs) # hrf_at_trs sample data
+    N = len(neural_prediction)  # N == n_vols == 173
+    M = len(hrf_at_trs)  # M == 12
+    np_hrf=convolved[:N]
+   
     # Now get the estimated coefficients and design matrix for doing
     # regression on the convolved time course. 
-    B, X = glm(data, convolved)
+    B, X = glm(data, np_hrf)
 
-    # Some diagnostics. 
     MRSS, fitted, residuals = glm_diagnostics(B, X, data)
     
     rss_mean[...,int(i[-1])] = MRSS
