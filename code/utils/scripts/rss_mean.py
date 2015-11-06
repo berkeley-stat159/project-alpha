@@ -8,6 +8,8 @@ import nibabel as nib
 from glm import glm, glm_diagnostics
 from stimuli import events2neural
 from event_related_fMRI_functions import hrf_single, convolution_specialized
+from hypothesis import t_stat
+from Image_Visualizing import present_3d
 
 pathtodata = "../../../data/ds009/"
 sub_list = os.listdir(pathtodata)[1:]
@@ -45,14 +47,31 @@ for i in os.listdir(pathtodata)[1:]:
    
     # Now get the estimated coefficients and design matrix for doing
     # regression on the convolved time course. 
-    B, X = glm(data, np_hrf)
+    
+    #B, X = glm(data, np_hrf)
+    #MRSS, fitted, residuals = glm_diagnostics(B, X, data)
+    
+    B,t,df,p = t_stat(data, np_hrf, np.array([0,1]))
+    
+    rss_mean[...,int(i[-1])] = np.reshape(t,(64,64,34))
+    
+    mask = nib.load(pathtodata+i+'/anatomy/inplane001_brain_mask.nii.gz')
+    mask_data = mask.get_data()
+    new_mask = np.zeros((64,64,34))
+    def shrink(data, rows, cols):
+        return data.reshape(rows, data.shape[0]/rows, cols, data.shape[1]/cols).sum(axis=1).sum(axis=2)
+    
+    for j in range(mask_data.shape[-1]):
+        new_mask[...,j] = shrink(mask_data[...,j],64,64)
+    
+    rss_mean[...,int(i[-1])] = np.reshape(t,(64,64,34)) * new_mask
+    
 
-    MRSS, fitted, residuals = glm_diagnostics(B, X, data)
-    
-    rss_mean[...,int(i[-1])] = MRSS
-    
-print(np.mean(rss_mean,axis=3))
-    
+final = np.mean(rss_mean,axis=3)
+print(final)
+plt.imshow(present_3d(final), cmap='gray', interpolation='nearest')
+plt.colorbar()
+plt.show()
 
 
 
