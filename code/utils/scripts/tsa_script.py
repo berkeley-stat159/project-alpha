@@ -9,6 +9,8 @@ as needed.
 import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
+
 import statsmodels.api as sm
 from statsmodels.graphics.api import qqplot
 import nibabel as nib
@@ -100,7 +102,17 @@ plt.close()
 # Use first half of the observations to predict the second half.
 # Not bad! 
 print("Suggested model is ARIMA(1,1,1).")
-preds = arima111.predict(start=len(diff1)//2)
-plt.plot(diff1[len(diff1)//2:])
-plt.plot(preds)
+preds = arima111.predict(start=len(diff1)//2+1)
+times = range(1,len(diff1)+1)
+plt.plot(times[len(diff1)//2:], diff1[len(diff1)//2:], 'b')
+plt.plot(times[len(diff1)//2:], preds, 'r')
+
+hand_obs = mlines.Line2D([], [], color="b", label="Observed")
+hand_fore = mlines.Line2D([], [], color="r", label="Forecast")
+plt.legend(handles=[hand_obs, hand_fore])
+
+plt.title('Second Half of Observations')
+plt.xlabel('Time')
+plt.ylabel('Hemoglobin Response')
+
 plt.savefig(location_of_images+"ts-preds.png")
