@@ -25,24 +25,66 @@
 \begin{document}
 \maketitle
 
-\abstract{You should have a short abstract.}
+\abstract{\input{text_files/abstract.tex}}
 
 \section{Introduction}
 
-
-Here's the paper citation: \cite{CohenSelfControl}.
-
-Identify a published fMRI paper and the accompanying data
-\cite{lindquist2008statistical}.  You should explain the basic idea of the
-paper in a paragraph.  You should also perform basic sanity check on the data
-(e.g., can you downloaded, can you load the files, confirm that you have the
-correct number of subjects).
-
-Briefly explain what reproducibility means and in what sense you will
-try to reproduce this study.
+	\input{text_files/intro.tex}
 
 \section{Data}
 
+	\input{text_files/data.tex}
+	
+\section{Methods}
+
+	\subsection{Convolution}
+		\input{text_files/convolution.tex}
+	
+	\subsection{Smoothing}
+	
+		\input{text_files/smoothing.tex}
+		
+	\subsection{Regression}
+	
+		\input{text_files/regression.tex}
+		
+	\subsection{Hypothesis Testing}
+	
+		\input{text_files/hypothesis.tex}
+		
+	\subsection{PCA}
+	
+		\input{text_files/pca.tex}
+		
+	\subsection{Time Series}
+	
+		\input{text_files/time.tex}
+		
+\section{Results}
+		
+	\subsection{Regression Results}
+	
+		\input{text_files/regression_results.tex}
+		
+		
+	\subsection{Hypothesis Testing Results}
+	
+		\input{text_files/hypothesis_results.tex}
+		
+	\subsection{Time Series Results}
+	
+		\input{text_files/time_results.tex}
+		
+\section{Discussion}
+	
+	\subsection{Discussion of Results}
+		
+		\input{text_files/discussion.tex}
+		
+	\subsection{Discussion of Future Work}
+	
+		\input{text_files/discussion_future.tex}
+		
 \bibliographystyle{siam}
 \bibliography{project}
 
