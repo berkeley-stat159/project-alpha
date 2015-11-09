@@ -8,4 +8,3 @@ all:
 
 
 clean:
-	rm -f *.{aux,log,bbl,lof,lot,blg,out}
