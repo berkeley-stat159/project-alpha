@@ -27,9 +27,11 @@ expect.
 from __future__ import absolute_import, division, print_function
 
 import numpy as np
+import os
+import sys
 
-from .. import pearson
-
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
+import pearson
 from numpy.testing import assert_almost_equal
 
 
