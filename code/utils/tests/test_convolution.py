@@ -11,23 +11,24 @@ import numpy.linalg as npl
 import matplotlib.pyplot as plt
 import nibabel as nib
 import pandas as pd # new
-import sys # instead of os
+import sys 
+import os
 import scipy.stats
 from scipy.stats import gamma
 from numpy.testing import assert_almost_equal, assert_array_equal
 
 # Path to the subject 009 fMRI data used in class.  
-location_of_project="../../../"
+location_of_project="../../"
 location_of_data=location_of_project+"data/ds009/" 
 location_of_subject001=location_of_data+"sub001/" 
 location_of_functions= "../functions/"
 location_to_class_data=location_of_project+"data/ds114/"
 
 # path to functions
-sys.path.append(location_of_functions) 
+sys.path.append(os.path.join(os.path.dirname(__file__), location_of_functions))
 
 # path to class data
-sys.path.append(location_to_class_data)
+sys.path.append(os.path.join(os.path.dirname(__file__), location_to_class_data))
 
 # Load our GLM functions. 
 from event_related_fMRI_functions import convolution, convolution_specialized, hrf_single
