@@ -6,7 +6,7 @@
 
 ## The Paper
 
-- from OpenFMRI.org (ds009)
+- From OpenFMRI.org (ds009)
 - "The Generality of Self-Control" (Jessica Cohen, Russell Poldrack)
 
 ## The Data
@@ -47,14 +47,19 @@
 # Our plan
 
 ## Initial
-- Analysis to perform: multiple subjects, time series, PCA, multiple testing
-- Using only BART study for feasibility
+- Analysis to perform: 
+	- multiple subjects
+	- time series
+	- PCA
+	- multiple testing
+	- Using only BART study for feasibility
 
 ## Goal
 - Trying to reproduce methods, but it won't all be the same
 
 ## Simplification steps
-- They used a lot of packaged software, we don't have those. Also not familiar with some of their methods. 
+- Paper used a lot of packaged software which we don't have
+- Not familiar with some of their methods
 
 # Our plan
 
@@ -63,15 +68,17 @@
 - Multiple comparisons
 
 ## Method of validating models
-- t-tests, RSS, permutations
+- t-tests
+- RSS
+- permutations
 
 # Our process
 
 ## Most difficult aspect of project?
-- working with fMRI data, moreso than Git workflow
+- Working with fMRI data, moreso than Git workflow
 
 ## Ill-defined assignment?
-- having the freedom to make decisions on what direction to take
+- Having the freedom to make decisions on what direction to take
 
 ## Success in overcoming these obstacles?
 - (work-in-progress)
@@ -90,11 +97,12 @@
 # Our process (cont'd)
 
 ## What do we need to successfully complete the project?
-- try our best to reproduce as much as possible
-- if time allows, explore new approaches
+- Try our best to reproduce as much as possible
+- If time allows, explore new approaches
 
 ## Difficulty of making work reproducible?
-- making sure that stuff works for both Python 2 and 3. Travis is a pain, but testing is important.
+- Making sure that stuff works for both Python 2 and 3
+- Travis is a pain, but testing is important
 
 # Potential topics to cover in class in the future
 - Overview of brain / neuroanatomy?
