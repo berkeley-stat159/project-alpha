@@ -6,10 +6,9 @@ clean:
 	find . -name "*.so" -o -name "*.pyc" -o -name "*.pyx.md5" | xargs rm -f
 
 coverage:
-	cd code/utils/tests
+	cd code/
 	nosetests data --with-coverage --cover-package=data  --cover-package=utils
-	cd ../../..
-
+	cd ../
 test:
 	nosetests code/utils data
 

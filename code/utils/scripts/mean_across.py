@@ -69,9 +69,15 @@ for i in os.listdir(pathtodata)[1:]:
     
 
 final = np.mean(rss_mean,axis=3)
-plt.imshow(present_3d(final), cmap='gray', interpolation='nearest')
+
+plt.imshow(final,interpolation='nearest', cmap='seismic')
+plt.title("Mean T-Statistic Value Across 25 Subjects")
+
+zero_out=max(abs(final)),np.max(final))
+plt.clim(-zero_out,zero_out)
 plt.colorbar()
-plt.show()
+plt.savefig("../../../paper/images/hypothesis_testint.png")
+plt.close()
 
 
 
