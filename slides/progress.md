@@ -1,6 +1,8 @@
-% Project Alpha Progress Report
-% Kent Chen, Rachel Lee, Ben LeRoy, Jane Liang, Hiro Udagawa
+% Progress Report for Project Alpha
+% Kent Chen, Rachel Lee, Ben LeRoy, Jane Liang, Hiroto Udagawa
 % November 12, 2015
+
+
 
 # Background
 
@@ -8,107 +10,82 @@
 
 - From OpenFMRI.org (ds009)
 - "The Generality of Self-Control" (Jessica Cohen, Russell Poldrack)
+<comment about software packages and replication>
 
 ## The Data
 
-- BART study with event-related neurological stimulus and 24 subjects.
+- BART study with event-related neurological stimulus (balloon demo)
 - 24 subjects, 3 conditions per subject
+	- Condition 1: Inflation
+	- Condition 2: Pop Pop
+	- Condition 3: Cash out dem monies
+- Download, decompress and check hashes of data
 
-
-# Data fetching and preprocessing
-- Set up a make file to download and decompress data
-- Wrote a loop to get hashes of all files in all subdirectories of data belonging to one group member, saved the dictionary of hashes to a JSON file
-- "make validate"
 
 # Initial analysis
 
-## Convolution
-- Worked with problems with event-related stimulus model
+- Convolution: Worked with problems with event-related stimulus model
 
-## Smoothing
-- Convolution with a Gaussian filter (scipy module)
+- Smoothing: Convolution with a Gaussian filter (scipy module)
 
-## Linear regression
-- Multiple and single regression with stimulus (all conditions and seperate)
+- Linear regression: Single and multiple regression with stimulus (all conditions and seperate)
 
-# Initial analysis
+- Hypothesis testing: General t-tests on $\beta$ values, and across suject analysis
 
-## Hypothesis testing
-- General t-tests on $\beta$ values
-- Across suject analysis
+- Time series: ARIMA model
 
-## Time series
-- ARIMA(1,1,1) model
+- PCA: Modeling against SVD
 
-## PCA
-- Modeling against
-- SVD
-
-# Our plan
-
-## Initial
-- Analysis to perform: 
-	- multiple subjects
-	- time series
-	- PCA
-	- multiple testing
-	- Using only BART study for feasibility
+# Our Plan
 
 ## Goal
 - Trying to reproduce methods, but it won't all be the same
 
-## Simplification steps
-- Paper used a lot of packaged software which we don't have
-- Not familiar with some of their methods
+## Issues we have encountered
+- Convolution with event-related stimuli
+- Approach to multiple subjects
+- Scan time problems (large dimensions)
+- Validation of performance
+- Trying to replicate black box analysis
 
-# Our plan
+# Our Plan
+## What we need to accomplish
+- Preprocessing: 
+	- Resampling to correct for when the voxels were actual scanned (time shift)
+	- Explore Convolution (3rd time's the charm)
+- Analysis:
+	- Multiple comparision:
+		- Permutation test
+		- Random field technique
+		- Benjamini-Hoffberg
 
-## Issues we have encountered/discussed
-- Convolution/time intervals
-- Multiple comparisons
-
-## Method of validating models
-- t-tests
-- RSS
-- permutations
-
-# Our process
+# Comments about our Project
 
 ## Most difficult aspect of project?
-- Working with fMRI data, moreso than Git workflow
-
-## Ill-defined assignment?
-- Having the freedom to make decisions on what direction to take
+- Direction of project
 
 ## Success in overcoming these obstacles?
-- (work-in-progress)
-
-# Our process (cont'd)
-
-## Issues with working as a team?
-- 5 people means it's hard to find time to meet in person
-
+- |--------------------------------|
+- 		 ^ This successful ^
+ 
 ## Most useful parts of class?
 - Git workflow
 
-## Least helpful?
-- fMRI. 
-
-# Our process (cont'd)
+# The Project continued
 
 ## What do we need to successfully complete the project?
-- Try our best to reproduce as much as possible
-- If time allows, explore new approaches
+- Define better goals, and set an end goal
+- Take advantage of pre-existing toolkit
+- Tie our analysis and conclusions back to the original paper
 
 ## Difficulty of making work reproducible?
-- Making sure that stuff works for both Python 2 and 3
-- Travis is a pain, but testing is important
+- Writing tests that maintain our coverage
+- Relative paths and making sure nosetests/Makefiles work properly
 
 # Potential topics to cover in class in the future
-- Overview of brain / neuroanatomy?
-- More linear regression (ANOVA)? PCA? The mathematics or the implementation?
-- Machine learning (classification, prediction, cross-validation)?
-- Permutation tests (and maybe bootstrap)?
-- Software tools (Git, Make, Python, statmodels, etc.)
-- Technical writing and scientific visualization?
-- Advanced topics (regularized regression, selective inference)
+- Coding best practices and style
+- Python approach to machine learning (scikit-learn)
+- Other popular software tools used in collaboration
+- Learning basics of Pandas
+
+
