@@ -8,12 +8,12 @@ import nibabel as nib
 from stimuli import events2neural
 from event_related_fMRI_functions import hrf_single, convolution_specialized
 from hypothesis import t_stat
-from Image_Visualizing import present_3d
+from Image_Visualizing import present_3d, make_mask
 
 pathtodata = "../../../data/ds009/"
 sub_list = os.listdir(pathtodata)[1:]
 
-rss_mean = np.zeros((64, 64, 34,24))
+t_mean = np.zeros((64, 64, 34,24))
 
 
     
@@ -50,34 +50,26 @@ for i in os.listdir(pathtodata)[1:]:
     #MRSS, fitted, residuals = glm_diagnostics(B, X, data)
     
     B,t,df,p = t_stat(data, np_hrf, np.array([0,1]))
-    
-    ################
-    # Create Mask
-    ################
+
  
     mask = nib.load(pathtodata+i+'/anatomy/inplane001_brain_mask.nii.gz')
     mask_data = mask.get_data()
-    new_mask = np.zeros((64,64,34))
-    def shrink(data, rows, cols):
-        return data.reshape(rows, data.shape[0]/rows, cols, data.shape[1]/cols).sum(axis=1).sum(axis=2)
     
-    for j in range(mask_data.shape[-1]):
-        new_mask[...,j] = shrink(mask_data[...,j],64,64)
-    ###################
-    
-    rss_mean[...,int(i[-1])] = np.reshape(t,(64,64,34)) * new_mask
-    
+    t_mean[...,int(i[-1])] = make_mask(np.reshape(t,(64,64,34)), mask_data, fit=True)
 
-final = np.mean(rss_mean,axis=3)
+    
+final = present_3d(np.mean(t_mean,axis=3))
 
 plt.imshow(final,interpolation='nearest', cmap='seismic')
 plt.title("Mean T-Statistic Value Across 25 Subjects")
 
-zero_out=max(abs(final)),np.max(final))
+zero_out=max(abs(np.min(final)),np.max(final))
 plt.clim(-zero_out,zero_out)
 plt.colorbar()
 plt.savefig("../../../paper/images/hypothesis_testint.png")
 plt.close()
+
+
 
 
 
