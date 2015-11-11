@@ -8,6 +8,7 @@ import pandas as pd # new
 import sys # instead of os
 import scipy.stats
 from scipy.stats import gamma
+from stimuli import events2neural
 
 
 # getting the peak (for this specific hrf function)
@@ -109,5 +110,57 @@ def convolution_specialized(real_times,on_off,hrf_function,record_cuts):
 		output_vector[i]= sum([on_off[j]*hrf_function(record_cuts[i]-real_times[j]) for j in range(len(real_times))])
 
 	return output_vector
+
+
+
+# Third attempt at convolution
+def np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30):
+	""" Does convolution on Event-Related fMRI data, cutting TR into 'cuts' equal distance chunks and putting stimulus in closed cut 
+
+	Parameters:
+	-----------
+	real_times = one dimensional np.array of time slices (size K)
+	hrf_function = a hrf (in functional form, not as a vector)
+	TR = time between record_cuts
+	record_cuts = vector with fMRI times that it recorded (size N)
+
+	Returns:
+	--------
+	output_vector = vector of hrf predicted values (size N)
+
+	Note:
+	-----
+	It should be noted that you can make the output vector (size "N-M+1") if you'd like by 
+	adding on extra elements in the times and have their on_off values be 0 at the end of both
+
+	# np.convolve(neural_prediction, hrf_at_trs)
+	"""
+	
+	# creating 1 and 0s like in stimuli (more fine grained)
+	N= len(record_cuts)
+
+	X = np.zeros((cuts*N,2))
+	X[:,0] = np.linspace(min(record_cuts),max(record_cuts),num=cuts*N)
+
+	for i,time in enumerate(real_times):
+		min_close=np.min(abs(X[:,0]-time))     
+		X[(abs(X[:,0]-time)==min_close),1]=1*on_off[i]
+
+	# now use np.convolve with better thing
+	hrf_discrete=np.array([hrf_function(x) for x in np.linspace(0,30,num=cuts*30)]) # num since the hrf function takes 30 seconds to finish 
+	
+	larger_output = np.convolve(X[:,1],hrf_discrete) # too many cuts
+	N2= X[:,1].shape[0]
+
+	larger_output=larger_output[:N2]
+
+
+
+	desired_x_i= [min(record_cuts)+(cuts)*i for i in range(len(record_cuts))]
+	output = larger_output[desired_x_i]
+
+	return output
+
+
 
 
