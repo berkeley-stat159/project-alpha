@@ -56,15 +56,21 @@ def test_convolution():
 
 
 	my_convolved=convolution(np.linspace(0,432.5,173),neural_prediction,hrf_single)
+	my_convolved2=convolution_specialized(np.linspace(0,432.5,173),neural_prediction,hrf_single,np.linspace(0,432.5,173))
 
 	print("you'll have to look at the plots yourself, they're pretty close")
 	plt.plot(np.linspace(0,432.5,173),convolved,label="np.convolved")
 	plt.plot(np.linspace(0,432.5,173),my_convolved,label="my convolution function")
-
+	plt.plot(np.linspace(0,432.5,173),my_convolved2,label="my 2nd convolution function")
 	#In [5]: max(abs(convolved-my_convolved)) < .01
 	#Out[5]: 0.0087853818693934826
 
 	assert (max(abs(convolved-my_convolved)) < .01)
+
+
+	my_con2=np_convolve_30_cuts(np.linspace(0,432.5,173),hrf_single,TR,np.linspace(0,432.5,173),cuts=30)
+
+
 
 def test_convolution_specialized():
 	stimuli=np.array([0,5,15])
