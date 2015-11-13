@@ -1,8 +1,31 @@
 % tex file for future discussion
-\par \indent To extend our work on multiple linear regression, we will explore methods to account for more of the noise in our data, such as linear drift and discrete cosine transforms for general trends (similar to Fourier series as extra features). We will also be looking into (as long as this is not corrected with pre-processing from out mentors) realignment of scans to correct for the time it takes to scan each voxel compared to the start of the scan. One approach to correct the time shift of when the voxels were actually scanned is to perform resampling techniques.
+\par \indent To extend our work on multiple linear regression, we will 
+explore methods to account for more of the noise in our data, such as linear 
+drift and discrete cosine transforms for general trends (similar to Fourier 
+series as extra features). We will also be looking into (as long as this is 
+not corrected with pre-processing from out mentors) realignment of scans to 
+correct for the time it takes to scan each voxel compared to the start of the 
+scan. One approach to correct the time shift of when the voxels were actually 
+scanned is to perform resampling techniques.
 
-\par Almost all of our currently implemented methods are designed to handle each subject's data individually. However, we would like to take advantage of all 24 subjects, and would like to explore procedures for comparing results across subjects or aggregating subject data together. 
+\par Almost all of our currently implemented methods are designed to handle 
+each subject's data individually. However, we would like to take advantage of 
+all 24 subjects, and would like to explore procedures for comparing results 
+across subjects or aggregating subject data together. 
 
-\par One major concern for hypothesis testing and working with the estimated coefficients from linear modeling is the issue of multiple comparisons. This may be as simple as utilizing a Bonferroni correction, but we can also consider permutation tests or more sophisticated approaches (random fields, Benjamini-Hoffberg, etc). 
+\par One major concern for hypothesis testing and working with the estimated 
+coefficients from linear modeling is the issue of multiple comparisons. This 
+may be as simple as utilizing a Bonferroni correction, but we can also 
+consider permutation tests or more sophisticated approaches (random fields, 
+Benjamini-Hoffberg, etc). 
 
-\par More quantitative and robust indicators for validating time series models should be implemented. One possibility is to simulate a null process by permuting the phases of the voxel’s time course after performing a Fourier transform, and then transforming the permuted data back to the original space. This way, the data is permuted but maintains the original correlated structure. We can then fit the same ARIMA model to the permuted process and examine how much, if at all, the ARIMA process fitted to the observed data makes improvements over the null case. Generating confidence intervals for the parameter estimates and forecasting future observations may also be of interest. 
+\par More quantitative and robust indicators for validating time series 
+models should be implemented. One possibility is to simulate a null process 
+by permuting the phases of the voxel’s time course after performing a Fourier 
+transform, and then transforming the permuted data back to the original 
+space. This way, the data is permuted but maintains the original correlated 
+structure. We can then fit the same ARIMA model to the permuted process and 
+examine how much, if at all, the ARIMA process fitted to the observed data 
+makes improvements over the null case. Generating confidence intervals for 
+the parameter estimates and forecasting future observations may also be of 
+interest. 
