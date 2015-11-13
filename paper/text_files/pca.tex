@@ -1,4 +1,21 @@
 % tex file for pca
-\par \indent To perform Principal Components Analysis (PCA), we first considered the method outlined by the guide posted on the class website. Using matrix algebra, we were able to compute principal components by finding orthogonal projections (the shortest distance between points). After consulting with J.B. Poline in lecture, we took a new approach to PCA by implementing the Singular Value Decomposition (SVD) method for 4-dimensional data reshaped to 2-dimensional space. The SVD method is considerably more computationally efficient. 
+\par \indent To perform Principal Components Analysis (PCA), we first 
+considered the method outlined by the guide posted on the class website. 
+Using matrix algebra, we were able to compute principal components by finding 
+orthogonal projections (the shortest distance between points). After 
+consulting with J.B. Poline in lecture, we took a new approach to PCA by 
+implementing the Singular Value Decomposition (SVD) method for 4-dimensional 
+data reshaped to 2-dimensional space. The SVD method is considerably more 
+computationally efficient. 
 
-\par PCA has the advantage of projecting the original data so that the predictors are independent. This can be used either to benefit interpretation or for dimension reduction. With our large number predictors (the time intervals), the original 2-dimensional matrix may be too large to interpret or study because there would be too many variables to look at. To analyze the data in a more meaningful form, PCA can be used to reduce the number of important variables to a few, interpretable linear combinations of our dataset. (Luckily, the components are obtained such that they decrease in variance explained.) Another potential use would be to examine the first few principal components of the residuals from linear regression to assess model fit and performance. 
+\par PCA has the advantage of projecting the original data so that the 
+predictors are independent. This can be used either to benefit interpretation 
+or for dimension reduction. With our large number predictors (the time 
+intervals), the original 2-dimensional matrix may be too large to interpret 
+or study because there would be too many variables to look at. To analyze the 
+data in a more meaningful form, PCA can be used to reduce the number of 
+important variables to a few, interpretable linear combinations of our 
+dataset. (Luckily, the components are obtained such that they decrease in 
+variance explained.) Another potential use would be to examine the first few 
+principal components of the residuals from linear regression to assess model 
+fit and performance. 

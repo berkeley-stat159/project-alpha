@@ -1,5 +1,25 @@
 % tex file for regression
-\par \indent A simple and straightforward way to model the voxel time courses is to perform simple and multiple linear regression. As a first attempt, we implemented and performed simple regression on a single subject's 4-dimensional array of voxels against the convolved time course, such that every voxel had an intercept and a coefficient corresponding to the convolved time course. However, examining the effects of the BART experiment conditions on voxel blood flow is also of interest. Thus, we turned to a more sophisticated multiple linear regression model that includes the conditions as dummy variable predictors. In either scenario, we created a design matrix $X$ with the number of rows equal to the number of observed times and the number of rows is equal to the number of predictors. Then, using matrix algebra, we found the matrix of coefficients $\beta$ by calculating $\beta = (X X^T)^{-1} X^T Y$, where $Y$ is the 4-dimensional array of the subject's voxels transformed into two-dimensional space. To do this, we essentially flattened out the first three dimensions (which indicate spatial positions) into a single dimension, while keeping the fourth dimension (time) the same. The resulting $\beta$ was transformed into a three-dimensional array to maintain the spatial relationships of the voxels. 
+\par \indent A simple and straightforward way to model the voxel time courses 
+is to perform simple and multiple linear regression. As a first attempt, we 
+implemented and performed simple regression on a single subject's 4-
+dimensional array of voxels against the convolved time course, such that 
+every voxel had an intercept and a coefficient corresponding to the convolved 
+time course. However, examining the effects of the BART experiment conditions 
+on voxel blood flow is also of interest. Thus, we turned to a more 
+sophisticated multiple linear regression model that includes the conditions 
+as dummy variable predictors. In either scenario, we created a design matrix 
+$X$ with the number of rows equal to the number of observed times and the 
+number of rows is equal to the number of predictors. Then, using matrix 
+algebra, we found the matrix of coefficients $\beta$ by calculating $\beta = 
+(X X^T)^{-1} X^T Y$, where $Y$ is the 4-dimensional array of the subject's 
+voxels transformed into two-dimensional space. To do this, we essentially 
+flattened out the first three dimensions (which indicate spatial positions) 
+into a single dimension, while keeping the fourth dimension (time) the same. 
+The resulting $\beta$ was transformed into a three-dimensional array to 
+maintain the spatial relationships of the voxels. 
 
-\par To consider the strength of the effects of these predictors, we looked at t-tests of the corresponding estimated coefficients for each voxel, as discussed under \textit{"Hypothesis Testing"}. Neither of these models, based on our current convolution methods, was very fruitful. 
+\par To consider the strength of the effects of these predictors, we looked 
+at t-tests of the corresponding estimated coefficients for each voxel, as 
+discussed under \textit{"Hypothesis Testing"}. Neither of these models, based 
+on our current convolution methods, was very fruitful. 
 
