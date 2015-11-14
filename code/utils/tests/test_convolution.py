@@ -18,7 +18,7 @@ from scipy.stats import gamma
 from numpy.testing import assert_almost_equal, assert_array_equal
 
 # Path to the subject 009 fMRI data used in class.  
-location_of_project="../"
+location_of_project="../../"
 location_of_data=location_of_project+"data/ds009/" 
 location_of_subject001=location_of_data+"sub001/" 
 location_of_functions= "../functions/"
@@ -31,7 +31,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), location_of_functions))
 sys.path.append(os.path.join(os.path.dirname(__file__), location_to_class_data))
 
 # Load our GLM functions. 
-from event_related_fMRI_functions import convolution, convolution_specialized, hrf_single
+from event_related_fMRI_functions import convolution, convolution_specialized, hrf_single, np_convolve_30_cuts
 
 
 
@@ -47,7 +47,7 @@ def test_convolution():
 
 	n_vols = 173
 	neural_prediction = events2neural(location_to_class_data+'ds114_sub009_t2r1_cond.txt',TR,n_vols)
-	all_tr_times = np.arange(173) * TR
+	all_tr_times = np.arange(173) * TR  #np.linspace(0,432.5,173)
 
 	convolved = np.convolve(neural_prediction, hrf_at_trs) # hrf_at_trs sample data
 	N = len(neural_prediction)  # N == n_vols == 173
@@ -55,22 +55,34 @@ def test_convolution():
 	convolved=convolved[:N]
 
 
-	my_convolved=convolution(np.linspace(0,432.5,173),neural_prediction,hrf_single)
-	my_convolved2=convolution_specialized(np.linspace(0,432.5,173),neural_prediction,hrf_single,np.linspace(0,432.5,173))
-
+	my_convolved=convolution(all_tr_times,neural_prediction,hrf_single)
+	my_convolved2=convolution_specialized(all_tr_times,neural_prediction,hrf_single,all_tr_times)
+	my_convolved3=np_convolve_30_cuts(all_tr_times,neural_prediction,hrf_single,TR,all_tr_times,cuts=1)
 	print("you'll have to look at the plots yourself, they're pretty close")
-	plt.plot(np.linspace(0,432.5,173),convolved,label="np.convolved")
-	plt.plot(np.linspace(0,432.5,173),my_convolved,label="my convolution function")
-	plt.plot(np.linspace(0,432.5,173),my_convolved2,label="my 2nd convolution function")
+	plt.plot(all_tr_times,convolved,label="np.convolved")
+	plt.plot(all_tr_times,my_convolved,label="my convolution function")
+	plt.plot(all_tr_times,my_convolved2,label="my 2nd convolution function")
+	plt.plot(all_tr_times,my_convolved3)
 	#In [5]: max(abs(convolved-my_convolved)) < .01
 	#Out[5]: 0.0087853818693934826
 
 	assert (max(abs(convolved-my_convolved)) < .01)
 
+	for i in [0,1,3,7,15]:
+		my_con2=np_convolve_30_cuts(all_tr_times,neural_prediction,hrf_single,TR,all_tr_times,cuts=i+1)[1]
+		#plt.plot(my_con2[:,0],(.02*i) + my_con2[:,1])
+		plt.scatter(my_con2[:,0],(.02*i) + my_con2[:,1])
+		#plt.plot(my_con2[:,0],my_con2[:,1])
+	plt.xlim(0,50)
 
-	my_con2=np_convolve_30_cuts(np.linspace(0,432.5,173),hrf_single,TR,np.linspace(0,432.5,173),cuts=30)
+	plt.plot(all_tr_times,my_con2)
+	for i in range(30):
+		plt.plot(all_tr_times,np_convolve_30_cuts(all_tr_times,neural_prediction,hrf_single,TR,all_tr_times,cuts=i+1)[0])
 
-
+	for i in [0,1,3,7,15]:
+		X=np_convolve_30_cuts(all_tr_times,neural_prediction,hrf_single,TR,all_tr_times,cuts=i+1)[1]
+		plt.plot(X[:,0],X[:,1]+.02*i)
+		plt.scatter(X[:,0],X[:,1]+.02*i)
 
 def test_convolution_specialized():
 	stimuli=np.array([0,5,15])
