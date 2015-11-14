@@ -12,9 +12,9 @@ from stimuli import events2neural
 
 
 # getting the peak (for this specific hrf function)
-peak_values = gamma.pdf(4.91, 6)
-undershoot_values = gamma.pdf(4.91, 12)
-max_value = peak_values - 0.35 * undershoot_values
+peak_value = gamma.pdf(4.91, 6)
+undershoot_value = gamma.pdf(4.91, 12)
+max_value = peak_value - 0.35 * undershoot_value
 
 # fixed maximum value
 def hrf_single(value):
@@ -146,9 +146,10 @@ def np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30):
 		min_close=np.min(abs(X[:,0]-time))     
 		X[(abs(X[:,0]-time)==min_close),1]=1*on_off[i]
 
+	neural_X=X
 	# now use np.convolve with better thing
-	hrf_discrete=np.array([hrf_function(x) for x in np.linspace(0,30,num=cuts*30)]) # num since the hrf function takes 30 seconds to finish 
-	
+	hrf_discrete=np.array([hrf_function(x) for x in np.arange(0, 30, TR/cuts)]) # num since the hrf function takes 30 seconds to finish 
+	#np.arange(0, 30, TR/cuts)
 	larger_output = np.convolve(X[:,1],hrf_discrete) # too many cuts
 	N2= X[:,1].shape[0]
 
@@ -156,10 +157,36 @@ def np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30):
 
 
 
-	desired_x_i= [min(record_cuts)+(cuts)*i for i in range(len(record_cuts))]
-	output = larger_output[desired_x_i]
+	desired_x_i=min(record_cuts) +cuts*np.arange(len(record_cuts))
+	
 
-	return output
+
+
+	output = larger_output[list(desired_x_i)]
+
+	return output,neural_X
+
+
+
+
+real_times,on_off,hrf_function,TR,record_cuts,cuts=np.linspace(0,432.5,173),neural_prediction,hrf_single,2.5 ,np.linspace(0,432.5,173),1
+
+plt.plot(X[:,0],X[:,1],color="red")
+plt.plot(all_tr_times,on_off,color="blue")
+plt.plot(all_tr_times,X[[min(record_cuts)+(cuts)*i for i in range(len(record_cuts))],1],color="green")
+
+
+plt.scatter(X[:,0],X[:,1],color="red")
+plt.scatter(all_tr_times,on_off,color="blue")
+
+plt.plot(record_cuts,np.convolve(on_off,
+								np.array([hrf_function(x) for x in np.arange(0, 30, TR)])
+								)[:len(record_cuts)]
+		)
+plt.plot(X[:,0],output)
+plt.plot(X[:,0],larger_output)
+	
+
 
 
 
