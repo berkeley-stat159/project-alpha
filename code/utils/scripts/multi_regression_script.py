@@ -218,15 +218,33 @@ plt.savefig(location_of_images+'mr_cond1-cond2_beta_brain.png')
 plt.close()
 
 
+plt.plot(X_np[:,1]+X_np[:,2]+X_np[:,3],label="All Conditions",color="#000019")
+plt.plot([0,239],[0,0])
+colors=["#000099","#1A1AFF","#9999FF"]
+for i in range(3):
+	plt.plot(X_np[:,(i+1)]-2*(i+1),label="Condition " +str(i+1),color=colors[i])
+	plt.plot([0,239],[-2*(i+1),-2*(i+1)],color="#FF0000")
+
+plt.legend(loc='center right', shadow=True,fontsize="smaller")
+
+plt.title("Hemogoblin predicted response for different conditions")
+plt.xlabel("Time")
+plt.ylabel("Hemoglobin response")
+plt.savefig(location_of_images+'all_cond_time.png')
+plt.close()
+
+
+
 
 
 
 
 MRSS_my, fitted_my, residuals_my = glm_diagnostics(B_my, X_my, data)
 print("MRSS using multiple regression: "+str(np.mean(MRSS_my)))
-
-plt.plot(data[41, 47, 2])
-plt.plot(fitted_my[41, 47, 2])
+plt.plot(data[41, 47, 2],label="actual HR response")
+plt.plot(fitted_my[41, 47, 2],label="predicted HR response")
+plt.title("Subject 001, voxel (41,47,2) HR Fitted vs actual")
+plt.legend(loc='upper left', shadow=True,fontsize="smaller")
 plt.savefig(location_of_images+"fitted_vs_actual_mult_regression.png")
 plt.close()
 

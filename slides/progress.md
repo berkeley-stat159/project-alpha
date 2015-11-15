@@ -36,6 +36,14 @@
 
 - PCA: Modeling against SVD
 
+# Our Plan
+
+- Hypothesis testing: General t-tests on $\beta$ values, and across suject analysis
+
+- Time series: ARIMA model
+
+- PCA: Modeling against SVD
+
 # Before and After Smoothing
 \begin{figure}
   \centering
