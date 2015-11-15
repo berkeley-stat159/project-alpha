@@ -34,3 +34,8 @@ def test_smooth():
 
 	# assert that data at time 7 and non_smoothed_data are equal since fwhm = 0
 	assert_almost_equal(data[..., 7], non_smoothed_data)
+	
+	# Run the smoothvoxels function with fwhm = 5 at time 7
+	smoothed_data = smoothvoxels(data, 5, 7)
+	# assert that data at time 7 and smoothed_data are not equal
+	assertNotEqual(data[..., 7], moothed_data)
