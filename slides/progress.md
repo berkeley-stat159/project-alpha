@@ -60,7 +60,6 @@
 
 # Our Plan
 
->>>>>>> 488f28ba40e34474f23656bf278ae5f6c9e4836b
 ## Goal
 - Trying to reproduce methods, but it won't all be the same
 
