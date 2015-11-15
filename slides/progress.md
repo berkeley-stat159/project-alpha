@@ -38,6 +38,29 @@
 
 # Our Plan
 
+- Hypothesis testing: General t-tests on $\beta$ values, and across suject analysis
+
+- Time series: ARIMA model
+
+- PCA: Modeling against SVD
+
+# Before and After Smoothing
+\begin{figure}
+  \centering
+  {\includegraphics[scale=0.25]{images/original_slice.png}}{\includegraphics[scale=0.25]{images/smoothed_slice.png}}
+\end{figure}
+
+
+
+# Hypothesis Testing Across Subjects
+\begin{figure}
+  \centering
+  {\includegraphics[scale=0.5]{images/hypothesis_testing.png}}
+\end{figure}
+
+# Our Plan
+
+>>>>>>> 488f28ba40e34474f23656bf278ae5f6c9e4836b
 ## Goal
 - Trying to reproduce methods, but it won't all be the same
 
