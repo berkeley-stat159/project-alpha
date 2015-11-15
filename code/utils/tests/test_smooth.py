@@ -12,7 +12,8 @@ import matplotlib.pyplot as plt
 import nibabel as nib
 import os
 import sys
-from numpy.testing import assert_almost_equal, assert_array_equal
+from numpy.testing import assert_almost_equal
+from nose.tools import assert_not_equals
 # Path to the subject 009 fMRI data used in class. 
 # You need to add the convolution, .nii, and condition files. 
 # Assume that this is in the data directory for our project, 
@@ -38,4 +39,4 @@ def test_smooth():
 	# Run the smoothvoxels function with fwhm = 5 at time 7
 	smoothed_data = smoothvoxels(data, 5, 7)
 	# assert that data at time 7 and smoothed_data are not equal
-	assertNotEqual(data[..., 7], moothed_data)
+	assert_not_equals(data[..., 7].all(), smoothed_data.all())
