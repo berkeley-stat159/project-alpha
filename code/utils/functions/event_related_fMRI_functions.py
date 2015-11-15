@@ -50,15 +50,15 @@ def hrf_single(value):
 
 	
 def fast_hrf(values):
-	""" Return values for HRF at single value
+	""" Return values for HRF at multiple values
 
 	Parameters:
 	-----------
-	value: a single float or integer value
+	value: an array-like structure of integers or floats.
 
 	Returns:
 	--------
-	hrf_value: the hrf(value) evaluated 
+	comb_values: the hrf(values) evaluated 
 
 
 	Note:
@@ -197,7 +197,7 @@ def np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30):
 # faster convolution_specialized
 def fast_convolution(real_times,on_off,hrf_function,record_cuts):
 
-	""" Does convolution on Event-Related fMRI data, assumes non-constant/non-fixed time slices, takes in fMRI recorded cuts 
+	""" Does convolution on Event-Related fMRI data, assumes non-constant/non-fixed time slices, takes in fMRI recorded cuts. Uses matrix multiplication, so it's fastered than convolution_specialized. 
 
 	Parameters:
 	-----------
