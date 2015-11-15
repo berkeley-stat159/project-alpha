@@ -46,8 +46,8 @@ data = data[...,6:] # Knock off the first 6 observations.
 time = 7
 original_slice = data[..., 7]
 # full width at half maximum (FWHM) 
-sigma = 1.5
-smoothed_slice = smoothvoxels(data, sigma, time)
+fwhm = 1.5
+smoothed_slice = smoothvoxels(data, fwhm, time)
 
 # visually compare original_slice to smoothed_slice
 plt.imshow(present_3d(smoothed_slice))
