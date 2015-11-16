@@ -1,23 +1,26 @@
 \documentclass[11pt]{article}
 
 \usepackage[margin=0.75in]{geometry}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\bibliographystyle{siam}
 
 \title{The generality of self-control}
 \author{
-  Udagawa, Hiroto\\
-  \texttt{hiroto-udagawa}
-  \and
-  LeRoy, Benjamin\\
-  \texttt{benjaminleroy}
+  Chen, Kent\\
+  \texttt{kentschen}
   \and
   Lee, Rachel\\
   \texttt{reychil}
   \and
+  LeRoy, Benjamin\\
+  \texttt{benjaminleroy}
+  \and
   Liang, Jane\\
   \texttt{janewliang}
   \and
-  Chen, Kent\\
-  \texttt{kentschen}
+  Udagawa, Hiroto\\
+  \texttt{hiroto-udagawa}
 }
 
 
@@ -25,15 +28,65 @@
 \begin{document}
 \maketitle
 
-\abstract{You should have a short abstract.}
+\abstract{\input{text_files/abstract.tex}}
 
 \section{Introduction}
-
-
+	\input{text_files/intro.tex}
 
 \section{Data}
 
-\bibliographystyle{siam}
+	\input{text_files/data.tex}
+	
+\section{Methods}
+
+	\subsection{Convolution}
+		\input{text_files/convolution.tex}
+	\subsection{Smoothing}
+	
+		\input{text_files/smoothing.tex}
+		
+	\subsection{Linear Regression}
+	
+		\input{text_files/regression.tex}
+		
+	\subsection{Hypothesis Testing}
+	
+		\input{text_files/hypothesis.tex}
+		
+	\subsection{Principal Components Analysis}
+	
+		\input{text_files/pca.tex}
+		
+	\subsection{Time Series Analysis}
+	
+		\input{text_files/time.tex}
+		
+\section{Results}
+		
+	\subsection{Linear Regression Results}
+	
+		\input{text_files/regression_results.tex}
+		
+		
+	\subsection{Hypothesis Testing Results}
+	
+		\input{text_files/hypothesis_results.tex}
+		
+	\subsection{Time Series Analysis Results}
+	
+		\input{text_files/time_results.tex}
+		
+\section{Discussion}
+	
+	\subsection{Discussion of Results}
+		
+		\input{text_files/discussion.tex}
+		
+	\subsection{Discussion of Future Work}
+	
+		\input{text_files/discussion_future.tex}
+		
+
 \bibliography{project}
 
 \end{document}

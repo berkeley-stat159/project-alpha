@@ -16,12 +16,12 @@ from numpy.testing import assert_almost_equal, assert_array_equal
 # You need to add the convolution, .nii, and condition files. 
 # Assume that this is in the data directory for our project, 
 # in a directory called 'ds114'. 
-pathtoclassdata = "../../../data/ds114/"
+pathtoclassdata = "../data/ds114/"
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
 
 # Load our GLM functions. 
-from glm import glm, glm_multiple
+from glm import glm, glm_diagnostics, glm_multiple
 
 
 def test_glm():
@@ -43,6 +43,18 @@ def test_glm():
     exp_B_4d, exp_design = glm(data, convolved)
     assert_almost_equal(actual_B_4d, exp_B_4d)
     assert_almost_equal(actual_design, exp_design)
+
+    # Pick a single voxel to check diagnostics. 
+    # Calculate actual fitted values, residuals, and MRSS of voxel.
+    actual_fitted = actual_design.dot(actual_B_4d[42, 32, 19])
+    actual_residuals = data[42, 32, 19] - actual_fitted
+    actual_MRSS = np.sum(actual_residuals**2)/(actual_design.shape[0] - npl.matrix_rank(actual_design))
+    
+    # Calculate using glm_diagnostics function.
+    exp_MRSS, exp_fitted, exp_residuals = glm_diagnostics(exp_B_4d, exp_design, data)
+    assert_almost_equal(actual_fitted, exp_fitted[42, 32, 19])
+    assert_almost_equal(actual_residuals, exp_residuals[42, 32, 19])
+    assert_almost_equal(actual_MRSS, exp_MRSS[42, 32, 19])
 
 def test_glm_multiple(): 
     # example from http://www.jarrodmillman.com/rcsds/lectures/glm_intro.html

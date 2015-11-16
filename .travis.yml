@@ -16,7 +16,7 @@ install:
   - source venv/bin/activate
   - python --version # just to check
   - retry pip install nose # always
-  - cd data && make test_data && cd ..
+  - cd data && make testdata && cd ..
   - sudo apt-get install libblas-dev liblapack-dev libatlas3gf-base
   - wheelhouse_pip_install ${DEPENDS}
   - if [ "${COVERAGE}" == "1" ]; then
