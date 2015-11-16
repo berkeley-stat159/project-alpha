@@ -16,7 +16,7 @@ from numpy.testing import assert_almost_equal, assert_array_equal
 pathtoclassdata = "data/ds114/"
 
 # Add path to functions to the system path.
-sys.path.append(os.path.join(os.path.dirname(__file__),  "functions/"))
+sys.path.append(os.path.join(os.path.dirname(__file__),  "../functions/"))
 
 # Load our t_stat functions. 
 from hypothesis import t_stat,t_stat_mult_regression_single,t_stat_mult_regression
@@ -69,7 +69,7 @@ def test_hypothesis_3():
 
 
     beta,t,df,p = t_stat(data, convolved,[0,1])
-    beta2, t2,df2,p2 = t_stat_mult_regression_single(data, X,np.array([0,1]))
+    beta2, t2,df2,p2 = t_stat_mult_regression_single(data, X)
 
     beta3, t3,df3,p3 = t_stat_mult_regression(data, X)
 
