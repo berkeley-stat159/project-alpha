@@ -27,7 +27,7 @@ location_to_class_data="data/ds114/"
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 # Load our convolution functions. 
-from event_related_fMRI_functions import convolution, convolution_specialized, hrf_single, np_convolve_30_cuts, fast_convolution,fast_hrf
+from event_related_fMRI_functions import convolution, convolution_specialized, hrf_single, np_convolve_30_cuts, fast_convolution,fast_hrf,create_stimuli_from_all_values
 from stimuli import events2neural
 
 def test_convolution():
@@ -122,3 +122,16 @@ def test_convolution_specialized():
 
 	assert all(HRF1 == y1)
 	assert all(HRF2 == y2)
+
+
+# This function is currently not in use.
+def test_create_stimuli_from_all_values():
+	# Simulate some conditions. 
+	c1 = np.arange(1,51).reshape(10,-1)
+	c2 = np.arange(21,71).reshape(10,-1)
+	c3 = np.arange(11,61).reshape(10,-1)
+	
+	# Get the sorted array, gaps, and colors. 
+	x_s_array, gap_between, colors = create_stimuli_from_all_values(c1, c2, c3)
+
+	assert(np.diff(x_s_array).all() == gap_between.all())
