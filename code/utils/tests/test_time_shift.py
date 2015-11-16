@@ -15,12 +15,10 @@ from numpy.testing import assert_almost_equal
 from nose.tools import assert_not_equals
 
 # Path to the subject 009 fMRI data used in class.  
-location_of_project="../"
-location_of_functions=location_of_project+"functions/"
-location_to_class_data=location_of_project+"data/ds114/"
+location_to_class_data="data/ds114/"
 
 # path to functions
-sys.path.append(os.path.join(os.path.dirname(__file__), location_of_functions))
+sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 from stimuli import events2neural
 from event_related_fMRI_functions import hrf_single

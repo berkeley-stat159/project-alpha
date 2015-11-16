@@ -1,6 +1,7 @@
 """ Tests for glm function in glm module
 This checks the glm function with the procedure in the "Basic linear 
 modeling" exercise from Day 14. 
+
 Run with:
     nosetests test_glm.py
 """
@@ -11,8 +12,8 @@ import os
 import sys
 from numpy.testing import assert_almost_equal, assert_array_equal, assert_equal
 
-
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
+# path to functions
+sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 # Load our visualization functions. 
 from Image_Visualizing import present_3d, make_mask

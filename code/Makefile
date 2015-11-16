@@ -1,5 +1,5 @@
 test:
-	nosetests utils
+	nosetests code/utils/tests -w ..
 
 coverage:
-	nosetests utils --with-coverage --cover-package=utils 
+	nosetests code/utils/tests -w .. --with-coverage --cover-package=utils/functions

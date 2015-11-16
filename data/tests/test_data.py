@@ -1,3 +1,9 @@
+""" Tests hash-checking functions. 
+
+Run with:
+    nosetests test_data.py
+"""
+
 from __future__ import absolute_import, division, print_function
 
 import tempfile

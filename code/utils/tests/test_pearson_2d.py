@@ -12,7 +12,9 @@ import numpy as np
 import os
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
+# path to functions
+sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
+
 import pearson
 from numpy.testing import assert_almost_equal
 
