@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import os
 import sys 
 from numpy.testing import assert_almost_equal
+from nose.tools import assert_not_equals
 
 # Path to the subject 009 fMRI data used in class.  
 location_of_project="../"
@@ -43,4 +44,7 @@ def test_time_shift():
     actual_shifted = convolved[5:(5+N)]
     exp_convolved2, exp_shifted = time_shift(convolved, neural_prediction, 5)
     assert_almost_equal(actual_shifted, exp_shifted)
+
+    # Assert that shifted data is not the same as the original.
+    assert_not_equals(exp_convolved2[0], exp_shifted[0])
     
