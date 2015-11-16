@@ -1,6 +1,7 @@
 """ Tests the time_shift function.
-Run with:
-    nosetests test_time_shift.py
+
+Run at the project directory with:
+    nosetests code/utils/tests/test_time_shift.py
 """
 
 # Loading modules.
@@ -17,9 +18,10 @@ from nose.tools import assert_not_equals
 # Path to the subject 009 fMRI data used in class.  
 location_to_class_data="data/ds114/"
 
-# path to functions
+# Add path to functions to the system path.
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
+# Load our convolution and time shift functions. 
 from stimuli import events2neural
 from event_related_fMRI_functions import hrf_single
 from time_shift import time_shift

@@ -2,8 +2,8 @@
 This checks the glm function with the procedure in the "Basic linear 
 modeling" exercise from Day 14. 
 
-Run with:
-    nosetests test_glm.py
+Run at the project directory with:
+    nosetests code/utils/tests/test_glm.py
 """
 # Loading modules.
 import numpy as np
@@ -16,12 +16,11 @@ from numpy.testing import assert_almost_equal, assert_array_equal
 # Path to the subject 009 fMRI data used in class. 
 pathtoclassdata = "data/ds114/"
 
-# path to functions
+# Add path to functions to the system path.
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 # Load our GLM functions. 
 from glm import glm, glm_diagnostics, glm_multiple
-
 
 def test_glm():
     # Read in the image data.

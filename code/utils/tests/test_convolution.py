@@ -2,8 +2,8 @@
 This checks the convolution function against the np.convolve build in function
 when data follows the assumptions under np.convolve. 
 
-Run with:
-    nosetests test_convolution.py
+Run at the project directory with:
+    nosetests code/utils/tests/test_convolution.py
 """
 # Loading modules.
 from __future__ import absolute_import, division, print_function
@@ -21,14 +21,12 @@ from scipy.stats import gamma
 from numpy.testing import assert_almost_equal, assert_array_equal
 
 # Path to the subject 009 fMRI data used in class.
-location_of_data="data/ds009/" 
-location_of_subject001=location_of_data+"sub001/" 
 location_to_class_data="data/ds114/"
 
-# path to functions
+# Add path to functions to the system path.
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
-# Load our GLM functions. 
+# Load our convolution functions. 
 from event_related_fMRI_functions import convolution, convolution_specialized, hrf_single, np_convolve_30_cuts, fast_convolution,fast_hrf
 from stimuli import events2neural
 

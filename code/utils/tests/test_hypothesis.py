@@ -2,8 +2,8 @@
 This checks the hypothesis testing which closely follows the "General
 Linear Models Lecture from class"
 
-Run with:
-    nosetests test_hypothesis.py
+Run at the project directory with:
+    nosetests code/utils/tests/test_hypothesis.py
 """
 # Loading modules.
 import numpy as np
@@ -13,8 +13,9 @@ import sys, os
 from numpy.testing import assert_almost_equal, assert_array_equal
 
 # Path to the subject 009 fMRI data used in class.  
-# Path to functions. 
 pathtoclassdata = "data/ds114/"
+
+# Add path to functions to the system path.
 sys.path.append(os.path.join(os.path.dirname(__file__),  "functions/"))
 
 # Load our t_stat functions. 
