@@ -1,6 +1,7 @@
 """ Tests the time_shift function.
-Run with:
-    nosetests test_time_shift.py
+
+Run at the project directory with:
+    nosetests code/utils/tests/test_time_shift.py
 """
 
 # Loading modules.
@@ -12,15 +13,15 @@ import matplotlib.pyplot as plt
 import os
 import sys 
 from numpy.testing import assert_almost_equal
+from nose.tools import assert_not_equals
 
 # Path to the subject 009 fMRI data used in class.  
-location_of_project="../"
-location_of_functions=location_of_project+"functions/"
-location_to_class_data=location_of_project+"data/ds114/"
+location_to_class_data="data/ds114/"
 
-# path to functions
-sys.path.append(os.path.join(os.path.dirname(__file__), location_of_functions))
+# Add path to functions to the system path.
+sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
+# Load our convolution and time shift functions. 
 from stimuli import events2neural
 from event_related_fMRI_functions import hrf_single
 from time_shift import time_shift
@@ -43,4 +44,7 @@ def test_time_shift():
     actual_shifted = convolved[5:(5+N)]
     exp_convolved2, exp_shifted = time_shift(convolved, neural_prediction, 5)
     assert_almost_equal(actual_shifted, exp_shifted)
+
+    # Assert that shifted data is not the same as the original.
+    assert_not_equals(exp_convolved2[0], exp_shifted[0])
     

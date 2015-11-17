@@ -1,9 +1,8 @@
 """
 Test Pearson module, pearson_2d function
 
-Run with::
-
-    nosetests test_pearson_2d.py
+Run at the project directory with:
+    nosetests code/utils/tests/test_pearson_2d.py
 """
 # Python 3 compatibility
 from __future__ import print_function, division
@@ -11,11 +10,13 @@ from __future__ import print_function, division
 import numpy as np
 import os
 import sys
-
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
-import pearson
 from numpy.testing import assert_almost_equal
 
+# Add path to functions to the system path.
+sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
+
+# Load our pearson functions.
+import pearson
 
 def test_pearson_2d():
     # Test pearson_2d routine

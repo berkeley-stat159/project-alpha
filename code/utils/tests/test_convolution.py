@@ -1,8 +1,9 @@
 """ Tests for convolution function in event_related_fMRI_function model
 This checks the convolution function against the np.convolve build in function
 when data follows the assumptions under np.convolve. 
-Run with:
-    nosetests test_convolution.py
+
+Run at the project directory with:
+    nosetests code/utils/tests/test_convolution.py
 """
 # Loading modules.
 from __future__ import absolute_import, division, print_function
@@ -19,26 +20,15 @@ import scipy.stats
 from scipy.stats import gamma
 from numpy.testing import assert_almost_equal, assert_array_equal
 
-# Path to the subject 009 fMRI data used in class.  
-location_of_project="../"
-location_of_data=location_of_project+"data/ds009/" 
-location_of_subject001=location_of_data+"sub001/" 
-location_of_functions=location_of_project+"functions/"
-location_to_class_data=location_of_project+"data/ds114/"
+# Path to the subject 009 fMRI data used in class.
+location_to_class_data="data/ds114/"
 
-# path to functions
-sys.path.append(os.path.join(os.path.dirname(__file__), location_of_functions))
+# Add path to functions to the system path.
+sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
-# path to class data
-sys.path.append(os.path.join(os.path.dirname(__file__), location_to_class_data))
-
-# Load our GLM functions. 
-from event_related_fMRI_functions import convolution, convolution_specialized, hrf_single, np_convolve_30_cuts, fast_convolution,fast_hrf
+# Load our convolution functions. 
+from event_related_fMRI_functions import convolution, convolution_specialized, hrf_single, np_convolve_30_cuts, fast_convolution,fast_hrf,create_stimuli_from_all_values
 from stimuli import events2neural
-
-
-#convolution(times,on_off,hrf_single)
-
 
 def test_convolution():
 	#################
@@ -132,3 +122,16 @@ def test_convolution_specialized():
 
 	assert all(HRF1 == y1)
 	assert all(HRF2 == y2)
+
+
+# This function is currently not in use.
+def test_create_stimuli_from_all_values():
+	# Simulate some conditions. 
+	c1 = np.arange(1,51).reshape(10,-1)
+	c2 = np.arange(21,71).reshape(10,-1)
+	c3 = np.arange(11,61).reshape(10,-1)
+	
+	# Get the sorted array, gaps, and colors. 
+	x_s_array, gap_between, colors = create_stimuli_from_all_values(c1, c2, c3)
+
+	assert(np.diff(x_s_array).all() == gap_between.all())

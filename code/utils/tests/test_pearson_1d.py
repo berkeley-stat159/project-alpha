@@ -1,9 +1,8 @@
 """
 Test Pearson module, pearson_1d function
 
-Run with::
-
-    nosetests test_pearson_1d.py
+Run at the project directory with:
+    nosetests code/utils/tests/test_pearson_1d.py
 
 This is a test module.
 
@@ -29,11 +28,13 @@ from __future__ import absolute_import, division, print_function
 import numpy as np
 import os
 import sys
-
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
-import pearson
 from numpy.testing import assert_almost_equal
 
+# Add path to functions to the system path.
+sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
+
+# Load our pearson functions.
+import pearson
 
 def test_pearson_1d():
     # Test pearson_1d routine

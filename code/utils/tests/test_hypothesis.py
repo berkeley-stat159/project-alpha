@@ -2,8 +2,8 @@
 This checks the hypothesis testing which closely follows the "General
 Linear Models Lecture from class"
 
-Run with:
-    nosetests test_hypothesis.py
+Run at the project directory with:
+    nosetests code/utils/tests/test_hypothesis.py
 """
 # Loading modules.
 import numpy as np
@@ -13,9 +13,10 @@ import sys, os
 from numpy.testing import assert_almost_equal, assert_array_equal
 
 # Path to the subject 009 fMRI data used in class.  
-# Path to functions. 
-pathtoclassdata = "../data/ds114/"
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
+pathtoclassdata = "data/ds114/"
+
+# Add path to functions to the system path.
+sys.path.append(os.path.join(os.path.dirname(__file__),  "../functions/"))
 
 # Load our t_stat functions. 
 from hypothesis import t_stat,t_stat_mult_regression_single,t_stat_mult_regression
@@ -68,7 +69,7 @@ def test_hypothesis_3():
 
 
     beta,t,df,p = t_stat(data, convolved,[0,1])
-    beta2, t2,df2,p2 = t_stat_mult_regression_single(data, X,np.array([0,1]))
+    beta2, t2,df2,p2 = t_stat_mult_regression_single(data, X)
 
     beta3, t3,df3,p3 = t_stat_mult_regression(data, X)
 
