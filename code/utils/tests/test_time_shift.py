@@ -23,7 +23,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), location_of_functions))
 
 from stimuli import events2neural
 from event_related_fMRI_functions import hrf_single
-from time_shift import time_shift,time_shift_cond,make_shift_matrix
+from time_shift import time_shift,time_shift_cond,make_shift_matrix, time_correct
 
 def test_time_shift():
     # Intialize values for class data. 
@@ -54,7 +54,29 @@ def times_time_shift_2():
         np.array([0,1,2,3,4, 
                  -1,0,1,2,3]).reshape((2,-1)).T))
 
-    # didn't yet make a test for time_correct, but it works swell ()
+    # a run from time_correct    
+    from event_related_fMRI_functions import hrf_single, np_convolve_30_cuts
+
+
+    def make_convolve_lambda(hrf_function,TR,num_TRs):
+        convolve_lambda=lambda x: np_convolve_30_cuts(x,np.ones(x.shape[0]),hrf_function,TR,np.linspace(0,(num_TRs-1)*TR,num_TRs),15)[0]
+        return convolve_lambda
+
+    convolve_lambda=make_convolve_lambda(hrf_single,2,239)
+
+    hrf_matrix=time_correct(convolve_lambda,shifted,239)
+
+
+    TR=2
+    num_TRs=239
+    for i in [0,1,10,33]:
+        plt.plot(np.linspace(0,(num_TRs-1)*TR,num_TRs),hrf_matrix[:,i])
+
+    plt.xlim(0,50)
+    plt.ylim(-.5,2)
+
+    plt.savefig(location_of_images + "hrf_time_correction.png")
+    plt.close()
 
 
 
