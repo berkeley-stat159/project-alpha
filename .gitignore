@@ -3,6 +3,7 @@
 data/ds114/
 data/ds009/
 data/our_data/
+final/data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
