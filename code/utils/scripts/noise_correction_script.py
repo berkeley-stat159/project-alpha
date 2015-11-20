@@ -194,6 +194,8 @@ plt.close()
 
 
 # Get first two principal components. 
+# Scikit learn needed. Trying to get all the components results in
+# a memory error, so we will only get the first two. 
 pca = PCA(n_components=2)
 pca.fit(np.cov(X_2))
 comps = pca.components_
