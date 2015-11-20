@@ -113,3 +113,4 @@ plt.ylim(-.5,2)
 
 plt.savefig(location_of_images + "hrf_time_correction.png")
 plt.close()
+
