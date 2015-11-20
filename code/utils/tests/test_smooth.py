@@ -1,7 +1,7 @@
 """ Tests for smoothvoxels in smooth module
 
-Run with:
-    nosetests test_smooth.py
+Run at the project directory with:
+    nosetests code/utils/tests/test_smooth.py
 """
 
 import numpy as np
@@ -14,15 +14,14 @@ import os
 import sys
 from numpy.testing import assert_almost_equal
 from nose.tools import assert_not_equals
-# Path to the subject 009 fMRI data used in class. 
-# You need to add the convolution, .nii, and condition files. 
-# Assume that this is in the data directory for our project, 
-# in a directory called 'ds114'. 
-pathtoclassdata = "../data/ds114/"
 
+# Path to the subject 009 fMRI data used in class. 
+pathtoclassdata = "data/ds114/"
+
+# Add path to functions to the system path.
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
-# Load smoothing function
+# Load smoothing function.
 from smooth import smoothvoxels
 
 def test_smooth():
