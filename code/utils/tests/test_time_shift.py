@@ -33,7 +33,7 @@ def test_time_shift():
     
     # Load class data.
     n_vols = 173
-    neural_prediction = events2neural(location_to_class_data+'ds114_sub009_t2r1_cond.txt', TR, n_vols)
+    neural_prediction = events2neural(pathtoclassdata+'ds114_sub009_t2r1_cond.txt', TR, n_vols)
 
     # Get np.convolve time course. 
     convolved = np.convolve(neural_prediction, hrf_at_trs) 
