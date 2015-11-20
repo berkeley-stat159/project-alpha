@@ -29,17 +29,17 @@ def test_check_hashes():
         assert not get_hashes.check_hashes(d)
 
 def test_get_hashes(): 
-    # Download class data to current directory. 
-    url = 'http://www.jarrodmillman.com/rcsds/_downloads/ds107_sub001_highres.nii'
-    file_name = 'ds107_sub001_highres.nii'
-    ds107 = urlopen(url)
+    # Download flag text file to current directory. 
+    url = 'http://textfiles.com/art/flag'
+    file_name = 'flag.txt'
+    flag = urlopen(url)
     output = open(file_name,'wb')
-    output.write(ds107.read())
+    output.write(flag.read())
     output.close()
     # Now get all hashes of all files in current directory.
     file_hashes = get_all_hashes.get_all_hashes('.')
-    # The class data should be in the dictionary of hashes, with the 
+    # The text file should be in the dictionary of hashes, with the 
     # correct hash. 
-    assert(file_hashes['./ds107_sub001_highres.nii'] == 'fd733636ae8abe8f0ffbfadedd23896c')
+    assert(file_hashes['./flag.txt'] == 'a0cd62d98374cb5dfbd1c53a220e12fa')
     # Delete the file. 
-    os.remove('ds107_sub001_highres.nii')
+    os.remove('flag.txt')
