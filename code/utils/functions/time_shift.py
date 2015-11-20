@@ -8,7 +8,6 @@ def time_shift(convolved, neural_prediction, delta):
     Parameters:
     -----------
     convolved: 1-d array of the convolved time course.
-
     neural_prediction: 1-d array of the event stimuli
     
     delta: a single numeric value indicating how much to shift.
@@ -84,7 +83,6 @@ def time_correct(convolve_lambda,shift_matrix,num_TRs):
     convolution_lambda: function that takes in 1 parameter (a 1d vector of times to be convolved)
     
     shift_matrix: a 2d np.array with time shifted columns (n x m)
-
     num_TRs: expected dimension of convolve_lambda output
     
     Returns:
@@ -97,5 +95,4 @@ def time_correct(convolve_lambda,shift_matrix,num_TRs):
         hrf_matrix[:,i]=convolve_lambda(shift_matrix[:,i])
 
     return hrf_matrix
-
 
