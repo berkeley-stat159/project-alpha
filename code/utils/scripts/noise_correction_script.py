@@ -35,6 +35,7 @@ import scipy.stats
 from scipy.stats import gamma
 import os
 import scipy.stats as stats
+from sklearn.decomposition import PCA
 
 location_of_project="../../../"
 location_of_data=location_of_project+"data/ds009/" 
@@ -70,7 +71,7 @@ from noise_correction import mean_underlying_noise, fourier_predict_underlying_n
 #################
 
 # load in subject001's BOLD data:
-img=nib.load(location_of_subject001+"BOLD/task001_run001/"+"bold.nii")
+img=nib.load(location_of_subject001+"BOLD/task001_run001/"+"bold.nii.gz")
 data=img.get_data()
 data=data[...,6:]
 num_voxels=np.prod(data.shape[:-1])
@@ -189,6 +190,28 @@ plt.close()
 out=stats.probplot(residuals_2[41, 47, 2], dist="norm",plot=plt)
 plt.title("Q-Q plot for sub001, voxel [41, 47, 2],fourier 3 fit to mean")
 plt.savefig(location_of_images+'noise_correction_mean_individual_residuals_QQ.png')
+plt.close()
+
+
+# Get first two principal components. 
+# Sklearn needed. Trying to get all the components results in
+# a memory error, so we will only get the first two. 
+pca = PCA(n_components=2)
+pca.fit(np.cov(X_2))
+comps = pca.components_
+
+beta_3,junk=glm_multiple(comps,X_2)
+MRSS_3, fitted_3, residuals_3 = glm_diagnostics(beta_3, X_2, comps)
+
+plt.plot(all_tr_times,residuals_2[41, 47, 2]/np.std(residuals_2[41, 47, 2]),label="residuals",color="b")
+plt.plot(all_tr_times,residuals_3[0,:]/np.std(residuals_3[0,:]),label="pca1 residuals",color="r")
+plt.plot(all_tr_times,residuals_3[1,:]/np.std(residuals_3[1,:]),label="pca2 residuals",color="g")
+plt.plot([0,max(all_tr_times)],[0,0],label="origin (residual=0)",color="k")
+plt.title("Residual for sub001, voxel [41, 47, 2],fourier 3 fit to mean compared with PCA")
+plt.xlabel("Time")
+plt.ylabel("Hemodynamic response residual")
+plt.legend(loc='upper right', shadow=True,fontsize="smaller")
+plt.savefig(location_of_images+'noise_correction_pca.png')
 plt.close()
 
 
