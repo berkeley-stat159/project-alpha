@@ -80,3 +80,11 @@ for i in range(64):
             sw = scipy.stats.shapiro(np_residuals[i,j,k,:])   
 
 print "Shapiro-Wilks p-value:", sw[1] #0.0139
+
+
+for i in range(64):
+    for j in range(64):
+        for k in range(34):
+            #Kruskal-Wallis: tests the null hypothesis that population median of 
+            #all groups are equal
+            kw = scipy.stats.mstats.kruskalwallis(np_residuals[i,j,k,:]) 
