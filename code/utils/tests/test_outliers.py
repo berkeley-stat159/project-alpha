@@ -115,7 +115,7 @@ def test_sequential_input():
                        [3, 4, 7, 8, 9, 12, 13, 20, 21])
 
 
-# Heavily adapted from @jwliang's diagnosis_script.py.
+# Heavily adapted from jwliang's diagnosis_script.py.
 # Assumes here HW 2 solutions were correct. 
 def test_compare_outliers():
     # Load class data.

@@ -74,3 +74,7 @@ for name in sub_list:
 
 np.savetxt("outlierMRSSvals.txt",MRSSvals)
 print(MRSSvals)
+
+'''
+By and large, mean MRSS doesn't seem to shift much before and after dropping outliers. 
+''' 
