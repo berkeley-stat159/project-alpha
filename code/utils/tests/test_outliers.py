@@ -126,7 +126,7 @@ def test_compare_outliers():
     convolved = np.loadtxt(pathtoclassdata+'ds114_sub009_t2r1_conv.txt')
     convolved = convolved[4:]
     # Run function 
-    meanMRSSvals = compare_outliers(data, convolved)
+    meanMRSSvals = compare_outliers(data, convolved, True)
     assert_almost_equal(meanMRSSvals[0], 292.0293742754632262)
     assert_almost_equal(meanMRSSvals[1], 282.7266006127604214)
 
