@@ -1,5 +1,5 @@
 """ Tests functions in outliers module
-Largely lifted straight from the tests provided for diagnostics.py in HW2 and jwliang's diagnosis_script.py
+Largely lifted straight from the tests provided for diagnostics.py in HW2 and janewliang's diagnosis_script.py
 
 Run at the project directory with:
     nosetests code/utils/tests/test_outliers.py
