@@ -30,7 +30,7 @@ from glm import glm_multiple, glm_diagnostics
 # iv. import image viewing tool
 from Image_Visualizing import present_3d
 from noise_correction import mean_underlying_noise, fourier_predict_underlying_noise,fourier_creation
-from hypothesis import t_stat_mult_regression_single
+from hypothesis import t_stat_mult_regression
 # Progress bar
 toolbar_width=len(sub_list)
 sys.stdout.write("GLM, :  ")
@@ -57,17 +57,18 @@ for i in sub_list:
         X[:,2]=np.linspace(-1,1,num=X.shape[0]) #drift
         X[:,3:]=fourier_creation(X.shape[0],3)[:,1:]
         
-        beta,t,df,p = t_stat_mult_regression_single(data_slice, X, np.array([0,1,0,0,0,0]))
-        beta, X = glm_multiple(data_slice, X)
+        beta,t,df,p = t_stat_mult_regression(data_slice, X)
         
+        beta = beta.reshape((64,64,6))
+          
         MRSS, fitted, residuals = glm_diagnostics(beta, X, data_slice)
         
-        t_final[:,:,j] = t.reshape(data_slice.shape[:-1])
+        t_final[:,:,j] = t[1,:].reshape(data_slice.shape[:-1])
         
         residual_final[:,:,j,:] = residuals.reshape(data_slice.shape)
         
-        np.savez("../data/glm/"+i+"_tstat.npz", t_final)
-        np.savez("../data/glm/"+i+"_residual.npz", residual_final)
+        np.save("../data/glm/t_stat/"+i+"_tstat.npy", t_final)
+        np.save("../data/glm/residual/"+i+"_residual.npy", residual_final)
       
     sys.stdout.write("-")
     sys.stdout.flush()

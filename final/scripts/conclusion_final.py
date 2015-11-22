@@ -1,22 +1,36 @@
-import sys, os
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
+
 
 import numpy as np
 import matplotlib.pyplot as plt
 import nibabel as nib
+import os
+import sys
+import pandas as pd
 #from glm import glm, glm_diagnostics
+
+project_path          = "../../"
+path_to_data          = project_path+"data/ds009/"
+location_of_images    = project_path+"images/"
+location_of_functions = project_path+"code/utils/functions/" 
+final_data            = "../data/"
+behav_suffix           = "/behav/task001_run001/behavdata.txt"
+t_data           =  final_data + 'glm/t_stat/'
+
+#sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
+sys.path.append(location_of_functions)
+
+sub_list = os.listdir(path_to_data)[1:]
+# Progress bar
+toolbar_width=len(sub_list)
+sys.stdout.write("Conclusion:  ")
+sys.stdout.write("[%s]" % (" " * toolbar_width))
+sys.stdout.flush()
+sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
+    
 from stimuli import events2neural
 from event_related_fMRI_functions import hrf_single, convolution_specialized
 from hypothesis import t_stat
 from Image_Visualizing import present_3d, make_mask
-
-
-# Progress bar
-toolbar_width=len(sub_list)
-sys.stdout.write("Con, with 'fwhm = 1.5':  ")
-sys.stdout.write("[%s]" % (" " * toolbar_width))
-sys.stdout.flush()
-sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
 
 #####################################
 ########## Clustering ##############
@@ -27,25 +41,25 @@ sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
 t_mean = np.zeros((64, 64, 34,24))
 
 #loop through each person's T-statistic
-for i in os.listdir(pathtodata)[1:]:
+count=0
+for i in sub_list:
+
+    t_stat = np.load(t_data+i+"_tstat.npy")
+    t_mean[...,count] = t_stat
+    count+=1
     
-    t_stat = #person's t-stat with dimension (64,64,34)
-    
-    t_mean[...,i] = t_stat
-    t_mean = np.mean(t_mean,axis=3)
-    
-final = present_3d(np.mean(t_mean,axis=3))
+t_mean = np.mean(t_mean,axis=3)
+final = present_3d(t_mean)
 plt.imshow(final,interpolation='nearest', cmap='seismic')
 plt.title("Mean T-Statistic Value Across 25 Subjects")
 
 zero_out=max(abs(np.min(final)),np.max(final))
 plt.clim(-zero_out,zero_out)
 plt.colorbar()
-plt.savefig("../../../paper/images/hypothesis_testint.png")
 plt.close()
 
 
-#Cluster that shit
+#Cluster
 
 data_new = t_mean[...,10:15]
 X = np.reshape(data_new, (-1, 1))
@@ -86,19 +100,19 @@ plt.show()
 #####################################
 
 
-for i in os.listdir(pathtodata)[1:]:
+#for i in sub_list:
     
-    p_stat = #person's t-stat with dimension (64,64,34)
+ #   p_stat = #person's t-stat with dimension (64,64,34)
     
-    significant_pvalues = bh_procedure(p, .25)
+  #  significant_pvalues = bh_procedure(p, .25)
     
-    significant_pvalues = significant_pvalues.reshape(t_mean.shape)
+   # significant_pvalues = significant_pvalues.reshape(t_mean.shape)
     
-    final = present_3d(significant_pvalues)
+    #final = present_3d(significant_pvalues)
     
-    plt.imshow(final,interpolation='nearest', cmap='seismic')
-    plt.title("Significant P-values")
+    #plt.imshow(final,interpolation='nearest', cmap='seismic')
+    #plt.title("Significant P-values")
 
-    zero_out=max(abs(np.min(final)),np.max(final))
-    plt.clim(-zero_out,zero_out)
-    plt.colorbar()
+    #zero_out=max(abs(np.min(final)),np.max(final))
+    #plt.clim(-zero_out,zero_out)
+    #plt.colorbar()
