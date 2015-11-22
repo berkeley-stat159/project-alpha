@@ -38,7 +38,7 @@ sys.stdout.write("[%s]" % (" " * toolbar_width))
 sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
 
-for i in sub_list:
+for i in sub_list[0:2]:
     
     img = nib.load(smooth_data+ i +"_bold_smoothed.nii")
     data = img.get_data()
