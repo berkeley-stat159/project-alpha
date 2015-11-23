@@ -20,20 +20,13 @@ location_of_images="../../../images/"
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
-# Load events2neural from the stimuli module
+# Load functions
 from stimuli import events2neural
 from event_related_fMRI_functions import hrf_single, convolution_specialized
-
-from Image_Visualizing import present_3d
-
-# Load our GLM functions. 
+from Image_Visualizing import present_3d, make_mask
 from glm import glm
 from hypothesis import t_stat
-
-# Load our convolution and hrf function
 from event_related_fMRI_functions import hrf_single, convolution_specialized
-
-# Load our Benjamini-Hochberg function
 from benjamini_hochberg import bh_procedure
 
 # Load the image data for subject 1.
@@ -77,8 +70,6 @@ M = len(hrf_at_trs)  # M == 12
 np_hrf=convolved[:N]
 
 
-#=================================================
-
 """ Run hypothesis testing script"""
 
 B_my,t_my,df,p_my = t_stat(data, my_hrf, np.array([0,1]))
@@ -94,6 +85,8 @@ print(t_np,p_np)
 print("means of (t,p) for np convolution: (" +str(np.mean(t_np))+str(np.mean(p_np)) +")")
 B,t,df,p = t_stat(data, my_hrf, np.array([0,1]))
 
+
+
 #########################
 # c. Benjamini-Hochberg #
 #########################
@@ -102,7 +95,6 @@ p_vals = p.T
 
 # a fairly large false discovery rate
 Q = .25
-
 significant_pvals = bh_procedure(p_vals, Q)
 
 # Reshape significant_pvals
@@ -110,15 +102,77 @@ reshaped_sig_p = np.reshape(significant_pvals, data.shape[:-1])
 slice_reshaped_sig_p = reshaped_sig_p[...,7]
 original_slice = data[...,7]
 
-# visually compare original data slice to significant p-values slice
-plt.imshow(present_3d(reshaped_sig_p))
-#plt.imshow(present_3d(slice_reshaped_sig_p))
+# ==== Visualization of Masked data over original brain data ==== #
+
+# ==== No Mask ==== #
+plt.imshow(slice_reshaped_sig_p)
 plt.colorbar()
-plt.title('Slice with Significant p-values')
-#plt.clim(0,1600)
-plt.savefig(location_of_images+"significant_p_slice.png")
-
+plt.title('Significant p-values (No mask)')
+plt.savefig(location_of_images+"significant_p_slice_NOMASK.png")
 plt.close()
+print("Initial plot with NO MASK done.")
 
 
+# ==== varying the Q value = .005 (FDR) pt 2 ==== #
+Q2 = .005
 
+significant_pvals2 = bh_procedure(p_vals, Q2)
+
+# Reshape significant_pvals
+reshaped_sig_p2 = np.reshape(significant_pvals2, data.shape[:-1])
+slice_reshaped_sig_p2 = reshaped_sig_p2[...,7]
+
+masked_data2 = make_mask(original_slice, reshaped_sig_p2, fit=False)
+
+plt.imshow(present_3d(masked_data2))
+plt.colorbar()
+plt.title('Slice with Significant p-values (Q = .005)')
+plt.savefig(location_of_images+"significant_p_slice2.png")
+plt.close()
+print("Initial plot with Q = .005 done.")
+
+# ==== varying the Q value = .10 (FDR) pt 1 ==== #
+Q1 = .10
+
+significant_pvals1 = bh_procedure(p_vals, Q1)
+
+# Reshape significant_pvals
+reshaped_sig_p1 = np.reshape(significant_pvals1, data.shape[:-1])
+slice_reshaped_sig_p1 = reshaped_sig_p1[...,7]
+
+masked_data1 = make_mask(original_slice, reshaped_sig_p1, fit=False)
+
+plt.imshow(present_3d(masked_data1))
+plt.colorbar()
+plt.title('Slice with Significant p-values (Q = .10)')
+plt.savefig(location_of_images+"significant_p_slice1.png")
+plt.close()
+print("Initial plot with Q = .10 done.")
+
+# ==== varying the Q value = .25 (FDR) pt 0 ==== #
+masked_data = make_mask(original_slice, reshaped_sig_p, fit=False)
+
+plt.imshow(present_3d(masked_data))
+plt.colorbar()
+plt.title('Slice with Significant p-values (Q = .25)')
+plt.savefig(location_of_images+"significant_p_slice.png")
+plt.close()
+print("Initial plot with Q = .25 done.")
+
+# ==== varying the Q value = .5 (FDR) pt 3 ==== #
+Q3 = .5
+
+significant_pvals3 = bh_procedure(p_vals, Q3)
+
+# Reshape significant_pvals
+reshaped_sig_p3 = np.reshape(significant_pvals3, data.shape[:-1])
+slice_reshaped_sig_p3 = reshaped_sig_p3[...,7]
+
+masked_data3 = make_mask(original_slice, reshaped_sig_p3, fit=False)
+
+plt.imshow(present_3d(masked_data3))
+plt.colorbar()
+plt.title('Slice with Significant p-values (Q = .5)')
+plt.savefig(location_of_images+"significant_p_slice3.png")
+plt.close()
+print("Initial plot with Q = .5 done.")
