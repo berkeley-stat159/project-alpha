@@ -13,11 +13,9 @@ import sys
 import numpy.linalg as npl
 
 # Paths. Use your own. 
-
 pathtodata = "../../../data/ds009/sub001/"
 condition_location=pathtodata+"model/model001/onsets/task001_run001/"
 location_of_images="../../../images/"
-
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 # Load functions
@@ -69,20 +67,6 @@ N = len(neural_prediction)  # N == n_vols == 173
 M = len(hrf_at_trs)  # M == 12
 np_hrf=convolved[:N]
 
-
-""" Run hypothesis testing script"""
-
-B_my,t_my,df,p_my = t_stat(data, my_hrf, np.array([0,1]))
-
-print("'my' convolution single regression (t,p):")
-print(t_my,p_my)
-print("means of (t,p) for 'my' convolution: (" +str(np.mean(t_my))+str(np.mean(p_my)) +")")
-
-B_np,t_np,df,p_np = t_stat(data, np_hrf, np.array([0,1]))
-
-print("np convolution single regression (t,p):")
-print(t_np,p_np)
-print("means of (t,p) for np convolution: (" +str(np.mean(t_np))+str(np.mean(p_np)) +")")
 B,t,df,p = t_stat(data, my_hrf, np.array([0,1]))
 
 
@@ -90,7 +74,7 @@ B,t,df,p = t_stat(data, my_hrf, np.array([0,1]))
 #########################
 # c. Benjamini-Hochberg #
 #########################
-print("Beginning the Benjamini-Hochberg procedure now.")
+print("# ======= Beginning the Benjamini-Hochberg procedure now. ======= #")
 p_vals = p.T
 
 # a fairly large false discovery rate
