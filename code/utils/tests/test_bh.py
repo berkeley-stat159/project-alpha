@@ -15,7 +15,7 @@ import os
 import sys
 from numpy.testing import assert_almost_equal
 from nose.tools import assert_not_equals
-from hypothesis import t_stat
+
 
 # Path to the subject 009 fMRI data used in class. 
 pathtoclassdata = "data/ds114/"
@@ -25,7 +25,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 # Load our benjamini-hochberg function
 from benjamini_hochberg import bh_procedure
-
+from hypothesis import t_stat
 def test_bh():
     img = nib.load(pathtoclassdata + "ds114_sub009_t2r1.nii")
     data = img.get_data()[..., 4:]
