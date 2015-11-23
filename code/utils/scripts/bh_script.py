@@ -24,6 +24,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 from stimuli import events2neural
 from event_related_fMRI_functions import hrf_single, convolution_specialized
 
+from Image_Visualizing import present_3d
+
 # Load our GLM functions. 
 from glm import glm
 from hypothesis import t_stat
@@ -96,7 +98,7 @@ B,t,df,p = t_stat(data, my_hrf, np.array([0,1]))
 # c. Benjamini-Hochberg #
 #########################
 print("Beginning the Benjamini-Hochberg procedure now.")
-p_vals = p
+p_vals = p.T
 
 # a fairly large false discovery rate
 Q = .25
@@ -104,25 +106,19 @@ Q = .25
 significant_pvals = bh_procedure(p_vals, Q)
 
 # Reshape significant_pvals
-reshaped_sig_p = np.reshape(significant_pvals, data.shape)
+reshaped_sig_p = np.reshape(significant_pvals, data.shape[:-1])
 slice_reshaped_sig_p = reshaped_sig_p[...,7]
 original_slice = data[...,7]
 
 # visually compare original data slice to significant p-values slice
-plt.imshow(present_3d(slice_reshaped_sig_p))
+plt.imshow(present_3d(reshaped_sig_p))
+#plt.imshow(present_3d(slice_reshaped_sig_p))
 plt.colorbar()
 plt.title('Slice with Significant p-values')
-plt.clim(0,1600)
+#plt.clim(0,1600)
 plt.savefig(location_of_images+"significant_p_slice.png")
 
 plt.close()
 
-plt.imshow(present_3d(original_slice))
-plt.colorbar()
-plt.title('Original Slice')
-plt.clim(0,1600)
-plt.savefig(location_of_images+"original_slice.png")
-
-plt.close()
 
 

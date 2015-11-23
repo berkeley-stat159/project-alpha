@@ -37,7 +37,7 @@ def bh_procedure(p_vals, Q):
 
 	p_sorted = np.sort(p_vals)
 	p_sorted = np.ravel(p_sorted)
-	
+
 	bool_array = np.zeros(len(p_sorted), dtype = bool)
 	for i in range(len(p_sorted)):
 		if np.all(p_sorted[i] < upper[i]):
@@ -48,6 +48,6 @@ def bh_procedure(p_vals, Q):
 
 
 	# Make all non-siginificant p-values zero
-	final_p = [x if x <= max_upper else 0 for x in p_vals]
+	final_p = [x if x <= max_upper else 1 for x in p_vals]
 	return np.array(final_p)
 
