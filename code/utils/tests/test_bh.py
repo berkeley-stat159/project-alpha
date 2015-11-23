@@ -28,17 +28,17 @@ from benjamini_hochberg import bh_procedure
 
 def test_bh():
 	img = nib.load(pathtoclassdata + "ds114_sub009_t2r1.nii")
-    data = img.get_data()[..., 4:]
-    # Read in the convolutions. 
-    convolved = np.loadtxt(pathtoclassdata + "ds114_sub009_t2r1_conv.txt")[4:]
-    # Create design matrix. 
-    
-    beta,t,df,p = t_stat(data, convolved,[1,1])
-    beta2, t2,df2,p2 = t_stat(data, convolved,[0,1])
+	data = img.get_data()[..., 4:]
+	# Read in the convolutions. 
+	convolved = np.loadtxt(pathtoclassdata + "ds114_sub009_t2r1_conv.txt")[4:]
+	# Create design matrix. 
 
-    Q = 1.0
-    pval = p
-    useless_bh = bh_procedure(pval, Q)
+	beta,t,df,p = t_stat(data, convolved,[1,1])
+	beta2, t2,df2,p2 = t_stat(data, convolved,[0,1])
+
+	Q = 1.0
+	pval = p
+	useless_bh = bh_procedure(pval, Q)
 
     # Since the FDR is 100%, the bh_procedure should return the exact same thing as the original data.
     assert_almost_equal(data[...,7], useless_bh[...,7])

@@ -38,8 +38,8 @@ def bh_procedure(p_vals, Q):
 	p_sorted = np.sort(p_vals)
 
 	bool_array = np.zeros(len(p_sorted), dtype = bool)
-	for i in range(len(bool_array)):
-		if p_sorted[i] < upper[i]:
+	for i in range(len(p_sorted)):
+		if np.all(p_sorted[i] < upper[i]):
 			bool_array[i] = 1
 
 	# Find maximum True index and the element in it from p_sorted
