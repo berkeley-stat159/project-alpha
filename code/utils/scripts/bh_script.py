@@ -26,6 +26,7 @@ from glm import glm
 from hypothesis import t_stat
 from event_related_fMRI_functions import hrf_single, convolution_specialized
 from benjamini_hochberg import bh_procedure
+#from bh import new_bh_procedure
 
 # Load the image data for subject 1.
 img = nib.load(pathtodata+"BOLD/task001_run001/bold.nii.gz")
@@ -74,89 +75,164 @@ B,t,df,p = t_stat(data, my_hrf, np.array([0,1]))
 #########################
 # c. Benjamini-Hochberg #
 #########################
+# SHIT TO DO:
+# PLOT PVALUES AND THE UPPER BOUND ON A HISTOGRAM
+# PLOT DIFFERENT Q VALUES AND LOOK AT THE EFFECT OF DIFFERENT FDR'S.
+
 print("# ======= Beginning the Benjamini-Hochberg procedure now. ======= #")
+
+"""
+print("# ==== BEGIN Masking over the p-values with data ==== #")
+# unravel the data
+mask = nib.load(pathtodata + '/anatomy/inplane001_brain_mask.nii.gz')
+mask_data = mask.get_data()
+rachels_ones = np.ones((64, 64, 34))
+fitted_mask = make_mask(rachels_ones, mask_data, fit = True)
+print(mask_data.shape)
+print(fitted_mask.shape)
+mask_1d = np.ravel(fitted_mask)
+print(mask_1d.shape)
+smaller_p = p_vals[mask_1d == 1]
+
+smaller_p_bh = bh_procedure(smaller_p, .2)
+new_1d = np.zeros(mask_1d.shape)
+new_1d[mask_1d == 1] = smaller_p_bh
+
+new_1d_reshape = np.reshape(new_1d, fitted_mask.shape)
+print(new_1d_reshape.shape)
+#masked_reshape = make_mask(new_1d_reshape, fitted_mask)
+plt.imshow(present_3d(new_1d_reshape),interpolation="nearest",cmap="gray")
+#plt.colorbar()
+plt.savefig(location_of_images+"rachels_ones.png")
+plt.close()
+#data_1d = np.ravel(data)
+
+# subset into p-values array
+#smaller_p = p_vals[ == 1]
+"""
+
+print("# ==== BEGIN Visualization of Masked data over original brain data ==== #")
+
 p_vals = p.T
 
+print("# ==== No Mask, bh_procedure ==== #")
 # a fairly large false discovery rate
-Q = .25
+Q = .4
+significant_pvals = bh_procedure(p_vals, Q)
+#print(significant_pvals)
+# Reshape significant_pvals to shape of data
+reshaped_sig_p = np.reshape(significant_pvals, data.shape[:-1])
+slice_reshaped_sig_p = reshaped_sig_p[...,7]
+original_slice = data[...,7]
+
+plt.imshow(slice_reshaped_sig_p)
+plt.colorbar()
+plt.title('Significant p-values (No mask)')
+plt.savefig(location_of_images+"NOMASK_significant_p_slice.png")
+plt.close()
+print("# ==== END No Mask, bh_procedure ==== #")
+
+
+#significant_pvals_old = bh_procedure(p_vals, fdr)
+
+# Reshape significant_pvals to shape of data
+#reshaped_sig_p_old = np.reshape(significant_pvals_old, data.shape[:-1])
+#slice_reshaped_sig_p_old = reshaped_sig_p_old[...,7]
+#original_slice = data[...,7]
+
+#print("# ==== No mask, old bh_procedure")
+#plt.imshow(slice_reshaped_sig_p_old)
+#plt.colorbar()
+#plt.title('(OLD BH FUNCTION) Significant p-values (No mask)')
+#plt.savefig(location_of_images+"OLD_significant_p_slice_NOMASK.png")
+#plt.close()
+#print("Initial plot with NO MASK (using old bh function) done.")
+
+
+print("# ==== BEGIN varying the Q value = .005 (FDR) ==== #")
+Q = .005
+
 significant_pvals = bh_procedure(p_vals, Q)
 
 # Reshape significant_pvals
 reshaped_sig_p = np.reshape(significant_pvals, data.shape[:-1])
 slice_reshaped_sig_p = reshaped_sig_p[...,7]
-original_slice = data[...,7]
 
-# ==== Visualization of Masked data over original brain data ==== #
+masked_data = make_mask(original_slice, reshaped_sig_p, fit=False)
 
-# ==== No Mask ==== #
-plt.imshow(slice_reshaped_sig_p)
-plt.colorbar()
-plt.title('Significant p-values (No mask)')
-plt.savefig(location_of_images+"significant_p_slice_NOMASK.png")
-plt.close()
-print("Initial plot with NO MASK done.")
-
-
-# ==== varying the Q value = .005 (FDR) pt 2 ==== #
-Q2 = .005
-
-significant_pvals2 = bh_procedure(p_vals, Q2)
-
-# Reshape significant_pvals
-reshaped_sig_p2 = np.reshape(significant_pvals2, data.shape[:-1])
-slice_reshaped_sig_p2 = reshaped_sig_p2[...,7]
-
-masked_data2 = make_mask(original_slice, reshaped_sig_p2, fit=False)
-
-plt.imshow(present_3d(masked_data2))
+plt.imshow(present_3d(masked_data))
+plt.clim(0, 1600)
 plt.colorbar()
 plt.title('Slice with Significant p-values (Q = .005)')
-plt.savefig(location_of_images+"significant_p_slice2.png")
-plt.close()
-print("Initial plot with Q = .005 done.")
-
-# ==== varying the Q value = .10 (FDR) pt 1 ==== #
-Q1 = .10
-
-significant_pvals1 = bh_procedure(p_vals, Q1)
-
-# Reshape significant_pvals
-reshaped_sig_p1 = np.reshape(significant_pvals1, data.shape[:-1])
-slice_reshaped_sig_p1 = reshaped_sig_p1[...,7]
-
-masked_data1 = make_mask(original_slice, reshaped_sig_p1, fit=False)
-
-plt.imshow(present_3d(masked_data1))
-plt.colorbar()
-plt.title('Slice with Significant p-values (Q = .10)')
 plt.savefig(location_of_images+"significant_p_slice1.png")
 plt.close()
-print("Initial plot with Q = .10 done.")
+print("# ==== END plot with Q = .005 done. ==== #")
 
-# ==== varying the Q value = .25 (FDR) pt 0 ==== #
+print("# ==== BEGIN varying the Q value = .05 (FDR) ==== #")
+Q = .05
+
+significant_pvals = bh_procedure(p_vals, Q)
+
+# Reshape significant_pvals
+reshaped_sig_p = np.reshape(significant_pvals, data.shape[:-1])
+slice_reshaped_sig_p = reshaped_sig_p[...,7]
+
 masked_data = make_mask(original_slice, reshaped_sig_p, fit=False)
 
 plt.imshow(present_3d(masked_data))
 plt.colorbar()
-plt.title('Slice with Significant p-values (Q = .25)')
-plt.savefig(location_of_images+"significant_p_slice.png")
+plt.title('Slice with Significant p-values (Q = .05)')
+plt.savefig(location_of_images+"significant_p_slice2.png")
 plt.close()
-print("Initial plot with Q = .25 done.")
+print("# ==== END plot with Q = .05 done. ==== #")
 
-# ==== varying the Q value = .5 (FDR) pt 3 ==== #
-Q3 = .5
 
-significant_pvals3 = bh_procedure(p_vals, Q3)
+print("# ==== BEGIN varying the Q value = .10 (FDR) ==== #")
+Q = .10
+
+significant_pvals = bh_procedure(p_vals, Q)
 
 # Reshape significant_pvals
-reshaped_sig_p3 = np.reshape(significant_pvals3, data.shape[:-1])
-slice_reshaped_sig_p3 = reshaped_sig_p3[...,7]
+reshaped_sig_p = np.reshape(significant_pvals, data.shape[:-1])
+slice_reshaped_sig_p = reshaped_sig_p[...,7]
 
-masked_data3 = make_mask(original_slice, reshaped_sig_p3, fit=False)
+masked_data = make_mask(original_slice, reshaped_sig_p, fit=False)
 
-plt.imshow(present_3d(masked_data3))
+plt.imshow(present_3d(masked_data))
 plt.colorbar()
-plt.title('Slice with Significant p-values (Q = .5)')
+plt.title('Slice with Significant p-values (Q = .10)')
 plt.savefig(location_of_images+"significant_p_slice3.png")
 plt.close()
-print("Initial plot with Q = .5 done.")
+print("# ==== END plot with Q = .10 done. ==== #")
+
+print("# ==== BEGIN the Q value = .25 (FDR) ==== #")
+Q = .25
+significant_pvals = bh_procedure(p_vals, Q)
+slice_reshaped_sig_p = reshaped_sig_p[...,7]
+
+masked_data = make_mask(original_slice, reshaped_sig_p, fit=False)
+#masked_data2 = make_mask(original_slice, new_1d_reshape, fit=False)
+plt.imshow(present_3d(masked_data))
+plt.colorbar()
+plt.title('Slice with Significant p-values (Q = .25)')
+plt.savefig(location_of_images+"significant_p_slice4.png")
+plt.close()
+print("# ==== END plot with Q = .25 done. ==== #")
+
+print("# ==== BEGIN the Q value = .5 (FDR) ==== #")
+Q = .5
+
+significant_pvals = bh_procedure(p_vals, Q)
+
+# Reshape significant_pvals
+reshaped_sig_p = np.reshape(significant_pvals, data.shape[:-1])
+slice_reshaped_sig_p = reshaped_sig_p[...,7]
+
+masked_data = make_mask(original_slice, reshaped_sig_p, fit=False)
+
+plt.imshow(present_3d(masked_data))
+plt.colorbar()
+plt.title('Slice with Significant p-values (Q = .5)')
+plt.savefig(location_of_images+"significant_p_slice5.png")
+plt.close()
+print("# ==== END plot with Q = .5 done. === #")

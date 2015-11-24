@@ -30,24 +30,40 @@ def bh_procedure(p_vals, Q):
     Note: You will have to reshape the output to the shape of the data set.
 	"""
 	# k is Q/m where m = len(p_vals)
-	k = Q/len(p_vals)
+	k = Q/p_vals.shape[0]
 
 	# Multiply an array of rank values by k
-	upper = k*np.fromiter(range(1 + len(p_vals)), dtype = "int")
+	upper = k*np.fromiter(range(1, 1 + p_vals.shape[0]), dtype = "int")
 
-	p_sorted = np.sort(p_vals)
-	p_sorted = np.ravel(p_sorted)
-
-	bool_array = np.zeros(len(p_sorted), dtype = bool)
-	for i in range(len(p_sorted)):
-		if np.all(p_sorted[i] < upper[i]):
-			bool_array[i] = 1
+	#print(p_vals.shape)
+	p_sorted = np.sort(p_vals, axis = 0)
+	#print(p_sorted.shape)
+	#p_sorted = np.ravel(p_sorted)
+	#print(p_sorted.shape)
+	bool_array = np.zeros(p_sorted.shape[0], dtype = bool)
+	for i in range(p_sorted.shape[0]):
+		if p_sorted[i] < upper[i]:
+			bool_array[i] = True
 
 	# Find maximum True index and the element in it from p_sorted
-	max_upper = p_sorted[max(max(np.where(bool_array)))]
+
+	# check that bool_array has some True!!!
+	indices = np.where(bool_array)
+	#print(indices)
+	# Make sure there are indices that returned True!!
+	if sum(indices[0]) != 0:
+		max_true_index = np.max(indices)
+		# max_upper is the highest that a p-value can be to be considered significant.
+		max_upper = np.ravel(p_sorted)[max_true_index]
+	# If no indices where p < upper 
+	else:
+		max_upper = 0
+		print("**** Oh no. No p-values smaller than upper bound FDR were found. ****")
+		return p_vals
+	#max_upper = p_sorted[np.max(np.where(bool_array))]
 
 
 	# Make all non-siginificant p-values zero
-	final_p = [x if x <= max_upper else 1 for x in p_vals]
+	final_p = [x if x <= max_upper else 1 for x in np.ravel(p_vals)]
 	return np.array(final_p)
 
