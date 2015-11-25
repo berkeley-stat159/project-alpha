@@ -196,8 +196,9 @@ plt.close()
 # Get first two principal components. 
 # Sklearn needed. Trying to get all the components results in
 # a memory error, so we will only get the first two. 
+data_2d = data.reshape((-1,data.shape[-1]))
 pca = PCA(n_components=2)
-pca.fit(np.cov(X_2))
+pca.fit(data_2d.T.dot(data_2d))
 comps = pca.components_
 
 beta_3,junk=glm_multiple(comps,X_2)
