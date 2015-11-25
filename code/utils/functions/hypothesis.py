@@ -65,7 +65,7 @@ def t_stat(data_4d, convolved, c = [0,1]):
     ltp = t_dist.cdf(abs(t), df) # lower tail p
     p = 1 - ltp # upper tail p
     
-    return beta, t, df, p
+    return beta.t, t, df, p
         
 
 
@@ -140,7 +140,7 @@ def t_stat_mult_regression_single(data_4d, X, c = () ):
     ltp = t_dist.cdf(abs(t), df) # lower tail p
     p = 1 - ltp # upper tail p
     
-    return beta, t, df, p
+    return beta.T, t, df, p
         
 
 def t_stat_mult_regression(data_4d, X):

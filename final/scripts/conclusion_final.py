@@ -5,7 +5,11 @@ import matplotlib.pyplot as plt
 import nibabel as nib
 import os
 import sys
+from sklearn.cluster import AgglomerativeClustering
+from sklearn.feature_extraction.image import grid_to_graph
 import pandas as pd
+from scipy.stats import t as t_dist
+
 #from glm import glm, glm_diagnostics
 
 project_path          = "../../"
@@ -45,7 +49,10 @@ count=0
 for i in sub_list:
 
     t_stat = np.load(t_data+i+"_tstat.npy")
-    t_mean[...,count] = t_stat
+    mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
+    mask_data = mask.get_data()
+    
+    t_mean[...,count] = make_mask(t_stat, mask_data, fit=True)
     count+=1
     
 t_mean = np.mean(t_mean,axis=3)
@@ -56,8 +63,7 @@ plt.title("Mean T-Statistic Value Across 25 Subjects")
 zero_out=max(abs(np.min(final)),np.max(final))
 plt.clim(-zero_out,zero_out)
 plt.colorbar()
-plt.close()
-
+plt.show()
 
 #Cluster
 
@@ -66,8 +72,7 @@ X = np.reshape(data_new, (-1, 1))
 
 connectivity = grid_to_graph(n_x= data_new.shape[0], n_y = data_new.shape[1], n_z = data_new.shape[2])
 
-st = time.time()
-n_clusters = 3 # number of regions
+n_clusters = 7 # number of regions
 ward = AgglomerativeClustering(n_clusters=n_clusters,
         linkage='ward', connectivity=connectivity).fit(X)
 label = np.reshape(ward.labels_, data_new.shape)
@@ -81,7 +86,7 @@ for j in range(n_clusters):
     index = np.where(mask)
     center.append((np.mean(index[0]),np.mean(index[1]),np.mean(index[2])))
     label_mean[j] =np.mean(data_new[mask])
-   
+
 #PRINT THE PLOTS
 for i in range(data_new.shape[-1]):
     plt.figure()
@@ -98,21 +103,23 @@ plt.show()
 #####################################
 ####### MULTIPLE TESTING ############
 #####################################
-
-
-#for i in sub_list:
-    
- #   p_stat = #person's t-stat with dimension (64,64,34)
-    
-  #  significant_pvalues = bh_procedure(p, .25)
-    
-   # significant_pvalues = significant_pvalues.reshape(t_mean.shape)
-    
-    #final = present_3d(significant_pvalues)
-    
-    #plt.imshow(final,interpolation='nearest', cmap='seismic')
-    #plt.title("Significant P-values")
-
-    #zero_out=max(abs(np.min(final)),np.max(final))
-    #plt.clim(-zero_out,zero_out)
-    #plt.colorbar()
+#
+#
+# for i in sub_list:
+#     df=275
+#     t = np.load(t_data+i+"_tstat.npy")
+#     ltp = t_dist.cdf(abs(t), df)
+#     p = 1-ltp
+#
+#     significant_pvalues = bh_procedure(p, .25)
+#
+#     significant_pvalues = significant_pvalues.reshape(t_mean.shape)
+#
+#     final = present_3d(significant_pvalues)
+#
+#     plt.imshow(final,interpolation='nearest', cmap='seismic')
+#     plt.title("Significant P-values")
+#
+#     zero_out=max(abs(np.min(final)),np.max(final))
+#     plt.clim(-zero_out,zero_out)
+#     plt.colorbar()

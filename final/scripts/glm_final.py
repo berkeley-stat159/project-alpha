@@ -38,7 +38,7 @@ sys.stdout.write("[%s]" % (" " * toolbar_width))
 sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
 
-for i in sub_list:
+for i in sub_list[1:2]:
     
     img = nib.load(smooth_data+ i +"_bold_smoothed.nii")
     data = img.get_data()
@@ -53,17 +53,17 @@ for i in sub_list:
         
         data_slice = data[:,:,j,:]
         X = np.ones((n_vols,6))
-        X[:,1] = np.ones(n_vols)#convolve[:,j]
+        X[:,1] = convolve[:,j]
         X[:,2]=np.linspace(-1,1,num=X.shape[0]) #drift
         X[:,3:]=fourier_creation(X.shape[0],3)[:,1:]
         
         beta,t,df,p = t_stat_mult_regression(data_slice, X)
         
-        beta = beta.reshape((64,64,6))
-          
+        t = t[1,:]
+        
         MRSS, fitted, residuals = glm_diagnostics(beta, X, data_slice)
         
-        t_final[:,:,j] = t[1,:].reshape(data_slice.shape[:-1])
+        t_final[:,:,j] = t.reshape(data_slice.shape[:-1])
         
         residual_final[:,:,j,:] = residuals.reshape(data_slice.shape)
         
