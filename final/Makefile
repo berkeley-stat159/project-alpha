@@ -1,27 +1,27 @@
 smooth:
-	python smoothing.py
+	python script/smoothing.py
 
 convolve:
-	python convolution.py
+	python script/convolution.py
 	
 glm:
-	python glm.py
+	python script/glm.py
 
 normality:
-	python normality.py
+	python script/normality.py
 
 conclusion:
-	conclusion.py
+	python script/conclusion.py
 
 all:
-	python smoothing.py
+	python script/smoothing.py
 
-	python convolution.py
+	python script/convolution.py
 	
-	python glm.py
+	python script/glm.py
 
-	python normality.py
+	python script/normality.py
 
-	conclusion.py
+	python script/conclusion.py
 
 clean:

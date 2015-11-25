@@ -112,7 +112,7 @@ sys.stdout.write("\n")
 # if we want to save them all:
 # cost of function:  2.5 s * 24  (1 minute to smooth)
 # cost of saving:
-#  1 loops, best of 3: 3min 2s per loop
+#1 loops, best of 3: 1min 24s per loop
 
 
 ben=False
