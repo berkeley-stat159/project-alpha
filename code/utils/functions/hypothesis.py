@@ -65,7 +65,7 @@ def t_stat(data_4d, convolved, c = [0,1]):
     ltp = t_dist.cdf(abs(t), df) # lower tail p
     p = 1 - ltp # upper tail p
     
-    return beta.t, t, df, p
+    return beta, t, df, p
         
 
 
