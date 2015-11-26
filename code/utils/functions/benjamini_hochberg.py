@@ -57,7 +57,7 @@ def bh_procedure(p_vals, Q):
 		max_upper = np.ravel(p_sorted)[max_true_index]
 	# If no indices where p < upper 
 	else:
-		max_upper = 0
+		#max_upper = 0
 		print("**** Oh no. No p-values smaller than upper bound FDR were found. ****")
 		return p_vals
 	#max_upper = p_sorted[np.max(np.where(bool_array))]
