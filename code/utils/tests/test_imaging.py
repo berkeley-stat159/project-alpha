@@ -43,6 +43,13 @@ def test_mask():
     assert_equal(make_mask(data,mask2), mask2)
     assert_equal(make_mask(data,mask3,fit=True).shape, data.shape)
     
+    x= False
+    try:
+        make_mask(data,mask3,fit=False)
+    except ValueError:
+        x=True
+    assert(x==True)
+    
 
 
     

@@ -61,3 +61,56 @@ plt.savefig(location_of_images + "shifted.png")
 
 print("Shifted time course more closely matches stimuli.")
 
+
+
+
+
+
+
+#######################
+# Ben's improvements: #
+#######################
+
+# using the cond_all from above
+cond_all=np.array(cond_all)[:,0]
+
+from time_shift import make_shift_matrix,time_correct
+
+delta_y=2*(np.arange(34))/34
+
+
+shifted=make_shift_matrix(cond_all,delta_y)
+plt.close()
+for i in range(delta_y.shape[0]):
+    plt.plot(cond_all,shifted[:,i])
+plt.xlim(0,10)
+plt.ylim(0,10)
+plt.savefig(location_of_images + "ben_stupid_linear_shift.png")
+plt.close()
+
+
+# second
+
+from event_related_fMRI_functions import hrf_single, np_convolve_30_cuts
+
+
+def make_convolve_lambda(hrf_function,TR,num_TRs):
+    convolve_lambda=lambda x: np_convolve_30_cuts(x,np.ones(x.shape[0]),hrf_function,TR,np.linspace(0,(num_TRs-1)*TR,num_TRs),15)[0]
+    return convolve_lambda
+
+convolve_lambda=make_convolve_lambda(hrf_single,2,239)
+
+hrf_matrix=time_correct(convolve_lambda,shifted,239)
+
+
+TR=2
+num_TRs=239
+for i in [0,1,10,33]:
+    plt.plot(np.linspace(0,(num_TRs-1)*TR,num_TRs),hrf_matrix[:,i])
+
+plt.xlim(0,50)
+plt.ylim(-.5,2)
+
+plt.savefig(location_of_images + "hrf_time_correction.png")
+plt.close()
+
