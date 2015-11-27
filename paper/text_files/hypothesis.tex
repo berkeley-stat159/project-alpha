@@ -1,14 +1,13 @@
 % tex file for hypothesis
-\par \indent Our simple linear regression model was created not necessarily 
-with prediction in mind, but rather to understand the relationship between 
+\par \indent Our simple linear regression model was created to better understand the relationship between 
 the voxels in a given subject's brain and the convolved time course. In order 
 to measure the strength of the association between these two measurements, we 
 ran a hypothesis test on the coefficients of the simple linear regression 
 model for each subject.
 
-\par There is a distinct linear model associated with each voxel in a 
+\par There is an individual linear model associated with each voxel in a 
 subject’s image (and a total of $64 \times 64 \times 34$ voxels per subject). 
-So, we an a t-test on each voxel's non-intercept $\beta$ coefficient in our 
+THus we an a t-test on each voxel's non-intercept $\beta$ coefficient in our 
 simple linear regression case. The null hypothesis for each test was that $
 \beta = 0$, with the alternative hypothesis that $\beta \neq 0$. Once we had 
 obtained each t-statistic, we compared this value across voxels in two ways. 
