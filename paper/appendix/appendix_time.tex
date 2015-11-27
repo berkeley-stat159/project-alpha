@@ -75,8 +75,8 @@ observations for a single voxel. This process was then used to forecast the
 second half of the observations. A comparison between the true observations 
 and the forecasted predictions is shown in [Figure \ref{fig:ts-preds}]. 
 While the forecasted observations look reasonable for approximating the true 
-values, more quantitative metrics for assessing performance need to be 
-implemented. 
+values, more quantitative and robust metrics for assessing performance need 
+to be implemented. 
 
 \begin{figure}[ht]
 \centering
@@ -89,9 +89,13 @@ half.}
 \par One such procedure for assessing performance would be to design a 
 permutation test. A null voxel time course could be simulated from by 
 performing a Fourier transform on the observed time course, permuting the 
-phase, and then transforming back to the original space. That way, the 
+phases, and then transforming back to the original space. That way, the 
 simulated time course has the same autocovariance as the observed time 
-course, but random signal (as under the null case). Other considerations 
+course, but random signal (as under the null case). We can then fit the 
+same ARIMA model to the permuted process and examine how much, if at all, 
+the ARIMA process fitted to the observed data makes improvements over the 
+null case. Generating confidence intervals for the parameter estimates and 
+forecasting future observations may also be of interest. Other considerations 
 for modeling voxels as time series include exploring efficient and 
 reasonable techniques for comparing multiple voxels both within and across 
 subjects. 
