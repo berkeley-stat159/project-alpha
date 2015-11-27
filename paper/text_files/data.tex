@@ -17,3 +17,22 @@ as an event). Of interest for our work is the blood-oxygen-level dependent
 (BOLD) imaging data recorded for each subject during the course of task. Each 
 subject's BOLD data was recorded as 64 by 64 image matrices in 34 slices, with 
 a variable number of time points. 
+
+\par Much of our analysis focuses on creating our own procedure for cleaning 
+and preprocessing the raw BOLD data so that the true signal can be readily 
+captured by our analyses. However, a cleaned version of the data was later made 
+available by Ross Poldrack and the OpenfMRI project. The cleaned scans had 
+receieved motion correction, high-pass filtering in time, and registration to the 
+standard MNI anatomical template. We would eventually like to compare the 
+results from using our cleaning procedure versus the provided procedures. One 
+non-trivial issue that must be overcome is to design a reproducible pipeline to 
+perform our analyses on either data format, since the preprocessed scans provided 
+by OpenfMRI are in a space with different-sized dimensions. 
+
+\par It should also be noted that neither set of preprocessed data uses the exact 
+same cleaning procedure as that used in textit{The Development and Generality of 
+Self-Control} \cite{CohenSelfControl}, which describes using various software and 
+black-box methods that may not be available for our use. Additionally, while the 
+paper is mostly concerned with comparing the areas of neural activity across 
+different types of self control, we focused only on a single study on a single 
+type of self control, for feasibility reasons. 

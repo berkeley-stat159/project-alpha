@@ -63,19 +63,20 @@ normally distributed, and its autocorrelation and partial autocorrelation
 plots also do not raise any red flags. Furthermore, when visually comparing 
 the fitted time series to the true observed data, the ARIMA process seems to 
 approximate the observed data much better than any of the linear regression 
-models. While more work, such as developing more robust methods to assess fit 
-and considering the problem of modeling multiple voxels across multiple 
-subjects, is clearly needed, time series analysis presents a promising 
-direction for further investigation. 
+models. However, since specifying the correct ARIMA process orders and 
+estimating the associated parameters must be done separately by hand for 
+each individual voxel of interest, we decided to eliminate this direction 
+of analysis from our main pipeline. 
 
-\par In particular, we may be able to forecast future observations based on 
-previous ones. As an example we modeled an ARIMA(1,1,1) process based on the 
-first half of the observations for a single voxel. This process was then used 
-to forecast the second half of the observations. A comparison between the 
-true observations and the forecasted predictions is shown in [Figure \ref
-{fig:ts-preds}]. While the forecasted observations look reasonable for 
-approximating the true values, more quantitative metrics for assessing 
-performance need to be implemented. 
+\par Had we decided to continue pursuing time series analysis, we may have 
+tried to forecast future observations based on previous ones. As an example, 
+we modeled an ARIMA(1,1,1) process based on the first half of the 
+observations for a single voxel. This process was then used to forecast the 
+second half of the observations. A comparison between the true observations 
+and the forecasted predictions is shown in [Figure \ref{fig:ts-preds}]. 
+While the forecasted observations look reasonable for approximating the true 
+values, more quantitative and robust metrics for assessing performance need 
+to be implemented. 
 
 \begin{figure}[ht]
 \centering
@@ -84,6 +85,20 @@ performance need to be implemented.
 half.}
 \label{fig:ts-preds}
 \end{figure}
+
+\par One such procedure for assessing performance would be to design a 
+permutation test. A null voxel time course could be simulated from by 
+performing a Fourier transform on the observed time course, permuting the 
+phases, and then transforming back to the original space. That way, the 
+simulated time course has the same autocovariance as the observed time 
+course, but random signal (as under the null case). We can then fit the 
+same ARIMA model to the permuted process and examine how much, if at all, 
+the ARIMA process fitted to the observed data makes improvements over the 
+null case. Generating confidence intervals for the parameter estimates and 
+forecasting future observations may also be of interest. Other considerations 
+for modeling voxels as time series include exploring efficient and 
+reasonable techniques for comparing multiple voxels both within and across 
+subjects. 
 
 \bibliography{project}
 
