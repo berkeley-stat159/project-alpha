@@ -8,9 +8,10 @@ time course. However, examining the effects of the BART experiment conditions
 on voxel blood flow is also of interest. Thus, we turned to a more 
 sophisticated multiple linear regression model that includes the conditions 
 as dummy variable predictors. We also considered multiple regression including 
-linear drift and Fourier transform terms. In each scenario, we created a 
-design matrix $X$ with the number of rows equal to the number of observed 
-times and the number of rows is equal to the number of predictors. 
+linear drift and Fourier transform terms along with event conditions as dummy 
+variables. In each scenario, we created a design matrix $X$ with the number of 
+rows equal to the number of observed times and the number of rows is equal to 
+the number of predictors. 
 
 Our specified model is then $Y = X\beta + \epsilon$, where $X$ is the fixed 
 aforementioned design matrix, $Y$ is the 4-dimensional array of the subject's 
@@ -25,6 +26,14 @@ first three dimensions (which indicate spatial positions) into a single dimensio
 while keeping the fourth dimension (time) the same. The resulting $\hat{\beta}$ 
 was transformed back into a 3-dimensional array to maintain the spatial 
 relationships of the voxels. 
+
+\par Another possible way to model the voxels is to use the first two principal 
+components of the voxel by time covariance matrix for each subject as the $Y$ 
+instead of the raw voxel time courses. This reduces dimensionality while still 
+capturing much of the variance of the raw data. However, the choice to use two 
+components is does not have an especially strong justification, as the proportion 
+of variance explained by the components does not have a clear-cut "elbow" or 
+plateau. 
 
 \par To consider the strength of the effects of these predictors, we looked 
 at t-tests of the corresponding estimated coefficients for each voxel, as 
