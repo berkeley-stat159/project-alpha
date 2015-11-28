@@ -15,7 +15,7 @@ import os
 import sys
 from numpy.testing import assert_almost_equal
 from nose.tools import assert_not_equals
-
+from nose.tools import assert_equal
 
 # Path to the subject 009 fMRI data used in class. 
 pathtoclassdata = "data/ds114/"
