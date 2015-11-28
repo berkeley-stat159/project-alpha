@@ -49,3 +49,23 @@ def test_bh():
     real_bh = bh_procedure(pval, Q_real)
     #assert_not_equals(data[...,7], real_bh[...,7])
     assert(not (np.all(np.ravel(pval) != real_bh)))
+
+def test_bh_smallQ():
+    img = nib.load(pathtoclassdata + "ds114_sub009_t2r1.nii")
+    data = img.get_data()[..., 4:]
+    # Read in the convolutions. 
+    convolved = np.loadtxt(pathtoclassdata + "ds114_sub009_t2r1_conv.txt")[4:]
+    # Create design matrix. 
+
+    beta,t,df,p = t_stat(data, convolved,[1,1])
+    beta2, t2,df2,p2 = t_stat(data, convolved,[0,1])
+
+    Q = .005
+    pval = p.T
+    useless_bh = bh_procedure(pval, Q)
+
+    # Since the Q-value (FDR) is so small, it should return that no values were found to be significant.
+    assert_equal(useless_bh, pval)
+
+
+    
