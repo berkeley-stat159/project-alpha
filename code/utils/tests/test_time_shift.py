@@ -54,4 +54,45 @@ def times_time_shift_2():
         np.array([0,1,2,3,4, 
                  -1,0,1,2,3]).reshape((2,-1)).T))
 
+
+def test_time_shift_3():
+    happy=time_shift_cond(np.arange(100),5)
+
+    assert(np.all(happy== -5+np.arange(100)))
+
+
+def test_time_shift_4():
+    happy2=make_shift_matrix(np.arange(100),np.array([1,3,5]))
+
+    assert(np.all(happy2[:,0]== -1+np.arange(100)))
+
+    assert(np.all(happy2[:,2]== -5+np.arange(100)))
+
+
+def test_time_shift_4():
+    # this isn't a good check, but increases coverage
+    cond_all=2*np.arange(1,101)
+
+    from time_shift import make_shift_matrix,time_correct
+
+    delta_y=2*(np.arange(34))/34
+
+
+    shifted=make_shift_matrix(cond_all,delta_y)
+
+
+
+    from event_related_fMRI_functions import hrf_single, np_convolve_30_cuts
+
+
+    def make_convolve_lambda(hrf_function,TR,num_TRs):
+        convolve_lambda=lambda x: np_convolve_30_cuts(x,np.ones(x.shape[0]),hrf_function,TR,np.linspace(0,(num_TRs-1)*TR,num_TRs),15)[0]
+        return convolve_lambda
+
+    convolve_lambda=make_convolve_lambda(hrf_single,2,239)
+
+    hrf_matrix=time_correct(convolve_lambda,shifted,239)
+
+    assert(hrf_matrix[0,0]==0)
+
     

@@ -15,16 +15,11 @@ behavior. fMRI scans from the study show blood flow to the brain, which may
 be relatable to control over risk-taking behavior during participation.
 
 \par The rest of this report will detail the procedures from the original 
-analysis of the data that we have tried to mimic. We experimented with 
-different procedures to spatially smooth the voxels and the convolve and 
-time-correct the time courses for each subject. After preprocessing the data, 
-turned to fitting simple and multiple linear regression models to each subject, 
-with the option of including study conditions. The resulting coefficients from 
-the linear regression models can be used to perform t-tests to examine the 
-significance of activity in different voxels. However, the validity of these 
-tests is highly dependent on the validity of our model assumptions, such as the 
-normality of our errors. Also, since we are performing a large quantity of tests, 
-multiple comparison corrections are needed to control the false positive rate. 
-We used k-means clustering to further identify regions of the brain across 
-subjects with high activity and compared these results with the results of the 
-original paper. 
+analysis of the data that we have tried to mimic. We looked into spatial 
+smoothing of the data on the voxels of the brain. After obtaining convolved 
+time courses for each subject, we turned to fitting simple and multiple 
+linear regression models to each subject, with the option of including study 
+conditions. Since examining the behavior of blood flow in the voxels over 
+time was of such great interest, we also considered modeling the behavior as 
+a time series using an autoregressive integrated moving average (ARIMA) 
+process. 
