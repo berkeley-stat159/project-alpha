@@ -75,8 +75,8 @@ np_residuals.shape #should be (64, 64, 34, 239)
 #Shapiro-Wilks: tests the null hypothesis that the data was 
 #drawn from a normal distribution.
 
-sw_normality = sw(np_residuals)
-print "Shapiro-Wilks p-value:", sw_normality[1] #0.0139
+normality(resid_4d)
+print "Shapiro-Wilks p-value:", sw_3d #0.0139
 
 ##########
 #Plotting
@@ -84,7 +84,7 @@ print "Shapiro-Wilks p-value:", sw_normality[1] #0.0139
 
 plt.plot(np_resduals[41, 47, 2]) #from previous scripts
 plt.plot(np_residuals[i,j,k,:])
-plt.plot(sw_normality) #Test statistic from Shapiro-Wilks
+plt.plot(resid_4d) #Test statistic from Shapiro-Wilks
 plt.close()
 
 
@@ -94,8 +94,8 @@ plt.close()
 #Kruskal-Wallis: non-parametric method for testing whether 
 #samples originate from the same distribution
 
-kw_normality = kw(np_residuals)
-print "Shapiro-Wilks p-value:", kw_normality[1]
+normality(resid_4d)
+print "Kruskal-Wallis p-value:", kw_3d
             
             
 ##########
@@ -103,5 +103,5 @@ print "Shapiro-Wilks p-value:", kw_normality[1]
 #########
 plt.plot(np_resduals[41, 47, 2]) #from previous scripts
 plt.plot(np_residuals[i,j,k,:]) 
-plt.plot(kw_normality) #Test statistic from Kruskal-Wallis
+plt.plot(resid_4d) #Test statistic from Kruskal-Wallis
 plt.close()
