@@ -25,21 +25,21 @@ FMRI data present a distinct challenge for relating neural stimulation to BOLD r
 
 \section{Theory:}
 
-To related stimulation to BOLD reponse we use convolution. At a basic level convolution is just the combination of two functions (say $f$ and $g$), and in our case we combine these functions such that the first $f$ is the strength/amplitude of a $g$ started that location \cite{convolution}. One could say that a non-zero $f$ value at time $t$  "initializes" a new hemodyamic response with an amplitude of $f(t)$.  Observationally this requires $f$ (the stimulation events) to be discrete. Below we can see an example of $f$ and $g$ [Figure \ref{fig:on_off}, \ref{fig:hrf}]. One should notice that $f$ is only zeros and ones in this example, but can be many values (this one/zero stimulation mirrors our actual data).
+To related stimulation to BOLD reponse we use convolution. At a basic level convolution is just the combination of two functions (say $f$ and $g$), and in our case we combine these functions such that the first $f$ is the strength/amplitude of a $g$ started that location \cite{brett2015course}. One could say that a non-zero $f$ value at time $t$  "initializes" a new hemodyamic response with an amplitude of $f(t)$.  Observationally this requires $f$ (the stimulation events) to be discrete. Below we can see an example of $f$ and $g$ [Figure \ref{fig:on_off}, \ref{fig:hrf}]. One should notice that $f$ is only zeros and ones in this example, but can be many values (this one/zero stimulation mirrors our actual data).
 
 
 \begin{figure}[ht]
 \centering
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
-	\includegraphics[width=.8\linewidth]{convolution/images/on_off_pattern.png} 
+	\includegraphics[width=.8\linewidth]{images/on_off_pattern.png} 
 	\caption{$f$ (discrete stimulus)}
 	\label{fig:on_off}
 \end{minipage}	
 \quad
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
-	\includegraphics[width=.8\linewidth]{convolution/images/hrf_pattern.png} 
+	\includegraphics[width=.8\linewidth]{images/hrf_pattern.png} 
 	\caption{$g$ (continous hrf)}
 	\label{fig:hrf}
 \end{minipage}
@@ -49,7 +49,7 @@ With these examples of  $f$ and $g$ we can convolve them to get what is seen in 
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=.5\linewidth]{convolution/images/initial_convolved.png}
+	\includegraphics[width=.5\linewidth]{images/initial_convolved.png}
 	\caption{convolution of $f$ and $g$}
 	\label{fig:convolve1}
 \end{figure}
@@ -146,6 +146,6 @@ This method does loose accuracy, but since the ideas behind this process don't r
 %Needed references:
 %Brett, Matthew and Poline, J-B  (2013). Convolution. Retrieved from http://practical-neuroimaging.github.io/on_convolution.html
 
-\bibliography{../project}
+\bibliography{project}
 
 \end{document}

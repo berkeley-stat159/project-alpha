@@ -11,9 +11,9 @@ all:
 	pdflatex $(TITLE).tex
 	
 	pdflatex appendix/$(APP_CONV).tex
-	#bibtex $(APP_CONV)
-	#pdflatex appendix/$(APP_CONV).tex
-	#pdflatex appendix/$(APP_CONV).tex
+	bibtex $(APP_CONV)
+	pdflatex appendix/$(APP_CONV).tex
+	pdflatex appendix/$(APP_CONV).tex
 	
 	pdflatex appendix/$(APP_SMOOTH).tex
 	
