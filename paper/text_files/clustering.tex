@@ -1,7 +1,11 @@
 % tex file for clustering
 \par Now that we have the across subject average t-values for every voxel in the brain, we are left with a 3d array of t-values that contain both negative and positive values. Instead of manually observing patterns in these images, we instead impelmented a clustering algorithm to split the entire 3d images into clusters based on the voxels' relative location to each other as well as the t-value. 
 
-\par In order to find a proper clustering algorithm, we decided to treat this problem like a grayscale image segmentation problem and implemented a agglomerative hierarchical cluster using Ward's method. Agglomerative means that the clusters are built bottom up which each observation starting as its own cluster and pairs being moved up the hierarchy. Ward's method creates clusters based on a minimum variance criterion that miniizes the total within-cluster variances. An example of this implmenetation for a 2d image is seen here: "http://scikit-learn.org/stable/auto_examples/cluster/plot_lena_ward_segmentation.html#example-cluster-plot-lena-ward-segmentation-py". In our implmenetation, we defined a structure to our data using a connectivity graph in order to ensure that each cluster is spatially constrained. Also, since our scenario uses a 3d image, the connectivity graph will also have to take into account this extra dimension. 
+\par In order to find a proper clustering algorithm, we decided to treat this problem like a grayscale image segmentation problem and implemented a agglomerative hierarchical cluster using Ward's method. Agglomerative means that the clusters are built bottom up which each observation starting as its own cluster and pairs being moved up the hierarchy. Ward's method creates clusters based on a minimum variance criterion that miniizes the total within-cluster variances. An example of this implmenetation for a 2d image is seen here:
+\\
+\url{http://scikit-learn.org/stable/auto_examples/cluster/plot_lena_ward_segmentation.html}.\\ 
+
+In our implmenetation, we defined a structure to our data using a connectivity graph in order to ensure that each cluster is spatially constrained. Also, since our scenario uses a 3d image, the connectivity graph will also have to take into account this extra dimension. 
 
 \par Now that we have determiend our clustering algorithm, we must determine how many clusters to choose and how to 
 
