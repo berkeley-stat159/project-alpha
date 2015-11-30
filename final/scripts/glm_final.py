@@ -48,6 +48,8 @@ for i in sub_list:
     
     residual_final = np.zeros((data.shape))
     t_final = np.zeros((data.shape[:-1]))
+    p_final = np.zeros((data.shape[:-1]))
+    
     
     for j in range(data.shape[2]):
         
@@ -60,15 +62,21 @@ for i in sub_list:
         beta,t,df,p = t_stat_mult_regression(data_slice, X)
         
         t = t[1,:]
+        p = p[1,:]
+        
         
         MRSS, fitted, residuals = glm_diagnostics(beta, X, data_slice)
         
         t_final[:,:,j] = t.reshape(data_slice.shape[:-1])
+        p_final[:,:,j] = p.reshape(data_slice.shape[:-1])
+        
         
         residual_final[:,:,j,:] = residuals.reshape(data_slice.shape)
         
         np.save("../data/glm/t_stat/"+i+"_tstat.npy", t_final)
         np.save("../data/glm/residual/"+i+"_residual.npy", residual_final)
+        np.save("../data/glm/p-values/"+i+"_pvalue.npy", p_final)
+        
       
     sys.stdout.write("-")
     sys.stdout.flush()
