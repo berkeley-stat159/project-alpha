@@ -1,12 +1,21 @@
 % tex file for normality
-\par \indent Normality tests are null hypothesis tests AGAINST the assumption 
-of normality. In our dataset, we first used the Shapiro-Wilk test to conduct a 
-normality for our dataset. With a p-value of ______ and less than 0.05, this
-signifies that we should reject the null hypothesis that our samples come from
-a normal distribution. 
+\par \indent The validity of our hypothesis tests of the estimated 
+$\hat{beta}$ values from linear regression is largely dependent on whether we 
+can assume that the errors in our model(s) are idependent and identically 
+distributed from some normal distribution mean zero and constant variance. 
+We focus here on checking the normality assumption. It is generally wise to 
+use visualizations, such as residual vs. fitted values plots and 
+quantile-quantile plots to inspect residuals for patterns and abnormalities. 
+However, with the sheer quantity of data we are working with--- each of the 
+24 subjects has 64 $\times$ 64 $\times$ 34 voxels that can each in turn be 
+fitted to a model--- visual inspection is not practical. 
 
-\par Despite the fact that Shapiro-Wilk test works very well if every residual 
-is unique, it does not work well when there are identical multiple residuals. 
-For that reason, we then tested normality via the Kruskal-Wallis test, which 
-allows us to decide if the population distributins are identical without assuming 
-them to follow normal distribution. 
+For this reason, we turned to using the Shapiro-Wilk test for normality, 
+which tests the null hypothesis that the data in question is normally 
+distributed. A Shapiro-Wilk test was performed for each set of residuals 
+corresponding to a single voxel's time course. That is, each test used around 
+200 observations, or the number of time points for that particular subject. 
+200 observations is not an especially large sample size, and for this reason, 
+we express some concern because normality tests have low power for small sample 
+sizes. Shapiro-Wilk may incorrectly fail to reject the null hypothesis due to 
+this bias \cite{ghasemi2012normality}. 
