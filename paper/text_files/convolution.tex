@@ -12,11 +12,11 @@ better replicate the predicted response function defined by:
 r(t)= \sum_{i=1}^n \psi_{i} \phi_{i}(t-t_i)
 \end{equation}
 
-where $\psi$ is the amplitude of the response stimulis (always $1$ in our 
+where $\psi$ is the amplitude of the response stimulus (always $1$ in our 
 case), and $\phi_{i}$ is the hemodynamic response started at the $i$th 
 stimulation ($t_i$).
 
-The five approaches we attempted can be divded into 3 subcategories: 
+The five approaches we attempted can be divided into 3 subcategories: 
 \textbf{(1)} a strict replication of \ref{eq:convolve}; \textbf{(2)} a similar 
 function as \textbf{(1)} that utilizes matrix multiplication; and \textbf{(3)} a 
 function that splits the intervals between each scan (2 seconds) into a certain 
@@ -38,7 +38,7 @@ We compared these methods based on accuracy and speed. [Figure
 		\centering
 		\includegraphics[width=.8\linewidth]{images/convolution_vs_neural_stimulus}  
 		% needs to be from the event_related_HRF_script2.py 
-		\caption{\scriptsize{Different convolution functions vs. the Nueral stimulus}}
+		\caption{\scriptsize{Different convolution functions vs. the Neural stimulus}}
 		\label{fig:convolution}
 
 	\end{minipage}
@@ -82,8 +82,8 @@ scan (assuming that each layer of the scan took 2/34 of a second).
 \subsubsection{Multiple Conditions}
 
 At the beginning of our analysis we tried to see if there was an advantage to 
-seperating our 3 conditions and creating seperate predicted hemodyamic reponses 
-for each to allow for different applitudes for each type of condition. We did 
+separating our 3 conditions and creating separate predicted hemodyamic reposes 
+for each to allow for different amplitudes for each type of condition. We did 
 not observe a large difference in the $\hat{\beta}$ values we got, so we did not 
 continue with this exploration. It is quiet possible that with the new approaches 
 we've applied, differentiating the conditions for the stimulus might see gains in 
