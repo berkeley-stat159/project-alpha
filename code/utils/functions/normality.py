@@ -2,8 +2,11 @@ import numpy as np
 from scipy.stats import shapiro
 from scipy.stats.mstats import kruskalwallis
     
-def check_sw(resid_4d): #Shapiro Wilks
+def check_sw(resid_4d): 
     """
+    Shapiro-Wilk tests the null hypothesis that the data was drawn 
+    from a normal distribution. In particular, this function 
+    performs a Shapiro-Wilk test on each voxel's residuals. 
     Parameters
     ---------
     resid_4d: residual data of 4D numpy array
@@ -21,15 +24,20 @@ def check_sw(resid_4d): #Shapiro Wilks
     return sw_3d
             
 
-def check_kw(resid_4d): #Kruskal-Wallis
+def check_kw(resid_4d): 
     """
+    Kruskal-Wallis tests the null hypothesis that the population 
+    median of all of the groups are equal. In particular, this 
+    function performs a Kruskal-Wallis test for each voxel's 
+    residuals against a sample from the normal distribution. 
+
     Parameters
     ---------
     resid_4d: residual data of 4D numpy array
     
     Returns
     -------
-    kw_normality: test statistic from Kruskal-Wallis normality test
+    kw_normality: p-value from Kruskal-Wallis normality test
     
     """
     kw_3d = np.zeros(resid_4d.shape[:-1])

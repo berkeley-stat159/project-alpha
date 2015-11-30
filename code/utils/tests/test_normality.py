@@ -21,17 +21,18 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 from normality import check_sw, check_kw
 
 def test_normality():
+    # Generate some 4-d random uniform data. 
+    # The first 3 dimensions are like voxels, the last like time. 
     np.random.seed(159)
-    sim_resids = np.random.rand(2, 2, 2, 100)
-    sim_resids[0,0,0] = np.random.randn(100)
+    sim_resids = np.random.rand(2, 2, 2, 200)
+    # Force one of the time courses to be standard normal. 
+    sim_resids[0,0,0] = np.random.randn(200)
     
+    # Do Shaprio-Wilk and Kruskal-Wallis
     sw_3d = check_sw(sim_resids)
     kw_3d = check_kw(sim_resids)
-    print(sw_3d)
-    print(kw_3d)
     
     assert(sw_3d[0,0,0] > 0.05)
     assert(sw_3d[1,0,0] < 0.05)
     
     assert(kw_3d[0,0,0] > 0.05)
-    assert(kw_3d[1,0,0] < 0.05)
