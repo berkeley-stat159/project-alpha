@@ -1,6 +1,6 @@
 TITLE="report"
 APP_CONV = "appendix_convolution"
-APP_BH = "appendix_bh"
+APP_SMOOTH = "appendix_smoothing"
 APP_CLUSTER = "appendix_clustering"
 APP_TIME = "appendix_time"
 
@@ -15,10 +15,7 @@ all:
 	#pdflatex appendix/$(APP_CONV).tex
 	#pdflatex appendix/$(APP_CONV).tex
 	
-	pdflatex appendix/$(APP_BH).tex
-	#bibtex $(APP_BH)
-	#pdflatex appendix/$(APP_BH).tex
-	#pdflatex appendix/$(APP_BH).tex
+	pdflatex appendix/$(APP_SMOOTH).tex
 	
 	pdflatex appendix/$(APP_CLUSTER).tex
 	#bibtex $(APP_CLUSTER)
