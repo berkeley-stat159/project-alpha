@@ -19,13 +19,24 @@
 \maketitle
 
 
-\section{Introduction:}
+\section{Introduction}
 
-FMRI data present a distinct challenge for relating neural stimulation to BOLD response  (Blood-oxygen-level dependent contrast imaging). FMRIs record changes in oxygenation levels of hemoglobin in the brain, and there is a delay between neural stimulation and change in blood oxygen levels to the area. his delayed and lengthy response has been modeled using block stimulus and a classic example of this hemodyamic response function (with stimulation at t=0) can see in Figure \ref{fig:hrf}.  The complete hemodyamic needs to be modeled in order to better relate  stimulation and the BOLD response from the fMRI.
+fMRI data presents a distinct challenge for relating neural stimulation 
+to BOLD (blood-oxygen-level dependent) response. fMRI scans record changes 
+in oxygenation levels of hemoglobin in the brain. However, there is a delay 
+between neural stimulation and the change in blood oxygen levels to a givein 
+area. This delayed and lengthy response has been modeled using block stimulus 
+and a classic example of this hemodyamic response function (with stimulation 
+at t=0) can be seen in Figure \ref{fig:hrf}. The complete hemodynamic needs 
+to be modeled in order to better relate  stimulation and the BOLD response 
+from the fMRI.
 
-\section{Theory:}
+\section{Theory}
 
-To related stimulation to BOLD reponse we use convolution. At a basic level convolution is just the combination of two functions (say $f$ and $g$), and in our case we combine these functions such that the first $f$ is the strength/amplitude of a $g$ started that location \cite{brett2015course}. One could say that a non-zero $f$ value at time $t$  "initializes" a new hemodyamic response with an amplitude of $f(t)$.  Observationally this requires $f$ (the stimulation events) to be discrete. Below we can see an example of $f$ and $g$ [Figure \ref{fig:on_off}, \ref{fig:hrf}]. One should notice that $f$ is only zeros and ones in this example, but can be many values (this one/zero stimulation mirrors our actual data).
+To relate stimuli to BOLD reponse, we convolved the time courses. At a basic 
+level, convolution is just the combination of two functions (say $f$ and $g$). 
+In our case, we combined these functions such that $f$ is the strength/amplitude 
+of $g$ started at that location \cite{brett2015course}. One could say that a non-zero $f$ value at time $t$  "initializes" a new hemodyamic response with an amplitude of $f(t)$.  Observationally, this requires $f$ (the stimulation events) to be discrete. Below we can see an example of $f$ and $g$ [Figure \ref{fig:on_off}, \ref{fig:hrf}]. One should notice that $f$ is only zeros and ones in this example, but can be many values (this one/zero stimulation mirrors our actual data).
 
 
 \begin{figure}[ht]
@@ -45,7 +56,8 @@ To related stimulation to BOLD reponse we use convolution. At a basic level conv
 \end{minipage}
 \end{figure}
 
-With these examples of  $f$ and $g$ we can convolve them to get what is seen in Figure \ref{fig:convolve1}.
+With these examples of $f$ and $g$, we can convolve them to get what is 
+seen in Figure \ref{fig:convolve1}.
 
 \begin{figure}[ht]
 	\centering
@@ -55,27 +67,41 @@ With these examples of  $f$ and $g$ we can convolve them to get what is seen in 
 \end{figure}
 
 
-Mathematically, convolution between $f$ and $g$ in this was can be described as:
+Mathematically, convolution between $f$ and $g$ in can be described as:
 \begin{equation}  \label{eq:standard_convolve}
 r(t)= \sum_{i=1}^n \phi_{i}(t-t_i)
 \end{equation}
-where there are $i=1,...n$ stimuli points with a hemodyamic response for each being $\phi_i$, a function of $f(t_i)$ multiplied by the function $g(t)$.
+where there are $i=1,...n$ stimuli points with a hemodynamic response for each 
+being $\phi_i$, a function of $f(t_i)$ multiplied by the function $g(t)$.
 
-In our case all the non-zero $f(t_i)=1$, so all $\phi_i$ are the same. As such, we can rewrite this function as:
+In our case all the non-zero $f(t_i)$ are equal to 1, so all $\phi_i$ are the same. As such, we can rewrite this function as:
 \begin{equation} \label{eq:generalized_hrf}
 r(t) =\sum_{i=1}^n \phi (t-t_i)
 \end{equation}
 
-\section{Common Approach (\texttt{np.convolve}):}
+\section{Common Approach (\texttt{np.convolve})}
 
-A common approach to convolve 2 functions in the way described above utilizes \texttt{np.convolve}, which uses fast fourier transforms to get efficiency (boils down to less computations using roots of unity), the untilization of \texttt{np.convolve} assumes that the intervals for between stimulation mirrors the desired intervals between prediction intervals.  It should be noted that \texttt{np} is a common notation for the \texttt{numpy} function in \texttt{python}.
+A common approach to convolve 2 functions in the way described above 
+utilizes \texttt{np.convolve}, which uses fast fourier transforms for 
+efficiency (it boils down to fewer computations using roots of unity). 
+\texttt{np.convolve} assumes that the intervals between stimuli mirror the 
+desired intervals between prediction intervals. It should be noted that 
+\texttt{np} is a common notation for the \texttt{numpy} module in 
+\texttt{python}.
 
-\section{Moving beyond \texttt{np.convolve}, and needed improvements:}
+\section{Moving beyond \texttt{np.convolve}, and needed improvements}
 
-As might be guessed, and the reason for this appendix is that, our data and needs fails to meet the assumption of that the intervals are in equa-distant. Especially in our case, there failed to be easy route in terms of basic rounding to then utilize \texttt{np.convolve}. All these improvements on the basic \texttt{np.convolve} approach, and in the end circled back to incorporating \texttt{np.convolve} for speed gains. 
+The reason motivating this appendix is that our data and needs fail to meet 
+the assumption that the intervals are in equidistant. Especially in our case, 
+there was not an easy route in terms of basic rounding to then correctly utilize 
+\texttt{np.convolve}. All the following approaches improve on the basic 
+\texttt{np.convolve} approach, but ultimately circle back to incorporating 
+\texttt{np.convolve} for speed gains. 
 
 \subsection{Our data/situation explained}
-Our condition file (\texttt{cond1} to be specific) lists stimulus times for when the individual pumped the balloon but didn't pop it. For subject 001 the first 10 data points are as follows [Figure \ref{table:cond1}]:
+Our condition file (\texttt{cond1}) lists stimulus times for when the 
+individual pumped the balloon but didn't pop it. For subject 001, the 
+first 10 data points are as follows [Figure \ref{table:cond1}]:
 
 \vspace{5mm}
 
@@ -101,30 +127,43 @@ Our condition file (\texttt{cond1} to be specific) lists stimulus times for when
 \end{center}
 \end{figure}
  
- Clearly, this short time series doesn't align with scans that start at $t=0$ and occur every 2 seconds apart, as such we had to go back to the drawing board to try to reproduce our expected hemodyamic reponse for the whole time course.
+Clearly, this short time series doesn't align with scans that start at 
+$t=0$ and occur every 2 seconds apart. As such, we had to go back to the 
+drawing board to try to reproduce our expected hemodynamic reponse for the 
+whole time course.
 
 
 
-\subsection{Approaches Summary}
-The first approach tried to reproduce the theoretical rigor for our data. The second tried to utilitize \texttt{np.convolve} through expanding the grid of desired results (thanks to advice from Jean-Baptiste Poline).
+\subsection{Summary of Approaches}
+Our first approach attempts to reproduce the theoretical rigor for our data. 
+Our second approach tries to utilitize \texttt{np.convolve} by expanding the 
+grid of desired results (thanks to advice from Jean-Baptiste Poline).
 
 
 
 
 \subsubsection{Initial correction to represent theoretical idea}
-To account for our data's lack of any easily identifiable grid structure between when a stimulus was recorded and when our scans occured (on the order of every 2 seconds), we went back to the theoretics of convolution and created code to recreate equation \ref{eq:standard_convolve} directly. To do so, we also had to create a function that treated all discrete points of $f$, the stimulus reponse as potential starts of the hemodyamic response, multiplied by the actual value of $f$, as see in equation  \ref{eq:code_convolve}:
+To account for our data's lack of any easily identifiable grid structure 
+between when a stimulus was recorded and when our scans occured (on the 
+order of every 2 seconds), we went back to the theory of convolution and 
+implemented code to recreate equation \ref{eq:standard_convolve} directly. 
+To do so, we also had to create a function that treated all discrete points 
+of $f$, the stimulus reponse as potential starts of the hemodyamic response, 
+multiplied by the actual value of $f$, as see in equation 
+\ref{eq:code_convolve}:
 
 \begin{equation} \label{eq:code_convolve}
 r(t)= \sum_{i=1}^n \psi_{i} \phi_{i}(t-t_i)
 \end{equation}
 
-where $psi_{i}$ is the value of $f$ at the $i$th element in the stimulis vector (allowing for zeroes and varying applitudes/ strengths of stimulation.
+where $psi_{i}$ is the value of $f$ at the $i$th element in the stimulus vector 
+(allowing for zeroes and varying applitudes/strengths of stimulation).
 
 
 \subsubsection{Matrix multiplication}
-If you look at the equation \ref{eq:code_convolve}, rewritten below (thanks to Jane Liang):
+Equation \ref{eq:code_convolve}, rewritten below
 
-$$r(t)= \sum_{i=1}^n \phi_{i}(t-t_i)$$
+$$r(t)= \sum_{i=1}^n \psi_i \phi_{i}(t-t_i)$$
 
 can be changed to a matrix multiplication problem:
 
