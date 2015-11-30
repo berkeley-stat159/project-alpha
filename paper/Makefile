@@ -10,7 +10,7 @@ all:
 	bibtex $(TITLE)
 	pdflatex $(TITLE).tex
 	pdflatex $(TITLE).tex
-
+	
 	pdflatex appendix/$(APP_OUTLIERS).tex
 	
 	pdflatex appendix/$(APP_CONV).tex
