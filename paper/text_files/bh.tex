@@ -6,14 +6,15 @@ of Type I errors is important to the process. The processes of limiting the
 number of Type I errors are called FDR-controlling procedures. In the grand 
 scheme of things, FDR-controlling procedures give greater statistical power 
 with the cost of more Type I errors that can fall through. 
+
 \par Once we implemented the hypothesis function that would return t-test 
-values and $p-values$, we implemented the Benjamini-Hochberg procedure to 
+values and ``p-values'', we implemented the Benjamini-Hochberg procedure to 
 control the proportion of rejected null hypotheses in the data. The Benjamini-
-Hochberg procedure works by multiplying each of the $p-values$ to a ratio of the 
-number of tests and the chosen false discovery rate -- from these adjusted 
-p-values, only the values that are less than the chosen false discovery rate 
-will be chosen to be returned. This way, we are able to meddle around with 
-what proportion of null hypotheses will be rejected, and what proportion will 
-return the desired proportion of significant tests. This will reduce the number
-of false positives returned in the data and extend greater statistical power 
-in later analysis performed on the voxel dataset.
+Hochberg procedure works by multiplying each of the ``p-values'' to a ratio of 
+the number of tests and the chosen false discovery rate -- from these adjusted 
+``p-values'', only the values that are less than the chosen false discovery rate 
+will be chosen to be returned. This way, we are able to adjust the proportion of 
+null hypotheses that will be rejected and the proportion that will return the 
+desired proportion of significant tests. This will reduce the number of false 
+positives returned in the data and extend greater statistical power in later 
+analysis performed on the voxel dataset.

@@ -5,29 +5,29 @@ stimulus, not block stimulus as was discussed as the in-class example. We
 predicted the hemoglobin response (HR) related to this type of neurological 
 stimulus, since the methods in class were much better for block stimulus. 
 
-We approached the problem multiple ways, trying to better replicate the 
-predicted response function defined by:
+There were multiple ways in which we approached the problem of trying to 
+better replicate the predicted response function defined by:
 
 \begin{equation} \label{eq:convolve}
 r(t)= \sum_{i=1}^n \psi_{i} \phi_{i}(t-t_i)
 \end{equation}
 
-where $\psi$ is the amplitude of the response stimulis (always $1$ in our case),
- and $\phi_{i}$ is the hemodyamic response started at the $i$th  stimulation 
- ($t_i$).
+where $\psi$ is the amplitude of the response stimulus (always $1$ in our 
+case), and $\phi_{i}$ is the hemodynamic response started at the $i$th 
+stimulation ($t_i$).
 
-The 5 approaches could be catorgories into 3 subcategory \textbf{(1)} a strict replication of \ref{eq:convolve}, \textbf{(2)} a similar function as (1) that 
-utilizes matrix multiplication, \textbf{(3)} a function that slit the intervals 
-between each scan (2 seconds) into a certain number of even slices, then put 
-the stimulus into the closed split, used \texttt{np.convolve} on this stimulus 
-and a detailed hrf function, and then reduce the output back into the 2 second 
-time intervals. Detailed exploration of this matter can be found in the 
-appendix.
+The five approaches we attempted can be divided into 3 subcategories: 
+\textbf{(1)} a strict replication of \ref{eq:convolve}; \textbf{(2)} a similar 
+function as \textbf{(1)} that utilizes matrix multiplication; and \textbf{(3)} a 
+function that splits the intervals between each scan (2 seconds) into a certain 
+number of even slices, then puts the stimulus into the closed split, using 
+\texttt{np.convolve} on this stimulus and a detailed hrf function, and then 
+reducing the output back into the 2-second time intervals. Detailed exploration 
+of this matter can be found in the appendix.
 
-We compared these methods based on accuracy and speed. Selecting a model similar
-to the subcategory (3), with 15 slices between each 2 second scan capture. Figure
-\ref{fig:convolution} displaces accuracy comparison, and table 
-\ref{table:convolution} show the accuracy based off of \texttt{ipython}'s 
+We compared these methods based on accuracy and speed. [Figure 
+\ref{fig:convolution}] displaces accuracy comparison, and the table in [Figure 
+\ref{table:convolution}] show the accuracy based off of \texttt{ipython}'s 
 \texttt{timeit} function.
 
 
@@ -38,7 +38,7 @@ to the subcategory (3), with 15 slices between each 2 second scan capture. Figur
 		\centering
 		\includegraphics[width=.8\linewidth]{images/convolution_vs_neural_stimulus}  
 		% needs to be from the event_related_HRF_script2.py 
-		\caption{\scriptsize{Different convolution functions vs the Nueral stimulus}}
+		\caption{\scriptsize{Different convolution functions vs. the Neural stimulus}}
 		\label{fig:convolution}
 
 	\end{minipage}
@@ -63,24 +63,30 @@ to the subcategory (3), with 15 slices between each 2 second scan capture. Figur
 	\end{minipage}
 \end{figure}
 
-The "np" run is the worst, and extremely theoretically incorrect (and the whole reason we did the rest of the analysis). The "user 2" and "user 3" fall under the first subcategory and  "user 5" falls under the 2nd subcategory, and "user 4" fall under the 3rd subcategory, with notations for the number of slices between each scan.
-
-
+The ``np'' run has the worst approximation and is highly theoretically incorrect 
+This was the large motivating factor behind the rest of the convolution analysis. 
+The ``user 2''' and ``user 3'' runs fall under subcategory \textbf{(1)}, 
+``user 5'' falls under subcategory \textbf{(2)}, and ``user 4'' fall under 
+subcategory \textbf{(3)}, with notations for the number of slices between each 
+scan.
 
 \subsubsection{Time Correction}
 
-Since the fMRI machine actually scans each voxel at a slightly different time (in our case the lowest horizontal slice was scanned first, and it worked up toward the top of the brain), there was observable drift, which needed to be accounted for.
-
-We did so by shifting the times of stimulus "backwards" for voxels scanned later, and to directly "correct" for the delay of the scan (assuming that each layer of the scan took 2/34 of a second).
+The fMRI machine scans each voxel at a slightly different time. In our case, 
+the lowest horizontal slice was scanned first, with the later scans moving 
+progressively toward the top of the brain. So, there is an observable time drift 
+that needs be accounted for. We did so by shifting the times of stimulus 
+``backwards'' for voxels scanned later to directly "correct" for the delay of the 
+scan (assuming that each layer of the scan took 2/34 of a second).
 
 \subsubsection{Multiple Conditions}
-At the beginning of our analysis we tried to see if there was strength in 
-seperating our 3 conditions and creating seperate predicted hemodyamic reponses 
-for each (to allow for different applitudes for each type of condition), at 
-that time it didn't seem to be very different in the $\beta$ values we got, so 
-we didn't continue the exploration. It is quiet possible that with the new 
-approaches we've applied in the overall paper, that exploration into the 
-differentiating the conditions for the stimulus might see gains in 
+
+At the beginning of our analysis we tried to see if there was an advantage to 
+separating our 3 conditions and creating separate predicted hemodyamic reposes 
+for each to allow for different amplitudes for each type of condition. We did 
+not observe a large difference in the $\hat{\beta}$ values we got, so we did not 
+continue with this exploration. It is quiet possible that with the new approaches 
+we've applied, differentiating the conditions for the stimulus might see gains in 
 interpretability.
 
 
