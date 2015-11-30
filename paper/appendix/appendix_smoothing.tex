@@ -1,0 +1,59 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\bibliographystyle{siam}
+
+\title{Appendix: Smoothing}
+\author{
+  Chen, Kent\\
+  \texttt{kentschen}
+  \and
+  Lee, Rachel\\
+  \texttt{reychil}
+  \and
+  LeRoy, Benjamin\\
+  \texttt{benjaminleroy}
+  \and
+  Liang, Jane\\
+  \texttt{janewliang}
+  \and
+  Udagawa, Hiroto\\
+  \texttt{hiroto-udagawa}
+}
+
+\begin{document}
+\maketitle
+
+\par \indent We used a Gaussian filter to smooth away noise in the brain 
+images. At first, we played around with implementing a function similar 
+to a mean filter, where each voxel would be the average of a certain radius 
+of its neighbors. Ultimately, we decided to use a kernel with a Gaussian 
+(bell-like) shape. 
+\par The factor that makes a Gaussian filter a stronger and more 
+reliable candidate to smooth the voxel data is that it outputs a weighted 
+average of the voxel and its neighbors. The more heavily weighted values are 
+at the center of each of the neighborhood of voxels we examine. On the other 
+hand, a regular mean filter would use a uniformly weighted average, which means
+ there is the risk of oversmoothingalong with additional complications of 
+handling the voxels along the edges of the brain image data. Furthermore, a
+Gaussian filter is ideal for use in noisy voxel data 
+because of its steady frequency response. By choosing an appropriate filter, 
+we have more control of the range of spatial frequencies left after smoothing 
+the data. Additionally, Gaussian filters are non-negative for all voxel data. 
+Thus, smoothing voxel data with a Gaussian filter will guarantee non-
+negativeness. Thus, the output of smoothing will still be a valid image.
+\par In conclusion, we decided to go with the module for a Gaussian filter for 
+several reasons, the main one being that Gaussian filters can remove noise and 
+yet preserve the high frequency edges in the brain image data. Rather than use 
+a self-implemented mean filter function that would cause issues with high-
+frequency edge cases as well as conglomerating data into thoughtless averages, 
+a Gaussian filter handles these situations better because the smooth bell-
+shaped curve of the convolution does not have a sharp cutoff at edges, and the 
+Gaussian filter also distributes weighted averages across the voxels such that 
+the smoothing keeps high-frequency data points into consideration for the end 
+product.
+\bibliography{project}
+
+\end{document}
