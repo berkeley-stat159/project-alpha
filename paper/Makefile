@@ -1,4 +1,5 @@
 TITLE="report"
+APP_OUTLIERS = "appendix_outliers"
 APP_CONV = "appendix_convolution"
 APP_SMOOTH = "appendix_smoothing"
 APP_CLUSTER = "appendix_clustering"
@@ -9,6 +10,8 @@ all:
 	bibtex $(TITLE)
 	pdflatex $(TITLE).tex
 	pdflatex $(TITLE).tex
+
+	pdflatex appendix/$(APP_OUTLIERS).tex
 	
 	pdflatex appendix/$(APP_CONV).tex
 	bibtex $(APP_CONV)
