@@ -11,7 +11,7 @@ all:
 	pdflatex $(TITLE).tex
 	pdflatex $(TITLE).tex
 	
-appendix:
+app:
 	pdflatex appendix/$(APP_OUTLIERS).tex
 	
 	pdflatex appendix/$(APP_CONV).tex
