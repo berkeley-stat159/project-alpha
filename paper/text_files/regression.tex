@@ -8,10 +8,9 @@ time course. However, examining the effects of the BART experiment conditions
 on voxel blood flow is also of interest. Thus, we turned to a more 
 sophisticated multiple linear regression model that includes the conditions 
 as dummy variable predictors. We also considered multiple regression including 
-linear drift and Fourier transform terms along with event conditions as dummy 
-variables. In each scenario, we created a design matrix $X$ with the number of 
-rows equal to the number of observed times and the number of rows is equal to 
-the number of predictors. 
+linear drift, Fourier transform and fitted mean terms. In each scenario, we 
+created a design matrix $X$ with the number of rows equal to the number of 
+observed times and the number of rows is equal to the number of predictors. 
 
 Our specified model is then $Y = X\beta + \epsilon$, where $X$ is the fixed 
 aforementioned design matrix, $Y$ is the 4-dimensional array of the subject's 
@@ -39,6 +38,5 @@ plateau.
 at t-tests of the corresponding estimated coefficients for each voxel, as 
 discussed under \textit{"Hypothesis Testing"}. The validity of these t-tests and 
 their corresponding "p-values" is largely dependent on how good our assumptions 
-of linearity and normally-distributed errors are. Neither of these models, based 
-on our current convolution methods, was very fruitful. 
+of linearity and normally-distributed errors are. 
 
