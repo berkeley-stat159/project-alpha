@@ -1,9 +1,9 @@
 % tex file for hypothesis 
-\par \indent Our simple linear regression model was created to better
-understand the relationship between the voxels in a given subject's brain and
-the convolved time course. In order to measure the strength of the association
-between these two measurements, we ran a hypothesis test on the coefficients of
-the simple linear regression model for each subject.
+\par \indent Our simple linear regression model was created to better 
+understand the relationship between the voxels in a given subject's brain and 
+the convolved time course. In order to measure the strength of the association 
+between these two measurements, we ran a hypothesis test on the coefficients of 
+the simple linear regression model for each subject. 
 
 \par There is an individual linear model associated with each voxel in a
 subject’s image (and a total of $64 \times 64 \times 34$ voxels per subject).
@@ -18,19 +18,20 @@ irrelevant and we compared across voxels without taking into account this sign.
 Later, we also run a multiple comparison test using a Benjamini\–Hochberg in
 order to find the voxels that are most significant.
 
-\par Having implemented a method to compare the voxels within a single subject,
-we next examined our results for the same voxels across subjects. Our initial
-approach was to aggregate the t-statistic data between all subjects for each
-voxel. This allowed us to decrease the variability of the fit on each voxel and
-detect a more clear signal.
 
-\par In order to do this, we ran the hypothesis test as stated above on all 24
-subjects of the study. Then for each voxel, we took the average of t-
-statistics across the subjects. An issue with our data was the presence of
-empty space detected by the scanner that is not directly part of the brain. In
-order to account for this, we took the masked data of the brain and ‘cut out’
-the parts of the images that were not relevant. Ultimately, we were left with a
-single 3d image with each voxel representing the avereage t-value across all
-subjects in the study. This image will later be used in our clustering step in
-order to pinpoint the regions of the brain that have the strongest relationship
-with the convolved time course.
+\par Having implemented a method to compare the voxels within a single subject, 
+we next examined our results for the same voxels across subjects. Our initial 
+approach was to aggregate the t-statistic data between all subjects for each 
+voxel. This allowed us to decrease the variability of the fit on each voxel and 
+detect a more clear signal. 
+
+\par In order to do this, we ran the hypothesis test as stated above on all 24 
+subjects of the study. Then for each voxel, we took the average of the t-
+statistics across the subjects. An issue with our data was the presence of 
+empty space detected by the scanner that is not directly part of the brain. To 
+account for this, we took the masked data of the brain and ``cut out'' the parts 
+of the images that were not relevant to our analysis. Ultimately, we were left with 
+a single 3-d image with each voxel representing the average t-statistics across 
+all subjects in the study. This image will later be used in our clustering step in 
+order to pinpoint the regions of the brain that have the strongest relationship 
+with the convolved time course. 
