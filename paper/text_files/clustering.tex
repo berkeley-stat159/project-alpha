@@ -12,12 +12,12 @@ agglomerative hierarchical cluster using Ward's method. Agglomerative means
 that the clusters are built bottom up which each observation starting as its
 own cluster and pairs being moved up the hierarchy. Ward's method creates
 clusters based on a minimum variance criterion that miniizes the total
-within-cluster variances. An example of this implmenetation for a 2d image is
+within-cluster variances. An example of this implimentation for a 2d image is
 seen here: 
 \url{http://scikit-learn.org/stable/auto_examples/cluster/plot_lena_ward_segment
  ation.html}.
 
-In our implmenetation, we defined a structure to our data using a connectivity
+In our implimentation, we defined a structure to our data using a connectivity
 graph in order to ensure that each cluster is spatially constrained. Also,
 since our scenario uses a 3d image, the connectivity graph will also have to
 take into account this extra dimension.
