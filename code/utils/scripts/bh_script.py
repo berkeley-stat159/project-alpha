@@ -16,7 +16,7 @@ import numpy.linalg as npl
 pathtodata = "../../../data/ds009/sub001/"
 condition_location=pathtodata+"model/model001/onsets/task001_run001/"
 location_of_images="../../../images/"
-sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
+sys.path.append(os.path.join(os.path.dirname('__file__'), "../functions/"))
 
 # Load functions
 from stimuli import events2neural
@@ -113,7 +113,7 @@ plt.close()
 
 print("# ==== BEGIN Visualization of Masked data over original brain data ==== #")
 
-p_vals = p.T
+p_vals = p.T # shape of p_vals is (139264, 1)
 
 print("# ==== No Mask, bh_procedure ==== #")
 # a fairly large false discovery rate

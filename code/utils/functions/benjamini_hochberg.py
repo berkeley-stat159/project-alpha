@@ -65,5 +65,6 @@ def bh_procedure(p_vals, Q):
 
 	# Make all non-siginificant p-values zero
 	final_p = [x if x <= max_upper else 1 for x in np.ravel(p_vals)]
+	# shape of returned array is (len,)
 	return np.array(final_p)
 
