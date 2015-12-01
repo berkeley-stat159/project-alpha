@@ -88,9 +88,22 @@
 
 #  Hypothesis testing: General t-tests on $\beta$ values, and across subject analysis
 
-\begin{figure}
-  \centering
-  {\includegraphics[scale=0.5]{images/hypothesis_testing.png}}
+
+\begin{figure}[ht]
+\centering
+\begin{minipage}[b]{0.45\linewidth}
+	\centering
+	\includegraphics[width=.8\linewidth]{images/hypothesis_testing.png} 
+	\caption{Smoothed t-values}
+	\label{fig:t-value}
+\end{minipage}	
+\quad
+\begin{minipage}[b]{0.45\linewidth}
+	\centering
+		\includegraphics[width=.8\linewidth]{images/hypothesis_testing2.png} 
+	\caption{unsmoothed t-values}
+	\label{fig:t-value2}
+\end{minipage}
 \end{figure}
 
 # PCA on the voxel by time covariance matrix.
