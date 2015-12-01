@@ -20,7 +20,7 @@ distributed with a normal distribution $N(0, \sigma^2)$, and it is also assumed
 to be independent of $X$. We will need to check the validity of these 
 assumptions, as discussed in the \textit{"Normality Assumptions"} section. 
 $\beta$ is an unknown parameter that must be estimated using matrix algebra: 
-$\hat{\beta} = (X X^T)^{-1} X^T Y$. To do this, we essentially flattened out the 
+$\hat{\beta} = (X^T X)^{-1} X^T Y$. To do this, we essentially flattened out the 
 first three dimensions (which indicate spatial positions) into a single dimension, 
 while keeping the fourth dimension (time) the same. The resulting $\hat{\beta}$ 
 was transformed back into a 3-dimensional array to maintain the spatial 

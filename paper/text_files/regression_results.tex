@@ -1,12 +1,13 @@
 % tex file for regression results
 \par To develop linear models, we looked at the HR from the neural response 
-as a single feature and used multiple regression to take into account the 3 
-different types of stimulus (pump, explode, cash-out) to see if the 
-separation of these stimuli can better describe the response. Specifically, 
-this allows for the prediction of different amplitudes for each type of 
-stimulus's HR function in linear regression. The predictive power of these 
-models was not very good [Figure \ref{fig:fit_vs_act}, \ref{fig:fit_vs_res}, 
-\ref{fig:all_cond_time}]. This figures utilize the smoothed data.
+as a single feature. Originally we used multiple regression to take into 
+account the 3 different types of stimulus (pump, explode, cash-out) to see if 
+the separation of these stimuli can better describe the response, but it wasn't 
+that good. In figure \ref{fig:all_cond_time}, we can see the different 
+conditions broken up. Using smoothed data, fourier and drift features we got 
+the following fitted values and residuals for a random voxel for subject 001. [
+Figure \ref{fig:fit_vs_act}, \ref{fig:fit_vs_res}].
+
   
 \begin{figure}[ht]
 \centering
