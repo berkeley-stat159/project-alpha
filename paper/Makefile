@@ -11,6 +11,7 @@ all:
 	pdflatex $(TITLE).tex
 	pdflatex $(TITLE).tex
 	
+app:
 	pdflatex appendix/$(APP_OUTLIERS).tex
 	
 	pdflatex appendix/$(APP_CONV).tex
@@ -20,7 +21,8 @@ all:
 	
 	pdflatex appendix/$(APP_SMOOTH).tex
 	
-	pdflatex appendix/$(APP_CLUSTER).tex
+	# Section not yet written.
+	#pdflatex appendix/$(APP_CLUSTER).tex
 	#bibtex $(APP_CLUSTER)
 	#pdflatex appendix/$(APP_CLUSTER).tex
 	#pdflatex appendix/$(APP_CLUSTER).tex
@@ -32,3 +34,6 @@ all:
 	
 clean:
 	find . -name "*.aux" -o -name "*.log" -o -name "*.bbl" -o -name "*.lof" -o -name "*.lot" -o -name "*.blg" -o -name "*.out" | xargs rm -f
+
+reset: 
+	find . -name "*.aux" -o -name "*.log" -o -name "*.bbl" -o -name "*.lof" -o -name "*.lot" -o -name "*.blg" -o -name "*.out" -o -name "*.pdf"  | xargs rm -f

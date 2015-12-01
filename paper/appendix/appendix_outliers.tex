@@ -3,24 +3,13 @@
 \usepackage[margin=0.75in]{geometry}
 \usepackage{indentfirst}
 \usepackage{graphicx}
+\usepackage{hyperref}
 \bibliographystyle{siam}
 
 \title{Appendix: Outlier Removal}
 \author{
-  Chen, Kent\\
-  \texttt{kentschen}
-  \and
-  Lee, Rachel\\
-  \texttt{reychil}
-  \and
-  LeRoy, Benjamin\\
-  \texttt{benjaminleroy}
-  \and
   Liang, Jane\\
   \texttt{janewliang}
-  \and
-  Udagawa, Hiroto\\
-  \texttt{hiroto-udagawa}
 }
 
 \begin{document}
@@ -31,7 +20,7 @@ detect and remove outlier 3-d volumes from the 4-d image scans of each subject.
 The process involves finding the root mean squares (RMS) of each 3-d volume 
 across time and then getting the difference values. When a given volume is very 
 different from the preceding volume, this may indicate a potential outlier or 
-the sign of an artificat. We used thresholds based on 1.5 $\times$ IQR added to 
+the sign of an artifact. We used thresholds based on 1.5 $\times$ IQR added to 
 the 75th percentile and subtracted from the 25th percentile to create the 
 cutoffs for the RMS difference outliers. We then extended the RMS difference 
 outliers by labeling the volumes either side of the outlier RMS difference as 
