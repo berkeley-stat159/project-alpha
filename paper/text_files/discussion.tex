@@ -10,16 +10,16 @@ non-constant intervals.
 We implemented both simple and multiple regression models at the individual 
 subject level. In addition to the convolved time course, our multiple linear 
 regression models attempt to account for more of the noise in our data by 
-including terms for event conditions, linear drift, and discrete cosine 
-transforms. We then checked the assumptions for the fitted models and performed 
-hypothesis testing on the resulting coefficients for each voxel. Though the 
-linear regression models were designed to handle each voxel for each subject's 
-data individually, we aggregated the data across the 24 subjects by taking the 
-means of the t-statistics corresponding to each voxel. However, one major concern 
-for hypothesis testing is the issue of multiple comparisons, which we attempted to 
+including terms for event conditions, linear drift, and Fourier transforms. 
+We then checked the assumptions for the fitted models and performed hypothesis 
+testing on the resulting coefficients for each voxel. Though the linear 
+regression models were designed to handle each voxel for each subject's data 
+individually, we aggregated the data across the 24 subjects by taking the means 
+of the t-statistics corresponding to each voxel. However, one major concern for 
+hypothesis testing is the issue of multiple comparisons, which we attempted to 
 address using the Benjamini-Hochberg procedure. Finally, we used k-means 
-clustering to further identify areas of the brain with high neurological activity 
-during the events of the BART study. 
+clustering to further identify areas of the brain with high neurological 
+activity during the events of the BART study. 
 
 
 

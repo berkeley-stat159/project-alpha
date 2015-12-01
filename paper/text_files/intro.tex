@@ -4,27 +4,27 @@
 relationship between impaired and normal self control, as well as 
 similarities and differences across the brain relating to self-control. The 
 paper in its entirety explores multiple studies (of multiple study types), 
-but we will just focus on the third and final study, which compares four 
+but we will just focus on the third study. The full paper compares four 
 different types of self control among healthy adults to see if they are 
 related to each other. Very little relationship was found between these 
-behavioral tasks, in contrast to the vast majority of existing literature, 
-which argues for a unified notion of self-control. So, we have decided to 
-narrow our focus and data analysis approaches to just the Balloon Analogue 
-Risk Task (BART) study, which purportedly measures control over risky 
+different behavioral tasks, in contrast to the vast majority of existing 
+literature,  which argues for a unified notion of self-control. So, we have 
+decided to narrow our focus and data analysis approaches to just the Balloon 
+Analogue Risk Task (BART) study, which purportedly measures control over risky 
 behavior. fMRI scans from the study show blood flow to the brain, which may 
 be relatable to control over risk-taking behavior during participation.
 
 \par The rest of this report will detail the procedures from the original 
 analysis of the data that we have tried to mimic. We experimented with 
 different procedures to spatially smooth the voxels and the convolve and 
-time-correct the time courses for each subject. After preprocessing the data, 
+time-correct the time courses for each subject. After preprocessing the data, we 
 turned to fitting simple and multiple linear regression models to each subject, 
-with the option of including study conditions. The resulting coefficients from 
-the linear regression models can be used to perform t-tests to examine the 
-significance of activity in different voxels. However, the validity of these 
-tests is highly dependent on the validity of our model assumptions, such as the 
-normality of our errors. Also, since we are performing a large quantity of tests, 
-multiple comparison corrections are needed to control the false positive rate. 
-We used k-means clustering to further identify regions of the brain across 
-subjects with high activity and compared these results with the results of the 
-original paper. 
+with the option of including different study conditions. The resulting 
+coefficients from the linear regression models can be used to perform t-tests 
+to examine the significance of activity in different voxels. However, the 
+validity of these tests is highly dependent on the validity of our model 
+assumptions, such as the normality of our errors. Since we are performing a 
+large quantity of tests, multiple comparison corrections are needed to control 
+the false positive rate. We used k-means clustering to further identify regions 
+of the brain across subjects with high activity and compared these results with 
+the results of the original paper. 
