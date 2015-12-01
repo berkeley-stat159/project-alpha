@@ -15,10 +15,12 @@ import matplotlib.pyplot as plt
 import nibabel as nib
 import os
 import sys
+
 #from numpy.testing import assert_almost_equal
 #from nose.tools import assert_not_equals
 from nose.tools import assert_equals
 #from nose.tools import assert_array_equals
+
 
 
 # Path to the subject 009 fMRI data used in class. 
@@ -53,6 +55,7 @@ def test_bh():
     Q_real = .25
     real_bh = bh_procedure(p_vals, Q_real)
     #assert_not_equals(data[...,7], real_bh[...,7])
+
     assert(not (np.all(np.ravel(p_vals) != real_bh)))
 
 def small_q_bh():
@@ -66,4 +69,5 @@ def small_q_bh():
     assert_equals(small_q_bh.shape, p_vals.shape)
     # It should return p_vals if it finds no signficant tests
     assert_equals(small_q_bh.all, p_vals.all)
+
 
