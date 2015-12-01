@@ -6,20 +6,22 @@ images, we instead implemented a clustering algorithm to split the entire 3-d
 images into clusters based on the voxels' relative location to each other as 
 well as the values of their t-statistics.
 
-\par In order to find a proper clustering algorithm, we decided to treat this 
-problem like a grayscale image segmentation problem and implemented a 
-agglomerative hierarchical cluster using Ward's method. Agglomerative means 
-that the clusters are built bottom up which each observation starting as its 
-own cluster and pairs being moved up the hierarchy. Ward's method creates 
-clusters based on a minimum variance criterion that minimizes the total 
-within-cluster variances. An example of this implementation for a 2-d image can 
-be viewed here: \url{http://scikit-learn.org/stable/auto_examples/cluster/
-plot_lena_ward_segmentation.html}.
+\par In order to find a proper clustering algorithm, we decided to treat this
+problem like a grayscale image segmentation problem and implemented a
+agglomerative hierarchical cluster using Ward's method. Agglomerative means
+that the clusters are built bottom up which each observation starting as its
+own cluster and pairs being moved up the hierarchy. Ward's method creates
+clusters based on a minimum variance criterion that miniizes the total
+within-cluster variances. An example of this implimentation for a 2d image is
+seen here: 
+\url{http://scikit-learn.org/stable/auto_examples/cluster/plot_lena_ward_segment
+ ation.html}.
 
-In our implementation, we defined a structure for our data using a connectivity 
-graph in order to ensure that each cluster is spatially constrained. Since 
-our scenario uses a 3-d image, the connectivity graph will also have to take 
-into account this extra dimension.
+In our implimentation, we defined a structure to our data using a connectivity
+graph in order to ensure that each cluster is spatially constrained. Also,
+since our scenario uses a 3d image, the connectivity graph will also have to
+take into account this extra dimension.
+
 
 \par Ultimately, the goal of clustering is to have a better understanding of 
 which parts of the brain are related to the signal based on the t-statistics 

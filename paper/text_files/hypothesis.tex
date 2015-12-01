@@ -5,19 +5,19 @@ the convolved time course. In order to measure the strength of the association
 between these two measurements, we ran a hypothesis test on the coefficients of 
 the simple linear regression model for each subject. 
 
-\par There is an individual linear model associated with each voxel in a 
-subject’s image (and a total of $64 \times 64 \times 34$ voxels per subject). 
-Thus, we ran a t-test on each voxel's $\hat{\beta}$ coefficient that is 
-associated with the HRF response. The null hypothesis for each test was that 
-$\hat{\beta} = 0$, with the alternative hypothesis being $\hat{\beta} \neq 0$. 
-Once we had obtained each t-statistic, we compared this value across voxels in 
-two ways. First, we simply compared this t-statistics with voxels within a 
-subject. In this case, we took into account the sign of the t-statistic in our 
-analysis. Second, we converted these t-statistics to ``p-values'', in which case 
-the sign of the t-statistics will become irrelevant and we compared across voxels 
-without taking into account this sign. Later, we also ran a Benjamini–Hochberg 
-correction for multiple comparisons in order to find the voxels that are most 
-significant while still controlling the false positive rate. 
+\par There is an individual linear model associated with each voxel in a
+subject’s image (and a total of $64 \times 64 \times 34$ voxels per subject).
+Thus we ran a t-test on each voxel's $\beta$ coefficient that is associated
+with the HRF response. The null hypothesis for each test was that $ \beta = 0$,
+with the alternative hypothesis that $\beta \neq 0$. Once we had obtained each
+t-statistic, we compared this value across voxels in two ways. First, we simply
+compared this t-values with voxels within a subject. In this case, we took into
+account the sign of the t-statistic in our analysis. Second, we converted this
+t-statistic to a "p-value", in which case the sign of the t-value will become
+irrelevant and we compared across voxels without taking into account this sign.
+Later, we also run a multiple comparison test using a Benjamini\–Hochberg in
+order to find the voxels that are most significant.
+
 
 \par Having implemented a method to compare the voxels within a single subject, 
 we next examined our results for the same voxels across subjects. Our initial 
