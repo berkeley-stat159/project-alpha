@@ -93,12 +93,12 @@
   {\includegraphics[scale=0.5]{images/hypothesis_testing.png}}
 \end{figure}
 
-# Time series: ARIMA model
+# PCA on the voxel by time covariance matrix.
 
 
 \begin{figure}
   \centering
-  {\includegraphics[scale=0.5]{images/ts-preds.png}}
+  {\includegraphics[scale=0.5]{images/pcasub010.png}}
 \end{figure}
 
 
@@ -106,16 +106,17 @@
 
 \begin{figure}[ht]
 \centering
-\begin{minipage}[b]{0.45\linewidth}
+\begin{minipage}[b]{0.6\linewidth}
 	\centering
 	\includegraphics[width=.8\linewidth]{images/clustering1.png} 
 	\caption{Clustering 1}
 
 \end{minipage}	
 \quad
-\begin{minipage}[b]{0.45\linewidth}
+\hspace{-30mm}
+\begin{minipage}[b]{0.6\linewidth}
 	\centering
-		\includegraphics[width=.8\linewidth]{images/clustering2.png} 
+	\includegraphics[width=.8\linewidth]{images/clustering2.png} 
 	\caption{Clustering 2}
 
 \end{minipage}
