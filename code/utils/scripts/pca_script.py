@@ -16,6 +16,7 @@ project_path          = "../../../"
 path_to_data          = project_path+"data/ds009/"
 location_of_images    = project_path+"images/"
 location_of_functions = project_path+"code/utils/functions/" 
+behav_suffix           = "/behav/task001_run001/behavdata.txt"
 
 sys.path.append(location_of_functions)
 
@@ -35,7 +36,7 @@ for name in sub_list:
     
     # Load image data.
     img = nib.load(path_to_data+ name+ "/BOLD/task001_run001/bold.nii.gz")
-    data = img.get_data()
+    data = img.get_data().astype(float)
 
     # Load mask.
     mask = nib.load(path_to_data+ name+'/anatomy/inplane001_brain_mask.nii.gz')
