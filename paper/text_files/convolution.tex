@@ -47,14 +47,14 @@ We compared these methods based on accuracy and speed. [Figure
 		\centering
 		\begin{tabular}{|l | c|}
 		\hline
-		name in graph & Speed per loop \\
+		name in graph       & Speed per loop \\
 		\hline
-		np    			 & 14.4 µs \\
-		user 2     		 & 972 ms  \\
-		user 3     		 & 1.15 s  \\
-		user 4 (15 cuts) & 98.3 ms \\
-		user 4 (30 cuts) & 185 ms  \\
-		user 5     	 	 & 110 ms  \\
+		np naive approach & 14.4 $\mu$s  \\
+		user 2     		    & 972 ms  \\
+		user 3     		    & 1.15 s    \\
+		user 4 (15 cuts)      & 98.3 ms \\
+		user 4 (30 cuts)      & 185 ms  \\
+		user 5     	 	    & 110 ms   \\
 		\hline
 		\end{tabular}
 		\vspace{5mm}
@@ -64,13 +64,17 @@ We compared these methods based on accuracy and speed. [Figure
 	\end{minipage}
 \end{figure}
 
-The ``np'' run has the worst approximation and isn't even theoretically 
-correct. This was the large motivating factor behind the rest of the
-convolution analysis. 
-The ``user 2'' and ``user 3'' runs fall under subcategory \textbf{(1)}, 
-``user 5'' falls under subcategory \textbf{(2)}, and ``user 4'' fall under 
-subcategory \textbf{(3)}, with notations for the number of slices between each 
-scan.
+The ``np naive approach'' run has the worst approximation and isn't even 
+theoretically correct. As was stated above, this was the large motivating factor 
+behind the rest of the convolution analysis. The ``user 2'' and ``user 3'' runs fall 
+under subcategory \textbf{(1)}. The ``user 2'' was the first approach to
+matches the theory, but matches the stimulation times and not the scan times.
+The ``user 3'' is the most theoretically sound model (and is our standard for 
+accuracy). The ``user 5'' falls under subcategory \textbf{(2)}, ``User 5''  is our 
+matrix version of the theory, and has the same accuracy as ``user 3''. The 
+``user 4'' model fall under subcategory \textbf{(3)}, the methods that use the 
+grid cut usage of \texttt{np.convolve} with notations for the number of slices 
+between each scan.
 
 \subsubsection{Time Correction}
 
