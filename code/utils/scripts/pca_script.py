@@ -27,10 +27,6 @@ from Image_Visualizing import make_mask
 
 sub_list = os.listdir(path_to_data)
 
-# saving to compare number of cuts in the beginning
-num_cut=np.zeros(len(sub_list))
-i=0
-
 # Loop through all the subjects. 
 for name in sub_list:
     # amount of beginning TRs not standardized at 6
@@ -49,8 +45,6 @@ for name in sub_list:
     # Drop the appropriate number of volumes from the beginning. 
     first_n_vols=data.shape[-1]
     num_TR_cut=int(first_n_vols-num_TR)
-    num_cut[i]=num_TR_cut
-    i+=1
     data = data[...,num_TR_cut:] 
 
     # Now fit a mask to the 3-d image for each time point.
