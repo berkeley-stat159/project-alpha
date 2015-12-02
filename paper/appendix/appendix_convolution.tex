@@ -185,17 +185,17 @@ event-related trial \cite{brett2015course}.
 
 \section{Approach to our Specific Problem}
 
-\subsection{Common Approach (\texttt{np.convolve})}
+\subsection{Naive Approach (using \texttt{np.convolve})}
 
-A common approach for convolving two functions in the way described above 
-utilizes \texttt{np.convolve}, which takes advantage of fast Fourier transforms 
-for efficiency (it boils down to fewer computations using roots of unity). 
+A \texttt{numpy} function \texttt{np.convolve}, which takes advantage of 
+fast Fourier transforms for efficiency (it boils down to fewer computations 
+using roots of unity) is commonly used to do discrete convolution. A naive 
+approach for convolving two functions would use this function directly, but
 \texttt{np.convolve} assumes that the intervals between stimuli mirror the 
-desired intervals between prediction intervals. It should be noted that 
-\texttt{np} is a common notation for the \texttt{numpy} module in 
-\texttt{python}.
+desired intervals between prediction intervals. As such, we can not naively
+apply the \texttt{np.convolve} for our data (though we do for a base model). 
 
-\subsection{Needed Improvements: Moving Beyond \texttt{np.convolve}}
+\subsection{Needed Improvements: Moving beyond naive \texttt{np.convolve}}
 
 The reason motivating this appendix is the fact that our data fails to meet the 
 assumption that the intervals are in equidistant. Especially in our case, there 
@@ -243,9 +243,8 @@ the entire time course.
 \subsubsection{Summary of Approaches}
 Our first approach attempts to correctly match the theory underlying our data. 
 Our second approach tries to utilize \texttt{np.convolve} by expanding the 
-grid of desired results (thanks to advice from Jean-Baptiste Poline).
-
-
+grid of desired results (thanks to advice from  Matthew Brett, Jean-Baptiste Poline,
+and Jarrod Millman).
 
 
 \subsubsection{Initial Correction to Represent Theoretical Idea}
@@ -283,6 +282,8 @@ takes that into account). This is a useful representation, since matrix
 multiplication is faster for Python's numpy arrays. 
 
 
+
+
 \subsubsection{Using FFT with \texttt{np.convolve}}
 The ``theoretical'' solution lacked computation efficiency (despite 
 considerable speed improvements from matrix multiplication), so we also 
@@ -292,9 +293,71 @@ finely scaled grid. This allowed us to utilize \texttt{np.convolve} with its
 faster algorithms (thanks to FFT), before reducing back down to our 2 second 
 grid. 
 
-While this final method does lose some accuracy compared to the more 
-theoretically rigorous approach, the trade-off brings considerable gains in 
-computational efficiency. 
+
+\section{Example}
+
+Now that we have discussed that theoretics of and possible implementations of the 
+convolving event-related stimulation, let's look at a basic example from our data.
+(specifically using subject 001 condition files), and in doing so examine the trade-offs
+between theoretical accuracy and computational efficiency.
+
+
+\begin{figure}[ht]
+\centering
+	\begin{minipage}[b]{0.45\linewidth}
+		\centering
+		\includegraphics[width=.8\linewidth]{images/convolution_vs_neural_stimulus}  
+		% needs to be from the event_related_HRF_script2.py 
+		\caption{\scriptsize{Different convolution functions vs. the Neural stimulus}}
+		\label{fig:convolution}
+
+	\end{minipage}
+\quad
+	\begin{minipage}[b]{0.45\linewidth}
+		\centering
+		\begin{tabular}{|l | c|}
+		\hline
+		name in graph       & Speed per loop \\
+		\hline
+		np naive approach & 14.4 $\mu$s  \\
+		user 2     		    & 972 ms  \\
+		user 3     		    & 1.15 s    \\
+		user 4 (15 cuts)      & 98.3 ms \\
+		user 4 (30 cuts)      & 185 ms  \\
+		user 5     	 	    & 110 ms   \\
+		\hline
+		\end{tabular}
+		\vspace{5mm}
+		\caption{\scriptsize{Speed to create HRF predictions for Subject 001, 
+		all conditions}}
+		\label{table:convolution}
+	\end{minipage}
+\end{figure}
+
+The ``np naive approach'' run has the worst approximation and isn't even 
+theoretically correct. As was stated above, this was the large motivating factor 
+behind the rest of the convolution analysis. The ``user 2'' was the first approach to
+matches the theory, but matches the stimulation times and not the scan times.
+The ``user 3'' is the most theoretically sound model (and is our standard for 
+accuracy). ``User 5''  is our matrix version of the theory, and has the same 
+accuracy as ``user 3''. The ``user 4'' models fall under use the grid cut usage of 
+\texttt{np.convolve} with notations for the number of slices between each 
+scan.
+
+
+
+%While this final method does lose some accuracy compared to the more 
+%theoretically rigorous approach, the trade-off brings considerable gains in 
+%computational efficiency. 
+
+
+
+
+
+
+
+
+
 
 
 %Needed references:

@@ -436,7 +436,7 @@ scaled_5=(conv_5-np.mean(conv_5))/(2*np.std(conv_5)) +.4
 ############################
 
 plt.scatter(cond_all,np.zeros(len(cond_all)),color=colors,label="stimuli instances")
-plt.plot(all_tr_times,scaled_np,label="np scaled")
+plt.plot(all_tr_times,scaled_np,label="np naive approach scaled")
 plt.plot(cond_all,scaled_2,label="user 2 scaled")
 plt.plot(all_tr_times,scaled_3,"-o",label="user 3 scaled")
 plt.plot(all_tr_times,scaled_4_30,"-*",label="user 4 scaled (30 cuts)",color="k")
