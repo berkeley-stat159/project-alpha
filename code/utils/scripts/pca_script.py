@@ -1,5 +1,8 @@
 """
-Script to identify outliers for each subject. Compares the mean MRSS values from running GLM on the basic np.convolve convolved time course, before and after dropping the outliers. 
+Script to do SVD on the covariance matrix of the voxel by time matrix.
+
+Run with: 
+    python pca_script.py
 
 """
 
@@ -36,7 +39,8 @@ for name in sub_list:
     
     # Load image data.
     img = nib.load(path_to_data+ name+ "/BOLD/task001_run001/bold.nii.gz")
-    data = img.get_data().astype(float)
+    data = img.get_data()
+    data = data.astype(float) 
 
     # Load mask.
     mask = nib.load(path_to_data+ name+'/anatomy/inplane001_brain_mask.nii.gz')
@@ -59,6 +63,10 @@ for name in sub_list:
     my_mask_2d = my_mask.reshape((-1,my_mask.shape[-1]))
     data_2d = data.reshape((-1,data.shape[-1]))
     masked_data_2d = data_2d[my_mask_2d.sum(1) != 0,:]
+
+    # Subtract means from columns.
+    data_2d = data_2d - np.mean(data_2d, 0)
+    masked_data_2d = masked_data_2d - np.mean(masked_data_2d, 0)
 
     # PCA analysis on unmasked data: 
     # Do SVD for the first 20 values of the time by time matrix and plot explained variance.
