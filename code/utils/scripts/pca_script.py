@@ -7,11 +7,11 @@ Run with:
 """
 
 import numpy as np
+import numpy.linalg as npl
 import nibabel as nib
 import os
 import sys
 import pandas as pd
-from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 
 # Relative paths to project and data. 
@@ -58,24 +58,26 @@ for name in sub_list:
     data_2d = data.reshape((-1,data.shape[-1]))
     masked_data_2d = data_2d[my_mask_2d.sum(1) != 0,:]
 
-    # Subtract means from columns.
+    # Subtract means over voxels (columns).
     data_2d = data_2d - np.mean(data_2d, 0)
     masked_data_2d = masked_data_2d - np.mean(masked_data_2d, 0)
 
+    # Subtract means over time (rows)
+    data_2d = data_2d - np.mean(data_2d, axis=1)[:, None]
+    masked_data_2d = masked_data_2d - np.mean(masked_data_2d, axis=1)[:, None]
+
     # PCA analysis on unmasked data: 
-    # Do SVD for the first 20 values of the time by time matrix and plot explained variance.
-    pca = PCA(n_components=20)
-    pca.fit(data_2d.T.dot(data_2d))
-    exp_var = pca.explained_variance_ratio_ 
-    plt.plot(range(1,21), exp_var)
+    # Do SVD on the time by time matrix and plot explained variance.
+    U, S, VT = npl.svd(data_2d.T.dot(data_2d))
+    exp_var = S / np.sum(S)
+    plt.plot(exp_var[np.arange(50)])
     plt.savefig(location_of_images+'pca'+name+'.png')
     plt.close()
 
     # PCA analysis on MASKED data: 
-    # Do SVD for the first 20 values of the time by time matrix and plot explained variance.
-    pca_masked = PCA(n_components=20)
-    pca_masked.fit(masked_data_2d.T.dot(masked_data_2d))
-    exp_var_masked = pca_masked.explained_variance_ratio_ 
-    plt.plot(range(1,21), exp_var_masked)
+    # Do SVD on the time by time matrix and plot explained variance.
+    U_masked, S_masked, VT_masked = npl.svd(masked_data_2d.T.dot(masked_data_2d))
+    exp_var_masked = S_masked / np.sum(S_masked)
+    plt.plot(exp_var_masked[np.arange(50)])
     plt.savefig(location_of_images+'maskedpca'+name+'.png')
     plt.close()
