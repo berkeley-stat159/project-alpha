@@ -51,7 +51,7 @@ t_mean = np.zeros((64, 64, 34,24))
 count=0
 for i in sub_list:
 
-    t_stat = np.load(t_data+i+"_tstat.npy")
+    t_stat = np.load(t_data+i+"_tstat2.npy")
     mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
     mask_data = mask.get_data()
 

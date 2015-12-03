@@ -30,7 +30,7 @@ from glm import glm_multiple, glm_diagnostics
 # iv. import image viewing tool
 from Image_Visualizing import present_3d
 from noise_correction import mean_underlying_noise, fourier_predict_underlying_noise,fourier_creation
-from hypothesis import t_stat_mult_regression
+from hypothesis import t_stat_mult_regression, t_stat
 # Progress bar
 toolbar_width=len(sub_list)
 sys.stdout.write("GLM, :  ")
@@ -48,7 +48,11 @@ for i in sub_list:
     
     residual_final = np.zeros((data.shape))
     t_final = np.zeros((data.shape[:-1]))
+<<<<<<< Updated upstream
     p_final = np.zeros((data.shape[:-1]))
+=======
+    t_final2 = np.zeros((data.shape[:-1]))
+>>>>>>> Stashed changes
     
     
     for j in range(data.shape[2]):
@@ -61,19 +65,23 @@ for i in sub_list:
         
         beta,t,df,p = t_stat_mult_regression(data_slice, X)
         
+        beta2, t2, df2, p2 = t_stat(data_slice,convolve[:,j], c=[0,1] )
+        
         t = t[1,:]
         p = p[1,:]
-        
+        t2 = t2.T
         
         MRSS, fitted, residuals = glm_diagnostics(beta, X, data_slice)
         
+        
         t_final[:,:,j] = t.reshape(data_slice.shape[:-1])
         p_final[:,:,j] = p.reshape(data_slice.shape[:-1])
-        
+        t_final2[:,:,j] = t2.reshape(data_slice.shape[:-1])
         
         residual_final[:,:,j,:] = residuals.reshape(data_slice.shape)
         
         np.save("../data/glm/t_stat/"+i+"_tstat.npy", t_final)
+        np.save("../data/glm/t_stat/"+i+"_tstat2.npy", t_final2)
         np.save("../data/glm/residual/"+i+"_residual.npy", residual_final)
         np.save("../data/glm/p-values/"+i+"_pvalue.npy", p_final)
         
