@@ -13,6 +13,7 @@ import os
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
 
 # Relative paths to project and data. 
 project_path          = "../../../"
@@ -22,13 +23,16 @@ location_of_functions = project_path+"code/utils/functions/"
 behav_suffix           = "/behav/task001_run001/behavdata.txt"
 
 sys.path.append(location_of_functions)
-
 from Image_Visualizing import make_mask
 
+# List of subject directories.
 sub_list = os.listdir(path_to_data)
+# Initialize array to store variance proportions. 
+masked_var_array = np.zeros((50, len(sub_list)))
 
 # Loop through all the subjects. 
-for name in sub_list:
+for j in range(len(sub_list)):
+    name = sub_list[j]
     # amount of beginning TRs not standardized at 6
     behav=pd.read_table(path_to_data+name+behav_suffix,sep=" ")
     num_TR = float(behav["NumTRs"])
@@ -67,17 +71,41 @@ for name in sub_list:
     masked_data_2d = masked_data_2d - np.mean(masked_data_2d, axis=1)[:, None]
 
     # PCA analysis on unmasked data: 
-    # Do SVD on the time by time matrix and plot explained variance.
+    # Do SVD on the time by time matrix and get explained variance.
     U, S, VT = npl.svd(data_2d.T.dot(data_2d))
     exp_var = S / np.sum(S)
-    plt.plot(exp_var[np.arange(50)])
-    plt.savefig(location_of_images+'pca'+name+'.png')
-    plt.close()
+    var_sums = np.cumsum(exp_var)
 
     # PCA analysis on MASKED data: 
-    # Do SVD on the time by time matrix and plot explained variance.
+    # Do SVD on the time by time matrix and get explained variance.
     U_masked, S_masked, VT_masked = npl.svd(masked_data_2d.T.dot(masked_data_2d))
     exp_var_masked = S_masked / np.sum(S_masked)
-    plt.plot(exp_var_masked[np.arange(50)])
-    plt.savefig(location_of_images+'maskedpca'+name+'.png')
+    var_sums_masked= np.cumsum(exp_var_masked)
+    masked_var_array[:,j] = exp_var_masked[:50] # Store the first 50 variance proportions.
+    
+    # Setting up legend colors.
+    hand_un = mlines.Line2D([], [], color='b', label='Not Masked')
+    hand_mask = mlines.Line2D([], [], color='r', label='Masked')
+
+    # Compare proportion of variance explained by each component for masked and unmasked data.
+    plt.plot(exp_var[np.arange(10)], 'b-o')
+    plt.plot(exp_var_masked[np.arange(10)], 'r-o')
+    plt.legend(handles=[hand_un, hand_mask])
+    plt.xlabel("Principal Components")
+    plt.title("Proportion of Variance Explained by Each Component for " + name)
+    plt.savefig(location_of_images+'pcapropvar'+name+'.png')
     plt.close()
+
+    # Compare proportion of variance explained by each component.
+    plt.plot(var_sums[np.arange(10)], 'b-o')
+    plt.plot(var_sums_masked[np.arange(10)], 'r-o')
+    plt.axhline(y=0.4, color='k')
+    plt.legend(handles=[hand_un, hand_mask])
+    plt.xlabel("Number of Principal Components")
+    plt.title("Sum of Proportions of Variance Explained by Components for " + name)
+    plt.savefig(location_of_images+'pcacumsums'+name+'.png')
+    plt.close()
+
+# Write array of variance proportions to a text file.
+df = pd.DataFrame(masked_var_array)
+df.to_csv('masked_var.txt', sep=' ', index=False, header=sub_list)
