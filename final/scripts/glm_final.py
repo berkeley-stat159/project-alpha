@@ -17,6 +17,7 @@ path_to_data          = project_path+"data/ds009/"
 location_of_images    = project_path+"images/"
 location_of_functions = project_path+"code/utils/functions/" 
 final_data            = "../data/"
+behav_suffix           = "/behav/task001_run001/behavdata.txt"
 smooth_data           =  final_data + 'smooth/'
 hrf_data              = final_data + 'hrf/'
 
@@ -39,20 +40,28 @@ sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
 
 for i in sub_list:
+    name = i 
+    behav=pd.read_table(path_to_data+name+behav_suffix,sep=" ")
+    num_TR = float(behav["NumTRs"])
+	
+    #img = nib.load(path_to_data+ name+ "/BOLD/task001_run001/bold.nii.gz")
     
     img = nib.load(smooth_data+ i +"_bold_smoothed.nii")
-    data = img.get_data()
+    data = img.get_data()    
+    
+    first_n_vols=data.shape[-1]
+    num_TR_cut=int(first_n_vols-num_TR)
+    
+    #data = data[...,num_TR_cut:] 
+        
         
     n_vols = data.shape[-1]    
     convolve = np.loadtxt(hrf_data+i+"_hrf.txt")
     
-    residual_final = np.zeros((data.shape))
+    #residual_final = np.zeros((data.shape))
     t_final = np.zeros((data.shape[:-1]))
-<<<<<<< Updated upstream
-    p_final = np.zeros((data.shape[:-1]))
-=======
+    #p_final = np.zeros((data.shape[:-1]))
     t_final2 = np.zeros((data.shape[:-1]))
->>>>>>> Stashed changes
     
     
     for j in range(data.shape[2]):
@@ -68,24 +77,24 @@ for i in sub_list:
         beta2, t2, df2, p2 = t_stat(data_slice,convolve[:,j], c=[0,1] )
         
         t = t[1,:]
-        p = p[1,:]
+        #p = p[1,:]
         t2 = t2.T
         
         MRSS, fitted, residuals = glm_diagnostics(beta, X, data_slice)
         
         
         t_final[:,:,j] = t.reshape(data_slice.shape[:-1])
-        p_final[:,:,j] = p.reshape(data_slice.shape[:-1])
-        t_final2[:,:,j] = t2.reshape(data_slice.shape[:-1])
+        #p_final[:,:,j] = p.reshape(data_slice.shape[:-1])
+        #t_final2[:,:,j] = t2.reshape(data_slice.shape[:-1])
         
-        residual_final[:,:,j,:] = residuals.reshape(data_slice.shape)
+        #residual_final[:,:,j,:] = residuals.reshape(data_slice.shape)
         
         np.save("../data/glm/t_stat/"+i+"_tstat.npy", t_final)
-        np.save("../data/glm/t_stat/"+i+"_tstat2.npy", t_final2)
-        np.save("../data/glm/residual/"+i+"_residual.npy", residual_final)
-        np.save("../data/glm/p-values/"+i+"_pvalue.npy", p_final)
+        #np.save("../data/glm/t_stat/"+i+"_tstat2.npy", t_final2)
+        #np.save("../data/glm/residual/"+i+"_residual.npy", residual_final)
+        #np.save("../data/glm/p-values/"+i+"_pvalue.npy", p_final)
         
-      
+     
     sys.stdout.write("-")
     sys.stdout.flush()
 sys.stdout.write("\n")
