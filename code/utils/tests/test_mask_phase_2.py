@@ -46,8 +46,8 @@ def test_1():
 	happy4=np.arange(27*4)
 	happy4=happy4.reshape((3,3,3,4))
 
-	mask4=np.zeros((3,3,3,4))
-	mask4[:2,1:,2:,:]=1
+	mask4=np.zeros((3,3,3))
+	mask4[:2,1:,2:]=1
 
 	joy4=masking_reshape_start(happy4,mask4)
 
