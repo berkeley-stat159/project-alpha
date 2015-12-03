@@ -75,11 +75,11 @@ def test_2():
 
 def test_3():
 	# checks that neighbor_smoothing works
-	b = np.array([[np.arange(5), np.arange(5)], [np.arange(5), np.arange(5)]])
+	b = np.array([[np.arange(3), np.arange(3), np.arange(3)], [np.arange(3), np.arange(3), np.arange(3)], [np.arange(3), np.arange(3), np.arange(3)]])
 	a = b*-1
 
 	assert(len(a.shape) == 3)
-
+	assert(a.shape == (3, 3, 3))
 	a_n = neighbor_smoothing(a, 3)
 
 	assert_almost_equal(a_n, a)

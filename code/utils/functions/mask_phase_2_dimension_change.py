@@ -91,6 +91,8 @@ def neighbor_smoothing(data_3d, neighbors):
 	off = np.max(data_3d)
 	#print(off)
 	shape = data_3d.shape
+
+	# these for loops fail the travis coverage!!!
 	for i in 1 + np.arange(shape[0] - 2):
 		for j in 1 + np.arange(shape[1] - 2):
 			for k in 1 + np.arange(shape[2] - 2):
