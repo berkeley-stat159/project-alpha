@@ -1,9 +1,9 @@
 % tex file for convolution
 \subsubsection{Convolution}
 \par \indent Our study is structured around event-related neurological 
-stimulus, not block stimulus as was discussed as the in-class example. We 
+stimulus, not block stimulus as was discussed in the in-class example. We 
 predicted the hemoglobin response (HR) related to this type of neurological 
-stimulus, since the methods in class were much better for block stimulus. 
+stimulus. 
 
 There were multiple ways in which we approached the problem of trying to 
 better replicate the predicted response function defined by:
@@ -47,28 +47,34 @@ We compared these methods based on accuracy and speed. [Figure
 		\centering
 		\begin{tabular}{|l | c|}
 		\hline
-		name in graph & Speed per loop \\
+		name in graph       & Speed per loop \\
 		\hline
-		np    			 & 14.4 µs \\
-		user 2     		 & 972 ms  \\
-		user 3     		 & 1.15 s  \\
-		user 4 (15 cuts) & 98.3 ms \\
-		user 4 (30 cuts) & 185 ms  \\
-		user 5     	 	 & 110 ms  \\
+		np naive approach & 14.4 $\mu$s  \\
+		user 2     		    & 972 ms  \\
+		user 3     		    & 1.15 s    \\
+		user 4 (15 cuts)      & 98.3 ms \\
+		user 4 (30 cuts)      & 185 ms  \\
+		user 5     	 	    & 110 ms   \\
 		\hline
 		\end{tabular}
 		\vspace{5mm}
-		\caption{\scriptsize{Speed to create HRF predictions for Subject 001, all conditions}}
+		\caption{\scriptsize{Speed to create HRF predictions for Subject 001, 
+		all conditions}}
 		\label{table:convolution}
 	\end{minipage}
 \end{figure}
 
-The ``np'' run has the worst approximation and is highly theoretically incorrect 
-This was the large motivating factor behind the rest of the convolution analysis. 
-The ``user 2''' and ``user 3'' runs fall under subcategory \textbf{(1)}, 
-``user 5'' falls under subcategory \textbf{(2)}, and ``user 4'' fall under 
-subcategory \textbf{(3)}, with notations for the number of slices between each 
-scan.
+The ``np naive approach'' run has the worst approximation and isn't even 
+theoretically correct. As was stated above, this was the large motivating factor 
+behind the rest of the convolution analysis. The ``user 2'' and ``user 3'' runs fall 
+under subcategory \textbf{(1)}. The ``user 2'' was the first approach to
+matches the theory, but matches the stimulation times and not the scan times.
+The ``user 3'' is the most theoretically sound model (and is our standard for 
+accuracy). The ``user 5'' falls under subcategory \textbf{(2)}, ``User 5''  is our 
+matrix version of the theory, and has the same accuracy as ``user 3''. The 
+``user 4'' model fall under subcategory \textbf{(3)}, the methods that use the 
+grid cut usage of \texttt{np.convolve} with notations for the number of slices 
+between each scan.
 
 \subsubsection{Time Correction}
 
@@ -76,8 +82,8 @@ The fMRI machine scans each voxel at a slightly different time. In our case,
 the lowest horizontal slice was scanned first, with the later scans moving 
 progressively toward the top of the brain. So, there is an observable time drift 
 that needs be accounted for. We did so by shifting the times of stimulus 
-``backwards'' for voxels scanned later to directly "correct" for the delay of the 
-scan (assuming that each layer of the scan took 2/34 of a second).
+``backwards'' for voxels scanned later to directly "correct" for the delay of 
+the scan (assuming that each layer of the scan took 2/34 of a second).
 
 \subsubsection{Multiple Conditions}
 
@@ -85,8 +91,8 @@ At the beginning of our analysis we tried to see if there was an advantage to
 separating our 3 conditions and creating separate predicted hemodyamic reposes 
 for each to allow for different amplitudes for each type of condition. We did 
 not observe a large difference in the $\hat{\beta}$ values we got, so we did not 
-continue with this exploration. It is quiet possible that with the new approaches 
-we've applied, differentiating the conditions for the stimulus might see gains in 
-interpretability.
+continue with this exploration. It is quiet possible that with the new 
+approaches we've applied, differentiating the conditions for the stimulus might 
+see gains in interpretability.
 
 

@@ -20,31 +20,31 @@
 
 \section{Introduction}
 
-fMRI data presents a distinct challenge for relating neural stimulation 
+fMRI data presents a distinct challenge for relating neural stimuli 
 to BOLD (blood-oxygen-level dependent) response. fMRI scans record changes 
 in oxygenation levels of hemoglobin in the brain. However, there is a delay 
-between neural stimulation and the change in blood oxygen levels to a givein 
-area. This delayed and lengthy response has been modeled using block stimulus 
-and a classic example of this hemodyamic response function (with stimulation 
-at t=0) can be seen in Figure \ref{fig:hrf}. The complete hemodynamic needs 
-to be modeled in order to better relate  stimulation and the BOLD response 
-from the fMRI.
+between the neural stimulus and the change in blood oxygen levels in a given 
+area. For our data, this delayed response has been modeled using block stimulus. 
+A classic example of this hemodynamic response function (with stimulus at t=0) 
+can be seen in [Figure \ref{fig:hrf}]. The complete hemodynamic response 
+function needs to be modeled in order to better relate stimulation and the BOLD 
+response from the fMRI scan.
 
 \section{Mathematics}
-\subsection{Convolution Theory/ Mathematics}
+\subsection{Convolution Theory and Mathematics}
 
-To relate stimuli to BOLD reponse, we convolved the time courses. At a basic 
-level, convolution is a distinct combination of two functions (say $f$ and $g$).
- This combination is just the ``integral that expresses the amount of overlap of
-  $f$ as it is shifted over another function $g$''  
-  \cite{weissten2015convolution}. There are many examples of this, but the 
-  following is basic idea that we'll expand of later. 
+To relate stimuli to BOLD response, we convolved the time courses. At a basic 
+level, convolution is a distinct combination of two functions (say $f$ and $g$). 
+This combination is just the ``integral that expresses the amount of overlap of 
+$f$ as it is shifted over another function $g$'' \cite{weissten2015convolution}. 
+There are many examples of this, but the following is basic idea that we will 
+expand off of later. 
 
-Let's define a function $f$ as a sum of 2 gamma functions, and $g$ as a 
-``continous'' specialized step function  (we'll see why these functions are 
-valuable later). Graphically we can see their plots in Figure \ref{fig:f}, 
-\ref{fig:g}, and mathematically let's define them as follows as the following 
-equation \ref{eq:gamma2} and \ref{eq:step} respectly.
+Let us define the function $f$ as a sum of two gamma functions and $g$ as a 
+``continuous'' specialized step function (we will examine why these functions are 
+valuable later). Graphically, we can see their plots in [Figure \ref{fig:f}, 
+\ref{fig:g}], and mathematically we will define them as in the following 
+equations \ref{eq:gamma2} and \ref{eq:step}, respectively.
 
 \begin{equation} \label{eq:gamma2}
 f(t)=\frac{.6}{.17}\cdot  \big[G_1(6,t)-.35 \cdot G_1(12,t) \big]
@@ -65,54 +65,44 @@ $\theta =1$)
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
 	\includegraphics[width=.8\linewidth]{images/hrf_pattern.png} 
-	\caption{$f$ (``Stablized Function'')}
+	\caption{$f$ (``Stabilized Function'').}
 	\label{fig:f}
 \end{minipage}	
 \quad
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
 		\includegraphics[width=.8\linewidth]{images/play.png} 
-	\caption{$g$ (``Moving function'')}
+	\caption{$g$ (``Moving function'').}
 	\label{fig:g}
 \end{minipage}
 \end{figure}
 
 
-As mentioned in the basical level definition, if we move $g$ across $f$ from 
-left to right, at discrete time intervals we'd see something similar to Figure 
-\ref{fig:math}. If we plot these values (the integration of the differences), 
-we'll get a plot very similar to f starting at a certain point.  **The plot 
-actually cheats when $f$ is negative, and we'd have to alter definitions a 
-little bit (will hopefully do later).**  If we had multiple bumps in our $g$ 
-function ( i.e. multiple distinct``zero'' places'' we'd expect we'd get 
-multiple non-zero differences between the functions at each time capture 
-(this idea is needed later). 
-
-
-
-
+As mentioned in the earlier definition, if we move $g$ across $f$ from 
+left to right, we will see something similar to [Figure \ref{fig:math}] for 
+discrete time intervals. If we plot these values (the integration of the 
+differences), we will get a plot very similar to that of $f$ when $f$ is 
+starting at a certain point. (The plot actually ``cheats'' when $f$ is 
+negative, and we would have to alter definitions a little bit.) If we had 
+multiple peaks in our $g$ function (i.e. multiple distinct``zero'' places), we 
+would expect to get multiple non-zero differences between the functions at each 
+time capture. The time capture idea will be needed later.  
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=.5\linewidth]{images/math_convolved.png}
-	\caption{convolution of $f$ and $g$}
+	\caption{Convolution of $f$ and $g$.}
 	\label{fig:math}
 \end{figure}
 
 
-
-
-
-
 \subsection{Convolution Applied to Stimulus}
 
-The ``continous'' nature of the step function ``g'' doesn't extend well into 
-discrete time series that we have. As such, and a very common change in fMRI 
-analysis is to approach the convolution as something slightly different 
-(through mathematical sums).  
-
-For example in the previous section, we can treat $f$ as the same, and $g$ as 
-$g'$ defined in equation \ref{eq:g_prime}.
+The ``continuous'' nature of the step function ``g'' does not extend well into 
+the discrete time series that we have. However, one approach for fMRI analysis 
+is to approach the convolution as something slightly different: mathematical 
+sums. For example, in the previous section, we can treat $f$ as the same, and 
+$g$ as $g'$ defined in equation \ref{eq:g_prime}.
 
 \begin{equation}\label{eq:g_prime}
  g'(t)=\Big \{ \begin{tabular}{l c}
@@ -120,7 +110,7 @@ $g'$ defined in equation \ref{eq:g_prime}.
  		0  & otherwise \\
  		\end{tabular} \end{equation}
 
-We could then define the value of the convolution of $g'$ and $f$ for discrete 
+We could then find the value of the convolution of $g'$ and $f$ for discrete 
 integers as in equation \ref{eq:math_discrete}.
 
 
@@ -130,21 +120,21 @@ r(t)=  f(t-6)
 
 
 
-If we allow for multiple non-zero periods for $g'$ then we get a more general 
+If we allow for multiple non-zero periods in $g'$, we can get a more general 
 model in equation \ref{eq:math_discrete_extend}, where each $t_i$ is a value 
-when $g'(t_i) \neq 0$
+when $g'(t_i) \neq 0$: 
 
 \begin{equation}  \label{eq:math_discrete_extend}
 r(t)= \sum_{i=1}^n f(t-t_i)
 \end{equation}
 
-This equation gives a good glimpse into what a response of the hemodyamic 
-response would be after stimulus at time $t_i$ for $i \in {1,...,n}$. Moreover 
-you could extend the idea to including a ``strength'' value of the stimulus by 
-changing the $g'|t_i$ to values other than 1, if that was the case we'd change 
+This equation gives a good glimpse into what the hemodynamic response would be 
+after stimulus at time $t_i$ for $i \in {1,...,n}$. Moreover, you could extend 
+the idea to include a ``strength'' value of the stimulus by changing the 
+$g'|t_i$ to values other than 1. If that was the case, we would change 
 the response equation to equation \ref{eq:math_discrete_final}. Equation 
 \ref{eq:math_discrete_final} also allows us to include all discrete $t$ into 
-the equation where $g'(t_i)$ now is expected to be zero (so $n$ becomes much 
+the equation where $g'(t_i)$ is now expected to be zero (so $n$ becomes much 
 larger). 
 
 \begin{equation}  \label{eq:math_discrete_final}
@@ -152,8 +142,8 @@ r(t)= \sum_{i=1}^n g'(t_i) f(t-t_i)
 \end{equation}
 
 
-WIth this new equation we can look at function $f$ and $g'$ displayed 
-graphically [Figure \ref{fig:hrf}, \ref{fig:on_off}, respectively], and 
+With this new equation, we can consider function $f$ and $g'$ displayed 
+graphically [Figure \ref{fig:hrf}, \ref{fig:on_off}, respectively] and 
 their ``convolved'' output [Figure \ref{fig:convolve1}].
 
 
@@ -164,14 +154,14 @@ their ``convolved'' output [Figure \ref{fig:convolve1}].
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
 	\includegraphics[width=.8\linewidth]{images/hrf_pattern.png} 
-	\caption{$f$ (``Stablized Function'')}
+	\caption{$f$ (``Stabilized Function'').}
 	\label{fig:hrf}
 \end{minipage}	
 \quad
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
 	\includegraphics[width=.8\linewidth]{images/on_off_pattern.png} 
-	\caption{$g'$ (``Moving function'')}
+	\caption{$g'$ (``Moving function'').}
 	\label{fig:on_off}
 \end{minipage}
 \end{figure}
@@ -180,43 +170,43 @@ their ``convolved'' output [Figure \ref{fig:convolve1}].
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=.5\linewidth]{images/initial_convolved.png}
-	\caption{convolution of $f$ and $g'$}
+	\caption{Convolution of $f$ and $g'$.}
 	\label{fig:convolve1}
 \end{figure}
 
 
 
-\subsection{Bring it back to Earth, and fMRI}
+\subsection{Returning to Our fMRI Data}
 
-With this discrete approach to convolution between $f$ and $g'$, we can deal 
-with our data. The $f$ is actually a common representation of the hemodynamic 
-response, and the $g'$ is a good representation of the stimulation from an 
+We can now apply this discrete approach to convolution between $f$ and $g'$ 
+to our data. The $f$ is actually a common representation of the hemodynamic 
+response, and the $g'$ is a good representation of the stimuli from an 
 event-related trial \cite{brett2015course}. 
 
 \section{Approach to our Specific Problem}
 
-\subsection{Common Approach (\texttt{np.convolve})}
+\subsection{Naive Approach (using \texttt{np.convolve})}
 
-A common approach to convolve 2 functions in the way described above 
-utilizes \texttt{np.convolve}, which uses fast fourier transforms for 
-efficiency (it boils down to fewer computations using roots of unity). 
+A \texttt{numpy} function \texttt{np.convolve}, which takes advantage of 
+fast Fourier transforms for efficiency (it boils down to fewer computations 
+using roots of unity) is commonly used to do discrete convolution. A naive 
+approach for convolving two functions would use this function directly, but
 \texttt{np.convolve} assumes that the intervals between stimuli mirror the 
-desired intervals between prediction intervals. It should be noted that 
-\texttt{np} is a common notation for the \texttt{numpy} module in 
-\texttt{python}.
+desired intervals between prediction intervals. As such, we can not naively
+apply the \texttt{np.convolve} for our data (though we do for a base model). 
 
-\subsection{Moving beyond \texttt{np.convolve}, and needed improvements}
+\subsection{Needed Improvements: Moving beyond naive \texttt{np.convolve}}
 
-The reason motivating this appendix is that our data and needs fail to meet 
-the assumption that the intervals are in equidistant. Especially in our case, 
-there was not an easy route in terms of basic rounding to then correctly utilize 
-\texttt{np.convolve}. All the following approaches improve on the basic 
-\texttt{np.convolve} approach, but ultimately circle back to incorporating 
-\texttt{np.convolve} for speed gains. 
+The reason motivating this appendix is the fact that our data fails to meet the 
+assumption that the intervals are in equidistant. Especially in our case, there 
+was not an simple fix, such as performing some basic rounding in order to then 
+correctly utilize \texttt{np.convolve}. All the following approaches improve on 
+the basic \texttt{np.convolve} approach, but ultimately circle back to 
+incorporating \texttt{np.convolve} for speed gains. 
 
-\subsubsection{Our data/situation explained}
+\subsubsection{Explaining Our Situation}
 Our condition file (\texttt{cond1}) lists stimulus times for when the 
-individual pumped the balloon but didn't pop it. For subject 001, the 
+individual pumped the balloon but did not pop it. For subject 001, the 
 first 10 data points are as follows [Figure \ref{table:cond1}]:
 
 \vspace{5mm}
@@ -238,75 +228,136 @@ first 10 data points are as follows [Figure \ref{table:cond1}]:
  \hline
 
   \end{tabular}
-   \caption{First 10 values for Sub 001, condition 1}
+   \caption{First 10 values for Sub 001, condition 1.}
   \label{table:cond1}
 \end{center}
 \end{figure}
  
-Clearly, this short time series doesn't align with scans that start at 
-$t=0$ and occur every 2 seconds apart. As such, we had to go back to the 
-drawing board to try to reproduce our expected hemodynamic reponse for the 
-whole time course.
+Clearly, this short time series does not align with idealized scans that 
+start at $t=0$ and occur every 2 seconds apart. As such, we had to go back 
+to the drawing board to try to reproduce our expected hemodynamic response for 
+the entire time course.
 
 
 
 \subsubsection{Summary of Approaches}
-Our first approach attempts to reproduce the theoretical rigor for our data. 
-Our second approach tries to utilitize \texttt{np.convolve} by expanding the 
-grid of desired results (thanks to advice from Jean-Baptiste Poline).
+Our first approach attempts to correctly match the theory underlying our data. 
+Our second approach tries to utilize \texttt{np.convolve} by expanding the 
+grid of desired results (thanks to advice from  Matthew Brett, Jean-Baptiste Poline,
+and Jarrod Millman).
 
 
-
-
-\subsubsection{Initial correction to represent theoretical idea}
+\subsubsection{Initial Correction to Represent Theoretical Idea}
 To account for our data's lack of any easily identifiable grid structure 
-between when a stimulus was recorded and when our scans occured (on the 
+between when a stimulus was recorded and when our scans occurred (on the 
 order of every 2 seconds), we went back to the theory of convolution and 
 implemented code to recreate equation \ref{eq:math_discrete_final} directly. 
-To do so, we also had to create a function that treated all discrete points 
-of $f$, the stimulus reponse as potential starts of the hemodyamic response, 
-multiplied by the actual value of $f$, as see in equation 
+To do so, we also had to create a function that works with all discrete points 
+of $f$, the stimulus response as potential starts of the hemodyamic response, 
+multiplied by the actual value of $f$, as seen in equation 
 \ref{eq:code_convolve}:
 
 \begin{equation} \label{eq:code_convolve}
 r(t)= \sum_{i=1}^n g'_{i} f(t-t_i)
 \end{equation}
 
-where $g'_{i}$ is the value of $g'$ at $t_i$ (allowing for zeroes and varying 
-non-zero value of $g'$).
+where $g'_{i}$ is the value of $g'$ at $t_i$ (allowing for zeros and varying 
+non-zero values of $g'$).
 
 
-\subsubsection{Matrix multiplication}
-Equation \ref{eq:code_convolve}, rewritten below
+\subsubsection{Matrix Multiplication}
+Equation \ref{eq:code_convolve}, reproduced below
 
 $$r(t)= \sum_{i=1}^n g'_{i} f(t-t_i)$$
 
-can be changed to a matrix multiplication problem:
+can be rewritten as a matrix multiplication problem (thanks to Jane Liang):
 
 \begin{equation} \label{eq:matrix_code_convolve}
 r(t)=  g^*(t)^T f^*(t)
 \end{equation}
 
-where the $g^*$ is a vectorized function of $g'$ of $t$ as a scalar output and 
+where $g^*$ is a vectorized function of $g'$ of $t$ as a scalar output and 
 $f^*$ is the vector of $f$ values (irrespective of location, as the $t^*$ 
-takes that into account).
+takes that into account). This is a useful representation, since matrix 
+multiplication is faster for Python's numpy arrays. 
 
 
-\subsubsection{Utilization of FFT with \texttt{np.convolve}}
-The ''theoretical'' solution lacked computation efficiency (although the 
-matrix version increased speed by a lot), so we also approached the problem by 
-creating a more dense grid between each scan (2 seconds apart). Then we rounded 
-the actual times of the stimulus to meet this more finely scaled grid. This 
-allowed us to utilize \texttt{np.convolve} with it's faster algorithms 
-(using FFT), and then reduce back down to our 2 second grid.
 
-We initially started with 30 slices in between each scan, but matrix 
-multiplication actually beat this analysis, so we reduced the time cost by 1/2 
-(with only 15 slices), and so little decline is accuracy.
 
-This method does loose accuracy, but since the ideas behind this process don't 
-really have very strong relationships to real life, a little accuracy loss is 
-acceptable for speed.
+\subsubsection{Using FFT with \texttt{np.convolve}}
+The ``theoretical'' solution lacked computation efficiency (despite 
+considerable speed improvements from matrix multiplication), so we also 
+approached the problem by creating a denser grid between each scan (2 seconds 
+apart). Then we rounded the actual times of the stimulus to meet this more 
+finely scaled grid. This allowed us to utilize \texttt{np.convolve} with its 
+faster algorithms (thanks to FFT), before reducing back down to our 2 second 
+grid. 
+
+
+\section{Example}
+
+Now that we have discussed that theoretics of and possible implementations of the 
+convolving event-related stimulation, let's look at a basic example from our data.
+(specifically using subject 001 condition files), and in doing so examine the trade-offs
+between theoretical accuracy and computational efficiency.
+
+
+\begin{figure}[ht]
+\centering
+	\begin{minipage}[b]{0.45\linewidth}
+		\centering
+		\includegraphics[width=.8\linewidth]{images/convolution_vs_neural_stimulus}  
+		% needs to be from the event_related_HRF_script2.py 
+		\caption{\scriptsize{Different convolution functions vs. the Neural stimulus}}
+		\label{fig:convolution}
+
+	\end{minipage}
+\quad
+	\begin{minipage}[b]{0.45\linewidth}
+		\centering
+		\begin{tabular}{|l | c|}
+		\hline
+		name in graph       & Speed per loop \\
+		\hline
+		np naive approach & 14.4 $\mu$s  \\
+		user 2     		    & 972 ms  \\
+		user 3     		    & 1.15 s    \\
+		user 4 (15 cuts)      & 98.3 ms \\
+		user 4 (30 cuts)      & 185 ms  \\
+		user 5     	 	    & 110 ms   \\
+		\hline
+		\end{tabular}
+		\vspace{5mm}
+		\caption{\scriptsize{Speed to create HRF predictions for Subject 001, 
+		all conditions}}
+		\label{table:convolution}
+	\end{minipage}
+\end{figure}
+
+The ``np naive approach'' run has the worst approximation and isn't even 
+theoretically correct. As was stated above, this was the large motivating factor 
+behind the rest of the convolution analysis. The ``user 2'' was the first approach to
+matches the theory, but matches the stimulation times and not the scan times.
+The ``user 3'' is the most theoretically sound model (and is our standard for 
+accuracy). ``User 5''  is our matrix version of the theory, and has the same 
+accuracy as ``user 3''. The ``user 4'' models fall under use the grid cut usage of 
+\texttt{np.convolve} with notations for the number of slices between each 
+scan.
+
+
+
+%While this final method does lose some accuracy compared to the more 
+%theoretically rigorous approach, the trade-off brings considerable gains in 
+%computational efficiency. 
+
+
+
+
+
+
+
+
+
 
 
 %Needed references:
