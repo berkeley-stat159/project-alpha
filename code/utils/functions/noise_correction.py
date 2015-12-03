@@ -28,11 +28,11 @@ def fourier_creation(n,p):
 	Parameters:
 	-----------
 	n: desired length to run over (assumes 0:(n-1) by integers)
-	p: number of fourier series
+	p: number of fourier series (pairs)
 
 	Returns:
 	--------
-	X: glm_matrix (first column is all 1s) (dim p+1)
+	X: glm_matrix (first column is all 1s) (dim 2p+1)
 
 	Note:
 	-----
@@ -40,9 +40,10 @@ def fourier_creation(n,p):
 	look at maximum period first
 	"""	
 
-	X = np.ones((n,p+1))
+	X = np.ones((n,2*p+1))
 	for i in range(p):
-		X[:,i+1]=np.sin(((i+1)/X.shape[0])*2*np.arange(n))
+		X[:,2*i+1]=np.sin(((i+1)/X.shape[0])*2*np.arange(n))
+		X[:,2*i+2]=np.cos(((i+1)/X.shape[0])*2*np.arange(n))
 
 	return X
 
@@ -52,7 +53,7 @@ def fourier_predict_underlying_noise(y_mean,p):
 	Parameters:
 	-----------
 	y_mean: 1 dimensional np.array
-	p: number of fourier series
+	p: number of fourier series (pairs)
 
 	Returns:
 	--------
