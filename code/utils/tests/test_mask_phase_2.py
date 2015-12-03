@@ -16,15 +16,15 @@ import nibabel as nib
 import os
 import sys
 
-#from numpy.testing import assert_almost_equal
+from numpy.testing import assert_almost_equal
 #from nose.tools import assert_not_equals
 from nose.tools import assert_equals
-#from nose.tools import assert_array_equals
+#from nose.tools import assert_array_equal
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 
-from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end
+from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end, neighbor_smoothing
 
 
 
@@ -72,4 +72,15 @@ def test_2():
 	test[:2,1:,2:]=happy[:2,1:,2:]
 
 	assert(np.all(test==output))
+
+def test_3():
+	# checks that neighbor_smoothing works
+	b = np.array([[np.arange(5), np.arange(5)], [np.arange(5), np.arange(5)]])
+	a = b*-1
+
+	assert(len(a.shape) == 3)
+
+	a_n = neighbor_smoothing(a, 3)
+
+	assert_almost_equal(a_n, a)
 
