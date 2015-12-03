@@ -93,7 +93,7 @@ cond_all=np.loadtxt(condition_location+"cond_all.txt")
 #	potentially overcorrecting and masking some response to neural stimulation
 
 # X matrix
-X = np.ones((n_vols,6))
+X = np.ones((n_vols,9)) #changed since fourier needs more
 X[:,1]=convolution_specialized(cond_all[:,0],np.ones(len(cond_all)),hrf_single,all_tr_times)
 X[:,2]=np.linspace(-1,1,num=X.shape[0]) #drift
 X[:,3:]=fourier_creation(X.shape[0],3)[:,1:]
@@ -172,7 +172,7 @@ plt.title("Data for sub001, voxel [41, 47, 2],fourier 3 fit to mean")
 plt.xlabel("Time")
 plt.ylabel("Hemodynamic response")
 plt.legend(loc='upper right', shadow=True,fontsize="smaller")
-plt.savefig(location_of_images+'noise_correction_mean_individual_fitted.png')
+plt.savefig(location_of_images+'noise_correction_mean_individual_fitted2.png')
 plt.close()
 
 
@@ -196,7 +196,7 @@ plt.close()
 # Get first two principal components. 
 # Sklearn needed. Trying to get all the components results in
 # a memory error, so we will only get the first two. 
-data_2d = data.reshape((-1,data.shape[-1]))
+"""data_2d = data.reshape((-1,data.shape[-1]))
 pca = PCA(n_components=2)
 pca.fit(data_2d.T.dot(data_2d))
 comps = pca.components_
@@ -215,4 +215,4 @@ plt.legend(loc='upper right', shadow=True,fontsize="smaller")
 plt.savefig(location_of_images+'noise_correction_pca.png')
 plt.close()
 
-
+"""
