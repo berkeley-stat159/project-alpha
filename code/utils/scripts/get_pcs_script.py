@@ -1,8 +1,9 @@
 """
-Script to do SVD on the covariance matrix of the voxel by time matrix.
+Script to do SVD on the covariance matrix of the MASKED voxel by time matrix.
+Spits out the first 5 components for each subject.
 
 Run with: 
-    python pca_script.py
+    python get_pcs_script.py
 
 """
 
@@ -26,13 +27,13 @@ sys.path.append(location_of_functions)
 from Image_Visualizing import make_mask
 
 # List of subject directories.
-sub_list = os.listdir(path_to_data)
-# Initialize array to store variance proportions. 
-masked_var_array = np.zeros((50, len(sub_list)))
+#sub_list = os.listdir(path_to_data)
+sub_list = ['sub002', 'sub003', 'sub014'] # Just 3 for now.
+# Initialize list to store principal components for each subject.
+pcs = []
 
 # Loop through all the subjects. 
-for j in range(len(sub_list)):
-    name = sub_list[j]
+for name in sub_list:
     # amount of beginning TRs not standardized at 6
     behav=pd.read_table(path_to_data+name+behav_suffix,sep=" ")
     num_TR = float(behav["NumTRs"])
@@ -63,49 +64,13 @@ for j in range(len(sub_list)):
     masked_data_2d = data_2d[my_mask_2d.sum(1) != 0,:]
 
     # Subtract means over voxels (columns).
-    data_2d = data_2d - np.mean(data_2d, 0)
     masked_data_2d = masked_data_2d - np.mean(masked_data_2d, 0)
 
     # Subtract means over time (rows)
-    data_2d = data_2d - np.mean(data_2d, axis=1)[:, None]
     masked_data_2d = masked_data_2d - np.mean(masked_data_2d, axis=1)[:, None]
-
-    # PCA analysis on unmasked data: 
-    # Do SVD on the time by time matrix and get explained variance.
-    U, S, VT = npl.svd(data_2d.T.dot(data_2d))
-    exp_var = S / np.sum(S)
-    var_sums = np.cumsum(exp_var)
 
     # PCA analysis on MASKED data: 
     # Do SVD on the time by time matrix and get explained variance.
     U_masked, S_masked, VT_masked = npl.svd(masked_data_2d.T.dot(masked_data_2d))
-    exp_var_masked = S_masked / np.sum(S_masked)
-    var_sums_masked= np.cumsum(exp_var_masked)
-    masked_var_array[:,j] = exp_var_masked[:50] # Store the first 50 variance proportions.
+    pcs.append(masked_data_2d.dot(U_masked[:,:5]))
     
-    # Setting up legend colors.
-    hand_un = mlines.Line2D([], [], color='b', label='Not Masked')
-    hand_mask = mlines.Line2D([], [], color='r', label='Masked')
-
-    # Compare proportion of variance explained by each component for masked and unmasked data.
-    plt.plot(exp_var[np.arange(10)], 'b-o')
-    plt.plot(exp_var_masked[np.arange(10)], 'r-o')
-    plt.legend(handles=[hand_un, hand_mask])
-    plt.xlabel("Principal Components")
-    plt.title("Proportion of Variance Explained by Each Component for " + name)
-    plt.savefig(location_of_images+'pcapropvar'+name+'.png')
-    plt.close()
-
-    # Compare proportion of variance explained by each component.
-    plt.plot(var_sums[np.arange(10)], 'b-o')
-    plt.plot(var_sums_masked[np.arange(10)], 'r-o')
-    plt.axhline(y=0.4, color='k')
-    plt.legend(handles=[hand_un, hand_mask])
-    plt.xlabel("Number of Principal Components")
-    plt.title("Sum of Proportions of Variance Explained by Components for " + name)
-    plt.savefig(location_of_images+'pcacumsums'+name+'.png')
-    plt.close()
-
-# Write array of variance proportions to a text file.
-df = pd.DataFrame(masked_var_array)
-df.to_csv('masked_var.txt', sep=' ', index=False, header=sub_list)
