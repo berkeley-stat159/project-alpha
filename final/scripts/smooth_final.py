@@ -69,7 +69,7 @@ for name in sub_list:
 	img = nib.load(path_to_data+ name+ "/BOLD/task001_run001/bold.nii.gz")
 	
 	affine=img.affine # why is it 4d? 
-	data = img.get_data()
+	data = img.get_data().astype(float)
 
 
 	first_n_vols=data.shape[-1]

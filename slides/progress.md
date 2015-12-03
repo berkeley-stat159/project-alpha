@@ -22,118 +22,92 @@
 - Download, decompress and check hashes of data
 
 
+# Initial analysis
 
+- Convolution: Worked with problems with event-related stimulus model
 
-# Convolution: Worked with problems with event-related stimulus model
+- Smoothing: Convolution with a Gaussian filter (scipy module)
 
-\begin{figure}[ht]
-\centering
-	\begin{minipage}[b]{0.5\linewidth}
-		\centering
-		\includegraphics[width=1\linewidth]{images/convolution_vs_neural_stimulus}  
-		% needs to be from the event_related_HRF_script2.py 
-		\caption{\scriptsize{Different convolution functions vs. the Neural stimulus}}
-		\label{fig:convolution}
+- Linear regression: Single and multiple regression with stimulus (all conditions and seperate)
 
-	\end{minipage}
-\quad
-	\begin{minipage}[b]{0.45\linewidth}
-		\centering
-		\scriptsize{\begin{tabular}{|l | c|}
-		\hline
-		name in graph & Speed per loop \\
-		\hline
-		np    			 & 14.4 µs \\
-		user 2     		 & 972 ms  \\
-		user 3     		 & 1.15 s  \\
-		user 4 (15 cuts) & 98.3 ms \\
-		user 4 (30 cuts) & 185 ms  \\
-		user 5     	 	 & 110 ms  \\
-		\hline
-		\end{tabular}}
-		\vspace{5mm}
-		\caption{\scriptsize{Speed to create HRF predictions for Subject 001, all conditions}}
-		\label{table:convolution}
-	\end{minipage}
-\end{figure}
+- Hypothesis testing: General t-tests on $\beta$ values, and across suject analysis
 
-# Smoothing: Convolution with a Gaussian filter (scipy module)
+- Time series: ARIMA model
 
+- PCA: Modeling against SVD
+
+# Our Plan
+
+- Hypothesis testing: General t-tests on $\beta$ values, and across suject analysis
+
+- Time series: ARIMA model
+
+- PCA: Modeling against SVD
+
+# Before and After Smoothing
 \begin{figure}
   \centering
   {\includegraphics[scale=0.25]{images/original_slice.png}}{\includegraphics[scale=0.25]{images/smoothed_slice.png}}
 \end{figure}
 
 
-# Linear regression: Single and multiple regression with stimulus (all conditions and seperate)
 
-\begin{figure}[ht]
-\centering
-\begin{minipage}[b]{0.45\linewidth}
-	\centering
-	\includegraphics[width=.8\linewidth]{images/Fitted_v_Actual.png} 
-	\caption{Fitted vs Actual}
-	\label{fig:fit_vs_act}
-\end{minipage}	
-\quad
-\begin{minipage}[b]{0.45\linewidth}
-	\centering
-		\includegraphics[width=.8\linewidth]{images/Fitted_v_Residuals.png} 
-	\caption{Fitted vs Residual}
-	\label{fig:fit_vs_res}
-\end{minipage}
-\end{figure}
-
-
-
-#  Hypothesis testing: General t-tests on $\beta$ values, and across subject analysis
-
-
-\begin{figure}[ht]
-\centering
-\begin{minipage}[b]{0.45\linewidth}
-	\centering
-	\includegraphics[width=.8\linewidth]{images/hypothesis_testing.png} 
-	\caption{Smoothed t-values}
-	\label{fig:t-value}
-\end{minipage}	
-\quad
-\begin{minipage}[b]{0.45\linewidth}
-	\centering
-		\includegraphics[width=.8\linewidth]{images/hypothesis_testing2.png} 
-	\caption{unsmoothed t-values}
-	\label{fig:t-value2}
-\end{minipage}
-\end{figure}
-
-# PCA on the voxel by time covariance matrix.
-
-
+# Hypothesis Testing Across Subjects
 \begin{figure}
   \centering
-  {\includegraphics[scale=0.5]{images/pcasub010.png}}
+  {\includegraphics[scale=0.5]{images/hypothesis_testing.png}}
 \end{figure}
 
+# Our Plan
 
-# Clustering
+## Goal
+- Trying to reproduce methods, but it won't all be the same
 
-\begin{figure}[ht]
-\centering
-\begin{minipage}[b]{0.6\linewidth}
-	\centering
-	\includegraphics[width=.8\linewidth]{images/clustering1.png} 
-	\caption{Clustering 1}
+## Issues we have encountered
+- Convolution with event-related stimuli
+- Approach to multiple subjects
+- Scan time problems (large dimensions)
+- Validation of performance
+- Trying to replicate black box analysis
 
-\end{minipage}	
-\quad
-\hspace{-30mm}
-\begin{minipage}[b]{0.6\linewidth}
-	\centering
-	\includegraphics[width=.8\linewidth]{images/clustering2.png} 
-	\caption{Clustering 2}
+# Our Plan
+## What we need to accomplish
+- Preprocessing: 
+	- Resampling to correct for when the voxels were actual scanned (time shift)
+	- Explore Convolution (3rd time's the charm)
+- Analysis:
+	- Multiple comparision:
+		- Permutation test
+		- Random field technique
+		- Benjamini-Hoffberg
 
-\end{minipage}
-\end{figure}
+# Comments about our Project
 
+## Most difficult aspect of project?
+- Direction of project
+
+## Success in overcoming these obstacles?
+- |--------------------------------|
+- 		 ^ This successful ^
+ 
+## Most useful parts of class?
+- Git workflow
+
+# The Project continued
+
+## What do we need to successfully complete the project?
+- Define better goals, and set an end goal
+- Take advantage of pre-existing toolkit
+- Tie our analysis and conclusions back to the original paper
+
+## Difficulty of making work reproducible?
+- Writing tests that maintain our coverage
+- Relative paths and making sure nosetests/Makefiles work properly
+
+# Potential topics to cover in class in the future
+- Coding best practices and style
+- Python approach to machine learning (scikit-learn)
+- Other popular software tools used in collaboration
+- Learning basics of Pandas
 
 
