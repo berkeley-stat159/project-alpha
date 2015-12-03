@@ -1,6 +1,17 @@
 # masking_reshape_functions.py
 # this file provides a way to mask data, then reduce it's dimensions 
 # (and then create the correct output after analysis is done on 1d to 2d data)
+import numpy as np
+import itertools
+import scipy.ndimage
+from scipy.ndimage.filters import gaussian_filter
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import nibabel as nib
+import os
+import sys
+
 
 def masking_reshape_start(data,mask):
 	"""
