@@ -16,6 +16,8 @@ import nibabel as nib
 import os
 import sys
 
+from numpy.testing import assert_array_almost_equal
+#from numpy.testing import assert_allclose
 from numpy.testing import assert_almost_equal
 #from nose.tools import assert_not_equals
 from nose.tools import assert_equals
@@ -83,4 +85,11 @@ def test_3():
 	a_n = neighbor_smoothing(a, 3)
 
 	assert_almost_equal(a_n, a)
+
+	ones = np.ones((3, 3, 3))
+
+	rachel = np.ones((3, 3, 3))
+	rachel[1, 1, 1] = -1
+	rachel_n = neighbor_smoothing(rachel, 2)
+	assert_array_almost_equal(rachel_n, ones)
 
