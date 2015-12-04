@@ -20,7 +20,7 @@ from event_related_fMRI_functions import hrf_single, convolution_specialized
 from glm import glm, glm_diagnostics
 
 # Load our normality functions. 
-from normality import check_sw
+from normality import check_sw, check_sw_masked
 
 # Load the image data for subject 1.
 img = nib.load(pathtodata+"BOLD/task001_run001/bold.nii.gz")
@@ -69,8 +69,17 @@ np_MRSS, np_fitted, np_residuals = glm_diagnostics(np_B, np_X, data)
 ###########################
 #Shapiro-Wilks on Residuals
 ###########################
-#Shapiro-Wilks: tests the null hypothesis that the data was 
-#drawn from a normal distribution.
+# Shapiro-Wilks: tests the null hypothesis that the data was 
+# drawn from a normal distribution.
 
+# Using 4-d residuals.
 sw_pvals = check_sw(np_residuals)
 print(np.mean(sw_pvals > 0.05))
+
+# Using 2-d residuals (voxel by time), which is kind of silly now, 
+# but will be important when running models on masked data. 
+resid_2d = np_residuals.reshape((-1,np_residuals.shape[-1]))
+sw_pvals_2d = check_sw_masked(resid_2d)
+print(np.mean(sw_pvals_2d > 0.05))
+print("Should be the same.")
+

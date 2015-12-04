@@ -13,7 +13,7 @@ def check_sw(resid_4d):
     
     Returns
     -------
-    sw_normality: test statistic from Shapiro-Wilks normality test
+    sw_normality: 3D array of p-values.
     
     """
     sw_3d = np.zeros(resid_4d.shape[:-1])
@@ -22,6 +22,28 @@ def check_sw(resid_4d):
             for k in range(resid_4d.shape[2]):
                 junk, sw_3d[i,j,k] = shapiro(resid_4d[i,j,k,:])
     return sw_3d
+
+
+def check_sw_masked(resid_2d): 
+    """
+    Shapiro-Wilk tests the null hypothesis that the data was drawn 
+    from a normal distribution. In particular, this function 
+    performs a Shapiro-Wilk test on each voxel's residuals. Same as 
+    check_sw, but assumes that the residuals come in a 2D array, 
+    with voxels as the rows. 
+    Parameters
+    ---------
+    resid_2d: residual data of 2D numpy array
+    
+    Returns
+    -------
+    sw_normality: 1D array of p-values.
+    
+    """
+    sw_1d = np.zeros(resid_2d.shape[0])
+    for i in range(resid_2d.shape[0]):
+        junk, sw_1d[i] = shapiro(resid_2d[i,:])
+    return sw_1d
             
 
 def check_kw(resid_4d): 
@@ -37,7 +59,7 @@ def check_kw(resid_4d):
     
     Returns
     -------
-    kw_normality: p-value from Kruskal-Wallis normality test
+    kw_normality: 3D array of p-values.
     
     """
     kw_3d = np.zeros(resid_4d.shape[:-1])
