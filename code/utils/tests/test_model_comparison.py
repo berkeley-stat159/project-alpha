@@ -25,22 +25,26 @@ from model_comparison import adjR2, BIC
 def test_1():
 	# adjusted R^2 for the trivial case (RSS=TSS)
 	
-	y_1d= np.array([1,-1])
-	MRSS= np.mean((y_1d-np.mean(y_1d))**2)*2
-	df = 1
+	y_1d = np.array([1,-1])
+	df   = 1
+	MRSS = np.sum((y_1d-np.mean(y_1d))**2)/df
+	rank = 1
 
-	joy=adjR2(MRSS,y_1d,df)
+
+	joy  = adjR2(MRSS,y_1d,df,rank)
 
 	assert(joy==0)
 
 def test_2():
 
-	y_1d= np.array([1,-1])
-	MRSS= np.mean((y_1d-np.mean(y_1d))**2)*2
-	df = 1
-	RSS=MRSS
-	n=2
-	joy2=n * np.log(RSS/n) + np.log(n)*(n-df)
+	y_1d = np.array([1,-1])
+	df   = 1
+	MRSS = np.sum((y_1d-np.mean(y_1d))**2)/df
+	rank = 1
+	RSS  = MRSS
+	n    = 2
 
-	assert(joy2==BIC(MRSS,y_1d,df))
+	joy2 = n * np.log(RSS/n) + np.log(n)*(n-df)
+
+	assert(joy2==BIC(MRSS,y_1d,rank,df))
 

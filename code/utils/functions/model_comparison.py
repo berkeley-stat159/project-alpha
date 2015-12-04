@@ -11,18 +11,19 @@ import os
 import sys
 
 
-def adjR2(MRSS,y_1d,df):
+def adjR2(MRSS,y_1d,df,rank):
 	"""
 	Computes a single Adjusted R^2 value for a model (high is good) 
 
 	Input:
 	------
-	MRSS: Mean Squared Error
-	y_1d: the y vector as a 1d np array ( n x 1)
-	df: degrees of freedom for the model 
-		asummed to be "n-p" where p is the number of features (including the 
-		column of 1s)
-
+	MRSS : Mean Squared Error
+	y_1d : the y vector as a 1d np array ( n x 1)
+	df   : the degrees of the model (n-p-1 generally where = is the number of 
+		features)
+	rank : the rank of the X feature matrix used to create the MRSS 
+		(assumed to be p+1 generally, where p is the number of features)
+ 
 	Output:
 	-------
 	adjR2: the adjusted R^2 value
@@ -36,21 +37,22 @@ def adjR2(MRSS,y_1d,df):
 	n=y_1d.shape[0]
 	RSS= MRSS*df
 	TSS= np.sum((y_1d-np.mean(y_1d))**2)
-	adjR2 = 1- ((RSS/TSS)  * (df/(n-1))  )
+	adjR2 = 1- ((RSS/TSS)  * ((n-rank)/(n-1))  )
 
 	return adjR2
 
-def BIC(MRSS,y_1d,df):
+def BIC(MRSS,y_1d,df,rank):
 	"""
 	Computes a single BIC value for a model (low is good) 
 
 	Input:
 	------
-	MRSS: Mean Squared Error
-	y_1d: the y vector as a 1d np array ( n x 1)
-	df: degrees of freedom for the model 
-		asummed to be "n-p" where p is the number of features (including the 
-		column of 1s)
+	MRSS : Mean Squared Error
+	y_1d : the y vector as a 1d np array ( n x 1)
+	df   : the degrees of the model (n-p-1 generally where = is the number of 
+	features)
+	rank : the rank of the X feature matrix used to create the MRSS 
+		(assumed to be p+1 generally, where p is the number of features)
 
 	Output:
 	-------
@@ -66,6 +68,6 @@ def BIC(MRSS,y_1d,df):
 	n=y_1d.shape[0]
 	RSS= MRSS*df
 
-	BIC= n * np.log(RSS/n) + np.log(n)*(n-df)
+	BIC= n * np.log(RSS/n) + np.log(n)*(rank)
 
 	return BIC
