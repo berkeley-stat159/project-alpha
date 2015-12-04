@@ -1,17 +1,17 @@
 smooth:
-	python script/smoothing.py
+	python scripts/smoothing.py
 
 convolve:
-	python script/convolution.py
+	python scripts/convolution.py
 	
 glm:
-	python script/glm.py
+	python scripts/glm.py
 
 normality:
-	python script/normality.py
+	python scripts/normality.py
 
 conclusion:
-	python script/conclusion.py
+	python scripts/conclusion.py
 
 all:
 	python script/smoothing.py
