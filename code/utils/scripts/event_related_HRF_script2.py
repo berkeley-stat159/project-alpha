@@ -217,12 +217,12 @@ on_off = np.zeros(174)
 real_times,on_off[:-1] = np.linspace(0,432.5,173+1),neural_prediction
 hrf_function,TR,record_cuts= hrf_single, 2.5 ,np.linspace(0,432.5,173+1)
 #
-testconv_4_1 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=1)[0]
+testconv_4_1 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=1)
 
-testconv_4_15 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=15)[0]
+testconv_4_15 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=15)
 
 
-testconv_4_30 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30)[0]
+testconv_4_30 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30)
 
 
 #-------#
@@ -275,15 +275,15 @@ plt.close()
 	# 	1 loops, best of 3: 797 ms per loop
 
 	## testconv_4_1
-	# In [4]: %timeit testconv_4_1 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=1)[0]
+	# In [4]: %timeit testconv_4_1 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=1)
 	# 	100 loops, best of 3: 9.52 ms per loop
 
 	## testconv_4_15
-	# In [4]: %timeit testconv_4_15 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=15)[0]
+	# In [4]: %timeit testconv_4_15 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=15)
 	# 	10 loops, best of 3: 95.8 ms per loop
 
 	## testconv_4_30
-	# In [5]: %timeit testconv_4_30 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30)[0]
+	# In [5]: %timeit testconv_4_30 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30)
 	# 	10 loops, best of 3: 139 ms per loop
 
 	## testconv_5
@@ -416,10 +416,10 @@ scaled_3=(conv_3-np.mean(conv_3))/(2*np.std(conv_3)) +.4
 real_times,on_off = cond_all,np.ones(len(cond_all))
 hrf_function,TR,record_cuts= hrf_single, 2 ,np.linspace(0,239*2-2,239)
 
-conv_4_15 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=15)[0]
+conv_4_15 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=15)
 scaled_4_15=(conv_4_15-np.mean(conv_4_15))/(2*np.std(conv_4_15)) +.4
 
-conv_4_30 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30)[0]
+conv_4_30 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30)
 scaled_4_30=(conv_4_30-np.mean(conv_4_30))/(2*np.std(conv_4_30)) +.4
 
 #-------#
@@ -478,11 +478,11 @@ plt.close()
 	# 	1 loops, best of 3: 1.15 s per loop
 
 	## conv_4_15
-	# In [4]: %timeit conv_4_15 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=15)[0]
+	# In [4]: %timeit conv_4_15 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=15)
 	# 	10 loops, best of 3: 98.3 ms per loop
 
 	## conv_4_30
-	# In [5]: %timeit conv_4_30 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30)[0]
+	# In [5]: %timeit conv_4_30 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30)
 	# 	10 loops, best of 3: 185 ms per loop
 
 	## conv_5

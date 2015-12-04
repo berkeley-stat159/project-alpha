@@ -77,12 +77,12 @@ def test_convolution():
 	real_times,on_off[:-1] = np.linspace(0,432.5,173+1),neural_prediction
 	hrf_function,TR,record_cuts= hrf_single, 2.5 ,np.linspace(0,432.5,173+1)
 	#
-	testconv_4_1 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=1)[0]
+	testconv_4_1 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=1)
 
-	testconv_4_15 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=15)[0]
+	testconv_4_15 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=15)
 
 
-	testconv_4_30 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30)[0]
+	testconv_4_30 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30)
 
 
 	#-------#
