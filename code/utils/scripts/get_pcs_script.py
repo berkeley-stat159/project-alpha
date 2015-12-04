@@ -1,6 +1,6 @@
 """
 Script to do SVD on the covariance matrix of the MASKED voxel by time matrix.
-Spits out the first 5 components for each subject.
+Spits out the first k components for each subject.
 
 Run with: 
     python get_pcs_script.py
@@ -31,6 +31,8 @@ from Image_Visualizing import make_mask
 sub_list = ['sub002', 'sub003', 'sub014'] # Just 3 for now.
 # Initialize list to store principal components for each subject.
 pcs = []
+# Number of components to pull out. 
+k = 6 
 
 # Loop through all the subjects. 
 for name in sub_list:
@@ -72,5 +74,5 @@ for name in sub_list:
     # PCA analysis on MASKED data: 
     # Do SVD on the time by time matrix and get explained variance.
     U_masked, S_masked, VT_masked = npl.svd(masked_data_2d.T.dot(masked_data_2d))
-    pcs.append(masked_data_2d.dot(U_masked[:,:5]))
+    pcs.append(masked_data_2d.dot(U_masked[:,:k]))
     
