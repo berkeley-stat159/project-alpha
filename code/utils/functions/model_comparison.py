@@ -37,7 +37,7 @@ def adjR2(MRSS,y_1d,df,rank):
 	n=y_1d.shape[0]
 	RSS= MRSS*df
 	TSS= np.sum((y_1d-np.mean(y_1d))**2)
-	adjR2 = 1- ((RSS/TSS)  * ((n-rank)/(n-1))  )
+	adjR2 = 1- ((RSS/TSS)  * ((n-1)/(n-rank))  )
 
 	return adjR2
 
