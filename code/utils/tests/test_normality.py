@@ -18,7 +18,7 @@ pathtoclassdata = "data/ds114/"
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 #Load our Normality functions
-from normality import check_sw, check_kw
+from normality import check_sw, check_sw_masked, check_kw
 
 def test_normality():
     # Generate some 4-d random uniform data. 
@@ -28,11 +28,16 @@ def test_normality():
     # Force one of the time courses to be standard normal. 
     sim_resids[0,0,0] = np.random.randn(200)
     
-    # Do Shaprio-Wilk and Kruskal-Wallis
-    sw_3d = check_sw(sim_resids)
+    # Do Shaprio-Wilk. 
+    sw_3d = check_sw(sim_resids) # 4-d residuals, 3-d p-values
+    sw_1d = check_sw_masked(sim_resids.reshape((-1, sim_resids.shape[-1]))) # 2-d residuals, 1-d p-values
+    # Do Kruskal-Wallis.
     kw_3d = check_kw(sim_resids)
     
     assert(sw_3d[0,0,0] > 0.05)
     assert(sw_3d[1,0,0] < 0.05)
+
+    # Two Shaprio-Wilk functions should do the same thing over arrays of different dimensions. 
+    assert(sw_3d[0,0,0] == sw_1d[0])
     
     assert(kw_3d[0,0,0] > 0.05)
