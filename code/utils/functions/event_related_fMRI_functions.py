@@ -45,7 +45,8 @@ def hrf_single(value):
 	values = peak_values - 0.35 * undershoot_values
 	# Scale max to 0.6
 	return values / max_value * 0.6 
-	##### you must change the max_value (use np.argmax) if you change the function
+	##### you must change the max_value (use np.argmax) if you change the 
+	# function
 
 
 	
@@ -76,19 +77,21 @@ def fast_hrf(values):
 	comb_values[np.logical_or(values <0, values >30)] = 0
 	# Scale max to 0.6
 	return comb_values / max_value * 0.6 
-	##### you must change the max_value (use np.argmax) if you change the function
+	##### you must change the max_value (use np.argmax) if you change the 
+	# function
 
 
 
 
 def convolution(times,on_off,hrf_function):
-	""" Does convolution on Event-Related fMRI data, assumes non-constant/non-fixed time slices 
+	""" Does convolution on Event-Related fMRI data, assumes non-constant/
+	non-fixed time slices 
 
 	Parameters:
 	-----------
 	times = one dimensional np.array of time slices (size N)
-	on_off =  one dimensional np.array of on/off switch or applify the hrf from the i_th 
-		position (size N)
+	on_off =  one dimensional np.array of on/off switch or applify the hrf from 
+		the i_th position (size N)
 	hrf_function = a hrf (in functional form, not as a vector)
 
 	Returns:
@@ -97,9 +100,9 @@ def convolution(times,on_off,hrf_function):
 
 	Note:
 	-----
-	It should be noted that you can make the output vector (size "N-M+1") if you'd like by 
-	adding on extra elements in the times and have their on_off values be 0 at the end of both
-
+	It should be noted that you can make the output vector (size "N-M+1") if 
+	you'd like by adding on extra elements in the times and have their on_off 
+	values be 0 at the end of both
 	"""
 
 	output_vector=np.zeros(len(times))
@@ -114,13 +117,14 @@ def convolution(times,on_off,hrf_function):
 # second take into account the desired number of cuts
 
 def convolution_specialized(real_times,on_off,hrf_function,record_cuts):
-	""" Does convolution on Event-Related fMRI data, assumes non-constant/non-fixed time slices, takes in fMRI recorded cuts 
+	""" Does convolution on Event-Related fMRI data, assumes non-constant/
+	non-fixed time slices, takes in fMRI recorded cuts 
 
 	Parameters:
 	-----------
 	real_times = one dimensional np.array of time slices (size K)
-	on_off =  one dimensional np.array of on/off switch or applify the hrf from the i_th real_time
-		position (size K)
+	on_off =  one dimensional np.array of on/off switch or applify the hrf 
+		from the i_th real_time	position (size K)
 	hrf_function = a hrf (in functional form, not as a vector)
 	record_cuts = vector with fMRI times that it recorded (size N)
 
@@ -130,8 +134,9 @@ def convolution_specialized(real_times,on_off,hrf_function,record_cuts):
 
 	Note:
 	-----
-	It should be noted that you can make the output vector (size "N-M+1") if you'd like by 
-	adding on extra elements in the times and have their on_off values be 0 at the end of both
+	It should be noted that you can make the output vector (size "N-M+1") if 
+	you'd like by adding on extra elements in the times and have their on_off 
+	values be 0 at the end of both
 
 
 	"""
@@ -146,14 +151,18 @@ def convolution_specialized(real_times,on_off,hrf_function,record_cuts):
 
 # Third attempt at convolution
 def np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30):
-	""" Does convolution on Event-Related fMRI data, cutting TR into 'cuts' equal distance chunks and putting stimulus in closed cut 
+	""" Does convolution on Event-Related fMRI data, cutting TR into 'cuts' 
+	equal distance chunks and putting stimulus in closed cut 
 
 	Parameters:
 	-----------
-	real_times = one dimensional np.array of time slices (size K)
+	real_times   = one dimensional np.array of time slices (size K)
+	on_off       = a one dimensional np.array of the on_off values (not 
+		necessarily 1s and 0s)
 	hrf_function = a hrf (in functional form, not as a vector)
-	TR = time between record_cuts
-	record_cuts = vector with fMRI times that it recorded (size N)
+	TR           = time between record_cuts
+	record_cuts  = vector with fMRI times that it recorded (size N)
+	cuts         = number of cuts between each TR
 
 	Returns:
 	--------
@@ -161,10 +170,9 @@ def np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30):
 
 	Note:
 	-----
-	It should be noted that you can make the output vector (size "N-M+1") if you'd like by 
-	adding on extra elements in the times and have their on_off values be 0 at the end of both
-
-	# np.convolve(neural_prediction, hrf_at_trs)
+	It should be noted that you can make the output vector (size "N+M+1") if 
+	you'd like by adding on extra elements in the times and have their on_off 
+	values be 0 at the end of both
 	"""
 	
 	# creating 1 and 0s like in stimuli (more fine grained)
@@ -190,20 +198,22 @@ def np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30):
 	
 	output = larger_output[list(desired_x_i)]
 
-	return output,neural_X
+	return output
 
 
 
 # faster convolution_specialized
 def fast_convolution(real_times,on_off,hrf_function,record_cuts):
 
-	""" Does convolution on Event-Related fMRI data, assumes non-constant/non-fixed time slices, takes in fMRI recorded cuts. Uses matrix multiplication, so it's fastered than convolution_specialized. 
+	""" Does convolution on Event-Related fMRI data, assumes non-constant/
+	non-fixed time slices, takes in fMRI recorded cuts. Uses matrix 
+	multiplication, so it's fastered than convolution_specialized. 
 
 	Parameters:
 	-----------
 	real_times = one dimensional np.array of time slices (size K)
-	on_off =  one dimensional np.array of on/off switch or applify the hrf from the i_th real_time
-		position (size K)
+	on_off =  one dimensional np.array of on/off switch or applify the hrf from 
+		the i_th real_time position (size K)
 	hrf_function = a hrf (in functional form, not as a vector)
 	record_cuts = vector with fMRI times that it recorded (size N)
 
@@ -213,8 +223,9 @@ def fast_convolution(real_times,on_off,hrf_function,record_cuts):
 
 	Note:
 	-----
-	It should be noted that you can make the output vector (size "N-M+1") if you'd like by 
-	adding on extra elements in the times and have their on_off values be 0 at the end of both
+	It should be noted that you can make the output vector (size "N-M+1") if 
+	you'd like by adding on extra elements in the times and have their on_off 
+	values be 0 at the end of both
 
 
 	"""
@@ -237,9 +248,11 @@ def create_stimuli_from_all_values(cond1,cond2,cond3):
 
 	Returns:
 	--------
-	x_s_array = a sorted np.array (1 dimensional) of all times in all condition files
+	x_s_array = a sorted np.array (1 dimensional) of all times in all condition 
+		files
 	gap_between = the difference between t_i and t_{i+1}
-	colors = list of color codes of the different times (corresponding to condition file number)
+	colors = list of color codes of the different times (corresponding to 
+		condition file number)
 
 	"""
 

@@ -62,18 +62,27 @@ for i in sub_list:
     delta_y=2*(np.arange(34))/34
 
 
-    shifted=make_shift_matrix(cond_all,delta_y)
+    shifted_all=make_shift_matrix(cond_all,delta_y)
+    shifted_1= make_shift_matrix(cond1[:,0],delta_y)
+    shifted_2= make_shift_matrix(cond2[:,0],delta_y)
+    shifted_3= make_shift_matrix(cond3[:,0],delta_y)
     
     def make_convolve_lambda(hrf_function,TR,num_TRs):
-        convolve_lambda=lambda x: np_convolve_30_cuts(x,np.ones(x.shape[0]),hrf_function,TR,np.linspace(0,(num_TRs-1)*TR,num_TRs),15)[0]
+        convolve_lambda=lambda x: np_convolve_30_cuts(x,np.ones(x.shape[0]),hrf_function,TR,np.linspace(0,(num_TRs-1)*TR,num_TRs),15)
         
         return convolve_lambda
         
     convolve_lambda=make_convolve_lambda(hrf_single,TR,num_TR)
     
-    hrf_matrix=time_correct(convolve_lambda,shifted,num_TR)
+    hrf_matrix_all=time_correct(convolve_lambda,shifted_all,num_TR)
+    hrf_matrix_1=time_correct(convolve_lambda,shifted_1,num_TR)
+    hrf_matrix_2=time_correct(convolve_lambda,shifted_2,num_TR)
+    hrf_matrix_3=time_correct(convolve_lambda,shifted_3,num_TR)
     
-    np.savetxt("../data/hrf/"+i+"_hrf.txt",hrf_matrix)
+    np.savetxt("../data/hrf/"+i+"_hrf_all.txt",hrf_matrix_all)
+    np.savetxt("../data/hrf/"+i+"_hrf_1.txt",hrf_matrix_1)
+    np.savetxt("../data/hrf/"+i+"_hrf_2.txt",hrf_matrix_2)
+    np.savetxt("../data/hrf/"+i+"_hrf_3.txt",hrf_matrix_3)
     
     sys.stdout.write("-")
     sys.stdout.flush()
