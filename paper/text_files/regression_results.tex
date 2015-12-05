@@ -4,9 +4,10 @@ as a single feature. Originally we used multiple regression to take into
 account the 3 different types of stimulus (pump, explode, cash-out) to see if 
 the separation of these stimuli can better describe the response, but it wasn't 
 that good. In figure \ref{fig:all_cond_time}, we can see the different 
-conditions broken up. Using smoothed data, fourier and drift features we got 
-the following fitted values and residuals for a random voxel for subject 001. [
-Figure \ref{fig:fit_vs_act}, \ref{fig:fit_vs_res}].
+conditions broken up. Using smoothed data, fourier and drift features in linear 
+regression we obtained fitted values for fMRI BOLD contrast of a random 
+voxel and also calculated the residuals for a random voxel for subject 001, 
+voxel $(30,40,15)$ [Figure \ref{fig:fit_vs_act}, \ref{fig:fit_vs_res}].
 
   
 \begin{figure}[ht]
@@ -14,14 +15,14 @@ Figure \ref{fig:fit_vs_act}, \ref{fig:fit_vs_res}].
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
 	\includegraphics[width=.8\linewidth]{images/Fitted_v_Actual.png} 
-	\caption{Fitted vs Actual}
+	\caption{Fitted/Predicted vs Actual fMRI BOLD contrast}
 	\label{fig:fit_vs_act}
 \end{minipage}	
 \quad
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
 		\includegraphics[width=.8\linewidth]{images/Fitted_v_Residuals.png} 
-	\caption{Fitted vs Residual}
+	\caption{Fitted fMRI BOLD contrast vs Residual from Linear Regression}
 	\label{fig:fit_vs_res}
 \end{minipage}
 \end{figure}
@@ -36,17 +37,12 @@ Figure \ref{fig:fit_vs_act}, \ref{fig:fit_vs_res}].
 \label{fig:all_cond_time}
 \end{figure}
 
-As we also obtained $\hat{\beta}$ values (coefficients) from the linear 
+*****As we also obtained $\hat{\beta}$ values (coefficients) from the linear 
 regression models, we looked at the 3-dimensional reports of the 
 $\hat{\beta}$ values, a less rigorous analysis than hypothesis testing with 
-t-statistics [Figure \ref{fig:con1_beta_brain}]. 
+t-statistics [Figure reference]. $\sim$Remove or update****
 
-\begin{figure}[ht]
-\centering
-\includegraphics[scale=.5]{images/mr_cond1_beta_brain}    
-\caption{$\hat{\beta}$ values for condition 1, subject 001.}
-\label{fig:con1_beta_brain}
-\end{figure}
+
 
 The numerous other multiple regression models discussed in 
 \textit{Linear Regression} should be analyzed similarly in the future. 
