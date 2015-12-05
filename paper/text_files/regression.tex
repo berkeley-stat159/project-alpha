@@ -10,7 +10,8 @@ sophisticated multiple linear regression model that includes the conditions
 as dummy variable predictors. We also considered multiple regression including 
 linear drift, Fourier transform and fitted mean terms. In each scenario, we 
 created a design matrix $X$ with the number of rows equal to the number of 
-observed times and the number of rows is equal to the number of predictors. 
+observed times and the number of columns equal to the number of predictors 
+(including a column of ones in the predictors). 
 
 Our specified model is then $Y = X\beta + \epsilon$, where $X$ is the fixed 
 aforementioned design matrix, $Y$ is the 4-dimensional array of the subject's 
