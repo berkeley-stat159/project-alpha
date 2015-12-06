@@ -88,8 +88,8 @@ for j in range(len(sub_list)):
     hand_mask = mlines.Line2D([], [], color='r', label='Masked')
 
     # Compare proportion of variance explained by each component for masked and unmasked data.
-    plt.plot(exp_var[np.arange(10)], 'b-o')
-    plt.plot(exp_var_masked[np.arange(10)], 'r-o')
+    plt.plot(exp_var[np.arange(1,11)], 'b-o')
+    plt.plot(exp_var_masked[np.arange(1,11)], 'r-o')
     plt.legend(handles=[hand_un, hand_mask])
     plt.xlabel("Principal Components")
     plt.title("Proportion of Variance Explained by Each Component for " + name)
@@ -97,8 +97,8 @@ for j in range(len(sub_list)):
     plt.close()
 
     # Compare proportion of variance explained by each component.
-    plt.plot(var_sums[np.arange(10)], 'b-o')
-    plt.plot(var_sums_masked[np.arange(10)], 'r-o')
+    plt.plot(var_sums[np.arange(1,11)], 'b-o')
+    plt.plot(var_sums_masked[np.arange(1,11)], 'r-o')
     plt.axhline(y=0.4, color='k')
     plt.legend(handles=[hand_un, hand_mask])
     plt.xlabel("Number of Principal Components")

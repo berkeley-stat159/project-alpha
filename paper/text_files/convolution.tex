@@ -26,8 +26,8 @@ reducing the output back into the 2-second time intervals. Detailed exploration
 of this matter can be found in the appendix.
 
 We compared these methods based on accuracy and speed. [Figure 
-\ref{fig:convolution}] displaces accuracy comparison, and the table in [Figure 
-\ref{table:convolution}] show the accuracy based off of \texttt{ipython}'s 
+\ref{fig:convolution}] displaces accuracy comparison, and the table in 
+[Table~\ref{tab:convolution}] show the accuracy based off of \texttt{ipython}'s 
 \texttt{timeit} function.
 
 
@@ -58,9 +58,9 @@ We compared these methods based on accuracy and speed. [Figure
 		\hline
 		\end{tabular}
 		\vspace{5mm}
-		\caption{\scriptsize{Speed to create HRF predictions for Subject 001, 
+		\label{tab:convolution}
+		\captionof{table}{\scriptsize{Speed to create HRF predictions for Subject 001, 
 		all conditions}}
-		\label{table:convolution}
 	\end{minipage}
 \end{figure}
 
