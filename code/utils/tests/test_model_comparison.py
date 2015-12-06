@@ -48,3 +48,17 @@ def test_2():
 
 	assert(joy2==BIC(MRSS,y_1d,rank,df))
 
+
+def test_3():
+
+	y_1d = np.array([1,-1])
+	df   = 1
+	MRSS = np.sum((y_1d-np.mean(y_1d))**2)/df
+	rank = 1
+	RSS  = MRSS
+	n    = 2
+
+	joy3 = n * np.log(RSS/n) + 2*(n-df)
+
+	assert(joy3==AIC(MRSS,y_1d,rank,df))
+

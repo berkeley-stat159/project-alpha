@@ -41,6 +41,32 @@ def adjR2(MRSS,y_1d,df,rank):
 
 	return adjR2
 
+def AIC(MRSS,y_1d,df,rank):
+	"""
+	Computes a single BIC value for a model (low is good) 
+
+	Input:
+	------
+	MRSS : Mean Squared Error
+	y_1d : the y vector as a 1d np array ( n x 1)
+	df   : the degrees of the model (n-p-1 generally where = is the number of 
+	features)
+	rank : the rank of the X feature matrix used to create the MRSS 
+		(assumed to be p+1 generally, where p is the number of features)
+
+	Output:
+	-------
+	AIC: the adjusted AIC value
+
+	"""
+	n=y_1d.shape[0]
+	RSS= MRSS*df
+
+	AIC= n * np.log(RSS/n) + 2*(rank)
+
+	return AIC
+
+
 def BIC(MRSS,y_1d,df,rank):
 	"""
 	Computes a single BIC value for a model (low is good) 
