@@ -47,9 +47,15 @@ def adjR2(MRSS,y_1d,df):
 
 	return adjR2
 
-
+def BIC(MRSS,y_1d,df):
+	n=y_1d.shape[0]
+	RSS= MRSS*df
+	BIC= n * np.log(RSS/n) + np.log(n)*(n-df)
+	return BIC
+    
+    
 #LOAD THE DATA In
-i = 'sub001'
+i = 'sub010'
 img = nib.load(smooth_data+ i +"_bold_smoothed.nii")
 data = img.get_data() 
 
@@ -74,8 +80,11 @@ cond_all=np.array(cond_all)[:,0]
     
 delta_y=2*(np.arange(34))/34
 
+shifted_all=make_shift_matrix(cond_all,delta_y)
+shifted_1= make_shift_matrix(cond1[:,0],delta_y)
+shifted_2= make_shift_matrix(cond2[:,0],delta_y)
+shifted_3= make_shift_matrix(cond3[:,0],delta_y)
 
-shifted=make_shift_matrix(cond_all,delta_y)
     
 def make_convolve_lambda(hrf_function,TR,num_TRs):
     convolve_lambda=lambda x: np_convolve_30_cuts(x,np.ones(x.shape[0]),hrf_function,TR,np.linspace(0,(num_TRs-1)*TR,num_TRs),15)[0]
@@ -84,7 +93,11 @@ def make_convolve_lambda(hrf_function,TR,num_TRs):
         
 convolve_lambda=make_convolve_lambda(hrf_single,TR,num_TR)
     
-convolve=time_correct(convolve_lambda,shifted,num_TR)   
+hrf_matrix_all=time_correct(convolve_lambda,shifted_all,num_TR)
+hrf_matrix_1=time_correct(convolve_lambda,shifted_1,num_TR)
+hrf_matrix_2=time_correct(convolve_lambda,shifted_2,num_TR)
+hrf_matrix_3=time_correct(convolve_lambda,shifted_3,num_TR)
+
 n_vols = data.shape[-1]    
     
 
@@ -123,16 +136,26 @@ for j in range(data.shape[2]):
     
     data_slice = data[:,:,j,:]
     mask_slice = mask_data[:,:,j]
-    data_slice = data_slice.reshape((-1,239))
+    data_slice = data_slice.reshape((-1,num_TR))
     mask_slice = np.ravel(mask_slice)
     
     data_slice = data_slice[mask_slice==1]
     
+    # all conditions in 1 roof (cond_all)
     X = np.ones((n_vols,13))
-    X[:,1] = convolve[:,j] # 1 more
+    X[:,1] = hrf_matrix_all[:,j] # 1 more
     X[:,2] = np.linspace(-1,1,num=X.shape[0]) #drift # one 
     X[:,3:7] = fourier_creation(X.shape[0],2)[:,1:] # four more
     X[:,7:] = pca_addition
+    
+    # all conditions seperate (cond1,cond2,cond3)
+    X_cond = np.ones((n_vols,15))
+    X_cond[:,1] = hrf_matrix_1[:,j] # 1 more
+    X_cond[:,2] = hrf_matrix_2[:,j] # 1 more
+    X_cond[:,3] = hrf_matrix_3[:,j] # 1 more
+    X_cond[:,4] = np.linspace(-1,1,num=X.shape[0]) #drift # one 
+    X_cond[:,5:9] = fourier_creation(X.shape[0],2)[:,1:] # four more
+    X_cond[:,9:] = pca_addition
     
 
 #START CREATING MODELS
@@ -230,42 +253,107 @@ for j in range(data.shape[2]):
         count+=1
     
     model5=model5+adj5_slice.tolist()
-    
-    # ###################
-    # #   MODEL 6       #
-    # ###################
-    #
-    # beta6,t,df6,p = t_stat_mult_regression(data_slice, X)
-    #
-    # MRSS6, fitted, residuals = glm_diagnostics(beta6, X, data_slice)
-    #
-    # adj6_slice = np.zeros(len(MRSS6))
-    # count = 0
-    #
-    # for value in MRSS6:
-    #     adj6_slice[count] = adjR2(value, np.array(data_slice[count,:]) ,df6)
-    #     count+=1
-    #
-    # model6=model6+adj6_slice.tolist()
-    #
-    # ###################
-    # #   MODEL 7       #
-    # ###################
-    #
-    # beta7,t,df7,p = t_stat_mult_regression(data_slice, X)
-    #
-    # MRSS7, fitted, residuals = glm_diagnostics(beta7, X, data_slice)
-    #
-    # adj7_slice = np.zeros(len(MRSS7))
-    # count = 0
-    #
-    # for value in MRSS7:
-    #     adj7_slice[count] = adjR2(value, np.array(data_slice[count,:]) ,df7)
-    #     count+=1
-    #
-    # model7=model7+adj7_slice.tolist()
-    #
 
+    
+    ###################
+    #   MODEL 6       #
+    ###################
+    
+    # 2.1 hrf
+
+    beta6,t,df6,p = t_stat_mult_regression(data_slice, X_cond[:,0:4])
+
+    MRSS6, fitted, residuals = glm_diagnostics(beta6, X_cond[:,0:4], data_slice)
+
+    adj6_slice = np.zeros(len(MRSS6))
+    count = 0
+
+    for value in MRSS6:
+        adj6_slice[count] = adjR2(value, np.array(data_slice[count,:]) ,df6)
+        count+=1
+
+    model6=model6+adj6_slice.tolist()
+
+    ###################
+    #   MODEL 7       #
+    ###################
+    
+    # 2.2 hrf + drift
+
+    beta7,t,df7,p = t_stat_mult_regression(data_slice, X_cond[:,0:5])
+
+    MRSS7, fitted, residuals = glm_diagnostics(beta7, X_cond[:,0:5], data_slice)
+
+    adj7_slice = np.zeros(len(MRSS7))
+    count = 0
+
+    for value in MRSS7:
+        adj7_slice[count] = adjR2(value, np.array(data_slice[count,:]) ,df7)
+        count+=1
+
+    model7=model7+adj7_slice.tolist()
+    
+    ###################
+    #   MODEL 8       #
+    ###################
+    
+    # 2.3 hrf + drift + fourier
+   
+
+    beta8,t,df8,p = t_stat_mult_regression(data_slice, X_cond[:,0:9])
+
+    MRSS8, fitted, residuals = glm_diagnostics(beta8, X_cond[:,0:9], data_slice)
+
+    adj8_slice = np.zeros(len(MRSS8))
+    count = 0
+
+    for value in MRSS8:
+        adj8_slice[count] = adjR2(value, np.array(data_slice[count,:]) ,df8)
+        count+=1
+
+    model8=model8+adj8_slice.tolist()
+    
+    ###################
+    #   MODEL 9       #
+    ###################
+    
+    # 2.4 hrf + drift + pca
+    
+
+    beta9,t,df9,p = t_stat_mult_regression(data_slice, X_cond[:,list(range(5))+list(range(9,15))])
+
+    MRSS9, fitted, residuals = glm_diagnostics(beta9,X_cond[:,list(range(5))+list(range(9,15))], data_slice)
+
+    adj9_slice = np.zeros(len(MRSS9))
+    count = 0
+
+    for value in MRSS9:
+        adj9_slice[count] = adjR2(value, np.array(data_slice[count,:]) ,df9)
+        count+=1
+
+    model9=model9+adj9_slice.tolist()
+    
+    
+    ###################
+    #   MODEL 10       #
+    ###################
+    
+    # 2.5 hrf + drift + pca + fourier
+    beta10,t,df10,p = t_stat_mult_regression(data_slice, X_cond)
+
+    MRSS10, fitted, residuals = glm_diagnostics(beta10, X_cond, data_slice)
+
+    adj10_slice = np.zeros(len(MRSS10))
+    count = 0
+
+    for value in MRSS10:
+        adj10_slice[count] = adjR2(value, np.array(data_slice[count,:]) ,df10)
+        count+=1
+
+    model10=model10+adj10_slice.tolist()
+
+    
+   
 ###################
 # Desired Models: #
 ###################
