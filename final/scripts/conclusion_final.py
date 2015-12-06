@@ -107,39 +107,39 @@ plt.show()
 #####################################
 ####### MULTIPLE TESTING ############
 #####################################
-#
-# p_mean = np.zeros((64, 64, 34,24))
-#
-# #loop through each person's T-statistic
-# count=0
-# for i in sub_list:
-#
-#     p_stat = np.load(p_data+i+"_pvalue.npy")
-#     #mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
-#     #mask_data = mask.get_data()
-#
-#     #p_mean[...,count] = make_mask(p_stat, mask_data, fit=True)
-#
-#     p_mean[...,count] = p_stat
-#     count+=1
-#
-# p_mean = np.mean(p_mean,axis=3)/2
-#
-#
-# p_vals = np.ravel(p_mean).T
-#
-# print("# ==== No Mask, bh_procedure ==== #")
-# # a fairly large false discovery rate
-# Q = .4
-# significant_pvals = bh_procedure(p_vals, Q)
-#
-# reshaped_sig_p = np.reshape(significant_pvals, p_mean.shape)
-#
-# slice_reshaped_sig_p = reshaped_sig_p[...,7]
-#
-# plt.imshow(slice_reshaped_sig_p)
-# plt.colorbar()
-# plt.title('Significant p-values (No mask)')
+
+p_mean = np.zeros((64, 64, 34,24))
+
+#loop through each person's T-statistic
+count=0
+for i in sub_list:
+
+    p_stat = np.load(p_data+i+"_pvalue.npy")
+    #mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
+    #mask_data = mask.get_data()
+
+    #p_mean[...,count] = make_mask(p_stat, mask_data, fit=True)
+
+    p_mean[...,count] = p_stat
+    count+=1
+
+p_mean = np.mean(p_mean,axis=3)/2
+
+
+p_vals = np.ravel(p_mean).T
+
+print("# ==== No Mask, bh_procedure ==== #")
+# a fairly large false discovery rate
+Q = .4
+significant_pvals = bh_procedure(p_vals, Q)
+
+reshaped_sig_p = np.reshape(significant_pvals, p_mean.shape)
+slice_reshaped_sig_p = reshaped_sig_p[...,7]
+
+plt.imshow(slice_reshaped_sig_p)
+plt.colorbar()
+plt.title('Significant p-values (No mask)')
+print("# ==== END No Mask, bh_procedure ==== #")
 
 
 
