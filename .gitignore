@@ -3,7 +3,12 @@
 data/ds114/
 data/ds009/
 data/our_data/
-final/data/
+final/data/hrf/
+final/data/p-values/
+final/data/residual/
+final/data/smooth/
+final/data/t_stat/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

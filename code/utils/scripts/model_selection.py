@@ -32,9 +32,9 @@ from noise_correction import mean_underlying_noise, fourier_predict_underlying_n
 from hypothesis import t_stat_mult_regression, t_stat
 from Image_Visualizing import present_3d, make_mask
 from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end
-from model_comparison import adjR2, BIC
+from model_comparison import adjR2, BIC, AIC
 
-input_var = input("adjR2 or BIC: ")
+input_var = input("adjR2 or BIC or AIC: ")
 
 
 ################
@@ -50,6 +50,11 @@ elif input_var == 'BIC':
        
     def model(MRSS,y_1d,df, rank):
         return BIC(MRSS, y_1d, df, rank)
+        
+elif input_var == 'AIC': 
+       
+    def model(MRSS,y_1d,df, rank):
+        return AIC(MRSS, y_1d, df, rank)
     
 	    
         
@@ -57,11 +62,13 @@ model1=[]
 model2=[]
 model3=[]
 model4=[]
+model4_5=[]
 model5=[]
 model6=[]
 model7=[]
 model8=[]
 model9=[]
+model9_5=[]
 model10=[]   
     
 #LOAD THE DATA In
@@ -243,6 +250,25 @@ for i in ['sub002','sub003','sub014']:
         model4=model4+model4_slice.tolist()
 
         ###################
+        #   MODEL 4_5       #
+        ###################
+
+        # 1.4 hrf + drift + pca
+
+        beta4_5,t,df4_5,p = t_stat_mult_regression(data_slice, X[:,[0,1,2,7,8,9,10]])
+        
+        MRSS4_5, fitted, residuals = glm_diagnostics(beta4_5, X[:,[0,1,2,7,8,9,10]], data_slice)
+
+        model4_5_slice = np.zeros(len(MRSS4_5))
+        rank4_5 = npl.matrix_rank(X[:,[0,1,2,7,8,9,10,11,12]])
+        count = 0
+
+        for value in MRSS4:
+            model4_5_slice[count] = model(value, np.array(data_slice[count,:]) ,df4_5, rank4_5)  
+            count+=1
+
+        model4_5=model4_5+model4_5_slice.tolist()
+        ###################
         #   MODEL 5       #
         ###################
 
@@ -355,6 +381,28 @@ for i in ['sub002','sub003','sub014']:
 
         model9=model9+model9_slice.tolist()
 
+        ###################
+        #   MODEL 9_5       #
+        ###################
+
+        # 2.4 hrf + drift + pca
+
+
+        beta9_5,t,df9_5,p = t_stat_mult_regression(data_slice, X_cond[:,list(range(5))+list(range(9,13))])
+
+        MRSS9_5, fitted, residuals = glm_diagnostics(beta9_5,X_cond[:,list(range(5))+list(range(9,13))], data_slice)
+
+        model9_5_slice = np.zeros(len(MRSS9_5))
+        
+        rank9_5 = npl.matrix_rank(X_cond[:,list(range(5))+list(range(9,13))])
+        
+        count = 0
+
+        for value in MRSS9_5:
+            model9_5_slice[count] = model(value, np.array(data_slice[count,:]) ,df9_5, rank9_5)
+            count+=1
+
+        model9_5=model9_5+model9_5_slice.tolist()
 
         ###################
         #   MODEL 10       #
@@ -383,6 +431,7 @@ np.mean(model8), np.mean(model9), np.mean(model10)])
 
 final = final.reshape((2,5))   
 
+np.savetxt(input_var+'.txt', final)
 
 ###################
 # Desired Models: #
