@@ -20,7 +20,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 
-from model_comparison import adjR2, BIC
+from model_comparison import adjR2, BIC, AIC
 
 def test_1():
 	# adjusted R^2 for the trivial case (RSS=TSS)
