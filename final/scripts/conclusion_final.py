@@ -23,8 +23,8 @@ location_of_images    = project_path+"images/"
 location_of_functions = project_path+"code/utils/functions/" 
 final_data            = "../data/"
 behav_suffix           = "/behav/task001_run001/behavdata.txt"
-t_data           =  final_data + 'glm/t_stat/'
-p_data           =  final_data + 'glm/p-values/'
+t_data           =  final_data + '/t_stat/'
+p_data           =  final_data + '/p-values/'
 
 
 #sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
@@ -53,25 +53,27 @@ from benjamini_hochberg import bh_procedure
 t_mean = np.zeros((64, 64, 34,24))
 
 #loop through each person's T-statistic
-count=0
-for i in sub_list:
+for model in ["_tstat.npy","_tstat_rough_full.npy","_tstat_smooth_simple.npy","tstat_rough_simple.npy"]:
+    
+    count=0
+    for i in sub_list:
 
-    t_stat = np.load(t_data+i+"_tstat.npy")
-    mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
-    mask_data = mask.get_data()
+        t_stat = np.load(t_data+i+model)
+        mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
+        mask_data = mask.get_data()
 
-    t_mean[...,count] = make_mask(t_stat, mask_data, fit=True)
-    count+=1
+        t_mean[...,count] = make_mask(t_stat, mask_data, fit=True)
+        count+=1
 
-t_mean = np.mean(t_mean,axis=3)
-final = present_3d(t_mean)
-plt.imshow(final,interpolation='nearest', cmap='seismic')
-plt.title("Mean T-Statistic Value Across 25 Subjects")
+    t_mean = np.mean(t_mean,axis=3)
+    final = present_3d(t_mean)
+    plt.imshow(final,interpolation='nearest', cmap='seismic')
+    plt.title("Mean T-Statistic Value Across 25 Subjects")
 
-zero_out=max(abs(np.min(final)),np.max(final))
-plt.clim(-zero_out,zero_out)
-plt.colorbar()
-plt.show()
+    zero_out=max(abs(np.min(final)),np.max(final))
+    plt.clim(-zero_out,zero_out)
+    plt.colorbar()
+    plt.show()
 
 #####################################
 ########## Clustering##########

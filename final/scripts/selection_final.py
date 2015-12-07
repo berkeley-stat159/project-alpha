@@ -427,12 +427,12 @@ for input_var in ['adjR2','BIC','AIC']:
             model10=model10+model10_slice.tolist()
 
     
-    final = np.array([np.mean(model1), np.mean(model2), np.mean(model3), np.mean(model4), np.mean(model5), np.mean(model6), np.mean(model7),
-    np.mean(model8), np.mean(model9), np.mean(model10)])   
+    final = np.array([np.mean(model1), np.mean(model2), np.mean(model3), np.mean(model4), np.mean(model4_5), np.mean(model5), np.mean(model6), np.mean(model7),
+    np.mean(model8), np.mean(model9),np.mean(model9_5), np.mean(model10)])   
 
-    final = final.reshape((2,5))   
+    final = final.reshape((2,6))   
 
-    np.savetxt('../../images/input_var+'.txt', final)
+    np.savetxt('../data/model_comparison/'+ input_var+'.txt', final)
     
     sys.stdout.write("-")
     sys.stdout.flush()
