@@ -76,8 +76,7 @@ for i in sub_list:
     for j in range(data_smooth.shape[2]):
         
         data_smooth_slice = data_smooth[:,:,j,:]
-        data_rough_slice = data_rough[:,:,j,:]
-        
+        data_rough_slice = data_rough[:,:,j,:]        
         #Create design matrix
         X = np.ones((n_vols,7))
         X[:,1] = convolve[:,j]
@@ -100,9 +99,9 @@ for i in sub_list:
         t_final3[:,:,j] = t3.reshape(data_rough_slice.shape[:-1])
         
 
-        np.save("../data/t_stat/"+i+"_tstat_rough_full.npy", t_final1)
-        np.save("../data/t_stat/"+i+"_tstat_smooth_simple.npy", t_final2)
-        np.save("../data/t_stat/"+i+"_tstat_rough_simple.npy", t_final3)
+    np.save("../data/t_stat/"+i+"_tstat_rough_full.npy", t_final1)
+    np.save("../data/t_stat/"+i+"_tstat_smooth_simple.npy", t_final2)
+    np.save("../data/t_stat/"+i+"_tstat_rough_simple.npy", t_final3)
                 
      
     sys.stdout.write("-")
