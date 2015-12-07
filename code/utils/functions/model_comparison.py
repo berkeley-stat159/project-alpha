@@ -100,38 +100,6 @@ def BIC(MRSS,y_1d,df,rank):
 
 
 ##### Second attempt (mult-dimensional)
-
-
-def adjR2_2(MRSS_vec,y_1d,df,rank):
-	"""
-	Computes a single Adjusted R^2 value for a model (high is good) 
-
-	Input:
-	------
-	MRSS_vec : Mean Squared Error Vector (1d np array)
-	y_1d : the y vector as a 1d np array ( n x 1)
-	df   : the degrees of the model (n-p-1 generally where = is the number of 
-		features)
-	rank : the rank of the X feature matrix used to create the MRSS 
-		(assumed to be p+1 generally, where p is the number of features)
- 
-	Output:
-	-------
-	adjR2: the adjusted R^2 value vector
-
-	Comments:
-	---------
-	Adjusted R^2 is a comparision tool that penalizes the number of features
-
-	"""
-
-	n=y_1d.shape[0]
-	RSS= MRSS*df
-	TSS= np.sum((y_1d-np.mean(y_1d))**2)
-	adjR2 = 1- ((RSS/TSS)  * ((n-1)/(n-rank))  )
-
-	return adjR2
-
 def AIC_2(MRSS_vec,y_2d,df,rank):
 	"""
 	Computes a single BIC value for a model (low is good) 
