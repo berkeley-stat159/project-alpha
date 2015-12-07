@@ -8,9 +8,6 @@ All this is stored in matrices for the specific condition file and the shifts pe
 
 import numpy as np
 import itertools
-import scipy.ndimage
-from scipy.ndimage.filters import gaussian_filter
-import matplotlib.pyplot as plt
 import nibabel as nib
 import os
 import sys

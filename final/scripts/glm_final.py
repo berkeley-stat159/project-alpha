@@ -58,7 +58,7 @@ for i in sub_list:
         
         
     n_vols = data.shape[-1]    
-    convolve = np.loadtxt(hrf_data+i+"_hrf.txt")
+    convolve = np.loadtxt(hrf_data+i+"_hrf_all.txt")
     
     residual_final = np.zeros((data.shape))
     t_final = np.zeros((data.shape[:-1]))
@@ -70,10 +70,10 @@ for i in sub_list:
         data_slice = data[:,:,j,:]
         
         #Create design matrix
-        X = np.ones((n_vols,6))
+        X = np.ones((n_vols,7))
         X[:,1] = convolve[:,j]
         X[:,2]=np.linspace(-1,1,num=X.shape[0]) #drift
-        X[:,3:]=fourier_creation(X.shape[0],3)[:,1:]
+        X[:,3:]=fourier_creation(X.shape[0],2)[:,1:]
         
         beta,t,df,p = t_stat_mult_regression(data_slice, X)
         
@@ -88,9 +88,9 @@ for i in sub_list:
         p_final[:,:,j] = p.reshape(data_slice.shape[:-1])        
         residual_final[:,:,j,:] = residuals.reshape(data_slice.shape)
         
-        np.save("../data/glm/t_stat/"+i+"_tstat.npy", t_final)
-        np.save("../data/glm/residual/"+i+"_residual.npy", residual_final)
-        np.save("../data/glm/p-values/"+i+"_pvalue.npy", p_final)
+        np.save("../data/t_stat/"+i+"_tstat.npy", t_final)
+        np.save("../data/residual/"+i+"_residual.npy", residual_final)
+        np.save("../data/p-values/"+i+"_pvalue.npy", p_final)
         
      
     sys.stdout.write("-")
