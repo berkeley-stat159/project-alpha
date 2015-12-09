@@ -1,3 +1,8 @@
+"""
+Conclusion files
+
+Runs BH analysis, clustering analysis, and hypothesis testing
+"""
 
 
 import numpy as np
@@ -18,8 +23,8 @@ location_of_images    = project_path+"images/"
 location_of_functions = project_path+"code/utils/functions/" 
 final_data            = "../data/"
 behav_suffix           = "/behav/task001_run001/behavdata.txt"
-t_data           =  final_data + 'glm/t_stat/'
-p_data           =  final_data + 'glm/p-values/'
+t_data           =  final_data + '/t_stat/'
+p_data           =  final_data + '/p-values/'
 
 
 #sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
@@ -40,36 +45,39 @@ from Image_Visualizing import present_3d, make_mask
 from benjamini_hochberg import bh_procedure
 
 #####################################
-########## Clustering ##############
+########## T-value analysis##########
 #####################################
 
 #Mean across all subject
 
-t_mean = np.zeros((64, 64, 34,24))
 
 #loop through each person's T-statistic
-count=0
-for i in sub_list:
+for model in ["_tstat.npy","_tstat_rough_full.npy","_tstat_smooth_simple.npy","_tstat_rough_simple.npy"]:
+    t_mean = np.zeros((64, 64, 34,24))
+    
+    count=0
+    for i in sub_list:
 
-    t_stat = np.load(t_data+i+"_tstat.npy")
-    mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
-    mask_data = mask.get_data()
+        t_stat = np.load(t_data+i+model)
+        mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
+        mask_data = mask.get_data()
 
-    t_mean[...,count] = make_mask(t_stat, mask_data, fit=True)
-    count+=1
+        t_mean[...,count] = make_mask(t_stat, mask_data, fit=True)
+        count+=1
 
-t_mean = np.mean(t_mean,axis=3)
-final = present_3d(t_mean)
-plt.imshow(final,interpolation='nearest', cmap='seismic')
-plt.title("Mean T-Statistic Value Across 25 Subjects")
+    t_mean = np.mean(t_mean,axis=3)
+    final = present_3d(t_mean)
+    plt.imshow(final,interpolation='nearest', cmap='seismic')
+    plt.title("Mean T-Statistic Value Across 25 Subjects")
 
-zero_out=max(abs(np.min(final)),np.max(final))
-plt.clim(-zero_out,zero_out)
-plt.colorbar()
-plt.show()
-#plt.close()
-
-#Cluster
+    zero_out=max(abs(np.min(final)),np.max(final))
+    plt.clim(-zero_out,zero_out)
+    plt.colorbar()
+    plt.show()
+#
+# #####################################
+# ########## Clustering##########
+# #####################################
 #
 # data_new = t_mean[...,20:23]
 # X = np.reshape(data_new, (-1, 1))
@@ -101,45 +109,45 @@ plt.show()
 # plt.xticks(())
 # plt.yticks(())
 # plt.show()
-
-
-
-#####################################
-####### MULTIPLE TESTING ############
-#####################################
-
-p_mean = np.zeros((64, 64, 34,24))
-
-#loop through each person's T-statistic
-count=0
-for i in sub_list:
-
-    p_stat = np.load(p_data+i+"_pvalue.npy")
-    #mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
-    #mask_data = mask.get_data()
-
-    #p_mean[...,count] = make_mask(p_stat, mask_data, fit=True)
-
-    p_mean[...,count] = p_stat
-    count+=1
-
-p_mean = np.mean(p_mean,axis=3)/2
-
-
-p_vals = np.ravel(p_mean).T
-
-print("# ==== No Mask, bh_procedure ==== #")
-# a fairly large false discovery rate
-Q = .4
-significant_pvals = bh_procedure(p_vals, Q)
-
-reshaped_sig_p = np.reshape(significant_pvals, p_mean.shape)
-slice_reshaped_sig_p = reshaped_sig_p[...,7]
-
-plt.imshow(slice_reshaped_sig_p)
-plt.colorbar()
-plt.title('Significant p-values (No mask)')
-print("# ==== END No Mask, bh_procedure ==== #")
+#
+#
+#
+# #####################################
+# ####### MULTIPLE TESTING ############
+# #####################################
+#
+# p_mean = np.zeros((64, 64, 34,24))
+#
+# #loop through each person's T-statistic
+# count=0
+# for i in sub_list:
+#
+#     p_stat = np.load(p_data+i+"_pvalue.npy")
+#     #mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
+#     #mask_data = mask.get_data()
+#
+#     #p_mean[...,count] = make_mask(p_stat, mask_data, fit=True)
+#
+#     p_mean[...,count] = p_stat
+#     count+=1
+#
+# p_mean = np.mean(p_mean,axis=3)/2
+#
+#
+# p_vals = np.ravel(p_mean).T
+#
+# print("# ==== No Mask, bh_procedure ==== #")
+# # a fairly large false discovery rate
+# Q = .4
+# significant_pvals = bh_procedure(p_vals, Q)
+#
+# reshaped_sig_p = np.reshape(significant_pvals, p_mean.shape)
+# slice_reshaped_sig_p = reshaped_sig_p[...,7]
+#
+# plt.imshow(slice_reshaped_sig_p)
+# plt.colorbar()
+# plt.title('Significant p-values (No mask)')
+# print("# ==== END No Mask, bh_procedure ==== #")
 
 
 

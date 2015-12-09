@@ -17,7 +17,6 @@
 # with the following doc-string: #
 """ Does convolution on Event-Related fMRI data, cutting TR into 'cuts' equal 
 distance chunks and putting stimulus in closed cut 
-
 Parameters:
 -----------
 real_times   = one dimensional np.array of time slices (size K)
@@ -27,11 +26,9 @@ hrf_function = a hrf (in functional form, not as a vector)
 TR           = time between record_cuts
 record_cuts  = vector with fMRI times that it recorded (size N)
 cuts         = number of cuts between each TR
-
 Returns:
 --------
 output_vector = vector of hrf predicted values (size N)
-
 Note:
 -----
 It should be noted that you can make the output vector (size "N+M+1") if you'd 
@@ -64,10 +61,3 @@ at the end of both
 # Examples of this function can be found in the script file (both initial
 #    and the final convolution script)
 #######
-
-
-
-
-
-
-
