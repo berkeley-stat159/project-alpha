@@ -1,16 +1,22 @@
+""" Tests the different linear regression models 
+and chooses best model using AIC, BIC, and Adjusted R2
+
+Averages the criteria for all voxels across 3 subjects
+
+Run with: 
+    python model_selection.py
+"""
+
 from __future__ import absolute_import, division, print_function
 import numpy as np
 import numpy.linalg as npl
 import nibabel as nib
 import pandas as pd # new
 import sys # instead of os
-import scipy.stats
-from scipy.stats import gamma
 import os
-import scipy.stats as stats
 
-# Relative path to subject 1 data
 
+# Relative path to subjects
 project_path          = "../../../"
 path_to_data          = project_path+"data/ds009/"
 location_of_images    = project_path+"images/"
@@ -22,24 +28,24 @@ behav_suffix           = "/behav/task001_run001/behavdata.txt"
 
 
 sys.path.append(location_of_functions)
-
 sub_list = os.listdir(path_to_data)[1:]
 
 from event_related_fMRI_functions import hrf_single, np_convolve_30_cuts
 from time_shift import time_shift, make_shift_matrix, time_correct
 from glm import glm_multiple, glm_diagnostics
 from noise_correction import mean_underlying_noise, fourier_predict_underlying_noise,fourier_creation
-from hypothesis import t_stat_mult_regression, t_stat
 from Image_Visualizing import present_3d, make_mask
 from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end
 from model_comparison import adjR2, BIC, AIC
 
+
+#Choose which criteria
 input_var = input("adjR2 or BIC or AIC: ")
 
 
-################
-# Adjusted R^2 #
-################
+################################
+# Functions for different models #
+################################
 
 if input_var == 'adjR2':
     
@@ -57,7 +63,7 @@ elif input_var == 'AIC':
         return AIC(MRSS, y_1d, df, rank)
     
 	    
-        
+#List to include all of the models        
 model1=[]
 model2=[]
 model3=[]
@@ -71,7 +77,8 @@ model9=[]
 model9_5=[]
 model10=[]   
     
-#LOAD THE DATA In
+
+#Average for subject 2,3,and 14
 for i in ['sub002','sub003','sub014']:
     img = nib.load(smooth_data+ i +"_bold_smoothed.nii")
     data = img.get_data() 
@@ -102,7 +109,10 @@ for i in ['sub002','sub003','sub014']:
     shifted_2= make_shift_matrix(cond2[:,0],delta_y)
     shifted_3= make_shift_matrix(cond3[:,0],delta_y)
 
-
+    #########################################
+    #Create convovled HRF for each condition#
+    #########################################
+    
     def make_convolve_lambda(hrf_function,TR,num_TRs):
         convolve_lambda=lambda x: np_convolve_30_cuts(x,np.ones(x.shape[0]),hrf_function,TR,np.linspace(0,(num_TRs-1)*TR,num_TRs),15)
     
@@ -117,14 +127,15 @@ for i in ['sub002','sub003','sub014']:
 
     n_vols = data.shape[-1]    
 
-
+    ##########################################
+    # Create PCA features for our regression #
+    ##########################################
     mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
     mask_data = mask.get_data()
     mask_data = make_mask(np.ones(data.shape[:-1]), mask_data, fit=True)
     mask_data = mask_data!=0
     mask_data = mask_data.astype(int)
 
-    ###PCA SHIT###
 
     to_2d= masking_reshape_start(data,mask)
     # double_centered_2d
@@ -137,7 +148,8 @@ for i in ['sub002','sub003','sub014']:
 
 
 
-    #START DOING GLM
+    #Run GLM Per slice
+    
     for j in range(data.shape[2]):
 
         data_slice = data[:,:,j,:]
@@ -156,9 +168,9 @@ for i in ['sub002','sub003','sub014']:
 
         # all conditions seperate (cond1,cond2,cond3)
         X_cond = np.ones((n_vols,15))
-        X_cond[:,1] = hrf_matrix_1[:,j] # 1 more
-        X_cond[:,2] = hrf_matrix_2[:,j] # 1 more
-        X_cond[:,3] = hrf_matrix_3[:,j] # 1 more
+        X_cond[:,1] = hrf_matrix_1[:,j]
+        X_cond[:,2] = hrf_matrix_2[:,j] 
+        X_cond[:,3] = hrf_matrix_3[:,j] 
         X_cond[:,4] = np.linspace(-1,1,num=X.shape[0]) #drift # one 
         X_cond[:,5:9] = fourier_creation(X.shape[0],2)[:,1:] # four more
         X_cond[:,9:] = pca_addition
@@ -432,32 +444,3 @@ np.mean(model8), np.mean(model9), np.mean(model10)])
 final = final.reshape((2,5))   
 
 np.savetxt(input_var+'.txt', final)
-
-###################
-# Desired Models: #
-###################
-
-### subcategory 1:
-# with only cond_all hrf run
-
-# 1.1 hrf (simple)
-# 1.2 hrf + drift
-# 1.3 hrf + drift + fourier
-# 1.4 hrf + drift + pca
-# 1.5 hrf + drift + pca += fourier
-
-
-
-
-### subcategory 1:
-# with all 3 different hrfs for each type of condition
-
-# 2.1 hrf
-# 2.2 hrf + drift
-# 2.3 hrf + drift + fourier
-# 2.4 hrf + drift + pca
-# 2.5 hrf + drift + pca + fourier
-
-
-
-# need to correct fourier in noise correction function file

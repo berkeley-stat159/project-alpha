@@ -1,5 +1,7 @@
 """
-Script to identify outliers for each subject. Compares the mean MRSS values from running GLM on the basic np.convolve convolved time course, before and after dropping the outliers. 
+Script to identify outliers for each subject. 
+Compares the mean MRSS values from running GLM on the basic np.convolve convolved time course, 
+before and after dropping the outliers. 
 
 """
 
@@ -31,7 +33,7 @@ num_cut=np.zeros(len(sub_list))
 i=0
 
 # Loop through all the subjects. 
-for name in sub_list:
+for name in sub_list[1:]:
     # amount of beginning TRs not standardized at 6
     behav=pd.read_table(path_to_data+name+behav_suffix,sep=" ")
     num_TR = float(behav["NumTRs"])
@@ -72,7 +74,7 @@ for name in sub_list:
     # mean MRSS values before and after dropping outliers. 
     MRSSvals.append((name,) + compare_outliers(data, np_hrf))
 
-np.savetxt("outlierMRSSvals.txt",MRSSvals)
+#np.savetxt("outlierMRSSvals.txt",MRSSvals)
 print(MRSSvals)
 
 '''

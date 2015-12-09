@@ -1,3 +1,9 @@
+""" Checks whether the residuals of linear regression are 
+normal using Shapiro Wilk test for normality.
+Run with: 
+    python normality_script.py
+"""
+
 # Loading modules.
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,17 +19,11 @@ location_of_images="../../../images/"
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
-# Load events2neural from the stimuli module.
+# Load our functions
 from stimuli import events2neural
 from event_related_fMRI_functions import hrf_single, convolution_specialized
-
-# Load our GLM functions. 
 from glm import glm, glm_diagnostics
-
-# Load our normality functions. 
 from normality import check_sw
-
-# Load masking and visualization functions.
 from Image_Visualizing import make_mask, present_3d
 
 # Load the image data for subject 1.

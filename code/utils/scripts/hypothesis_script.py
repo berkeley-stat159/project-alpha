@@ -6,14 +6,11 @@ Run with:
 # Loading modules.
 import os
 import numpy as np
-from scipy.stats import gamma
 import matplotlib.pyplot as plt
 import nibabel as nib
 import sys
-import numpy.linalg as npl
 
 # Paths. Use your own. 
-
 pathtodata = "../../../data/ds009/sub001/"
 condition_location=pathtodata+"model/model001/onsets/task001_run001/"
 location_of_images="../../../images/"
@@ -41,7 +38,7 @@ cond2=np.loadtxt(condition_location+"cond002.txt")
 cond3=np.loadtxt(condition_location+"cond003.txt")
 
 #######################
-# a. (my) convolution #
+# Ben's   convolution #
 #######################
 
 all_stimuli=np.array(sorted(list(cond2[:,0])+list(cond3[:,0])+list(cond1[:,0]))) # could also just x_s_array
@@ -49,7 +46,7 @@ my_hrf = convolution_specialized(all_stimuli,np.ones(len(all_stimuli)),hrf_singl
 
 
 ##################
-# b. np.convolve #
+#    np.convolve #
 ##################
 
 # Suppose that TR=2. We know this is not a good assumption.
@@ -70,19 +67,6 @@ convolved = np.convolve(neural_prediction, hrf_at_trs) # hrf_at_trs sample data
 N = len(neural_prediction)  # N == n_vols == 173
 M = len(hrf_at_trs)  # M == 12
 np_hrf=convolved[:N]
-
-
-
-
-
-
-
-#######################
-# a. (my) convolution #
-#######################
-
-all_stimuli=np.array(sorted(list(cond2[:,0])+list(cond3[:,0])+list(cond1[:,0]))) # could also just x_s_array
-my_hrf = convolution_specialized(all_stimuli,np.ones(len(all_stimuli)),hrf_single,np.linspace(0,239*2-2,239))
 
 
 #=================================================
