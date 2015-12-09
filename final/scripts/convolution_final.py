@@ -1,12 +1,13 @@
-# load condition
-# cond_all
+"""
+Script to create convolved hrf 
+Does the correct method to convolve the condition files for the output as well as time shifting that is required.
+All this is stored in matrices for the specific condition file and the shifts per time.
+
+"""
 
 
 import numpy as np
 import itertools
-import scipy.ndimage
-from scipy.ndimage.filters import gaussian_filter
-import matplotlib.pyplot as plt
 import nibabel as nib
 import os
 import sys
@@ -23,10 +24,11 @@ behav_suffix           = "/behav/task001_run001/behavdata.txt"
 
 
 
-#sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 sys.path.append(location_of_functions)
 
-sub_list = os.listdir(path_to_data)[1:]
+
+sub_list = os.listdir(path_to_data)[1:] #List of all the subjects
+
 # Progress bar
 toolbar_width=len(sub_list)
 sys.stdout.write("Convolution:  ")
@@ -37,6 +39,8 @@ sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
 from event_related_fMRI_functions import hrf_single, np_convolve_30_cuts
 from time_shift import time_shift, make_shift_matrix, time_correct
 
+
+#Create convolution HRF for each subjects
 for i in sub_list:
         
     behav=pd.read_table(path_to_data+i+behav_suffix,sep=" ")
@@ -44,7 +48,6 @@ for i in sub_list:
     
 
     # Suppose that TR=2. We know this is not a good assumption.
-    # Also need to look into the hrf function. 
     cond1=np.loadtxt(path_to_data+ i+ "/model/model001/onsets/task001_run001/cond001.txt")
     cond2=np.loadtxt(path_to_data+ i+ "/model/model001/onsets/task001_run001/cond002.txt")
     cond3=np.loadtxt(path_to_data+ i+ "/model/model001/onsets/task001_run001/cond003.txt")
@@ -61,12 +64,13 @@ for i in sub_list:
     
     delta_y=2*(np.arange(34))/34
 
-
     shifted_all=make_shift_matrix(cond_all,delta_y)
     shifted_1= make_shift_matrix(cond1[:,0],delta_y)
     shifted_2= make_shift_matrix(cond2[:,0],delta_y)
     shifted_3= make_shift_matrix(cond3[:,0],delta_y)
     
+    
+    #Required for the time correction
     def make_convolve_lambda(hrf_function,TR,num_TRs):
         convolve_lambda=lambda x: np_convolve_30_cuts(x,np.ones(x.shape[0]),hrf_function,TR,np.linspace(0,(num_TRs-1)*TR,num_TRs),15)
         

@@ -66,7 +66,7 @@ plt.title("Mean T-Statistic Value Across 25 Subjects")
 zero_out=max(abs(np.min(final)),np.max(final))
 plt.clim(-zero_out,zero_out)
 plt.colorbar()
-plt.savefig("../../../paper/images/hypothesis_testint.png")
+plt.savefig("../../../paper/images/hypothesis_testing.png")
 plt.close()
 
 

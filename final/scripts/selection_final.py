@@ -98,6 +98,7 @@ sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1))
 
 
+
 #LOAD THE DATA In
 subjects=['sub002','sub003','sub014']
 ben=0
@@ -567,4 +568,5 @@ plt.title("Adjusted R2")
 plt.legend(loc='top right', shadow=True,fontsize="smaller")
 plt.savefig('../../images/adjr2_better.png')
 plt.close()
+
 

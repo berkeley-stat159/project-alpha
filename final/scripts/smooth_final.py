@@ -4,22 +4,21 @@ Script to smooth all bold files,
 Imports functions from multiple locations, see test files in correct folders
 
 Potential variants:
-	- this currently uses sigma =1.5/ fwhm =3.5, see lines 90-92
+	- this currently uses sigma =1/ fwhm = (2*np.sqrt(2 *np.log(2))) * sigma 
+        - the paper uses 5.5mm for its fwhm
 	- saves affine from non-smooth data file
 """
 
 import numpy as np
 import itertools
 import scipy.ndimage
-from scipy.ndimage.filters import gaussian_filter
-import matplotlib.pyplot as plt
 import nibabel as nib
 import os
 import sys
 import pandas as pd
 
-# Relative path to subject 1 data
 
+# Relative path to subject all the subjects
 project_path          = "../../"
 path_to_data          = project_path+"data/ds009/"
 location_of_images    = project_path+"images/"
@@ -27,18 +26,7 @@ location_of_functions = project_path+"code/utils/functions/"
 final_data            = "../data/"
 behav_suffix           = "/behav/task001_run001/behavdata.txt"
 
-
-
-#sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 sys.path.append(location_of_functions)
-
-# Load events2neural from the stimuli module.
-#from stimuli import events2neural
-#from event_related_fMRI_functions import hrf_single, convolution_specialized
-
-# Load our GLM functions. 
-#from glm import glm, glm_diagnostics, glm_multiple
-
 
 # Load smoothing function
 from smooth import smoothvoxels
@@ -46,10 +34,9 @@ from Image_Visualizing import present_3d
 
 sub_list = os.listdir(path_to_data)[1:]
 
-
 # Progress bar
 toolbar_width=len(sub_list)
-sys.stdout.write("Smoothing data, with 'fwhm ~ 3.5':  ")
+sys.stdout.write("Smoothing data, with sigma=1:  ")
 sys.stdout.write("[%s]" % (" " * toolbar_width))
 sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
@@ -90,8 +77,7 @@ for name in sub_list:
 	for time in np.arange(data.shape[-1]):
 		# Kind of arbitrary chosen time
 
-		sigma = 1.5
-		fwhm = (2*np.sqrt(2 *np.log(2))) * sigma
+		sigma = 1
 		smoothed_data[...,time]= smoothvoxels(data, sigma, time)
 
 
@@ -114,17 +100,6 @@ sys.stdout.write("\n")
 # cost of saving:
 #1 loops, best of 3: 1min 24s per loop
 
-
-ben=False
-if ben:
-	plt.scatter(np.arange(len(sub_list)),num_cut)
-	plt.title("Number of Slices removed at the beginning per person")
-	plt.ylabel("Number of Slices")
-	plt.xlabel("Individual count (not directly related to ID index)")
-	plt.xlim(-1,len(sub_list))
-	plt.savefig(location_of_images+'num_slice_rm.png')
-
-	plt.close()
 
 
 
