@@ -19,7 +19,7 @@ install:
   - cd data && make testing_data && cd ..
   - sudo apt-get update
   - sudo apt-get install libblas-dev liblapack-dev libatlas3gf-base
-  - wheelhouse_pip_install ${DEPENDS} --trusted-host travis-wheels.scikit-image.org
+  - wheelhouse_pip_install ${DEPENDS} 
   - if [ "${COVERAGE}" == "1" ]; then
     pip install coverage;
     pip install coveralls;

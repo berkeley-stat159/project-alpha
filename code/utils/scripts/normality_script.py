@@ -1,5 +1,6 @@
 # Loading modules.
 import numpy as np
+import matplotlib.pyplot as plt
 import nibabel as nib
 from scipy.stats import shapiro
 import os
@@ -20,11 +21,15 @@ from event_related_fMRI_functions import hrf_single, convolution_specialized
 from glm import glm, glm_diagnostics
 
 # Load our normality functions. 
-from normality import check_sw, check_sw_masked
+from normality import check_sw
+
+# Load masking and visualization functions.
+from Image_Visualizing import make_mask, present_3d
 
 # Load the image data for subject 1.
 img = nib.load(pathtodata+"BOLD/task001_run001/bold.nii.gz")
 data = img.get_data()
+data = data.astype(float) 
 data = data[...,6:] # Knock off the first 6 observations.
 
 cond1=np.loadtxt(condition_location+"cond001.txt")
@@ -74,12 +79,21 @@ np_MRSS, np_fitted, np_residuals = glm_diagnostics(np_B, np_X, data)
 
 # Using 4-d residuals.
 sw_pvals = check_sw(np_residuals)
-print(np.mean(sw_pvals > 0.05))
+print("Proportion of voxels with p-value above 0.05 (unmasked): "+str(np.mean(sw_pvals > 0.05)))
 
-# Using 2-d residuals (voxel by time), which is kind of silly now, 
-# but will be important when running models on masked data. 
-resid_2d = np_residuals.reshape((-1,np_residuals.shape[-1]))
-sw_pvals_2d = check_sw_masked(resid_2d)
-print(np.mean(sw_pvals_2d > 0.05))
-print("Should be the same.")
+
+# Load mask.
+mask = nib.load(pathtodata+'/anatomy/inplane001_brain_mask.nii.gz')
+mask_data = mask.get_data()
+
+masked_pvals = make_mask(sw_pvals, mask_data, fit=True)
+pvals_in_brain = sw_pvals.ravel()[masked_pvals.ravel() != 0]
+print("Proportion of voxels with p-value above 0.05 (masked): "+str(np.mean(pvals_in_brain > 0.05)))
+
+plt.imshow(present_3d(sw_pvals), cmap=plt.get_cmap('gray'))
+plt.savefig(location_of_images+'sub001sw.png')
+plt.close()
+plt.imshow(present_3d(masked_pvals), cmap=plt.get_cmap('gray'))
+plt.savefig(location_of_images+'sub001swmasked.png')
+plt.close()
 
