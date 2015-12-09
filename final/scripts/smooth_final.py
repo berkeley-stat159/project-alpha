@@ -4,7 +4,8 @@ Script to smooth all bold files,
 Imports functions from multiple locations, see test files in correct folders
 
 Potential variants:
-	- this currently uses sigma =1/ fwhm =3.5
+	- this currently uses sigma =1/ fwhm = (2*np.sqrt(2 *np.log(2))) * sigma 
+        - the paper uses 5.5mm for its fwhm
 	- saves affine from non-smooth data file
 """
 
@@ -77,7 +78,6 @@ for name in sub_list:
 		# Kind of arbitrary chosen time
 
 		sigma = 1
-		fwhm = (2*np.sqrt(2 *np.log(2))) * sigma
 		smoothed_data[...,time]= smoothvoxels(data, sigma, time)
 
 
