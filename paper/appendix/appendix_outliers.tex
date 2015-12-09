@@ -1,21 +1,6 @@
-\documentclass[11pt]{article}
+% Outliers appendix. 
 
-\usepackage[margin=0.75in]{geometry}
-\usepackage{indentfirst}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\bibliographystyle{siam}
-
-\title{Appendix: Outlier Removal}
-\author{
-  Liang, Jane\\
-  \texttt{janewliang}
-}
-
-\begin{document}
-\maketitle
-
-We considered following the procedure implemented as part of Homework 2 to 
+\par \indent We considered following the procedure implemented as part of Homework 2 to 
 detect and remove outlier 3-d volumes from the 4-d image scans of each subject. 
 The process involves finding the root mean squares (RMS) of each 3-d volume 
 across time and then getting the difference values. When a given volume is very 
@@ -26,7 +11,7 @@ cutoffs for the RMS difference outliers. We then extended the RMS difference
 outliers by labeling the volumes either side of the outlier RMS difference as 
 being outliers. 
 
-Each subject was considered independently, as considerable variation in 
+\par Each subject was considered independently, as considerable variation in 
 measurement is expected between different subjects. However, we found that 
 reductions in mean residual sum of squares from running simple linear regression 
 before and after removing the extended RMS difference outliers were minimal. 
@@ -34,6 +19,3 @@ Visually speaking, we also did not observe the presence of egregiously different
 points. So, we opted to refrain from removing outliers, at least through the 
 extended RMS difference method. 
 
-\bibliography{project}
-
-\end{document}

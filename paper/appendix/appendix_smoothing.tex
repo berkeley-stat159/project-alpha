@@ -1,19 +1,4 @@
-\documentclass[11pt]{article}
-
-\usepackage[margin=0.75in]{geometry}
-\usepackage{indentfirst}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\bibliographystyle{siam}
-
-\title{Appendix: Smoothing}
-\author{
-  Lee, Rachel\\
-  \texttt{reychil}
-}
-
-\begin{document}
-\maketitle
+% Smoothing appendix. 
 
 \par \indent We used a Gaussian filter to smooth away noise in the brain 
 images. At first, we played around with implementing a function similar 
@@ -45,7 +30,3 @@ shaped curve of the convolution does not have a sharp cutoff at edges. The
 Gaussian filter also distributes weighted averages across the voxels such that 
 the smoothing keeps high-frequency data points into consideration for the end 
 product.
-
-\bibliography{project}
-
-\end{document}
