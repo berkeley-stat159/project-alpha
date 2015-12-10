@@ -43,9 +43,9 @@ from model_comparison import adjR2, BIC, AIC
 input_var = input("adjR2 or BIC or AIC: ")
 
 
-################################
+##################################
 # Functions for different models #
-################################
+##################################
 
 if input_var == 'adjR2':
     
@@ -261,9 +261,9 @@ for i in ['sub002','sub003','sub014']:
 
         model4=model4+model4_slice.tolist()
 
-        ###################
+        #####################
         #   MODEL 4_5       #
-        ###################
+        #####################
 
         # 1.4 hrf + drift + pca
 
@@ -393,9 +393,9 @@ for i in ['sub002','sub003','sub014']:
 
         model9=model9+model9_slice.tolist()
 
-        ###################
+        #####################
         #   MODEL 9_5       #
-        ###################
+        #####################
 
         # 2.4 hrf + drift + pca
 
@@ -416,9 +416,9 @@ for i in ['sub002','sub003','sub014']:
 
         model9_5=model9_5+model9_5_slice.tolist()
 
-        ###################
+        ####################
         #   MODEL 10       #
-        ###################
+        ####################
 
         # 2.5 hrf + drift + pca + fourier
         beta10,t,df10,p = t_stat_mult_regression(data_slice, X_cond)

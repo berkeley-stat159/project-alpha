@@ -1,11 +1,7 @@
-
-# coding: utf-8
-
 # # BART trial
 
 # This is some initial exploration and analysis related to the Bart Trials. I hope the comments make sense :).  Since this is ipython I've intermixed *bash* code with the *python* code, I hope this is easy to follow.
 
-# In[1]:
 
 from __future__ import absolute_import, division, print_function
 import numpy as np
@@ -29,7 +25,6 @@ get_ipython().magic('matplotlib inline')
 
 # Below I've provided where my data files are currently located.  You may observe that the numbering of the subjects is missing some numbers.
 
-# In[6]:
 
 # setting locations of elements, make sure to change this: (smart idea in general, when dealing with a file system_
 location_of_data="/Users/BenjaminLeRoy/Desktop/1.Fall2015/Stat 159/project/data/ds009/" 
@@ -41,7 +36,6 @@ location_of_processed_data="/Users/BenjaminLeRoy/Desktop/1.Fall2015/Stat 159/pro
 
 # ### Folders in the large Data Directory (ds009)
 
-# In[7]:
 
 os.chdir(location_of_data)
 np.array(os.listdir(location_of_data))
@@ -54,7 +48,6 @@ np.array(os.listdir(location_of_data))
 
 # These is the folders in the sub001 folder:
 
-# In[8]:
 
 os.chdir(location_of_subject001)
 np.array(os.listdir(location_of_subject001))
@@ -64,7 +57,6 @@ np.array(os.listdir(location_of_subject001))
 
 # I've tried to help you visualize the data by using the tree function (try in your own terminal), you need your directory to be "ds009/sub001"
 
-# In[9]:
 
 #Run is in terminal after entering sub001 folder:
 #  1)
@@ -79,49 +71,49 @@ np.array(os.listdir(location_of_subject001))
 #  tree model/model002/onsets/task001_run001
 
 # 1)
-BOLD/task001_run001
-├── QA
-│   ├── DVARS.png
-│   ├── QA_report.pdf
-│   ├── confound.txt
-│   ├── dvars.txt
-│   ├── fd.png
-│   ├── fd.txt
-│   ├── mad.png
-│   ├── maskmean.png
-│   ├── meanpsd.png
-│   ├── qadata.csv
-│   ├── spike.png
-│   ├── voxcv.png
-│   ├── voxmean.png
-│   └── voxsfnr.png
-├── bold.nii
-└── bold.nii.gz
-
-# 2)
-anatomy
-├── highres001.nii.gz
-├── highres001_brain.nii.gz
-├── highres001_brain_mask.nii.gz
-├── inplane001.nii.gz
-├── inplane001_brain.nii.gz
-└── inplane001_brain_mask.nii.gz
-
-# 3)
-behav/task001_run001
-└── behavdata.txt
-
-# 4)
-model/model001/onsets/task001_run001
-├── cond001.txt
-├── cond002.txt
-└── cond003.txt
-
-# 5)
-model/model002/onsets/task001_run001
-├── cond001.txt
-├── cond002.txt
-└── cond003.txt
+# BOLD/task001_run001
+# ├── QA
+# │   ├── DVARS.png
+# │   ├── QA_report.pdf
+# │   ├── confound.txt
+# │   ├── dvars.txt
+# │   ├── fd.png
+# │   ├── fd.txt
+# │   ├── mad.png
+# │   ├── maskmean.png
+# │   ├── meanpsd.png
+# │   ├── qadata.csv
+# │   ├── spike.png
+# │   ├── voxcv.png
+# │   ├── voxmean.png
+# │   └── voxsfnr.png
+# ├── bold.nii
+# └── bold.nii.gz
+#
+# # 2)
+# anatomy
+# ├── highres001.nii.gz
+# ├── highres001_brain.nii.gz
+# ├── highres001_brain_mask.nii.gz
+# ├── inplane001.nii.gz
+# ├── inplane001_brain.nii.gz
+# └── inplane001_brain_mask.nii.gz
+#
+# # 3)
+# behav/task001_run001
+# └── behavdata.txt
+#
+# # 4)
+# model/model001/onsets/task001_run001
+# ├── cond001.txt
+# ├── cond002.txt
+# └── cond003.txt
+#
+# # 5)
+# model/model002/onsets/task001_run001
+# ├── cond001.txt
+# ├── cond002.txt
+# └── cond003.txt
 # Commentary on the above structure:
 # 1. Explore for yourself some of the following:
 #  1. that the model 001 and 002 files seem to be the same (iono why that might be)
@@ -132,7 +124,6 @@ model/model002/onsets/task001_run001
 # I've included already created files to combine all behavioral data into CSV files, and we can load these csv files with panda.
 # Below is visual of the data:
 
-# In[10]:
 
 os.chdir(location_of_processed_data)
 behav=pd.read_table("task001_run001_model_data_frame.csv",sep=",")
@@ -149,14 +140,11 @@ behav.head(5)
 # - events2neural which was done in class
 # - present_3d a code I have already created, see the example later
 
-# In[11]:
-
 #location of my stimuli.py file
 os.chdir(location_of_simuli)
 from stimuli import events2neural
 
 
-# In[12]:
 
 #locating my Image_Visualizing.py file
 os.chdir(location_of_present_3d)
@@ -167,7 +155,6 @@ from Image_Visualizing import present_3d
 
 # There are some other observations below, that might be interesting to find
 
-# In[13]:
 
 os.chdir(os.path.join(location_of_subject001,"BOLD/task001_run001"))
 img=nib.load("bold.nii")
@@ -175,13 +162,11 @@ data=img.get_data()
 # data.shape # (64, 64, 34, 245)
 
 
-# In[14]:
 
 # just a single 3d image to show case the present_3d function
 three_d_image=data[...,0]
 
 
-# In[ ]:
 
 # use of my specialized function
 full=present_3d(three_d_image)
@@ -194,7 +179,6 @@ plt.colorbar()
 # 1) Is there a major problem in the beginning of the data?   
 #   *we will come comment on this later
 
-# In[ ]:
 
 # cut from middle of the brain
 test=data[32,32,15,:] # random voxel
@@ -203,7 +187,6 @@ plt.plot(test) # doesn't look like there are problems in the morning
 
 # 2) Looking at the Conditions/ different types of events in scans
 
-# In[ ]:
 
 # model (condition data) (will be used to create on/off switches)
 os.chdir(os.path.join(location_of_subject001,"model/model001/onsets/task001_run001"))
@@ -211,8 +194,6 @@ cond1=np.loadtxt("cond001.txt")
 cond2=np.loadtxt("cond002.txt")
 cond3=np.loadtxt("cond003.txt")
 
-
-# In[ ]:
 
 # Looking at the first to understand values
 cond1[:10,:]
@@ -222,7 +203,6 @@ cond1[:10,:]
 #  - We already know how many times the first person popped the balloon (see above) *8*. So,... I'd bet money that we could figure out which is that one, and the regular should probably be the largest one. In the first draft of this I included some more analysis, but this is a pretty straight forward reason, so lets use it.
 #  - In the rest of my analysis not included here we saw different lengths of time between elements- and the paper says so as well, this is slightly annoying, but we can deal with it, because we have the start values.
 
-# In[ ]:
 
 for i in [cond1,cond2,cond3]:
     print(i.shape)
@@ -232,7 +212,6 @@ for i in [cond1,cond2,cond3]:
 # 
 # I've talked to Jarrod and he thinks the folks just cut out the first 6 recordings, which makes sense as a general practice, I didn't see any note of it anywhere, but Jarrod suggest looking for sumplimentary documents from the paper.
 
-# In[ ]:
 
 print(str(len(data[0,0,0,:]))+ " is not equal to " + str(behav["NumTRs"][0])) # not the same
 
@@ -241,13 +220,11 @@ print(str(len(data[0,0,0,:]))+ " is not equal to " + str(behav["NumTRs"][0])) # 
 
 # Problem with dimensions of fMRI data and numTRs
 
-# In[ ]:
 
 events=events2neural("cond001.txt",2,239) # 1s are non special events
 events=np.abs(events-1) # switching 0,1 to 1,0
 
 
-# In[ ]:
 
 data_cut=data[...,6:]
 # data_cut.shape (64, 64, 34, 239)
@@ -258,7 +235,6 @@ data_cut=data[...,6:]
 # ### Visualizing when the 3 conditions happen:
 # and that using only the event data will seperate condition 1 from condition 2 and 3
 
-# In[ ]:
 
 x=np.hstack((cond1[:,0],cond2[:,0],cond3[:,0]))
 
@@ -288,9 +264,6 @@ plt.ylabel("length of time to the next value")
 plt.xlim(0-5,239+5)
 plt.legend(loc='lower right', shadow=True,fontsize="smaller")
 plt.title("Just Checking")
-
-
-# In[ ]:
 
 
 

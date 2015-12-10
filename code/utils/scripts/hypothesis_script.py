@@ -38,7 +38,7 @@ cond2=np.loadtxt(condition_location+"cond002.txt")
 cond3=np.loadtxt(condition_location+"cond003.txt")
 
 #######################
-# Ben's   convolution #
+# Smart   convolution #
 #######################
 
 all_stimuli=np.array(sorted(list(cond2[:,0])+list(cond3[:,0])+list(cond1[:,0]))) # could also just x_s_array
