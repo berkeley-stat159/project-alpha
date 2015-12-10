@@ -73,7 +73,7 @@ for i in sub_list:
     mask_data = mask_data!=0
     mask_data = mask_data.astype(int)
 
-    ###PCA###
+    ###PCA SHIT###
 
     to_2d= masking_reshape_start(data,mask)
     # double_centered_2d

@@ -24,7 +24,7 @@ path_to_data          = project_path+"data/ds009/"
 location_of_images    = project_path+"images/"
 location_of_functions = project_path+"code/utils/functions/" 
 final_data            = "../data/"
-behav_suffix          = "/behav/task001_run001/behavdata.txt"
+behav_suffix           = "/behav/task001_run001/behavdata.txt"
 
 sys.path.append(location_of_functions)
 
