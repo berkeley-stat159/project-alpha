@@ -1,19 +1,12 @@
-# multi_regression_script.py
+""" multi_regression_script.py
 
 # In this file we will be creating multiple regressions using the the glm 
 # function. Moreover, the features added with be: seperating the conditions
 # from each other (i.e. x_1 = cond1 HRF, x_2 = cond2 HRF, and x_3 = cond3 HRF.
 
-# I will be running it with np.convolve and convolution_specialized.
+# Will be running it with np.convolve and convolution_specialized.
 
-
-
-# Steps:
-# 1. Libraries, Location and Data
-# 2. X matrix creation,  specifically creation of column vectors for X matrix 
-# (a) np.convolve and (b) convolution_specialized
-# 3. use glm to generate a linear regression
-
+"""
 
 ###################################
 # 1. Libraries, Location and Data #
@@ -30,14 +23,10 @@ import matplotlib.pyplot as plt
 import nibabel as nib
 import pandas as pd # new
 import sys # instead of os
-import scipy.stats
-from scipy.stats import gamma
 import os
 
 ################
-################
-# b. Locations #
-################
+#   Locations #
 ################
 
 location_of_project="../../../"
@@ -50,57 +39,39 @@ bold_location=location_of_subject001+"BOLD/task001_run001/"
 location_to_class_data=location_of_project+"data/ds114/"
 location_of_images=location_of_project+"images/"
 
-
-###############
-# c. sys path #
-###############
-
+#System paths
 sys.path.append(location_of_functions) # 0
 sys.path.append(bold_location) # 1
 sys.path.append(condition_location) # 2
 sys.path.append(location_to_class_data) # Goals: i
 
 
-################
-# d. functions #
-################
-
-# i. importing created convolution function for event-related fMRI functions:
-from event_related_fMRI_functions import convolution, hrf_single
-from event_related_fMRI_functions import convolution_specialized
-# ii. importing events2neural for np.convolve built-in function
+#import our functions
+from event_related_fMRI_functions import convolution, hrf_single, convolution_specialized
 from stimuli import events2neural
-# iii. import glm_multiple for multiple regression
 from glm import glm_multiple, glm_diagnostics
-# iv. import image viewing tool
 from Image_Visualizing import present_3d
 
 
-###########
-# e. data #
-###########
 
-# i. load in subject001's BOLD data:
+# load in subject001's BOLD data:
 img=nib.load(location_of_subject001+"BOLD/task001_run001/"+"bold.nii")
 data=img.get_data()
 data=data[...,6:]
 num_voxels=np.prod(data.shape[:-1])
-#data.shape
 
-# ii. load in subject001's behavioral files (condition files) 
+# load in subject001's behavioral files (condition files) 
 # for convolution_specialized
 cond1=np.loadtxt(condition_location+"cond001.txt")
 cond2=np.loadtxt(condition_location+"cond002.txt")
 cond3=np.loadtxt(condition_location+"cond003.txt")
 
 ########################
-########################
-# 2. X Matrix Creation #  
-########################
+#    X Matrix Creation #  
 ########################
 
 ###################
-# (a) np.convolve #
+#     np.convolve #
 ###################
 
 TR = 2
@@ -120,7 +91,7 @@ all_tr_times = np.arange(n_vols) * TR
 
 
 ###############################
-# (b) convolution_specialized #
+#     convolution_specialized #
 ###############################
 X_my = np.ones((n_vols,4))
 
@@ -128,20 +99,20 @@ conds = [cond1[:,0],cond2[:,0],cond3[:,0]]
 for i,cond in enumerate(conds):
 	X_my[:,i+1]=convolution_specialized(cond,np.ones(len(cond)),hrf_single,all_tr_times)
 
+
 ##########
-##########
-# 3. GLM #  
-##########
+#    GLM #  
 ##########
 
+
 ###################
-# (a) np.convolve #
+#     np.convolve #
 ###################
 
 B_np,junk=glm_multiple(data,X_np)
 
 ###############################
-# (b) convolution_specialized #
+#     convolution_specialized #
 ###############################
 
 
@@ -152,13 +123,18 @@ B_my,junk=glm_multiple(data,X_my)
 #############
 # 4. Review #
 #############
-
+""""
 # Looks like splitting up the conditions does a few things
 # 1. cond2 (exploding the balloon) have 2 effects, it continues the views from 
 # 	all conditions to some extent and also (because it occurs so rarely- see 
 #	first plot), that also takes in the shifting of the brain on the outside
 # 2. cond3's beta is centered around 20 (so it may not be able to pick enought 
 #	up)
+"""
+
+############################
+# Condition 2 vs Time Plot #
+############################
 
 plt.plot(X_np[:,2])
 plt.title("Condition 2 (pop) time predictions")
@@ -166,6 +142,10 @@ plt.xlabel("Time")
 plt.ylabel("Hemoglobin response")
 plt.savefig(location_of_images+'cond2_time.png')
 plt.close()
+
+############################
+# Condition 2 brain image  #
+############################
 
 plt.imshow(present_3d(B_np[...,2]),interpolation='nearest', cmap='seismic') 
 # instead of cmap="gray"
@@ -177,6 +157,9 @@ plt.savefig(location_of_images+'mr_cond2_beta_brain.png')
 plt.close()
 
 
+############################
+# Condition 3 vs Time Plot #
+############################
 plt.plot(X_np[:,3])
 plt.title("Condition 3 (save) time predictions")
 plt.xlabel("Time")
@@ -184,8 +167,11 @@ plt.ylabel("Hemoglobin response")
 plt.savefig(location_of_images+'mr_cond3_time.png')
 plt.close()
 
+############################
+# Condition 3 Brain Image #
+############################
+
 plt.imshow(present_3d(B_np[...,3]),interpolation='nearest', cmap='seismic')
-# instead of cmap="gray"
 zero_out=max(abs(np.min(present_3d(B_np[...,3]))),np.max(present_3d(B_np[...,3])))
 plt.clim(-zero_out,zero_out)
 plt.title("Condition 3 (save) beta Brain Image")
@@ -193,6 +179,10 @@ plt.colorbar()
 plt.savefig(location_of_images+'mr_cond3_beta_brain.png')
 plt.close()
 
+
+############################
+# Condition 1 vs Time Plot #
+############################
 plt.plot(X_np[:,1])
 plt.title("Condition 1 time predictions")
 plt.xlabel("Time")
@@ -200,6 +190,9 @@ plt.ylabel("Hemoglobin response")
 plt.savefig(location_of_images+'mr_cond1_time.png')
 plt.close()
 
+############################
+# Condition 1 brain image  #
+############################
 plt.imshow(present_3d(B_np[...,1]),interpolation='nearest', cmap='seismic')
 # instead of cmap="gray"
 plt.title("Condition 1 beta Brain Image")
@@ -207,6 +200,11 @@ plt.colorbar()
 plt.savefig(location_of_images+'mr_cond1_beta_brain.png')
 plt.close()
 
+
+
+#################################################
+# Difference between condition1 and condition 2 #
+#################################################
 
 difference_12=present_3d(B_np[...,1])-present_3d(B_np[...,2])
 plt.imshow(difference_12,interpolation='nearest', cmap='seismic')
@@ -217,6 +215,10 @@ plt.colorbar()
 plt.savefig(location_of_images+'mr_cond1-cond2_beta_brain.png')
 plt.close()
 
+
+#################################################
+# Hemogrlobin response for each condition      #
+#################################################
 
 plt.plot(X_np[:,1]+X_np[:,2]+X_np[:,3],label="All Conditions",color="#000019")
 plt.plot([0,239],[0,0])
@@ -232,10 +234,6 @@ plt.xlabel("Time")
 plt.ylabel("Hemoglobin response")
 plt.savefig(location_of_images+'all_cond_time.png')
 plt.close()
-
-
-
-
 
 
 

@@ -1,24 +1,24 @@
+"""
 ################
 # New Analysis #
 ################
 
-# Goal is to eliminate noise not related to the Hemodynamic response by using 
-# 1) fourier (cosine/sine curves) to capture cyclic response and 
-# 2) a basic drift function to capture linear time drift
+Goal is to eliminate noise not related to the Hemodynamic response by using 
+1) fourier (cosine/sine curves) to capture cyclic response and 
+2) a basic drift function to capture linear time drift
 
 #############
 # Questions #
 #############
 
-# Questions brought about while working on the analysis:
-# 1) should the glm for the fourier be somehow determined per individual 
-# 	not per voxel? (is per voxel analysis overfitting the assumed random noise)
-# 2) Maybe make fourier from averaging of all voxels per person? 
-# 	Would this be strong enough and the right approach?
+Questions brought about while working on the analysis:
+1) should the glm for the fourier be somehow determined per individual 
+ 	not per voxel? (is per voxel analysis overfitting the assumed random noise)
+2) Maybe make fourier from averaging of all voxels per person?
+ 	Would this be strong enough and the right approach?
 
 
-#------------------------------------------------------------------------------#
-
+"""
 
 ##################
 # Load Libraries #
@@ -26,16 +26,14 @@
 
 from __future__ import absolute_import, division, print_function
 import numpy as np
-import numpy.linalg as npl
 import matplotlib.pyplot as plt
 import nibabel as nib
 import pandas as pd # new
 import sys # instead of os
-import scipy.stats
-from scipy.stats import gamma
 import os
-import scipy.stats as stats
 from sklearn.decomposition import PCA
+
+#paths
 
 location_of_project="../../../"
 location_of_data=location_of_project+"data/ds009/" 
@@ -54,14 +52,11 @@ sys.path.append(condition_location)
 sys.path.append(location_to_class_data) # Basic loading
 
 
-
+#Import our functions
 from event_related_fMRI_functions import convolution, hrf_single
 from event_related_fMRI_functions import convolution_specialized
-# ii. importing events2neural for np.convolve built-in function
 from stimuli import events2neural
-# iii. import glm_multiple for multiple regression
 from glm import glm_multiple, glm_diagnostics
-# iv. import image viewing tool
 from Image_Visualizing import present_3d
 from noise_correction import mean_underlying_noise, fourier_predict_underlying_noise,fourier_creation
 
@@ -83,7 +78,6 @@ all_tr_times = np.arange(n_vols) * TR
 
 cond_all=np.loadtxt(condition_location+"cond_all.txt")
 
-#------------------------------------------------------------------------------#
 
 #################
 # First Attempt #
@@ -193,26 +187,3 @@ plt.savefig(location_of_images+'noise_correction_mean_individual_residuals_QQ.pn
 plt.close()
 
 
-# Get first two principal components. 
-# Sklearn needed. Trying to get all the components results in
-# a memory error, so we will only get the first two. 
-"""data_2d = data.reshape((-1,data.shape[-1]))
-pca = PCA(n_components=2)
-pca.fit(data_2d.T.dot(data_2d))
-comps = pca.components_
-
-beta_3,junk=glm_multiple(comps,X_2)
-MRSS_3, fitted_3, residuals_3 = glm_diagnostics(beta_3, X_2, comps)
-
-plt.plot(all_tr_times,residuals_2[41, 47, 2]/np.std(residuals_2[41, 47, 2]),label="residuals",color="b")
-plt.plot(all_tr_times,residuals_3[0,:]/np.std(residuals_3[0,:]),label="pca1 residuals",color="r")
-plt.plot(all_tr_times,residuals_3[1,:]/np.std(residuals_3[1,:]),label="pca2 residuals",color="g")
-plt.plot([0,max(all_tr_times)],[0,0],label="origin (residual=0)",color="k")
-plt.title("Residual for sub001, voxel [41, 47, 2],fourier 3 fit to mean compared with PCA")
-plt.xlabel("Time")
-plt.ylabel("Hemodynamic response residual")
-plt.legend(loc='upper right', shadow=True,fontsize="smaller")
-plt.savefig(location_of_images+'noise_correction_pca.png')
-plt.close()
-
-"""

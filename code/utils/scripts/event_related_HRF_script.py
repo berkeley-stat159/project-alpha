@@ -264,7 +264,7 @@ plt.close()
 	# In [1]: %timeit testconv_np = np.convolve(neural_prediction, hrf_at_trs) 
 	# 	The slowest run took 4.67 times longer than the fastest. 
 	# 	This could mean that an intermediate result is being cached 
-	# 	100000 loops, best of 3: 12 µs per loop 
+	# 	100000 loops, best of 3: 12 mu s per loop 
 
 	## testconv_2	
 	# In [2]: %timeit testconv_2 = convolution(all_tr_times,neural_prediction,hrf_single)
@@ -288,8 +288,8 @@ plt.close()
 
 	## testconv_5
 	# In [5]: %timeit testconv_5 = fast_convolution(all_tr_times,neural_prediction,fast_hrf)
-	# 10 loops, best of 3: 102 ms per loop
-test_names={"testconv_np": "12 µs (3 ms w/ stimulus)",
+	# 10 loops, best of 3: 102 mu s per loop
+test_names={"testconv_np": "12 mu s (3 ms w/ stimulus)",
 			"testconv_2": "812 ms",
 			"testconv_3": "797 ms",
 			"testconv_4_1": "9.52 ms",
@@ -467,7 +467,7 @@ plt.close()
 	# In [1]: %timeit conv_np=np.convolve(neural_prediction,hrf_at_trs)
 	# 	The slowest run took 6.01 times longer than the fastest. 
 	#	This could mean that an intermediate result is being cached 
-	# 	100000 loops, best of 3: 14.4 µs per loop
+	# 	100000 loops, best of 3: 14.4 mu s per loop
 
 	## conv_2	
 	# In [2]: %timeit conv_2 = convolution(cond_all,np.ones(len(cond_all)),hrf_single)
@@ -488,7 +488,7 @@ plt.close()
 	## conv_5
 	# In [6]: %timeit conv_5 = fast_convolution(cond_all,np.ones(len(cond_all)),fast_hrf,np.linspace(0,239*2-2,239))
 	# 	10 loops, best of 3: 110 ms per loop
-names={"conv_np": "14.4 µs (3 ms + w/ stimulus)",
+names={"conv_np": "14.4 mu s (3 ms + w/ stimulus)",
 			"conv_2": "972 ms",
 			"conv_3": "1.15 s",
 			"conv_4_15": "98.3 ms per loop",

@@ -6,7 +6,6 @@ Run with:
 # Loading modules.
 import os
 import numpy as np
-from scipy.stats import gamma
 import matplotlib.pyplot as plt
 import nibabel as nib
 import sys

@@ -62,11 +62,6 @@ plt.savefig(location_of_images + "shifted.png")
 print("Shifted time course more closely matches stimuli.")
 
 
-
-
-
-
-
 #######################
 # Ben's improvements: #
 #######################
@@ -88,8 +83,6 @@ plt.ylim(0,10)
 plt.savefig(location_of_images + "ben_stupid_linear_shift.png")
 plt.close()
 
-
-# second
 
 from event_related_fMRI_functions import hrf_single, np_convolve_30_cuts
 
