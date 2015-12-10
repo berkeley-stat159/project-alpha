@@ -1,24 +1,6 @@
-\documentclass[11pt]{article}
+% Convolution appendix. 
 
-\usepackage[margin=0.75in]{geometry}
-\usepackage{indentfirst}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{amsmath}
-
-\bibliographystyle{siam}
-
-\title{Appendix: Convolution Analysis}
-\author{
-  LeRoy, Benjamin\\
-  \texttt{benjaminleroy}
-}
-
-\begin{document}
-\maketitle
-
-
-\section{Introduction}
+\subsection{Introduction}
 
 fMRI data presents a distinct challenge for relating neural stimuli 
 to BOLD (blood-oxygen-level dependent) response. fMRI scans record changes 
@@ -30,8 +12,8 @@ can be seen in [Figure \ref{fig:hrf}]. The complete hemodynamic response
 function needs to be modeled in order to better relate stimulation and the BOLD 
 response from the fMRI scan.
 
-\section{Mathematics}
-\subsection{Convolution Theory and Mathematics}
+\subsection{Mathematics}
+\subsubsection{Convolution Theory and Mathematics}
 
 To relate stimuli to BOLD response, we convolved the time courses. At a basic 
 level, convolution is a distinct combination of two functions (say $f$ and $g$). 
@@ -96,7 +78,7 @@ time capture. The time capture idea will be needed later.
 \end{figure}
 
 
-\subsection{Convolution Applied to Stimulus}
+\subsubsection{Convolution Applied to Stimulus}
 
 The ``continuous'' nature of the step function ``g'' does not extend well into 
 the discrete time series that we have. However, one approach for fMRI analysis 
@@ -176,16 +158,16 @@ their ``convolved'' output [Figure \ref{fig:convolve1}].
 
 
 
-\subsection{Returning to Our fMRI Data}
+\subsubsection{Returning to Our fMRI Data}
 
 We can now apply this discrete approach to convolution between $f$ and $g'$ 
 to our data. The $f$ is actually a common representation of the hemodynamic 
 response, and the $g'$ is a good representation of the stimuli from an 
 event-related trial \cite{brett2015course}. 
 
-\section{Approach to our Specific Problem}
+\subsection{Approach to our Specific Problem}
 
-\subsection{Naive Approach (using \texttt{np.convolve})}
+\subsubsection{Naive Approach (using \texttt{np.convolve})}
 
 A \texttt{numpy} function \texttt{np.convolve}, which takes advantage of 
 fast Fourier transforms for efficiency (it boils down to fewer computations 
@@ -195,7 +177,7 @@ approach for convolving two functions would use this function directly, but
 desired intervals between prediction intervals. As such, we can not naively
 apply the \texttt{np.convolve} for our data (though we do for a base model). 
 
-\subsection{Needed Improvements: Moving beyond naive \texttt{np.convolve}}
+\subsubsection{Needed Improvements: Moving beyond naive \texttt{np.convolve}}
 
 The reason motivating this appendix is the fact that our data fails to meet the 
 assumption that the intervals are in equidistant. Especially in our case, there 
@@ -204,7 +186,6 @@ correctly utilize \texttt{np.convolve}. All the following approaches improve on
 the basic \texttt{np.convolve} approach, but ultimately circle back to 
 incorporating \texttt{np.convolve} for speed gains. 
 
-\subsubsection{Explaining Our Situation}
 Our condition file (\texttt{cond1}) lists stimulus times for when the 
 individual pumped the balloon but did not pop it. For subject 001, the 
 first 10 data points are as follows [Figure \ref{table:cond1}]:
@@ -239,8 +220,7 @@ to the drawing board to try to reproduce our expected hemodynamic response for
 the entire time course.
 
 
-
-\subsubsection{Summary of Approaches}
+\subsection{Summary of Approaches}
 Our first approach attempts to correctly match the theory underlying our data. 
 Our second approach tries to utilize \texttt{np.convolve} by expanding the 
 grid of desired results (thanks to advice from  Matthew Brett, Jean-Baptiste Poline,
@@ -294,7 +274,7 @@ faster algorithms (thanks to FFT), before reducing back down to our 2 second
 grid. 
 
 
-\section{Example}
+\subsection{Example}
 
 Now that we have discussed that theoretics of and possible implementations of the 
 convolving event-related stimulation, let's look at a basic example from our data.
@@ -351,15 +331,6 @@ scan.
 %computational efficiency. 
 
 
-
-
-
-
-
-
-
-
-
 %Needed references:
 %Brett, Matthew and Poline, J-B  (2013). Convolution. Retrieved from 
 % http://practical-neuroimaging.github.io/on_convolution.html
@@ -367,6 +338,3 @@ scan.
 % Weissten, Eric W. ``Convolution''. From MathWorld - A Wolfram Web  Resource. 
 % Retrieved from htt://mathworld.wolfram.com/Convolution.html
 
-\bibliography{project}
-
-\end{document}

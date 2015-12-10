@@ -100,7 +100,6 @@ sm.graphics.tsa.plot_pacf(arima111.resid, lags=20)
 plt.close()
 
 # Use first half of the observations to predict the second half.
-# Not bad! 
 print("Suggested model is ARIMA(1,1,1).")
 preds = arima111.predict(start=len(diff1)//2+1)
 times = range(1,len(diff1)+1)

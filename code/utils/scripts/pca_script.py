@@ -31,7 +31,7 @@ sub_list = os.listdir(path_to_data)
 masked_var_array = np.zeros((50, len(sub_list)))
 
 # Loop through all the subjects. 
-for j in range(len(sub_list)):
+for j in range(1,len(sub_list)):
     name = sub_list[j]
     # amount of beginning TRs not standardized at 6
     behav=pd.read_table(path_to_data+name+behav_suffix,sep=" ")

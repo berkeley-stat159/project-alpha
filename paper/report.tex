@@ -34,14 +34,14 @@
 
 \abstract{\input{text_files/abstract.tex}}
 
-\section{Introduction}
+\section{Introduction} \label{introduction}
 	\input{text_files/intro.tex}
 
-\section{Data}
+\section{Data} \label{data}
 
 	\input{text_files/data.tex}
 	
-\section{Methods}
+\section{Methods} \label{methods}
 	\subsection{Smoothing}
 	
 		\input{text_files/smoothing.tex}
@@ -74,7 +74,7 @@
 	
 		\input{text_files/clustering.tex}
 		
-\section{Results}
+\section{Results} \label{results}
 		
 	\subsection{Linear Regression Results}
 	
@@ -88,7 +88,7 @@
 	
 		\input{text_files/clustering_results.tex}
 
-\section{Discussion}
+\section{Discussion} \label{discussion}
 	
 	\subsection{Discussion of Results}
 		
@@ -99,21 +99,28 @@
 		\input{text_files/discussion_future.tex}
 		
 
+
+\appendix
+
+\section{Appendix: Outlier Removal} \label{app_outliers}
+
+\input{appendix/appendix_outliers.tex}
+
+\section{Appendix: Convolution Analysis} \label{app_convolution}
+
+\input{appendix/appendix_convolution.tex}
+
+\section{Appendix: Smoothing} \label{app_smoothing}
+
+\input{appendix/appendix_smoothing.tex}
+
+\section{Appendix: Clustering} \label{app_clustering}
+
+\input{appendix/appendix_clustering.tex}
+
+\section{Appendix: Time Series Analysis} \label{app_time}
+
+\input{appendix/appendix_time.tex}
+
 \bibliography{project}
-
-\section{Appendix}
-
-\begin{enumerate}
-	\item Outlier Removal
-
-	\item Convolution Analysis
-
-	\item Smoothing
-
-	\item Clustering (not written yet)
-
-	\item Time Series Analysis
-
-\end{enumerate}
-
 \end{document}
