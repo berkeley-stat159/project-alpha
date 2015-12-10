@@ -1,11 +1,4 @@
-"""
-Script to do SVD on the covariance matrix of the voxel by time matrix.
-
-Run with: 
-    python pca_script.py
-
-"""
-
+from __future__ import absolute_import, division, print_function
 import numpy as np
 import numpy.linalg as npl
 import nibabel as nib
@@ -16,11 +9,12 @@ import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 
 # Relative paths to project and data. 
-project_path          = "../../../"
+project_path          = "../../"
 path_to_data          = project_path+"data/ds009/"
 location_of_images    = project_path+"images/"
 location_of_functions = project_path+"code/utils/functions/" 
-behav_suffix           = "/behav/task001_run001/behavdata.txt"
+final_data            = "../data/"
+behav_suffix          = "/behav/task001_run001/behavdata.txt"
 
 sys.path.append(location_of_functions)
 from Image_Visualizing import make_mask
@@ -83,29 +77,35 @@ for j in range(1,len(sub_list)):
     var_sums_masked= np.cumsum(exp_var_masked)
     masked_var_array[:,j] = exp_var_masked[:50] # Store the first 50 variance proportions.
     
-    # Setting up legend colors.
-    hand_un = mlines.Line2D([], [], color='b', label='Not Masked')
-    hand_mask = mlines.Line2D([], [], color='r', label='Masked')
+# Setting up legend colors.
+hand_un = mlines.Line2D([], [], color='b', label='Not Masked')
+hand_mask = mlines.Line2D([], [], color='r', label='Masked')
 
-    # Compare proportion of variance explained by each component for masked and unmasked data.
-    plt.plot(exp_var[np.arange(1,11)], 'b-o')
-    plt.plot(exp_var_masked[np.arange(1,11)], 'r-o')
-    plt.legend(handles=[hand_un, hand_mask])
-    plt.xlabel("Principal Components")
-    plt.title("Proportion of Variance Explained by Each Component for " + name)
-    plt.savefig(location_of_images+'pcapropvar'+name+'.png')
-    plt.close()
-
-    # Compare sum of proportion of variance explained by each component for masked and unmasked data.
-    plt.plot(var_sums[np.arange(1,11)], 'b-o')
-    plt.plot(var_sums_masked[np.arange(1,11)], 'r-o')
-    plt.axhline(y=0.4, color='k')
-    plt.legend(handles=[hand_un, hand_mask])
-    plt.xlabel("Number of Principal Components")
-    plt.title("Sum of Proportions of Variance Explained by Components for " + name)
-    plt.savefig(location_of_images+'pcacumsums'+name+'.png')
-    plt.close()
+# Compare sum of proportion of variance explained by each component for masked and unmasked data.
+# For just one subject. 
+plt.plot(var_sums[np.arange(1,11)], 'b-o')
+plt.plot(var_sums_masked[np.arange(1,11)], 'r-o')
+plt.axhline(y=0.4, color='k')
+plt.legend(handles=[hand_un, hand_mask])
+plt.xlabel("Number of Principal Components")
+plt.title("Sum of Proportions of Variance Explained by Components for " + name)
+plt.savefig(location_of_images+'pcacumsums'+name+'.png')
+plt.close()
 
 # Write array of variance proportions to a text file.
 df = pd.DataFrame(masked_var_array)
-df.to_csv('masked_var.txt', sep=' ', index=False, header=sub_list)
+df.to_csv(final_data+'masked_var.txt', sep=' ', index=False, header=sub_list)
+
+masked_var = pd.read_csv(final_data+'masked_var.txt', sep=' ').sort_index(1)
+cumsums = masked_var.cumsum(0)
+
+##########################
+# Boxplots of components #
+##########################
+plt.boxplot(np.array(cumsums[:10]).T)
+plt.scatter(np.ones((24,10))*np.arange(1,11), np.array(cumsums[:10]).T)
+plt.grid()
+plt.axhline(y=0.4, color='k', linestyle="--")
+plt.xlabel("Principal Components")
+plt.title("Sum of Proportions of Variance Explained by Components")
+plt.savefig(location_of_images+'pcaBOX.png')

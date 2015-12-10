@@ -23,7 +23,7 @@ The Makefile contains four commands: `clean`, `test`, `verbose`, and `coverage`.
 - `make coverage`: Generates a coverage report for the functions located in the `data` and `code` directories. 
 
 NEED TO ADD: Info on navigating the subdirectories. Images?
-Insstructions on what to do to get the analysis. 
+Instructions on what to do to get the analysis. 
 
 ## Contributers 
 

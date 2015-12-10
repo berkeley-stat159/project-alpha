@@ -1,6 +1,6 @@
 """ Tests for normality checks
 
-Run inside the project directory with:
+Run at the project directory with:
     nosetests code/utils/tests/test_normality.py
 """
 
@@ -17,7 +17,7 @@ pathtoclassdata = "data/ds114/"
 # Add path to functions to the system path.
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
-#Load our Normality functions
+# Load our Normality functions
 from normality import check_sw, check_sw_masked, check_kw
 
 def test_normality():

@@ -27,8 +27,7 @@ sys.path.append(location_of_functions)
 from Image_Visualizing import make_mask
 
 # List of subject directories.
-#sub_list = os.listdir(path_to_data)
-sub_list = ['sub002', 'sub003', 'sub014'] # Just 3 for now.
+sub_list = os.listdir(path_to_data)
 # Initialize list to store principal components for each subject.
 pcs = []
 # Number of components to pull out. 
