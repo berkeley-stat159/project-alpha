@@ -1,5 +1,7 @@
 TITLE="report"
 
+.PHONY: all clean reset
+
 all:
 	pdflatex $(TITLE).tex
 	bibtex $(TITLE)
