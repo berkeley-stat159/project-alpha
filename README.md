@@ -1,7 +1,9 @@
 # Project Alpha
 
-Statistics 159/259
+Statistics 159/259: Reproducible and Collaborative Statistical Data Science
+
 UC Berkeley
+
 Fall 2015 
 
 [![Build Status](https://travis-ci.org/berkeley-stat159/project-alpha.svg?branch=master)](https://travis-ci.org/berkeley-stat159/project-alpha?branch=master)
@@ -29,4 +31,4 @@ Insstructions on what to do to get the analysis.
 - Rachel Lee ([`reychil`](https://github.com/reychil))
 - Benjamin LeRoy ([`benjaminleroy`](https://github.com/benjaminleroy))
 - Jane Liang ([`janewliang`](https://github.com/janewliang))
-- Hiroto Udagawa ([hiroto-udagawa](https://github.com/hiroto-udagawa))
+- Hiroto Udagawa ([`hiroto-udagawa`](https://github.com/hiroto-udagawa))
