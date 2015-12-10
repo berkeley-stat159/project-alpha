@@ -59,7 +59,11 @@ def test_2():
 
 	assert(np.sum(output4[0]) == 50)
 
+	# Test for when neighbors != None and binary == False
 	output5 = t_grouping_neighbor(x4, mask, .5, neighbors = 2,
 						prop = True, abs_on = True, binary = False, off_value = 0, masked_value = .5)
 	assert(output5 == False)
+
+	# Test for when not binary
+	#assert()
 
