@@ -96,7 +96,7 @@ for j in range(1,len(sub_list)):
     plt.savefig(location_of_images+'pcapropvar'+name+'.png')
     plt.close()
 
-    # Compare proportion of variance explained by each component.
+    # Compare sum of proportion of variance explained by each component for masked and unmasked data.
     plt.plot(var_sums[np.arange(1,11)], 'b-o')
     plt.plot(var_sums_masked[np.arange(1,11)], 'r-o')
     plt.axhline(y=0.4, color='k')

@@ -74,7 +74,7 @@ for name in sub_list[1:]:
     # mean MRSS values before and after dropping outliers. 
     MRSSvals.append((name,) + compare_outliers(data, np_hrf))
 
-#np.savetxt("outlierMRSSvals.txt",MRSSvals)
+np.savetxt("outlierMRSSvals.txt",MRSSvals)
 print(MRSSvals)
 
 '''
