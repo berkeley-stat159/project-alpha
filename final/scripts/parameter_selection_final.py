@@ -139,7 +139,7 @@ plt.savefig(location_of_images+"bh_compare_15_plus_contours.png")
 plt.close()
 
 
-plt.contour(present_bh,interpolation="nearest",cmap="seismic")
+plt.imshow(present_bh,interpolation="nearest",cmap="seismic")
 plt.title("Benjamini Hochberg on slice 15 \n (with varying Q and # neighbors)")
 x=32+64*np.arange(5)
 labels = neighbors1
@@ -278,8 +278,6 @@ sys.stdout.write("\n")
 #------------------#
 
 
-behind2= np.ones((5*64,5*64))
-behind_t=beta_3d*mask
 
 present_beta = np.ones((5*64,5*64))
 behind3= np.ones((5*64,5*64))
