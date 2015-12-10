@@ -1,3 +1,13 @@
+"""
+Script for Normality
+
+Runs the Shapiro-Wilks Test for Normality on residuals
+
+Compares unmasked vs masked data and plots for one subject
+
+"""
+
+
 from __future__ import absolute_import, division, print_function
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,10 +23,10 @@ path_to_data          = project_path+"data/ds009/"
 location_of_images    = project_path+"images/"
 location_of_functions = project_path+"code/utils/functions/" 
 final_data            = "../data/"
-behav_suffix           = "/behav/task001_run001/behavdata.txt"
+behav_suffix          = "/behav/task001_run001/behavdata.txt"
 smooth_data           =  final_data + 'smooth/'
 hrf_data              = final_data + 'hrf/'
-residual_data              = final_data + 'glm/residual/'
+residual_data         = final_data + 'glm/residual/'
 
 sys.path.append(location_of_functions)
 

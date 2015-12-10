@@ -9,7 +9,7 @@ Fall 2015
 [![Build Status](https://travis-ci.org/berkeley-stat159/project-alpha.svg?branch=master)](https://travis-ci.org/berkeley-stat159/project-alpha?branch=master)
 [![Coverage Status](https://coveralls.io/repos/berkeley-stat159/project-alpha/badge.svg?branch=master)](https://coveralls.io/r/berkeley-stat159/project-alpha?branch=master)
 
-This repository stores the documentation of our analysis of the balloon-analogue risk task (BART) data included as part of the OpenfMRI ds000009 data set [*The generality of self-control*](https://openfmri.org/dataset/ds000009/). The original analysis was conducted by Jessica Cohen for her doctoral thesis, under the advisement of Russell Poldrack and was largely focused on comparing different notions of self-control across several fMRI studies. Our aim is to reproduce the original analysis and identify regions of the brain with high activation levels over the course of the BART study. 
+This repository stores the documentation of our analysis of the balloon-analogue risk task (BART) data included as part of the OpenfMRI ds000009 data set [*The generality of self-control*](https://openfmri.org/dataset/ds000009/). The original analysis was conducted in 2009 by Jessica Cohen, Ph.D, for her doctoral thesis at UCLA, under the advisement of Russell Poldrack and was largely focused on comparing different notions of self-control across several fMRI studies. Our aim is to reproduce the original analysis and identify regions of the brain with high activation levels over the course of the BART study. 
 
 Many thanks to Jarrod Millman, Matthew Brett, J-B Poline, and Ross Barnowski for their advice and encouragement. 
 
@@ -25,7 +25,7 @@ The Makefile contains four commands: `clean`, `test`, `verbose`, and `coverage`.
 NEED TO ADD: Info on navigating the subdirectories. Images?
 Instructions on what to do to get the analysis. 
 
-## Contributers 
+## Contributors 
 
 - Kent Chen ([`kentschen`](https://github.com/kentschen))
 - Rachel Lee ([`reychil`](https://github.com/reychil))
