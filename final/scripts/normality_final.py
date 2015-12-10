@@ -1,3 +1,11 @@
+"""
+Script to run normality
+
+Uses Shapiro-Wilks Test for normality on residuals
+
+Compares both unmasked and masked proportion of voxels and plots for a single subject
+"""
+
 from __future__ import absolute_import, division, print_function
 import numpy as np
 import nibabel as nib

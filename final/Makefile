@@ -18,10 +18,10 @@ all:
 
 	python script/convolution.py
 	
-	python script/glm.py
+	python scripts/glm.py
 
-	python script/normality.py
+	python scripts/normality.py
 
-	python script/conclusion.py
+	python scripts/conclusion.py
 
 clean:
