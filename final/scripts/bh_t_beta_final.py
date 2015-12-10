@@ -32,9 +32,7 @@ sys.path.append(location_of_functions)
 sub_list = os.listdir(path_to_data)[1:]
 
 from tgrouping import t_grouping_neighbor
-from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end
-from mask_phase_2_dimension_change import neighbor_smoothing, neighbor_smoothing_binary
-
+from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end, neighbor_smoothing, neighbor_smoothing_binary
 from Image_Visualizing import present_3d, make_mask
 from benjamini_hochberg import bh_procedure
 
@@ -53,7 +51,7 @@ fitted_mask[fitted_mask > 0] = 1
 #####################################
 
 # find BH output for each subject and save them all
-q = .2
+q = .25
 neighbors = 1
 #sub_bh = []
 
@@ -139,7 +137,7 @@ plt.close()
 ######################################
 # Run beta grouping for each subject #
 ######################################
-prop_beta = .15
+prop_beta = .2
 
 beta_mean = np.zeros((64, 64, 34, 24))
 
