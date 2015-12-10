@@ -14,14 +14,14 @@ conclusion:
 	python scripts/conclusion.py
 
 all:
-	python script/smoothing.py
+	python scripts/smoothing.py
 
-	python script/convolution.py
+	python scripts/convolution.py
 	
-	python script/glm.py
+	python scripts/glm.py
 
-	python script/normality.py
+	python scripts/normality.py
 
-	python script/conclusion.py
+	python scripts/conclusion.py
 
 clean:

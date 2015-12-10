@@ -12,12 +12,13 @@ from scipy.stats import shapiro
 import os
 import sys
 
-# Relative path to subject 1 data
-pathtodata = "../../../data/ds009/sub001/"
-condition_location=pathtodata+"model/model001/onsets/task001_run001/"
-location_of_images="../../../images/"
+# Relative paths to subject 1 data. 
+pathtodata = project_path + "data/ds009/sub001/"
+condition_location = pathtodata+"model/model001/onsets/task001_run001/"
+location_of_images = project_path+"images/"
+location_of_functions = project_path+"code/utils/functions/" 
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
+sys.path.append(location_of_functions)
 
 # Load our functions
 from stimuli import events2neural
@@ -32,6 +33,7 @@ data = img.get_data()
 data = data.astype(float) 
 data = data[...,6:] # Knock off the first 6 observations.
 
+# Load condition files. 
 cond1=np.loadtxt(condition_location+"cond001.txt")
 cond2=np.loadtxt(condition_location+"cond002.txt")
 cond3=np.loadtxt(condition_location+"cond003.txt")
@@ -86,10 +88,13 @@ print("Proportion of voxels with p-value above 0.05 (unmasked): "+str(np.mean(sw
 mask = nib.load(pathtodata+'/anatomy/inplane001_brain_mask.nii.gz')
 mask_data = mask.get_data()
 
+# Get masked p-values. 
 masked_pvals = make_mask(sw_pvals, mask_data, fit=True)
 pvals_in_brain = sw_pvals.ravel()[masked_pvals.ravel() != 0]
 print("Proportion of voxels with p-value above 0.05 (masked): "+str(np.mean(pvals_in_brain > 0.05)))
 
+# Compare the image plots of the brain slices with and without masking. 
+# Colors indicate whether the p-value for the voxel is above or below the 0.05 threshold. 
 plt.imshow(present_3d(sw_pvals), cmap=plt.get_cmap('gray'))
 plt.savefig(location_of_images+'sub001sw.png')
 plt.close()

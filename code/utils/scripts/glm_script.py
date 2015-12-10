@@ -10,12 +10,13 @@ import nibabel as nib
 import os
 import sys
 
-# Relative path to subject 1 data
-pathtodata = "../../../data/ds009/sub001/"
-condition_location=pathtodata+"model/model001/onsets/task001_run001/"
-location_of_images="../../../images/"
+# Relative paths to subject 1 data. 
+pathtodata = project_path + "data/ds009/sub001/"
+condition_location = pathtodata+"model/model001/onsets/task001_run001/"
+location_of_images = project_path+"images/"
+location_of_functions = project_path+"code/utils/functions/" 
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
+sys.path.append(location_of_functions)
 
 # Load events2neural from the stimuli module.
 from stimuli import events2neural

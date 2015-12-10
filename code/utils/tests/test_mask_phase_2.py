@@ -26,7 +26,7 @@ from nose.tools import assert_equals
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 
-from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end, neighbor_smoothing
+from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end, neighbor_smoothing,neighbor_smoothing_binary
 
 
 
@@ -92,4 +92,13 @@ def test_3():
 	rachel[1, 1, 1] = -1
 	rachel_n = neighbor_smoothing(rachel, 2)
 	assert_array_almost_equal(rachel_n, ones)
+
+def test_4():
+	# checks that neighbor_smoothing_binary works
+	zeros = np.zeros((5, 5, 5))
+
+	rachel = np.zeros((5, 5, 5))
+	rachel[2, 2:4, 2] = 1
+	rachel_n = neighbor_smoothing_binary(rachel, 3)
+	assert_array_almost_equal(rachel_n, zeros)
 

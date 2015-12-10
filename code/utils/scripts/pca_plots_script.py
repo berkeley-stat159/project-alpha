@@ -16,9 +16,10 @@ import matplotlib.pyplot as plt
 project_path          = "../../../"
 location_of_images    = project_path+"images/"
 
+# Read in the proportions of explained variance for the maske ddata.
 masked_var = pd.read_csv('masked_var.txt', sep=' ').sort_index(1)
+# Cumulative sums of variances. 
 cumsums = masked_var.cumsum(0)
-(cumsums[:10]).plot(x=np.arange(1,11), color=['0.2'], legend=False)
 
 
 #######################

@@ -1,25 +1,33 @@
+"""
+Script for Normality
+
+Runs the Shapiro-Wilks Test for Normality on residuals
+
+Compares unmasked vs masked data and plots for one subject
+
+"""
+
+
 from __future__ import absolute_import, division, print_function
 import numpy as np
+import matplotlib.pyplot as plt
 import nibabel as nib
 from scipy.stats import shapiro
 import os
 import sys
 
-# Relative path to subject 1 data
+# Relative path to all of the subjects
 
 project_path          = "../../"
 path_to_data          = project_path+"data/ds009/"
 location_of_images    = project_path+"images/"
 location_of_functions = project_path+"code/utils/functions/" 
 final_data            = "../data/"
-behav_suffix           = "/behav/task001_run001/behavdata.txt"
+behav_suffix          = "/behav/task001_run001/behavdata.txt"
 smooth_data           =  final_data + 'smooth/'
 hrf_data              = final_data + 'hrf/'
-residual_data              = final_data + 'glm/residual/'
+residual_data         = final_data + 'glm/residual/'
 
-
-
-#sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 sys.path.append(location_of_functions)
 
 sub_list = os.listdir(path_to_data)[1:]
@@ -43,30 +51,46 @@ sys.stdout.write("[%s]" % (" " * toolbar_width))
 sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
 
+# Set up lists to store proportion of p-values above 0.05. 
+unmasked_prop = [] # Unmasked (all voxels)
+masked_prop = [] # Masked. 
+
 for i in sub_list:
     residuals =   np.load(residual_data+i+"_residual.npy")
     sw_pvals = check_sw(residuals)
-    print(i+" proportion of voxels with p-value above 0.05 (unmasked): "+str(np.mean(sw_pvals > 0.05)))
+    unmasked_prop.append(np.mean(sw_pvals > 0.05))
 
     mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
     mask_data = mask.get_data()
     
     masked_pvals = make_mask(sw_pvals, mask_data, fit=True)
     pvals_in_brain = sw_pvals.ravel()[masked_pvals.ravel() != 0]
-    print(i+" proportion of voxels with p-value above 0.05 (masked): "+str(np.mean(pvals_in_brain > 0.05)))
+    masked_prop.append(np.mean(pvals_in_brain > 0.05))
      
     sys.stdout.write("-")
     sys.stdout.flush()
+sys.stdout.write("\n")
 
-# Save image plots of masked and unmasked p-values for a single subject. 
+print("Average proportion of unmasked p-values above 0.05:" + str(np.mean(np.array(unmasked_prop))))
+print("Average proportion of masked p-values above 0.05:" + str(np.mean(np.array(masked_prop))))
+
+plt.close()
+plt.hist(np.array(masked_prop))
+plt.title("Histogram of Proportions for each Subject")
+plt.savefig(location_of_images+'maskedhist.png')
+plt.close()
+
+# Save image plots of unmasked p-values for a single subject. 
 plt.imshow(present_3d(sw_pvals), cmap=plt.get_cmap('gray'))
 plt.savefig(location_of_images+i+'sw.png')
 plt.close()
+
+# Save image plots of masked p-values for a single subject. 
 plt.imshow(present_3d(masked_pvals), cmap=plt.get_cmap('gray'))
 plt.savefig(location_of_images+i+'swmasked.png')
 plt.close()
 
-sys.stdout.write("\n")
+
     
     
 
