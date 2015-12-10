@@ -28,11 +28,14 @@ behav_suffix           = "/behav/task001_run001/behavdata.txt"
 
 sys.path.append(location_of_functions)
 
+
 # Load smoothing function
 from smooth import smoothvoxels
 from Image_Visualizing import present_3d
 
-sub_list = os.listdir(path_to_data)[1:]
+sub_list = os.listdir(path_to_data)
+sub_list = [i for i in sub_list if 'sub' in i]
+
 
 # Progress bar
 toolbar_width=len(sub_list)

@@ -28,6 +28,8 @@ from Image_Visualizing import make_mask
 
 # List of subject directories.
 sub_list = os.listdir(path_to_data)
+sub_list = [i for i in sub_list if 'sub' in i]
+
 # Initialize list to store principal components for each subject.
 pcs = []
 # Number of components to pull out. 

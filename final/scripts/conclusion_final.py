@@ -30,7 +30,9 @@ p_data           =  final_data + '/p-values/'
 #sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 sys.path.append(location_of_functions)
 
-sub_list = os.listdir(path_to_data)[1:]
+sub_list = os.listdir(path_to_data)
+sub_list = [i for i in sub_list if 'sub' in i]
+
 # Progress bar
 toolbar_width=len(sub_list)
 sys.stdout.write("Conclusion:  ")

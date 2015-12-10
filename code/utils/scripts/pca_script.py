@@ -27,11 +27,13 @@ from Image_Visualizing import make_mask
 
 # List of subject directories.
 sub_list = os.listdir(path_to_data)
+sub_list = [i for i in sub_list if 'sub' in i]
+
 # Initialize array to store variance proportions. 
 masked_var_array = np.zeros((50, len(sub_list)))
 
 # Loop through all the subjects. 
-for j in range(1,len(sub_list)):
+for j in range(len(sub_list)):
     name = sub_list[j]
     # amount of beginning TRs not standardized at 6
     behav=pd.read_table(path_to_data+name+behav_suffix,sep=" ")
@@ -107,5 +109,31 @@ for j in range(1,len(sub_list)):
     plt.close()
 
 # Write array of variance proportions to a text file.
-df = pd.DataFrame(masked_var_array)
-df.to_csv('masked_var.txt', sep=' ', index=False, header=sub_list)
+masked_var = pd.DataFrame(masked_var_array)
+cumsums = masked_var.cumsum(0)
+
+
+#######################
+# Plots of Components #
+#######################
+plt.plot(np.arange(1,11), cumsums.median(1)[:10], 'r-o')
+plt.grid()
+plt.axhline(y=0.4, color='k', linestyle="--")
+plt.xlabel("Principal Components")
+plt.title("Sum of Proportions of Variance Explained by Components")
+plt.savefig(location_of_images+'pcaALL.png')
+plt.close()
+
+
+##########################
+# Boxplots of components #
+##########################
+plt.boxplot(np.array(cumsums[:10]).T)
+plt.scatter(np.ones((24,10))*np.arange(1,11), np.array(cumsums[:10]).T)
+plt.grid()
+plt.axhline(y=0.4, color='k', linestyle="--")
+plt.xlabel("Principal Components")
+plt.title("Sum of Proportions of Variance Explained by Components")
+plt.savefig(location_of_images+'pcaBOX.png')
+
+
