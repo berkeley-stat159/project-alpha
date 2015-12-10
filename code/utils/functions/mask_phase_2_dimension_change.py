@@ -29,13 +29,17 @@ def masking_reshape_start(data, mask):
 	"""
 	assert(len(data.shape) == 3 or len(data.shape) == 4)
 
+	mask_1d=np.ravel(mask)
+	b_mask_1d = (mask_1d==1)
+
+
 	if len(data.shape) == 3:
 		data_1d = np.ravel(data)
-		reshaped = data_1d[np.ravel(mask == 1)]
+		reshaped = data_1d[b_mask_1d]
 
 	if len(data.shape) == 4:
 		data_2d = data.reshape((-1, data.shape[-1]))
-		reshaped = data_2d[np.ravel(mask == 1), :]
+		reshaped = data_2d[b_mask_1d, :]
 	return reshaped
 
 
