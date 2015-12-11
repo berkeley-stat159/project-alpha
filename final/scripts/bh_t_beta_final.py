@@ -31,6 +31,13 @@ sys.path.append(location_of_functions)
 # list of subjects
 sub_list = os.listdir(path_to_data)[1:]
 
+# Progress bar
+toolbar_width=len(sub_list)
+sys.stdout.write("Clustering (BH, t, beta):  ")
+sys.stdout.write("[%s]" % (" " * toolbar_width))
+sys.stdout.flush()
+sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
+
 from tgrouping import t_grouping_neighbor
 from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end, neighbor_smoothing, neighbor_smoothing_binary
 from Image_Visualizing import present_3d, make_mask
@@ -102,6 +109,11 @@ for i, name in enumerate(sub_list):
 						prop = True, abs_on = True, binary = True, off_value = 0, masked_value = .5)[0]
 
 	beta_mean[..., i] = beta_group
+
+	sys.stdout.write("-")
+    sys.stdout.flush()
+
+sys.stdout.write("\n")
 
 # mean_across for all the process outputs for each subject
 final_bh = np.mean(bh_mean, axis = 3)
