@@ -44,7 +44,7 @@ from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape
 
 # Progress bar
 toolbar_width=len(sub_list)
-sys.stdout.write("GLM, :  ")
+sys.stdout.write("GLM:  ")
 sys.stdout.write("[%s]" % (" " * toolbar_width))
 sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1))

@@ -1,7 +1,7 @@
 import os
 import sys
 
-from . import get_hashes
+from get_hashes import generate_file_md5
 
 def get_all_hashes(data_dir):
     """
@@ -20,5 +20,5 @@ def get_all_hashes(data_dir):
     for root, dirs, files in os.walk(data_dir):
         for file_name in files:
             file_path = os.path.join(root, file_name)
-            file_hashes[file_path] = get_hashes.generate_file_md5(file_path)
+            file_hashes[file_path] = generate_file_md5(file_path)
     return file_hashes 
