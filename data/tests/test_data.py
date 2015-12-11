@@ -7,6 +7,7 @@ Run with:
 from __future__ import absolute_import, division, print_function
 
 import tempfile
+import sys
 import os
 
 try:
@@ -14,8 +15,11 @@ try:
 except ImportError:
     from urllib2 import urlopen
 
-from .. import get_hashes
-from .. import get_all_hashes
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+import get_hashes
+import get_all_hashes
 
 
 def test_check_hashes():
