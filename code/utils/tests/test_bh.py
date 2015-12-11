@@ -16,10 +16,10 @@ import nibabel as nib
 import os
 import sys
 
-#from numpy.testing import assert_almost_equal
-#from nose.tools import assert_not_equals
+
 from nose.tools import assert_equals
-#from nose.tools import assert_array_equals
+from numpy.testing import assert_almost_equal, assert_array_equal
+
 
 
 
@@ -38,7 +38,6 @@ data = img.get_data()[..., 4:]
 # Read in the convolutions. 
 convolved = np.loadtxt(pathtoclassdata + "ds114_sub009_t2r1_conv.txt")[4:]
 # Create design matrix. 
-
 beta,t,df,p = t_stat(data, convolved,[1,1])
 beta2, t2,df2,p2 = t_stat(data, convolved,[0,1])
 def test_bh():
@@ -54,7 +53,6 @@ def test_bh():
 
     Q_real = .25
     real_bh = bh_procedure(p_vals, Q_real)
-    #assert_not_equals(data[...,7], real_bh[...,7])
 
     assert(not (np.all(np.ravel(p_vals) != real_bh)))
 
@@ -70,4 +68,8 @@ def small_q_bh():
     # It should return p_vals if it finds no signficant tests
     assert_equals(small_q_bh.all, p_vals.all)
 
-
+def no_q_test():
+    Q = 0
+    p_vals = p.T
+    no_bh = bh_procedure(p_vals, Q)
+    np.testing.assert_array_equal(no_bh, p_vals)

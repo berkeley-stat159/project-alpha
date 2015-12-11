@@ -1,8 +1,8 @@
 # masking_reshape_functions.py
 # this file provides a way to mask data, then reduce it's dimensions 
 # (and then create the correct output after analysis is done on 1d to 2d data)
-import numpy as np
 
+import numpy as np
 
 def masking_reshape_start(data, mask):
     """
@@ -33,8 +33,6 @@ def masking_reshape_start(data, mask):
     
     return reshaped
 
-
-
 def masking_reshape_end(data_small, mask, off_value=0):
 	"""
 	takes a 1d input, utilizes a mask to convert into 3d output ()
@@ -62,6 +60,7 @@ def masking_reshape_end(data_small, mask, off_value=0):
 	data_big[mask == 1] = data_small
 
 	return data_big
+
 
 def neighbor_smoothing(data_3d, neighbors):
 	"""

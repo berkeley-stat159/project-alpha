@@ -1,6 +1,7 @@
 """ 
 A collection of utility functions for identifying outliers in fMRI data. Most of these are copied from janewliang's HW2 solutions. compare_outliers goes through the procedure to compare mean MRSS before and after dropping the extended outliers. 
 """
+
 import numpy as np
 from glm import glm_multiple, glm_diagnostics
 
