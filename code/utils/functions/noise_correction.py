@@ -1,8 +1,5 @@
-# voxel underlying noise function
 import numpy as np
 from glm import glm, glm_diagnostics, glm_multiple
-
-# mean_underlying_noise
 
 def mean_underlying_noise(data_4d):
 	""" takes average of data_4d across the 4th dimension (time)

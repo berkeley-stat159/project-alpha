@@ -3,7 +3,8 @@ from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape
 import numpy as np
 
 def t_binary_grouping(t, cutoff, prop = False, abs_on = False):
-	"""
+	
+    """
 	Evaluated the t values above a cutoff or proportion
 
 	Parameters
@@ -45,6 +46,7 @@ def t_binary_grouping(t, cutoff, prop = False, abs_on = False):
 		
 	return zero_one, cutoff
 
+
 def t_grouping_neighbor(t_3d, mask, cutoff, neighbors = None,
 						prop = False, abs_on = False, binary = True, off_value = 0, masked_value = .5):
 	"""
@@ -77,7 +79,6 @@ def t_grouping_neighbor(t_3d, mask, cutoff, neighbors = None,
 	"""
 	if neighbors != None and binary == False:
 		return False
-		#assert(False)
 
 	t_1d = masking_reshape_start(t_3d, mask)
 	t_1d = np.ravel(t_1d)

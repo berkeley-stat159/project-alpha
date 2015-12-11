@@ -1,6 +1,4 @@
-# Multiple Model Comparision
 import numpy as np
-
 
 def adjR2(MRSS,y_1d,df,rank):
 	"""
