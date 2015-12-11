@@ -32,7 +32,7 @@ sub_list = os.listdir(path_to_data)
 sub_list = [i for i in sub_list if 'sub' in i]
 
 
-# from event_related_fMRI_functions import hrf_single, np_convolve_30_cuts
+from event_related_fMRI_functions import hrf_single, np_convolve_30_cuts
 from time_shift import time_shift, make_shift_matrix, time_correct
 from glm import glm_multiple, glm_diagnostics
 from noise_correction import mean_underlying_noise, fourier_predict_underlying_noise,fourier_creation
