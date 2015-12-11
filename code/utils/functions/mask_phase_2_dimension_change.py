@@ -2,44 +2,36 @@
 # this file provides a way to mask data, then reduce it's dimensions 
 # (and then create the correct output after analysis is done on 1d to 2d data)
 import numpy as np
-import itertools
-import scipy.ndimage
-from scipy.ndimage.filters import gaussian_filter
-import matplotlib
-import matplotlib.pyplot as plt
-import nibabel as nib
-import os
-import sys
 
 
 def masking_reshape_start(data, mask):
-	"""
-	takes a 3 or 4d data and utilizes a mask to return a 1 or 2d reshaped output
+    """
+    takes a 3 or 4d data and utilizes a mask to return a 1 or 2d reshaped output
 
-	Input:
-	------
-	data: 3d *or* 4d np.array  (x,y,z) or (x,y,z,t) shape
-	mask: a 3d np array  (x,y,z) shape, with values 0s and 1s (1 desired, 0 remove)
+    Input:
+    ------
+    data: 3d *or* 4d np.array  (x,y,z) or (x,y,z,t) shape
+    mask: a 3d np array  (x,y,z) shape, with values 0s and 1s (1 desired, 0 remove)
 
-	Returns:
-	--------
-	reshaped: a 1d *or* 2d np.array (connected to 3d or 4d "data" input)
+    Returns:
+    --------
+    reshaped: a 1d *or* 2d np.array (connected to 3d or 4d "data" input)
 
-	"""
-	assert(len(data.shape) == 3 or len(data.shape) == 4)
+    """
+    assert(len(data.shape) == 3 or len(data.shape) == 4)
+    
+    mask_1d=np.ravel(mask)
+    b_mask_1d = (mask_1d==1)
+    
+    if len(data.shape) == 3:
+        data_1d = np.ravel(data)
+        reshaped = data_1d[b_mask_1d]
 
-	mask_1d=np.ravel(mask)
-	b_mask_1d = (mask_1d==1)
-
-
-	if len(data.shape) == 3:
-		data_1d = np.ravel(data)
-		reshaped = data_1d[b_mask_1d]
-
-	if len(data.shape) == 4:
-		data_2d = data.reshape((-1, data.shape[-1]))
-		reshaped = data_2d[b_mask_1d, :]
-	return reshaped
+    if len(data.shape) == 4:
+        data_2d = data.reshape((-1, data.shape[-1]))
+        reshaped = data_2d[b_mask_1d, :]
+    
+    return reshaped
 
 
 

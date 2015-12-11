@@ -17,13 +17,14 @@ from hypothesis import t_stat
 from Image_Visualizing import present_3d, make_mask
 
 pathtodata = "../../../data/ds009/"
-sub_list = os.listdir(pathtodata)[1:]
+sub_list = os.listdir(pathtodata)
+sub_list = [i for i in sub_list if 'sub' in i]
 
 #Create empty array for the t-values per voxel per subject
 t_mean = np.zeros((64, 64, 34,24))
 
 #loop through all of the subjects
-for i in os.listdir(pathtodata)[1:]:
+for i in sub_list:
     img = nib.load(pathtodata+ i+ "/BOLD/task001_run001/bold.nii.gz")
     data = img.get_data()
     data = data[...,6:] 

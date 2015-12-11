@@ -1,5 +1,4 @@
 import numpy as np
-import itertools
 import scipy.ndimage
 from scipy.ndimage.filters import gaussian_filter
 

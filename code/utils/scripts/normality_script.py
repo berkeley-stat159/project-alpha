@@ -13,6 +13,7 @@ import os
 import sys
 
 # Relative paths to subject 1 data. 
+project_path          = "../../../"
 pathtodata = project_path + "data/ds009/sub001/"
 condition_location = pathtodata+"model/model001/onsets/task001_run001/"
 location_of_images = project_path+"images/"

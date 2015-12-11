@@ -24,6 +24,8 @@ from event_related_fMRI_functions import hrf_single
 from outliers import *
 
 sub_list = os.listdir(path_to_data)
+sub_list = [i for i in sub_list if 'sub' in i]
+
 
 # List to store the mean MRSS values before and after outlier removal
 MRSSvals = []
@@ -33,7 +35,7 @@ num_cut=np.zeros(len(sub_list))
 i=0
 
 # Loop through all the subjects. 
-for name in sub_list[1:]:
+for name in sub_list:
     # amount of beginning TRs not standardized at 6
     behav=pd.read_table(path_to_data+name+behav_suffix,sep=" ")
     num_TR = float(behav["NumTRs"])
@@ -74,7 +76,7 @@ for name in sub_list[1:]:
     # mean MRSS values before and after dropping outliers. 
     MRSSvals.append((name,) + compare_outliers(data, np_hrf))
 
-np.savetxt("outlierMRSSvals.txt",MRSSvals)
+#np.savetxt("outlierMRSSvals.txt",MRSSvals)
 print(MRSSvals)
 
 '''

@@ -21,6 +21,8 @@ from Image_Visualizing import make_mask
 
 # List of subject directories.
 sub_list = os.listdir(path_to_data)
+sub_list = [i for i in sub_list if 'sub' in i]
+
 # Initialize array to store variance proportions. 
 masked_var_array = np.zeros((50, len(sub_list)))
 
@@ -32,7 +34,7 @@ sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1))
 
 # Loop through all the subjects. 
-for j in range(1,len(sub_list)):
+for j in range(len(sub_list)):
     name = sub_list[j]
     # amount of beginning TRs not standardized at 6
     behav=pd.read_table(path_to_data+name+behav_suffix,sep=" ")

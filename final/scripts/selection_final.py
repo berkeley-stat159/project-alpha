@@ -20,7 +20,9 @@ behav_suffix           = "/behav/task001_run001/behavdata.txt"
 
 sys.path.append(location_of_functions)
 
-sub_list = os.listdir(path_to_data)[1:]
+sub_list = os.listdir(path_to_data)
+sub_list = [i for i in sub_list if 'sub' in i]
+
 
 
 from event_related_fMRI_functions import hrf_single, np_convolve_30_cuts

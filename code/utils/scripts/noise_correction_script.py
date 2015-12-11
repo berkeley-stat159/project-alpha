@@ -32,7 +32,7 @@ import pandas as pd # new
 import sys # instead of os
 import os
 from sklearn.decomposition import PCA
-
+import scipy.stats as stats
 #paths
 
 location_of_project="../../../"

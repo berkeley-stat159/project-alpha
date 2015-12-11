@@ -1,15 +1,7 @@
 # Function for Event-Related fMRI
 from __future__ import absolute_import, division, print_function
 import numpy as np
-import numpy.linalg as npl
-import matplotlib.pyplot as plt
-import nibabel as nib
-import pandas as pd # new
-import sys # instead of os
-import scipy.stats
 from scipy.stats import gamma
-from stimuli import events2neural
-
 
 # getting the peak (for this specific hrf function)
 peak_value = gamma.pdf(4.91, 6)

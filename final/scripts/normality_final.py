@@ -30,7 +30,9 @@ residual_data         = final_data + 'residual/'
 
 sys.path.append(location_of_functions)
 
-sub_list = os.listdir(path_to_data)[1:]
+sub_list = os.listdir(path_to_data)
+sub_list = [i for i in sub_list if 'sub' in i]
+
 
 from stimuli import events2neural
 from event_related_fMRI_functions import hrf_single, convolution_specialized
