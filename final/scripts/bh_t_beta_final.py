@@ -18,7 +18,7 @@ import pandas as pd
 from scipy.stats import t as t_dist
 
 project_path          = "../../"
-path_to_data          = project_path+"data/ds009/sub001"
+path_to_data          = project_path+"data/ds009/"
 location_of_images    = project_path+"images/"
 location_of_functions = project_path+"code/utils/functions/" 
 final_data            = "../data/"
@@ -40,12 +40,112 @@ from benjamini_hochberg import bh_procedure
 #t_3d = np.load("../data/t_stat/sub001_tstat.npy")
 #beta_3d = np.load("../data/betas/sub001_beta.npy")
 
-mask = nib.load(path_to_data + '/anatomy/inplane001_brain_mask.nii.gz')
-mask_data = mask.get_data()
-rachels_ones = np.ones((64, 64, 34))
-fitted_mask = make_mask(rachels_ones, mask_data, fit = True)
-fitted_mask[fitted_mask > 0] = 1
 
+
+# Giant for loop!!!
+bh_mean = np.zeros((64, 64, 34, 24))
+t_mean = np.zeros((64, 64, 34, 24))
+beta_mean = np.zeros((64, 64, 34, 24))
+
+neighbors = 1
+q = .25	
+prop = .1
+prop_beta = .2
+
+# assign subjects a number
+
+for i, name in enumerate(sub_list):
+
+	# the mask for each subject
+	path_to_data = project_path + "data/ds009/" + name
+	mask = nib.load(path_to_data + '/anatomy/inplane001_brain_mask.nii.gz')
+	mask_data = mask.get_data()
+	rachels_ones = np.ones((64, 64, 34))
+	fitted_mask = make_mask(rachels_ones, mask_data, fit = True)
+	fitted_mask[fitted_mask > 0] = 1
+
+	#####################################
+	# Run bh_procedure for each subject #
+	#####################################
+	p_3d = np.load("../data/p-values/" + name + "_pvalue.npy")
+	p_1d = np.ravel(p_3d)
+
+	mask = fitted_mask
+	mask_1d = np.ravel(mask)
+	p_bh = p_1d[mask_1d == 1]
+
+	bh_first = bh_procedure(p_bh, q)
+	bh_3d    = masking_reshape_end(bh_first, mask, off_value = .5)
+	bh_3d[bh_3d < .5] = 0
+	bh_3d_1_good = 1 - bh_3d
+
+	#bh_final  = neighbor_smoothing_binary(bh_3d_1_good, neighbors)
+
+	bh_mean[..., i] = bh_3d_1_good
+
+	#####################################
+	# Run t_grouping for each subject   #
+	#####################################
+	t_3d = np.load("../data/t_stat/" + name + "_tstat.npy")
+
+	#mask = fitted_mask
+	t_group = t_grouping_neighbor(t_3d, mask, prop, neighbors = neighbors,
+					prop = True, abs_on = True, binary = True, off_value = 0, masked_value = .5)[0]
+
+	t_mean[..., i] = t_group
+
+	######################################
+	# Run beta grouping for each subject #
+	######################################
+	beta_3d = np.load("../data/betas/" + name + "_beta.npy")
+	beta_group = t_grouping_neighbor(beta_3d, mask, prop_beta, neighbors = neighbors,
+						prop = True, abs_on = True, binary = True, off_value = 0, masked_value = .5)[0]
+
+	beta_mean[..., i] = beta_group
+
+# mean_across for all the process outputs for each subject
+final_bh = np.mean(bh_mean, axis = 3)
+np.save("../data/final_bh.npy", final_bh)
+final_t = np.mean(t_mean, axis = 3)
+np.save("../data/final_t.npy", final_t)
+final_beta = np.mean(beta_mean, axis = 3)
+np.save("../data/final_beta.npy", final_beta)
+
+# plot/save the result (BH)
+plt.imshow(present_3d(final_bh), interpolation = 'nearest', cmap = 'seismic')
+plt.title("Mean BH Value Across 25 Subjects with Q = .25")
+
+zero_out = max(abs(np.min(final_bh)), np.max(final_bh))
+plt.clim(-zero_out, zero_out)
+plt.colorbar()
+#plt.savefig("../../../paper/images/bh_mean_final.png")
+plt.close()
+
+# plot/save the result (t)
+plt.imshow(present_3d(final_t), interpolation = 'nearest', cmap = 'seismic')
+plt.title("Mean t_grouping Value Across 25 Subjects with proportion = .1")
+
+zero_out = max(abs(np.min(final_t)), np.max(final_t))
+plt.clim(-zero_out, zero_out)
+plt.colorbar()
+#plt.savefig("../../../paper/images/tgroup_mean_final.png")
+plt.close()
+
+# plot/save the result (beta)
+plt.imshow(present_3d(final_beta), interpolation = 'nearest', cmap = 'seismic')
+plt.title("Mean beta_grouping Value Across 25 Subjects with proportion = .2")
+
+zero_out = max(abs(np.min(final_beta)), np.max(final_beta))
+plt.clim(-zero_out, zero_out)
+plt.colorbar()
+#plt.savefig("../../../paper/images/betagroup_mean_final.png")
+plt.close()
+
+
+
+
+
+"""
 #####################################
 # Run bh_procedure for each subject #
 #####################################
@@ -54,9 +154,14 @@ fitted_mask[fitted_mask > 0] = 1
 q = .25
 neighbors = 1
 #sub_bh = []
+prop = .1
 
+prop = .1
+#sub_tgroup = []
+t_mean = np.zeros((64, 64, 34, 24))
 #Create empty array for the p-values per voxel per subject
 bh_mean = np.zeros((64, 64, 34, 24))
+t_mean = np.zeros((64, 64, 34, 24))
 
 for i in sub_list:
 	p_3d = np.load("../data/p-values/" + i + "_pvalue.npy")
@@ -160,3 +265,4 @@ plt.clim(-zero_out, zero_out)
 plt.colorbar()
 #plt.savefig("../../../paper/images/betagroup_mean_final.png")
 plt.close()
+"""
