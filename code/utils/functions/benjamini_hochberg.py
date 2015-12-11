@@ -1,10 +1,5 @@
 import numpy as np
 
-# Order the p-values from smallest to largest
-# p-value has a rank that is the index of itself in the ordered array
-# critical value = (i/m)*Q where i = rank, m = number of tests, Q = FDR 
-# Compare each p-value to its critical value 
-# The largest p-value where p < (i/m)*Q is significant, and so are all the p-values before it 
 
 def bh_procedure(p_vals, Q):
 	"""
@@ -40,17 +35,17 @@ def bh_procedure(p_vals, Q):
 
 	# Find maximum True index and the element in it from p_sorted
 	indices = np.where(bool_array)
-	
+
 	# Make sure there are indices that returned True!!
 	if sum(indices[0]) != 0:
 		max_true_index = np.max(indices)
 		# max_upper is the highest that a p-value can be to be considered significant.
 		max_upper = np.ravel(p_sorted)[max_true_index]
 	# If no indices where p < upper 
+    
 	else:
 		print("**** Oh no. No p-values smaller than upper bound FDR were found. ****")
 		return p_vals
-
 
 	# Make all non-siginificant p-values zero
 	final_p = [x if x <= max_upper else 1 for x in np.ravel(p_vals)]

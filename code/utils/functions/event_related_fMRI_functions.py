@@ -1,4 +1,5 @@
 # Function for Event-Related fMRI
+
 from __future__ import absolute_import, division, print_function
 import numpy as np
 from scipy.stats import gamma
@@ -8,7 +9,6 @@ peak_value = gamma.pdf(4.91, 6)
 undershoot_value = gamma.pdf(4.91, 12)
 max_value = peak_value - 0.35 * undershoot_value
 
-# fixed maximum value
 def hrf_single(value):
 	""" Return values for HRF at single value
 
@@ -141,7 +141,6 @@ def convolution_specialized(real_times,on_off,hrf_function,record_cuts):
 
 
 
-# Third attempt at convolution
 def np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30):
 	""" Does convolution on Event-Related fMRI data, cutting TR into 'cuts' 
 	equal distance chunks and putting stimulus in closed cut 
@@ -194,7 +193,6 @@ def np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30):
 
 
 
-# faster convolution_specialized
 def fast_convolution(real_times,on_off,hrf_function,record_cuts):
 
 	""" Does convolution on Event-Related fMRI data, assumes non-constant/

@@ -278,7 +278,7 @@ for i in ['sub002','sub003','sub014']:
         rank4_5 = npl.matrix_rank(X[:,[0,1,2,7,8,9,10,11,12]])
         count = 0
 
-        for value in MRSS4:
+        for value in MRSS4_5:
             model4_5_slice[count] = model(value, np.array(data_slice[count,:]) ,df4_5, rank4_5)
             count+=1
 
