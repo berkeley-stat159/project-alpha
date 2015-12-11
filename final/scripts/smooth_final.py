@@ -96,8 +96,6 @@ for name in sub_list:
 
 sys.stdout.write("\n")
 
-
-
 # if we want to save them all:
 # cost of function:  2.5 s * 24  (1 minute to smooth)
 # cost of saving:

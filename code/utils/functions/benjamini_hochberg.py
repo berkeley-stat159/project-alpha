@@ -34,8 +34,6 @@ def bh_procedure(p_vals, Q):
 			bool_array[i] = True
 
 	# Find maximum True index and the element in it from p_sorted
-
-	# check that bool_array has some True!!!
 	indices = np.where(bool_array)
 
 	# Make sure there are indices that returned True!!

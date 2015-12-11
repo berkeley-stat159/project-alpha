@@ -5,17 +5,17 @@ import numpy as np
 def t_binary_grouping(t, cutoff, prop = False, abs_on = False):
 	
     """
-	Evaluated the t values above a cutoff or proportion
+    Evaluated the t values above a cutoff or proportion
 
-	Parameters
-	----------
+    Parameters
+    ----------
     t:         t-value of the betas 1d numpy array
     cutoff:    the limit for the false discovery rate
     prop:      logical~ if the cutoff is a proportion or a value
     abs_on:    logical~ if we want to take absolute value of the t input
 
 
-	Returns
+    Returns
     -------
     zero_one:  vector of ones and zeros where ones are above the cutoff, and zeros are below
     cutoff: the limit for the false discovery rate
@@ -23,29 +23,28 @@ def t_binary_grouping(t, cutoff, prop = False, abs_on = False):
     Notes
     -----
     If you want the values to be preserved multiply t*zero_one afterwards
-	"""
+    """
 	# if you want to use proportion you'll need to provide a logical cutoff value
-	assert(0 <= cutoff*prop and cutoff*prop <= 1)
+    assert(0 <= cutoff*prop and cutoff*prop <= 1)
 
-	# just to be safe:
-	t= np.ravel(t)
+    # just to be safe:
+    t= np.ravel(t)
 
-	# if we'd like to take into account abs(t)
-	if abs_on:
-		t = np.abs(t)
+    # if we'd like to take into account abs(t)
+    if abs_on:
+        t = np.abs(t)
 	
 	# sexy shorting
-	t_sorted = np.sort(t)
+    t_sorted = np.sort(t)
 	
-	if prop:
-		num = int((1 - cutoff)*t.shape[0])
-		cutoff = t_sorted[num]
-
-	zero_one = np.zeros(t.shape)
-	zero_one[t >= cutoff] = 1
+    if prop:
+        num = int((1 - cutoff)*t.shape[0])
+        cutoff = t_sorted[num]
+    
+    zero_one = np.zeros(t.shape)
+    zero_one[t >= cutoff] = 1
 		
-	return zero_one, cutoff
-
+    return zero_one, cutoff
 
 def t_grouping_neighbor(t_3d, mask, cutoff, neighbors = None,
 						prop = False, abs_on = False, binary = True, off_value = 0, masked_value = .5):

@@ -19,14 +19,10 @@ location_of_images="../../../images/"
 #sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 sys.path.append("../functions")
 
-# Load events2neural from the stimuli module.
-#from stimuli import events2neural
-#from event_related_fMRI_functions import hrf_single, convolution_specialized
-
-# Load our GLM functions. 
-#from glm import glm, glm_diagnostics, glm_multiple
-
-# Load smoothing function
+# Load Functions
+from stimuli import events2neural
+from event_related_fMRI_functions import hrf_single, convolution_specialized
+from glm import glm, glm_diagnostics, glm_multiple
 from smooth import smoothvoxels
 from Image_Visualizing import present_3d
 
