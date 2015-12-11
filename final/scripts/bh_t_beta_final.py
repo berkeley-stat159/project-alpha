@@ -111,7 +111,7 @@ for i, name in enumerate(sub_list):
 	beta_mean[..., i] = beta_group
 
 	sys.stdout.write("-")
-    sys.stdout.flush()
+	sys.stdout.flush()
 
 sys.stdout.write("\n")
 
