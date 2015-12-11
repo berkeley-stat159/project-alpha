@@ -27,6 +27,7 @@ hrf_data              = final_data + 'hrf/'
 sys.path.append(location_of_functions)
 
 sub_list = os.listdir(path_to_data)[1:]
+sub_list = [i for i in sub_list if 'sub' in i]
 
 from glm import glm_multiple, glm_diagnostics
 from Image_Visualizing import present_3d, make_mask
