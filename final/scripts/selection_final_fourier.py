@@ -95,16 +95,13 @@ elif input_var == 'AIC':
 """
 
 toolbar_width=34
-sys.stdout.write("sub002: [%s]" % (" " * toolbar_width))
-sys.stdout.flush()
-sys.stdout.write("\b" * (toolbar_width+1))
-
-
 
 #LOAD THE DATA In
-subjects=['sub002','sub003','sub014']
-ben=0
 for i in ['sub002','sub003','sub014']:
+
+    sys.stdout.write(i+": "+"[%s]" % (" " * toolbar_width))
+    sys.stdout.write("\b" * (toolbar_width+1))
+
     img = nib.load(smooth_data+ i +"_bold_smoothed.nii")
     data = img.get_data() 
 
@@ -477,11 +474,9 @@ for i in ['sub002','sub003','sub014']:
 
         sys.stdout.write("-")
         sys.stdout.flush()
-    ben=ben+1
     sys.stdout.write("\n")
-    sys.stdout.write(subjects[ben]+": "+"[%s]" % (" " * toolbar_width))
     sys.stdout.flush()
-    sys.stdout.write("\b" * (toolbar_width+1))
+
     
 
 #final = np.array([np.mean(model1), np.mean(model2), np.mean(model3), np.mean(model4), np.mean(model4_5), np.mean(model5), np.mean(model6), np.mean(model7),
@@ -519,21 +514,21 @@ adjR2=np.loadtxt("../data/model_comparison/adjR2_2.txt")
 plt.plot([1,2,3,4,4.5,5],aic[0,:],label="all conditions together")
 plt.plot([1,2,3,4,4.5,5],aic[1,:],label="individual conditions")
 plt.title("AIC")
-plt.legend(loc='top right', shadow=True,fontsize="smaller")
+plt.legend(loc='upper right', shadow=True,fontsize="smaller")
 plt.savefig('../../images/aic.png')
 plt.close()
 
 plt.plot([1,2,3,4,4.5,5],bic[0,:],label="all conditions together")
 plt.plot([1,2,3,4,4.5,5],bic[1,:],label="individual conditions")
 plt.title("BIC")
-plt.legend(loc='top right', shadow=True,fontsize="smaller")
+plt.legend(loc='upper right', shadow=True,fontsize="smaller")
 plt.savefig('../../images/bic.png')
 plt.close()
 
 plt.plot([1,2,3,4,4.5,5],adjR2[0,:],label="all conditions conditions")
 plt.plot([1,2,3,4,4.5,5],adjR2[1,:],label="individual conditions")
 plt.title("Adjusted R2")
-plt.legend(loc='top right', shadow=True,fontsize="smaller")
+plt.legend(loc='upper right', shadow=True,fontsize="smaller")
 plt.savefig('../../images/adjr2.png')
 plt.close()
 
@@ -553,21 +548,21 @@ adjR2_better[:,3],adjR2_better[:,4] = adjR2[:,4],adjR2[:,3]
 plt.plot(np.arange(6)+1,aic_better[0,:],label="all conditions together")
 plt.plot(np.arange(6)+1,aic_better[1,:],label="individual conditions")
 plt.title("AIC")
-plt.legend(loc='top right', shadow=True,fontsize="smaller")
+plt.legend(loc='upper right', shadow=True,fontsize="smaller")
 plt.savefig('../../images/aic_better.png')
 plt.close()
 
 plt.plot(np.arange(6)+1,bic_better[0,:],label="all conditions together")
 plt.plot(np.arange(6)+1,bic_better[1,:],label="individual conditions")
 plt.title("BIC")
-plt.legend(loc='top right', shadow=True,fontsize="smaller")
+plt.legend(loc='upper right', shadow=True,fontsize="smaller")
 plt.savefig('../../images/bic_better.png')
 plt.close()
 
 plt.plot(np.arange(6)+1,adjR2_better[0,:],label="all conditions conditions")
 plt.plot(np.arange(6)+1,adjR2_better[1,:],label="individual conditions")
 plt.title("Adjusted R2")
-plt.legend(loc='top right', shadow=True,fontsize="smaller")
+plt.legend(loc='upper right', shadow=True,fontsize="smaller")
 plt.savefig('../../images/adjr2_better.png')
 plt.close()
 
