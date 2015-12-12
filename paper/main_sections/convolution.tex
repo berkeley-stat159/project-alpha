@@ -1,12 +1,17 @@
 % tex file for convolution
 \subsubsection{Convolution}
-\par \indent Our study is structured around event-related neurological 
-stimulus, not block stimulus as was discussed in the in-class example. We 
-predicted the hemoglobin response (HR) related to this type of neurological 
-stimulus. 
+\par \indent As our study is structured around event-related neurological 
+stimulus, and not block stimulus as was discussed in class, a similar 
+approach to representing the hemodynamic response could not be done. 
+We note here that in general the hemodynamic response is only 5 \% of 
+the noise.
 
-There were multiple ways in which we approached the problem of trying to 
-better replicate the predicted response function defined by:
+The general assumption is that there is a relationship between the 
+hemodynamic response to neurological stimulation, where a single 
+stimulation generates a delayed hemodyamic response that mirrors 
+a double gamma function. And that there is a natural linear/additive 
+nature when there are multiple stimulations (just adding the response 
+functions started at different times), as defined by:
 
 \begin{equation} \label{eq:convolve}
 r(t)= \sum_{i=1}^n \psi_{i} \phi_{i}(t-t_i)
@@ -17,7 +22,7 @@ case), and $\phi_{i}$ is the hemodynamic response started at the $i$th
 stimulation ($t_i$).
 
 The five approaches we attempted can be divided into 3 subcategories: 
-\textbf{(1)} a strict replication of \ref{eq:convolve}; \textbf{(2)} a similar 
+\textbf{(1)} a strict replication of equation \ref{eq:convolve}; \textbf{(2)} a similar 
 function as \textbf{(1)} that utilizes matrix multiplication; and \textbf{(3)} a 
 function that splits the intervals between each scan (2 seconds) into a certain 
 number of even slices, then puts the stimulus into the closed split, using 
@@ -26,8 +31,8 @@ reducing the output back into the 2-second time intervals. Detailed exploration
 of this matter can be found in the appendix.
 
 We compared these methods based on accuracy and speed. [Figure 
-\ref{fig:convolution}] displaces accuracy comparison, and the table in 
-[Table~\ref{tab:convolution}] show the accuracy based off of \texttt{ipython}'s 
+\ref{fig:convolution_a}] displaces accuracy comparison, and the table in 
+[Table~\ref{tab:convolution_a}] show the accuracy based off of \texttt{ipython}'s 
 \texttt{timeit} function.
 
 
@@ -39,7 +44,7 @@ We compared these methods based on accuracy and speed. [Figure
 		\includegraphics[width=.8\linewidth]{../images/convolution_vs_neural_stimulus}  
 		% needs to be from the event_related_HRF_script2.py 
 		\caption{\scriptsize{Different convolution functions vs. the Neural stimulus}}
-		\label{fig:convolution}
+		\label{fig:convolution_a}
 
 	\end{minipage}
 \quad
@@ -58,41 +63,57 @@ We compared these methods based on accuracy and speed. [Figure
 		\hline
 		\end{tabular}
 		\vspace{5mm}
-		\label{tab:convolution}
+		\label{tab:convolution_a}
 		\captionof{table}{\scriptsize{Speed to create HRF predictions for Subject 001, 
 		all conditions}}
 	\end{minipage}
 \end{figure}
 
-The ``np naive approach'' run has the worst approximation and isn't even 
-theoretically correct. As was stated above, this was the large motivating factor 
-behind the rest of the convolution analysis. The ``user 2'' and ``user 3'' runs fall 
-under subcategory \textbf{(1)}. The ``user 2'' was the first approach to
+\par \noindent The first method in the table ``np naive approach'' which blindly plugs in our data 
+into the \texttt{np.convolve} function. It is provided to showcase potential speed. 
+The failure of the "np naive approach" was the motivating factor behind the rest 
+of the hemodynamic response convolution analysis . The ``user 2'' and ``user 3'' 
+runs fall under subcategory \textbf{(1)}. The ``user 2'' was the first approach to
 matches the theory, but matches the stimulation times and not the scan times.
 The ``user 3'' is the most theoretically sound model (and is our standard for 
 accuracy). The ``user 5'' falls under subcategory \textbf{(2)}, ``User 5''  is our 
 matrix version of the theory, and has the same accuracy as ``user 3''. The 
 ``user 4'' model fall under subcategory \textbf{(3)}, the methods that use the 
 grid cut usage of \texttt{np.convolve} with notations for the number of slices 
-between each scan.
+between each scan. We concluded that "user 4 (15 cuts)" was the best approach 
+gives us speed and very close accuracy to the golden standard - "user 3".
 
 \subsubsection{Time Correction}
 
-The fMRI machine scans each voxel at a slightly different time. In our case, 
+\par \indent The fMRI machine scans each voxel at a slightly different time. In our case, 
 the lowest horizontal slice was scanned first, with the later scans moving 
-progressively toward the top of the brain. So, there is an observable time drift 
-that needs be accounted for. We did so by shifting the times of stimulus 
-``backwards'' for voxels scanned later to directly "correct" for the delay of 
-the scan (assuming that each layer of the scan took 2/34 of a second).
+progressively toward the top of the brain. The signs of this linear change 
+in time of scan was observed when running simple regression on the data 
+and the hemodyamic response beta values from all conditions grouped together.
+We corrected for this  by shifting the times of stimulus ``backwards'' for voxels 
+scanned later to directly correct for the delay of the scan (assuming that each 
+layer of the scan took 2/34 of a second).
 
 \subsubsection{Multiple Conditions}
 
-At the beginning of our analysis we tried to see if there was an advantage to 
-separating our 3 conditions and creating separate predicted hemodyamic reposes 
-for each to allow for different amplitudes for each type of condition. We did 
-not observe a large difference in the $\hat{\beta}$ values we got, so we did not 
-continue with this exploration. It is quiet possible that with the new 
-approaches we've applied, differentiating the conditions for the stimulus might 
-see gains in interpretability.
+\par \indent Originally we used multiple regression to take into account the 3 
+different types of stimulus (pump, explode, cash- out) to see if the separation of 
+these stimuli can better describe the response. We did this by creating separate 
+predicted hemodyamic reposes for each to allow for different amplitudes for each 
+type of condition. As will be noted in the \textit{Model selection} portion below not 
+observe a large difference in the $\hat{\beta}$ values we got, so we did not continue 
+with this exploration. In figure \ref{fig:all_cond_time}, we can see the different 
+conditions broken up. 
 
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=.5]{../images/all_cond_time}  
+\caption{Plotting all predicted HR for conditions.}
+\label{fig:all_cond_time}
+\end{figure}
+
+A more detailed discussion about our approach and theory behind convolution 
+of the hemodynamic response with the neurological response can be found 
+in the Appendix on Convolution \ref{app_convolution}.
 
