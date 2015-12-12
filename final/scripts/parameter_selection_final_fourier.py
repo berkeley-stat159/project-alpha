@@ -25,6 +25,7 @@ import os
 
 name="sub001"
 
+
 project_path          = "../../"
 path_to_data          = project_path+"data/ds009/"+name
 location_of_images    = project_path+"images/"
@@ -44,9 +45,9 @@ from Image_Visualizing import present_3d, make_mask
 from benjamini_hochberg import bh_procedure
 
 
-p_3d = np.load("../data/p-values/"+name+"_pvalue.npy")
-t_3d = np.load("../data/t_stat/"+name+"_tstat.npy")
-beta_3d = np.load("../data/betas/"+name+"_beta.npy")
+p_3d = np.load("../data/p-values/"+name+"_pvalue_fourier.npy")
+t_3d = np.load("../data/t_stat/"+name+"_tstat_fourier.npy")
+beta_3d = np.load("../data/betas/"+name+"_beta_fourier.npy")
 
 
 mask = nib.load(path_to_data + '/anatomy/inplane001_brain_mask.nii.gz')
@@ -57,7 +58,7 @@ fitted_mask[fitted_mask>0]=1
 
 
 
-q1         = [.49,.45,.4,.3,.25,.2]
+q1         = [.3,.25,.2,.15,.1]
 neighbors1 = [1,3,5,12,20]
 prod2      = [.25,.2,.15,.1,.05]
 neighbors2 = [1,3,5,12,20]
@@ -92,7 +93,7 @@ sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
 
 bh=[] # values a*6 + b - 1
 count_a=0
-for a,b in itertools.product(range(6),range(5)):
+for a,b in itertools.product(range(len(q1)),range(5)):
 	bh_first = bh_procedure(p_bh,q1[a])
 	bh_3d    = masking_reshape_end(bh_first,mask,off_value=.5)
 	bh_3d[bh_3d<.5]=0
@@ -119,12 +120,12 @@ sys.stdout.write("\n")
 #------------------#
 
 
-present_bh = np.ones((6*64,5*64))
-behind= np.ones((6*64,5*64))
+present_bh = np.ones((len(q1)*64,5*64))
+behind= np.ones((len(q1)*64,5*64))
 
 behind_p=masking_reshape_end(p_bh,mask,off_value=.5)
 
-for a,b in itertools.product(range(6),range(5)):
+for a,b in itertools.product(range(len(q1)),range(5)):
 	present_bh[(a*64):((a+1)*64),(b*64):((b+1)*64)]= bh[a*5+b][...,15]
 	behind[(a*64):((a+1)*64),(b*64):((b+1)*64)]=behind_p[...,15]
 present_bh[present_bh<.5]=0
@@ -132,15 +133,15 @@ present_bh[present_bh<.5]=0
 
 
 plt.contour(present_bh,interpolation="nearest",colors="k",alpha=1)
-plt.imshow(behind,interpolation="nearest",cmap="seismic")
+plt.imshow(behind,interpolation="nearest",cmap="Reds_r")
 plt.title("Benjamini Hochberg on slice 15 and contours *"+name+"* \n (with varying Q and # neighbors)")
 x=32+64*np.arange(5)
 labels = neighbors1
 plt.xticks(x, labels)
-plt.clim(-np.max(abs(behind)),np.max(abs(behind)))
+plt.clim(0,np.max(abs(behind)))
 plt.xlabel("Number of Neighbors")
 labels2 = q1
-y=32+64*np.arange(6)
+y=32+64*np.arange(len(q1))
 plt.yticks(y, labels2)
 plt.ylabel("Q")
 plt.colorbar()
@@ -156,7 +157,7 @@ plt.xticks(x, labels)
 plt.xlabel("Number of Neighbors")
 labels2 = q1
 
-y=32+64*np.arange(6)
+y=32+64*np.arange(len(q1))
 plt.yticks(y, labels2)
 plt.ylabel("Q")
 plt.savefig(location_of_images+"_"+name+"_"+"bh_compare_15.png")
