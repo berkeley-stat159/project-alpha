@@ -46,14 +46,13 @@ from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape
 
 # Progress bar
 toolbar_width=len(sub_list)
-sys.stdout.write("GLM, :  ")
+sys.stdout.write("GLM:  ")
 sys.stdout.write("[%s]" % (" " * toolbar_width))
 sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1))
 
-
 #Run GLM for each subject
-for i in sub_list:
+for i in sub_list[:2]:
     name = i 
     behav=pd.read_table(path_to_data+name+behav_suffix,sep=" ")
     num_TR = float(behav["NumTRs"])    
@@ -77,7 +76,7 @@ for i in sub_list:
 
     ###PCA###
 
-    to_2d= masking_reshape_start(data,mask)
+    to_2d= masking_reshape_start(data,mask_data)
     # double_centered_2d
     X_pca= to_2d - np.mean(to_2d,0) - np.mean(to_2d,1)[:,None]
 

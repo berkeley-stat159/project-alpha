@@ -18,7 +18,7 @@ import numpy.linalg as npl
 
 project_path          = "../../../"
 path_to_data          = project_path+"data/ds009/"
-location_of_images    = project_path+"paper/images/"
+location_of_images    = project_path+"images/"
 location_of_functions = project_path+"code/utils/functions/" 
 final_data            = project_path+"final/data/"
 smooth_data           = final_data + 'smooth/'

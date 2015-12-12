@@ -149,7 +149,7 @@ plt.savefig(location_of_images+"_"+name+"_"+"bh_compare_15_plus_contours.png")
 plt.close()
 
 
-plt.imshow(present_bh,interpolation="nearest",cmap="seismic")
+plt.imshow(present_bh,interpolation="nearest",cmap="bwr")
 plt.title("Benjamini Hochberg on slice 15 *"+name+"* \n (with varying Q and # neighbors)")
 x=32+64*np.arange(5)
 labels = neighbors1
@@ -225,7 +225,7 @@ plt.close()
 
 
 plt.contour(present_t,interpolation="nearest",colors="k",alpha=1)
-plt.imshow(np.abs(behind2),interpolation="nearest",cmap="seismic")
+plt.imshow(np.abs(behind2),interpolation="nearest",cmap="Reds")
 plt.clim(0,np.max(abs(behind)))
 plt.colorbar()
 plt.title("abs(T- Analysis) on slice 15 and contours *"+name+"* \n (with varying proportions and # neighbors)")
@@ -242,7 +242,7 @@ plt.close()
 
 
 
-plt.imshow(present_t,interpolation="nearest",cmap="seismic")
+plt.imshow(present_t,interpolation="nearest",cmap="bwr")
 plt.title("T- Analysis on slice 15 *"+name+"* \n (with varying proportions and # neighbors)")
 x=32+64*np.arange(5)
 labels = neighbors2
@@ -318,7 +318,7 @@ plt.close()
 
 
 plt.contour(present_beta,interpolation="nearest",colors="k",alpha=1)
-plt.imshow(np.abs(behind3),interpolation="nearest",cmap="seismic")
+plt.imshow(np.abs(behind3),interpolation="nearest",cmap="Reds")
 plt.title("abs(Beta- values) on slice 15 and contours *"+name+"* \n (with varying proportions and # neighbors)")
 plt.colorbar()
 plt.clim(0,np.max(abs(behind3)))
@@ -335,7 +335,7 @@ plt.close()
 
 
 
-plt.imshow(present_beta,interpolation="nearest",cmap="seismic")
+plt.imshow(present_beta,interpolation="nearest",cmap="bwr")
 plt.title("Beta- Analysis on slice 15 *"+name+"* \n (with varying proportions and # neighbors)")
 plt.colorbar()
 x=32+64*np.arange(5)
