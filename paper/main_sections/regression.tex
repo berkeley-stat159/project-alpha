@@ -97,7 +97,9 @@ following structure in Table \ref{tab:plot}.
 the conditions seperated, and from the BIC, we decided that the fourier
 features didn't add enough benefit to justify the increase of features, so we'll
 be using the model that includes a single HRF for all the conditions, a linear
-drift feature, and the first 6 principle components.
+drift feature, and the first 6 principle components. It is possible that this is dangerous, 
+and even with these features we could have over fit beyond just the noise and into 
+the territory of the hemodyamic response.
 
 \begin{table}
 \centering
@@ -172,7 +174,7 @@ X value & 1 &        2       &             3       &     4         &        5   
 \centering
 	\begin{minipage}[b]{0.33\linewidth}
 		\centering
-		\includegraphics[width=.8\linewidth]{images/aic_better}  
+		\includegraphics[width=.8\linewidth]{../images/aic_better}  
 
 		\caption{AIC}
 		\label{fig:AIC}
@@ -181,7 +183,7 @@ X value & 1 &        2       &             3       &     4         &        5   
 	\quad
 	\begin{minipage}[b]{0.33\linewidth}
 		\centering
-		\includegraphics[width=.8\linewidth]{images/bic_better}  
+		\includegraphics[width=.8\linewidth]{../images/bic_better}  
 		\caption{BIC}
 		\label{fig:BIC}
 
@@ -189,7 +191,7 @@ X value & 1 &        2       &             3       &     4         &        5   
 		
 	\begin{minipage}[b]{0.33\linewidth}
 		\centering
-		\includegraphics[width=.8\linewidth]{images/adjr2_better}  
+		\includegraphics[width=.8\linewidth]{../images/adjr2_better}  
 		\caption{Adjusted $R^2$}
 		\label{fig:adjr2}
 
