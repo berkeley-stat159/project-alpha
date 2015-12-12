@@ -16,9 +16,15 @@ import matplotlib.pyplot as plt
 import sys
 import itertools
 import nibabel as nib
+import os
+
+sys.stdout.write(str(os.listdir("../../data/ds009")[1:])+"\n")
+sys.stdout.write("*-----------------------------------------------* \n")
+
+name = input("Subject name (like 'sub001'): ")
 
 project_path          = "../../"
-path_to_data          = project_path+"data/ds009/sub001"
+path_to_data          = project_path+"data/ds009/"+name
 location_of_images    = project_path+"images/"
 location_of_functions = project_path+"code/utils/functions/" 
 final_data            = "../data/"
@@ -36,9 +42,9 @@ from Image_Visualizing import present_3d, make_mask
 from benjamini_hochberg import bh_procedure
 
 
-p_3d = np.load("../data/p-values/sub001_pvalue.npy")
-t_3d = np.load("../data/t_stat/sub001_tstat.npy")
-beta_3d = np.load("../data/betas/sub001_beta.npy")
+p_3d = np.load("../data/p-values/"+name+"_pvalue.npy")
+t_3d = np.load("../data/t_stat/"+name+"_tstat.npy")
+beta_3d = np.load("../data/betas/"+name+"_beta.npy")
 
 
 mask = nib.load(path_to_data + '/anatomy/inplane001_brain_mask.nii.gz')
@@ -51,9 +57,9 @@ fitted_mask[fitted_mask>0]=1
 
 q1         = [.49,.45,.4,.3,.25,.2]
 neighbors1 = [1,3,5,12,20]
-prod2      = [.25,.1,.05,.025,.01]
+prod2      = [.25,.2,.15,.1,.05]
 neighbors2 = [1,3,5,12,20]
-prod3      = [.25,.1,.05,.025,.01]
+prod3      = [.25,.2,.15,.1,.05]
 neighbors3 = [1,3,5,12,20]
 
 
@@ -68,7 +74,7 @@ p_bh = p_1d[mask_1d==1]
 
 
 sys.stdout.write("*-----------------------------------------------* \n")
-sys.stdout.write("Running different Clustering Tasks on subject 001 \n more than needed for visuals: \n")
+sys.stdout.write("Running different Clustering Tasks on "+ name + "\n more than needed for visuals: \n")
 
 ###############################
 # Benjamini Hochberg Analysis #
@@ -125,31 +131,33 @@ present_bh[present_bh<.5]=0
 
 plt.contour(present_bh,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(behind,interpolation="nearest",cmap="seismic")
-plt.title("Benjamini Hochberg on slice 15 and contours \n (with varying Q and # neighbors)")
+plt.title("Benjamini Hochberg on slice 15 and contours *"+name+"* \n (with varying Q and # neighbors)")
 x=32+64*np.arange(5)
 labels = neighbors1
 plt.xticks(x, labels)
+plt.clim(-np.max(abs(behind)),np.max(abs(behind)))
 plt.xlabel("Number of Neighbors")
 labels2 = q1
 y=32+64*np.arange(6)
 plt.yticks(y, labels2)
 plt.ylabel("Q")
 plt.colorbar()
-plt.savefig(location_of_images+"bh_compare_15_plus_contours.png")
+plt.savefig(location_of_images+"_"+name+"_"+"bh_compare_15_plus_contours.png")
 plt.close()
 
 
 plt.imshow(present_bh,interpolation="nearest",cmap="seismic")
-plt.title("Benjamini Hochberg on slice 15 \n (with varying Q and # neighbors)")
+plt.title("Benjamini Hochberg on slice 15 *"+name+"* \n (with varying Q and # neighbors)")
 x=32+64*np.arange(5)
 labels = neighbors1
 plt.xticks(x, labels)
 plt.xlabel("Number of Neighbors")
 labels2 = q1
+
 y=32+64*np.arange(6)
 plt.yticks(y, labels2)
 plt.ylabel("Q")
-plt.savefig(location_of_images+"bh_compare_15.png")
+plt.savefig(location_of_images+"_"+name+"_"+"bh_compare_15.png")
 plt.close()
 
 ##############
@@ -200,23 +208,24 @@ plt.contour(present_t,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(behind2,interpolation="nearest",cmap="seismic")
 plt.clim(-4.2,4.2)
 plt.colorbar()
-plt.title("T- Analysis on slice 15 and contours \n (with varying proportions and # neighbors)")
+plt.title("T- Analysis on slice 15 and contours *"+name+"* \n (with varying proportions and # neighbors)")
 x=32+64*np.arange(5)
 labels = neighbors2
 plt.xticks(x, labels)
 plt.xlabel("Number of Neighbors")
 labels2 = prod2 
+plt.clim(-np.max(abs(behind2)),np.max(abs(behind2)))
 plt.yticks(x, labels2)
 plt.ylabel("Proportion")
-plt.savefig(location_of_images+"t_compare_15_plus_contours.png")
+plt.savefig(location_of_images+"_"+name+"_"+"t_compare_15_plus_contours.png")
 plt.close()
 
 
 plt.contour(present_t,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(np.abs(behind2),interpolation="nearest",cmap="seismic")
-plt.clim(0,4.2)
+plt.clim(0,np.max(abs(behind)))
 plt.colorbar()
-plt.title("abs(T- Analysis) on slice 15 and contours \n (with varying proportions and # neighbors)")
+plt.title("abs(T- Analysis) on slice 15 and contours *"+name+"* \n (with varying proportions and # neighbors)")
 x=32+64*np.arange(5)
 labels = neighbors2
 plt.xticks(x, labels)
@@ -224,14 +233,14 @@ plt.xlabel("Number of Neighbors")
 labels2 = prod2 
 plt.yticks(x, labels2)
 plt.ylabel("Proportion")
-plt.savefig(location_of_images+"t_compare_15_abs_plus_contours.png")
+plt.savefig(location_of_images+"_"+name+"_"+"t_compare_15_abs_plus_contours.png")
 plt.close()
 
 
 
 
 plt.imshow(present_t,interpolation="nearest",cmap="seismic")
-plt.title("T- Analysis on slice 15 \n (with varying proportions and # neighbors)")
+plt.title("T- Analysis on slice 15 *"+name+"* \n (with varying proportions and # neighbors)")
 x=32+64*np.arange(5)
 labels = neighbors2
 plt.xticks(x, labels)
@@ -239,7 +248,7 @@ plt.xlabel("Number of Neighbors")
 labels2 = prod2 
 plt.yticks(x, labels2)
 plt.ylabel("Proportion")
-plt.savefig(location_of_images+"t_compare_15.png")
+plt.savefig(location_of_images+"_"+name+"_"+"t_compare_15.png")
 plt.close()
 
 
@@ -291,7 +300,8 @@ for e,f in itertools.product(range(5),range(5)):
 
 plt.contour(present_beta,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(behind3,interpolation="nearest",cmap="seismic")
-plt.title("Beta- Analysis on slice 15 and contours \n (with varying proportions and # neighbors)")
+plt.clim(-np.max(abs(behind3)),np.max(abs(behind3)))
+plt.title("Beta- Analysis on slice 15 and contours *"+name+"* \n (with varying proportions and # neighbors)")
 plt.colorbar()
 x=32+64*np.arange(5)
 labels = neighbors3
@@ -300,14 +310,15 @@ plt.xlabel("Number of Neighbors")
 labels2 = prod3 
 plt.yticks(x, labels2)
 plt.ylabel("Proportion")
-plt.savefig(location_of_images+"beta_compare_15_plus_contours.png")
+plt.savefig(location_of_images+"_"+name+"_"+"beta_compare_15_plus_contours.png")
 plt.close()
 
 
 plt.contour(present_beta,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(np.abs(behind3),interpolation="nearest",cmap="seismic")
-plt.title("abs(Beta- values) on slice 15 and contours\n (with varying proportions and # neighbors)")
+plt.title("abs(Beta- values) on slice 15 and contours *"+name+"* \n (with varying proportions and # neighbors)")
 plt.colorbar()
+plt.clim(0,np.max(abs(behind3)))
 x=32+64*np.arange(5)
 labels = neighbors3
 plt.xticks(x, labels)
@@ -315,14 +326,14 @@ plt.xlabel("Number of Neighbors")
 labels2 = prod3 
 plt.yticks(x, labels2)
 plt.ylabel("Proportion")
-plt.savefig(location_of_images+"beta_compare_15_abs_plus_contours.png")
+plt.savefig(location_of_images+"_"+name+"_"+"beta_compare_15_abs_plus_contours.png")
 plt.close()
 
 
 
 
 plt.imshow(present_beta,interpolation="nearest",cmap="seismic")
-plt.title("Beta- Analysis on slice 15 \n (with varying proportions and # neighbors)")
+plt.title("Beta- Analysis on slice 15 *"+name+"* \n (with varying proportions and # neighbors)")
 plt.colorbar()
 x=32+64*np.arange(5)
 labels = neighbors3
@@ -331,7 +342,7 @@ plt.xlabel("Number of Neighbors")
 labels2 = prod3 
 plt.yticks(x, labels2)
 plt.ylabel("Proportion")
-plt.savefig(location_of_images+"beta_compare_15.png")
+plt.savefig(location_of_images+"_"+name+"_"+"beta_compare_15.png")
 plt.close()
 
 
