@@ -109,7 +109,7 @@ for i in sub_list:
     np.save("../data/t_stat/"+i+"_tstat_fourier.npy", t_final)
     np.save("../data/residual/"+i+"_residual_fourier.npy", residual_final)
     np.save("../data/p-values/"+i+"_pvalue_fourier.npy", p_final)
-    np.save("../data/X/"+i+"_covX.npy", np.cov(X))
+    np.save("../data/X/"+i+"_covX.npy", np.cov(X.T))
 
      
     sys.stdout.write("-")
