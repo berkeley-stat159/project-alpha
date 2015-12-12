@@ -5,35 +5,37 @@
 is to preform linear regression. Initially, we just used the convoluted predicted
 hemodyamic response (HR) using all the conditions together and each of 
 conditions individually. After realizing that the HRs themselves didn't explain
-enough of the BOLD ratio, attended to add features in order to reduce/ explain
+enough of the BOLD ratio, we attempted to add features in order to reduce/ explain
 the noise we observed. Additional features that we examined included a 
 linear drift, a small set the fourier series, and a few principle components.
 
-Linear regression suggests a linear relationship between an observation's response,
-$y_i$ with it's features $x_i$ (a vector who's first element is $1$ and the rest are
-the values the observation $i$'s features are) in the following manner:
+Linear regression stems from the assumption that there exists a linear relationship 
+between an observation's response,$y_i$ with it's features $x_i$ (a vector who's 
+first element is $1$ and the rest are the values the observation $i$'s features are) 
+in the following manner:
 
 \begin{equation}
 y_i = x_i^T \beta + \epsilon_i
+\label{eq:one_1d_lin_reg}
 \end{equation}
 
-where $\epsilon_i \sim N(0, \sigma^2)$. Moveover we assume for each observation
-($i$), the $\epsilon_i$ are independent and that the true $\beta$ value is the same.
-As such we can rewrite the relationship we assume is correct in a matrix form:
+where $\epsilon_i \sim N(0, \sigma^2)$. Moveover we assume all observations $i$, the $\epsilon_i$ are independent and that the true $\beta$ value is the same. Equation \ref{eq:one_1d_lin_reg} can be expressed in matrix form in the following manner (\ref{eq:mat_lin_reg}):
 
 \begin{equation}
 Y = X\beta + \epsilon
+\label{eq:mat_lin_reg}
 \end{equation}
 
-This relationship requires a $X$ feature matrix, which presents each distinct feature
+This relationship leads to creating a $X$ feature matrix, which presents each distinct feature
 as a column and sees each observation get a single row to represent it's values.
-Assuming $\epsilon \sim N(0,\sigma^2 I)$ isn't automatic, so we will need to check 
-the validity of this assumptions, as discussed in the \textit{"Normality Assumptions"} 
-section. As might be expected, we do not know the true value of $\beta$ and as such
+Normality of the errors, more specifically 
+$\epsilon \sim N(0,\sigma^2 I)$, is a not trivial assumption, so we will need to check 
+the validity of such a assumption (discussed in the \textit{"Normality Assumptions"} 
+section). As might be expected, we do not know the true value of $\beta$ and as such
 need to estimate, using matrix algebra we get a closed from solution:
 
 \begin{equation}
-\hat{\beta} =(X^T X)^{-1} X^T 
+\hat{\beta} =(X^T X)^{-1} X^T y
 \end{equation}
 
 This equation does require $(X^T X)$ to be invertible, but even when it is not, we
@@ -47,7 +49,7 @@ of linearity and normally-distributed errors are.
 
 \subsubsection{More about potential features:}
 \par Other than the basic HR feature/features, and a column of $1$s in our feature matrix
-(to account for a ``intercept'' term/ non-zero average value), we experimented with 
+which accounts for a ``intercept'' term/ non-zero average value, we experimented with 
 include a few features for the first principle components of a of time $\times$ time 
 matrix and the first few functions of the Fourier series.  As noted above these 
 additional features helped account for the noise in the observed BOLD ratio 
@@ -58,14 +60,14 @@ fluxuation.
 \vspace{2mm}
 \par This matrix use to obtain the principle components was the correlation between 
 each individual voxel time course with other voxel's time course ($A^TA$ where 
-$A$ is a voxel $time$ time matrix). It should be noted that this matrix $A^TA$ only 
-used the voxels inside the brain. ***Add Jane's Stuff about why we'd need to
-use the first 6 pcs***
+$A$ is a voxel $time$ time matrix). It should be noted that we only use the voxel 
+time courses for voxels that we knew were in the brain. ***Add Jane's Stuff about 
+why we'd need to use the first 6 pcs***
 
 \vspace{2mm}
 \textbf{Fourier Series}
 \vspace{2mm}
-\par We included 4 features related to the first few functions of the Fourier series.
+\par We included 4 - 6 features related to the first few functions of the Fourier series.
 The full fourier series is represent as the following:
 
 \begin{equation}
@@ -81,5 +83,8 @@ f(x) = \frac{1}{2} \cdot a_0 + \sum_{n=1}^{\infty} a_n \cdot cos(\frac{n}{\text{
 
 We used $ + \sum_{n=1}^{2} a_n \cdot cos(\frac{n}{\text{num of TR}} x) + 
 \sum_{n=1}^{2} b_n \cdot sin(\frac{n}{\text{num of TR}} x)$ to be 4 features to try 
-to get a low order sinusoidal fluxucations.
+to get a low order sinusoidal fluxucations. The idea behind including fourier series 
+would be they would be less likely to over fit/take the response from the hemodyamic 
+response than principle components and that could account for larger period level 
+fluctuation that might exist.
 
