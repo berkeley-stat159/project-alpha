@@ -1,4 +1,88 @@
-% model comparison
+% tex file for regression
+
+\par \indent A simple and straightforward way to model the voxel time courses
+is to preform linear regression. Initially, we just used the convoluted predicted
+hemodyamic response (HR) using all the conditions together and each of 
+conditions individually. After realizing that the HRs themselves didn't explain
+enough of the BOLD ratio, attended to add features in order to reduce/ explain
+the noise we observed. Additional features that we examined included a 
+linear drift, a small set the fourier series, and a few principle components.
+
+Linear regression suggests a linear relationship between an observation's response,
+$y_i$ with it's features $x_i$ (a vector who's first element is $1$ and the rest are
+the values the observation $i$'s features are) in the following manner:
+
+\begin{equation}
+y_i = x_i^T \beta + \epsilon_i
+\end{equation}
+
+where $\epsilon_i \sim N(0, \sigma^2)$. Moveover we assume for each observation
+($i$), the $\epsilon_i$ are independent and that the true $\beta$ value is the same.
+As such we can rewrite the relationship we assume is correct in a matrix form:
+
+\begin{equation}
+Y = X\beta + \epsilon
+\end{equation}
+
+This relationship requires a $X$ feature matrix, which presents each distinct feature
+as a column and sees each observation get a single row to represent it's values.
+Assuming $\epsilon \sim N(0,\sigma^2 I)$ isn't automatic, so we will need to check 
+the validity of this assumptions, as discussed in the \textit{"Normality Assumptions"} 
+section. As might be expected, we do not know the true value of $\beta$ and as such
+need to estimate, using matrix algebra we get a closed from solution:
+
+\begin{equation}
+\hat{\beta} =(X^T X)^{-1} X^T 
+\end{equation}
+
+This equation does require $(X^T X)$ to be invertible, but even when it is not, we
+can use the psuedo inverse, represented  $(X^T X)^{-}$ to get a non-unique value
+for $\hat{\beta}$.
+\par To consider the strength of the effects of these predictors, we looked 
+at t-tests of the corresponding estimated coefficients for each voxel, as 
+discussed under \textit{"Hypothesis Testing"}. The validity of these t-tests and 
+their corresponding "p-values" is largely dependent on how good our assumptions 
+of linearity and normally-distributed errors are. 
+
+\subsubsection{More about potential features:}
+\par Other than the basic HR feature/features, and a column of $1$s in our feature matrix
+(to account for a ``intercept'' term/ non-zero average value), we experimented with 
+include a few features for the first principle components of a of time $\times$ time 
+matrix and the first few functions of the Fourier series.  As noted above these 
+additional features helped account for the noise in the observed BOLD ratio 
+fluxuation.
+
+\vspace{2mm}
+\textbf{Principle Components}
+\vspace{2mm}
+\par This matrix use to obtain the principle components was the correlation between 
+each individual voxel time course with other voxel's time course ($A^TA$ where 
+$A$ is a voxel $time$ time matrix). It should be noted that this matrix $A^TA$ only 
+used the voxels inside the brain. ***Add Jane's Stuff about why we'd need to
+use the first 6 pcs***
+
+\vspace{2mm}
+\textbf{Fourier Series}
+\vspace{2mm}
+\par We included 4 features related to the first few functions of the Fourier series.
+The full fourier series is represent as the following:
+
+\begin{equation}
+f(x) = \frac{1}{2} \cdot a_0 + \sum_{n=1}^{\infty} a_n \cdot cos(n x) + \sum_{n=1}^{\infty} b_n \cdot  sin(n x)
+\end{equation}
+
+but since strength of Fourier series strength comes from orthogonality of the range, 
+and we are looking for a function of the range $(0, \text{num of TR})$, we change it to:
+
+\begin{equation}
+f(x) = \frac{1}{2} \cdot a_0 + \sum_{n=1}^{\infty} a_n \cdot cos(\frac{n}{\text{num of TR}} x) + \sum_{n=1}^{\infty} b_n \cdot sin(\frac{n}{\text{num of TR}} x)
+\end{equation}
+
+We used $ + \sum_{n=1}^{2} a_n \cdot cos(\frac{n}{\text{num of TR}} x) + 
+\sum_{n=1}^{2} b_n \cdot sin(\frac{n}{\text{num of TR}} x)$ to be 4 features to try 
+to get a low order sinusoidal fluxucations.
+
+\subsection{Model Selection}
 
 \par In order to select the best set of features for our $X$ matrix, and also 
 compare the use of a single condition feature vs each of the 3 different types
@@ -116,4 +200,4 @@ X value & 1 &        2       &             3       &     4         &        5   
 \end{figure}
 
 	
-	
+

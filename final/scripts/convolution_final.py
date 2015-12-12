@@ -23,7 +23,6 @@ final_data            = "../data/"
 behav_suffix           = "/behav/task001_run001/behavdata.txt"
 
 
-
 sys.path.append(location_of_functions)
 
 

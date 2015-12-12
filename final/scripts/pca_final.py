@@ -26,6 +26,13 @@ sub_list = [i for i in sub_list if 'sub' in i]
 # Initialize array to store variance proportions. 
 masked_var_array = np.zeros((50, len(sub_list)))
 
+# Progress bar
+toolbar_width=len(sub_list)
+sys.stdout.write("PCA:  ")
+sys.stdout.write("[%s]" % (" " * toolbar_width))
+sys.stdout.flush()
+sys.stdout.write("\b" * (toolbar_width+1))
+
 # Loop through all the subjects. 
 for j in range(len(sub_list)):
     name = sub_list[j]
@@ -78,21 +85,26 @@ for j in range(len(sub_list)):
     exp_var_masked = S_masked / np.sum(S_masked)
     var_sums_masked= np.cumsum(exp_var_masked)
     masked_var_array[:,j] = exp_var_masked[:50] # Store the first 50 variance proportions.
-    
-# Setting up legend colors.
-hand_un = mlines.Line2D([], [], color='b', label='Not Masked')
-hand_mask = mlines.Line2D([], [], color='r', label='Masked')
 
-# Compare sum of proportion of variance explained by each component for masked and unmasked data.
-# For just one subject. 
-plt.plot(var_sums[np.arange(1,11)], 'b-o')
-plt.plot(var_sums_masked[np.arange(1,11)], 'r-o')
-plt.axhline(y=0.4, color='k')
-plt.legend(handles=[hand_un, hand_mask])
-plt.xlabel("Number of Principal Components")
-plt.title("Sum of Proportions of Variance Explained by Components for " + name)
-plt.savefig(location_of_images+'pcacumsums'+name+'.png')
-plt.close()
+    if (name[-3:]=="010"):    
+        # Setting up legend colors.
+        hand_un = mlines.Line2D([], [], color='b', label='Not Masked')
+        hand_mask = mlines.Line2D([], [], color='r', label='Masked')
+
+        # Compare sum of proportion of variance explained by each component for masked and unmasked data.
+        # For just subject 10. 
+        plt.plot(var_sums[np.arange(1,11)], 'b-o')
+        plt.plot(var_sums_masked[np.arange(1,11)], 'r-o')
+        plt.axhline(y=0.4, color='k')
+        plt.legend(handles=[hand_un, hand_mask])
+        plt.xlabel("Number of Principal Components")
+        plt.title("Sum of Proportions of Variance Explained by Components for " + name)
+        plt.savefig(location_of_images+'pcacumsums'+name+'.png')
+        plt.close()
+
+    sys.stdout.write("-")
+    sys.stdout.flush()
+sys.stdout.write("\n")
 
 # Write array of variance proportions to a text file.
 df = pd.DataFrame(masked_var_array)

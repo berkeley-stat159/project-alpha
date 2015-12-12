@@ -1,10 +1,3 @@
-""" Functions to work with standard OpenFMRI stimulus files
-
-The functions have docstrings according to the numpy docstring standard - see:
-
-    https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt
-"""
-
 import numpy as np
 
 def events2neural(task_fname, tr, n_trs):
@@ -32,6 +25,8 @@ def events2neural(task_fname, tr, n_trs):
     task[:, :2] = task[:, :2] / tr
     # Neural time course from onset, duration, amplitude for each event
     time_course = np.zeros(n_trs)
+    
     for onset, duration, amplitude in task:
         time_course[onset:onset + duration] = amplitude
+    
     return time_course
