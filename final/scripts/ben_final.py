@@ -27,9 +27,9 @@ from benjamini_hochberg import bh_procedure
 
 
 p_3d = np.load("../data/p-values/"+name+"_pvalue_fourier.npy")
-t_3d = np.load("../data/t_stat/"+name+"_tstat.npy")
-beta_3d = np.load("../data/betas/"+name+"_beta.npy")
-
+t_3d = np.load("../data/t_stat/"+name+"_tstat_fourier.npy")
+beta_3d = np.load("../data/betas/"+name+"_beta_fourier.npy")
+X = np.load("../data/X/"+name+"_covX.npy")
 
 mask = nib.load(path_to_data + '/anatomy/inplane001_brain_mask.nii.gz')
 mask_data = mask.get_data()
@@ -45,7 +45,7 @@ plt.clim(-np.max(abs(beta_3d)),np.max(abs(beta_3d)))
 plt.title(name+" beta values")
 plt.yticks([])
 plt.xticks([])
-plt.savefig(location_of_images+name+"_"+"beta.png")
+plt.savefig(location_of_images+name+"_"+"beta_fourier.png")
 plt.close()
 
 
@@ -55,7 +55,18 @@ plt.clim(-np.max(abs(t_3d)),np.max(abs(t_3d)))
 plt.title(name+" t values")
 plt.yticks([])
 plt.xticks([])
-plt.savefig(location_of_images+name+"_"+"t.png")
+plt.savefig(location_of_images+name+"_"+"t_fourier.png")
 plt.close()
+
+
+plt.imshow(X,cmap="gray")
+plt.colorbar()
+plt.savefig(location_of_images+name+"_"+"_covX_fourier.png")
+plt.close()
+
+
+
+
+print()
 
 

@@ -46,13 +46,14 @@ from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape
 
 # Progress bar
 toolbar_width=len(sub_list)
-sys.stdout.write("GLM:  ")
+sys.stdout.write("GLM, :  ")
 sys.stdout.write("[%s]" % (" " * toolbar_width))
 sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1))
 
+
 #Run GLM for each subject
-for i in sub_list[:2]:
+for i in sub_list:
     name = i 
     behav=pd.read_table(path_to_data+name+behav_suffix,sep=" ")
     num_TR = float(behav["NumTRs"])    
@@ -74,16 +75,7 @@ for i in sub_list[:2]:
     mask_data = mask_data!=0
     mask_data = mask_data.astype(int)
 
-    ###PCA###
 
-    to_2d= masking_reshape_start(data,mask_data)
-    # double_centered_2d
-    X_pca= to_2d - np.mean(to_2d,0) - np.mean(to_2d,1)[:,None]
-
-    cov = X_pca.T.dot(X_pca)
-
-    U, S, V = npl.svd(cov)
-    pca_addition= U[:,:6] # ~40% coverage
     
     #Run per slice in order to correct for time
     for j in range(data.shape[2]):
@@ -93,8 +85,8 @@ for i in sub_list[:2]:
         #Create design matrix
         X = np.ones((n_vols,9))
         X[:,1] = convolve[:,j]
-        X[:,2]=np.linspace(-1,1,num=X.shape[0]) #drift
-        X[:,3:] = pca_addition
+        X[:,2] = np.linspace(-1,1,num=X.shape[0]) #drift
+        X[:,3:] = fourier_creation(n_vols,3)[:,1:]
         
         
         beta,t,df,p = t_stat_mult_regression(data_slice, X)
@@ -104,21 +96,29 @@ for i in sub_list[:2]:
         
         MRSS, fitted, residuals = glm_diagnostics(beta, X, data_slice)
         
+
+
+
         beta = beta[:,1]
         
         beta_final[:,:,j] = beta.reshape(data_slice.shape[:-1])
         t_final[:,:,j] = t.reshape(data_slice.shape[:-1])
         p_final[:,:,j] = p.reshape(data_slice.shape[:-1])        
         residual_final[:,:,j,:] = residuals.reshape(data_slice.shape)
-    
-    np.save("../data/betas/"+i+"_beta.npy", beta_final)    
-    np.save("../data/t_stat/"+i+"_tstat.npy", t_final)
-    np.save("../data/residual/"+i+"_residual.npy", residual_final)
-    np.save("../data/p-values/"+i+"_pvalue.npy", p_final)
-        
+    np.save("../data/betas/"+i+"_beta_fourier.npy", beta_final)    
+    np.save("../data/t_stat/"+i+"_tstat_fourier.npy", t_final)
+    np.save("../data/residual/"+i+"_residual_fourier.npy", residual_final)
+    np.save("../data/p-values/"+i+"_pvalue_fourier.npy", p_final)
+    np.save("../data/X/"+i+"_covX.npy", np.cov(X.T))
+
      
     sys.stdout.write("-")
     sys.stdout.flush()
+
+
+
+
+
 sys.stdout.write("\n")
     
     

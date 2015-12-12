@@ -25,6 +25,7 @@ import os
 
 name="sub001"
 
+
 project_path          = "../../"
 path_to_data          = project_path+"data/ds009/"+name
 location_of_images    = project_path+"images/"
@@ -44,9 +45,9 @@ from Image_Visualizing import present_3d, make_mask
 from benjamini_hochberg import bh_procedure
 
 
-p_3d = np.load("../data/p-values/"+name+"_pvalue.npy")
-t_3d = np.load("../data/t_stat/"+name+"_tstat.npy")
-beta_3d = np.load("../data/betas/"+name+"_beta.npy")
+p_3d = np.load("../data/p-values/"+name+"_pvalue_fourier.npy")
+t_3d = np.load("../data/t_stat/"+name+"_tstat_fourier.npy")
+beta_3d = np.load("../data/betas/"+name+"_beta_fourier.npy")
 
 
 mask = nib.load(path_to_data + '/anatomy/inplane001_brain_mask.nii.gz')
@@ -54,7 +55,6 @@ mask_data = mask.get_data()
 rachels_ones = np.ones((64, 64, 34))
 fitted_mask = make_mask(rachels_ones, mask_data, fit = True)
 fitted_mask[fitted_mask>0]=1
-
 
 
 
@@ -125,7 +125,7 @@ behind= np.ones((len(q1)*64,5*64))
 
 behind_p=masking_reshape_end(p_bh,mask,off_value=.5)
 
-for a,b in itertools.product(range(5),range(5)):
+for a,b in itertools.product(range(len(q1)),range(5)):
 	present_bh[(a*64):((a+1)*64),(b*64):((b+1)*64)]= bh[a*5+b][...,15]
 	behind[(a*64):((a+1)*64),(b*64):((b+1)*64)]=behind_p[...,15]
 present_bh[present_bh<.5]=0
@@ -138,7 +138,7 @@ plt.title("Benjamini Hochberg on slice 15 and contours *"+name+"* \n (with varyi
 x=32+64*np.arange(5)
 labels = neighbors1
 plt.xticks(x, labels)
-plt.clim(-np.max(abs(behind)),np.max(abs(behind)))
+plt.clim(0,np.max(abs(behind)))
 plt.xlabel("Number of Neighbors")
 labels2 = q1
 y=32+64*np.arange(len(q1))
@@ -157,7 +157,7 @@ plt.xticks(x, labels)
 plt.xlabel("Number of Neighbors")
 labels2 = q1
 
-y=32+64*np.arange(6)
+y=32+64*np.arange(len(q1))
 plt.yticks(y, labels2)
 plt.ylabel("Q")
 plt.savefig(location_of_images+"_"+name+"_"+"bh_compare_15.png")
@@ -241,11 +241,11 @@ plt.close()
 
 
 
+
 plt.imshow(present_t,interpolation="nearest",cmap="bwr")
 plt.title("T- Analysis on slice 15 *"+name+"* \n (with varying proportions and # neighbors)")
 x=32+64*np.arange(5)
 labels = neighbors2
-plt.colorbar()
 plt.xticks(x, labels)
 plt.xlabel("Number of Neighbors")
 labels2 = prod2 
@@ -331,6 +331,7 @@ plt.yticks(x, labels2)
 plt.ylabel("Proportion")
 plt.savefig(location_of_images+"_"+name+"_"+"beta_compare_15_abs_plus_contours.png")
 plt.close()
+
 
 
 

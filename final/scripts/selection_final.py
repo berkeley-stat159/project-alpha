@@ -77,20 +77,30 @@ aic_10=[]
 bic_10=[]
 
 
+"""
+if input_var == 'adjR2':
+
+    def model(MRSS,y_1d,df, rank):
+	    return adjR2(MRSS,y_1d, df, rank)
+    
+elif input_var == 'BIC': 
+   
+    def model(MRSS,y_1d,df, rank):
+        return BIC(MRSS, y_1d, df, rank)
+    
+elif input_var == 'AIC': 
+   
+    def model(MRSS,y_1d,df, rank):
+        return AIC(MRSS, y_1d, df, rank)
+"""
 
 toolbar_width=34
 
-
-
-
 #LOAD THE DATA In
-subjects=['sub002','sub003','sub014']
-ben=0
 for i in ['sub002','sub003','sub014']:
-    sys.stdout.write(i+": [%s]" % (" " * toolbar_width))
-    sys.stdout.flush()
-    sys.stdout.write("\b" * (toolbar_width+1))
 
+    sys.stdout.write(i+": "+"[%s]" % (" " * toolbar_width))
+    sys.stdout.write("\b" * (toolbar_width+1))
 
     img = nib.load(smooth_data+ i +"_bold_smoothed.nii")
     data = img.get_data() 
@@ -136,20 +146,20 @@ for i in ['sub002','sub003','sub014']:
         data_slice = data_slice[mask_slice==1]
 
         # all conditions in 1 roof (cond_all)
-        X = np.ones((n_vols,13))
+        X = np.ones((n_vols,15))
         X[:,1] = hrf_matrix_all[:,j] # 1 more
         X[:,2] = np.linspace(-1,1,num=X.shape[0]) #drift # one 
-        X[:,3:7] = fourier_creation(X.shape[0],2)[:,1:] # four more
-        X[:,7:] = pca_addition
+        X[:,3:9] = fourier_creation(X.shape[0],3)[:,1:] # six more
+        X[:,9:] = pca_addition
 
         # all conditions seperate (cond1,cond2,cond3)
-        X_cond = np.ones((n_vols,15))
+        X_cond = np.ones((n_vols,17))
         X_cond[:,1] = hrf_matrix_1[:,j] # 1 more
         X_cond[:,2] = hrf_matrix_2[:,j] # 1 more
         X_cond[:,3] = hrf_matrix_3[:,j] # 1 more
         X_cond[:,4] = np.linspace(-1,1,num=X.shape[0]) #drift # one 
-        X_cond[:,5:9] = fourier_creation(X.shape[0],2)[:,1:] # four more
-        X_cond[:,9:] = pca_addition
+        X_cond[:,5:11] = fourier_creation(X.shape[0],3)[:,1:] # six more
+        X_cond[:,11:] = pca_addition
 
 
     #START CREATING MODELS
@@ -212,13 +222,13 @@ for i in ['sub002','sub003','sub014']:
 
         # 1.3 hrf + drift + fourier
 
-        beta3,t,df3,p = t_stat_mult_regression(data_slice, X[:,0:7])
+        beta3,t,df3,p = t_stat_mult_regression(data_slice, X[:,0:9])
     
-        MRSS3, fitted, residuals = glm_diagnostics(beta3, X[:,0:7], data_slice)
+        MRSS3, fitted, residuals = glm_diagnostics(beta3, X[:,0:9], data_slice)
 
         model3_slice = np.zeros(len(MRSS3))
     
-        rank3 = npl.matrix_rank(X[:,0:7])
+        rank3 = npl.matrix_rank(X[:,0:9])
         count = 0
 
         for value in MRSS3:
@@ -236,14 +246,14 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 4       #
         ###################
 
-        # 1.4 hrf + drift + pca
+        # 1.4 hrf + drift + pca 6
 
-        beta4,t,df4,p = t_stat_mult_regression(data_slice, X[:,[0,1,2,7,8,9,10,11,12]])
+        beta4,t,df4,p = t_stat_mult_regression(data_slice, X[:,[0,1,2,7,10,11,12,13,14]])
     
-        MRSS4, fitted, residuals = glm_diagnostics(beta4, X[:,[0,1,2,7,8,9,10,11,12]], data_slice)
+        MRSS4, fitted, residuals = glm_diagnostics(beta4, X[:,[0,1,2,7,10,11,12,13,14]], data_slice)
 
         model4_slice = np.zeros(len(MRSS4))
-        rank4 = npl.matrix_rank(X[:,[0,1,2,7,8,9,10,11,12]])
+        rank4 = npl.matrix_rank(X[:,[0,1,2,7,10,11,12,13,14]])
         count = 0
 
         for value in MRSS4:
@@ -260,12 +270,12 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 4_5       #
         ###################
 
-        # 1.4 hrf + drift + pca
+        # 1.4 hrf + drift + pca 4
 
-        beta4_5,t,df4_5,p = t_stat_mult_regression(data_slice, X[:,[0,1,2,7,8,9,10]])
+        beta4_5,t,df4_5,p = t_stat_mult_regression(data_slice, X[:,[0,1,2,7,10,11,12]])
     
-        MRSS4_5, fitted, residuals = glm_diagnostics(beta4_5, X[:,[0,1,2,7,8,9,10]], data_slice)
-        rank4_5 = npl.matrix_rank(X[:,[0,1,2,7,8,9,10,11,12]])
+        MRSS4_5, fitted, residuals = glm_diagnostics(beta4_5, X[:,[0,1,2,7,10,11,12]], data_slice)
+        rank4_5 = npl.matrix_rank(X[:,[0,1,2,7,10,11,12]])
 
         model4_5_slice = np.zeros(len(MRSS4_5))
         count = 0
@@ -283,7 +293,7 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 5       #
         ###################
 
-        # 1.5 hrf + drift + pca + fourier
+        # 1.5 hrf + drift + pca 6 + fourier
 
         beta5,t,df5,p = t_stat_mult_regression(data_slice, X)
     
@@ -363,13 +373,13 @@ for i in ['sub002','sub003','sub014']:
         # 2.3 hrf + drift + fourier
 
 
-        beta8,t,df8,p = t_stat_mult_regression(data_slice, X_cond[:,0:9])
+        beta8,t,df8,p = t_stat_mult_regression(data_slice, X_cond[:,0:11])
 
-        MRSS8, fitted, residuals = glm_diagnostics(beta8, X_cond[:,0:9], data_slice)
+        MRSS8, fitted, residuals = glm_diagnostics(beta8, X_cond[:,0:11], data_slice)
 
         model8_slice = np.zeros(len(MRSS8))
     
-        rank8 = npl.matrix_rank(X_cond[:,0:9])
+        rank8 = npl.matrix_rank(X_cond[:,0:11])
     
         count = 0
 
@@ -387,16 +397,16 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 9       #
         ###################
 
-        # 2.4 hrf + drift + pca
+        # 2.4 hrf + drift + pca 6
 
 
-        beta9,t,df9,p = t_stat_mult_regression(data_slice, X_cond[:,list(range(5))+list(range(9,15))])
+        beta9,t,df9,p = t_stat_mult_regression(data_slice, X_cond[:,list(range(5))+list(range(11,17))])
 
-        MRSS9, fitted, residuals = glm_diagnostics(beta9,X_cond[:,list(range(5))+list(range(9,15))], data_slice)
+        MRSS9, fitted, residuals = glm_diagnostics(beta9,X_cond[:,list(range(5))+list(range(11,17))], data_slice)
 
         model9_slice = np.zeros(len(MRSS9))
     
-        rank9 = npl.matrix_rank(X_cond[:,list(range(5))+list(range(9,15))])
+        rank9 = npl.matrix_rank(X_cond[:,list(range(5))+list(range(11,17))])
     
         count = 0
 
@@ -410,20 +420,20 @@ for i in ['sub002','sub003','sub014']:
         aic_9=aic_9+AIC_2(MRSS9,data_slice,df9,rank9).tolist()
         bic_9=bic_9+BIC_2(MRSS9,data_slice,df9,rank9).tolist()
 
-        ###################
+        #####################
         #   MODEL 9_5       #
-        ###################
+        #####################
 
-        # 2.4 hrf + drift + pca
+        # 2.4 hrf + drift + pca 4
 
 
-        beta9_5,t,df9_5,p = t_stat_mult_regression(data_slice, X_cond[:,list(range(5))+list(range(9,13))])
+        beta9_5,t,df9_5,p = t_stat_mult_regression(data_slice, X_cond[:,list(range(5))+list(range(11,15))])
 
-        MRSS9_5, fitted, residuals = glm_diagnostics(beta9_5,X_cond[:,list(range(5))+list(range(9,13))], data_slice)
+        MRSS9_5, fitted, residuals = glm_diagnostics(beta9_5,X_cond[:,list(range(5))+list(range(11,15))], data_slice)
 
         model9_5_slice = np.zeros(len(MRSS9_5))
     
-        rank9_5 = npl.matrix_rank(X_cond[:,list(range(5))+list(range(9,13))])
+        rank9_5 = npl.matrix_rank(X_cond[:,list(range(5))+list(range(11,15))])
     
         count = 0
 
@@ -441,7 +451,7 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 10       #
         ###################
 
-        # 2.5 hrf + drift + pca + fourier
+        # 2.5 hrf + drift + pca 6 + fourier
         beta10,t,df10,p = t_stat_mult_regression(data_slice, X_cond)
 
         MRSS10, fitted, residuals = glm_diagnostics(beta10, X_cond, data_slice)
@@ -466,6 +476,7 @@ for i in ['sub002','sub003','sub014']:
         sys.stdout.flush()
     sys.stdout.write("\n")
     sys.stdout.flush()
+
     
 
 #final = np.array([np.mean(model1), np.mean(model2), np.mean(model3), np.mean(model4), np.mean(model4_5), np.mean(model5), np.mean(model6), np.mean(model7),
@@ -504,21 +515,21 @@ plt.plot([1,2,3,4,4.5,5],aic[0,:],label="all conditions together")
 plt.plot([1,2,3,4,4.5,5],aic[1,:],label="individual conditions")
 plt.title("AIC")
 plt.legend(loc='upper right', shadow=True,fontsize="smaller")
-plt.savefig('../../images/aic_pca.png')
+plt.savefig('../../images/aic.png')
 plt.close()
 
 plt.plot([1,2,3,4,4.5,5],bic[0,:],label="all conditions together")
 plt.plot([1,2,3,4,4.5,5],bic[1,:],label="individual conditions")
 plt.title("BIC")
 plt.legend(loc='upper right', shadow=True,fontsize="smaller")
-plt.savefig('../../images/bic_pca.png')
+plt.savefig('../../images/bic.png')
 plt.close()
 
 plt.plot([1,2,3,4,4.5,5],adjR2[0,:],label="all conditions conditions")
 plt.plot([1,2,3,4,4.5,5],adjR2[1,:],label="individual conditions")
 plt.title("Adjusted R2")
 plt.legend(loc='upper right', shadow=True,fontsize="smaller")
-plt.savefig('../../images/adjr2_pca.png')
+plt.savefig('../../images/adjr2.png')
 plt.close()
 
 np.round(aic,3)
@@ -527,6 +538,9 @@ np.round(adjR2,3)
 
 
 # making the plots make more sense:
+names=["HRF","HRF \n +DRIFT","HRF\n +DRIFT \n +FOURIER6","HRF\n +DRIFT\n +PCA4","HRF\n +DRIFT\n +PCA6","HRF \n +DRIFT\n+FOURIER6\n+PCA6"]
+
+
 aic_better=aic.copy()
 bic_better=bic.copy()
 adjR2_better=adjR2.copy()
@@ -536,23 +550,32 @@ adjR2_better[:,3],adjR2_better[:,4] = adjR2[:,4],adjR2[:,3]
 
 plt.plot(np.arange(6)+1,aic_better[0,:],label="all conditions together")
 plt.plot(np.arange(6)+1,aic_better[1,:],label="individual conditions")
+x=np.arange(6)+1
+labels = names
+plt.xticks(x, labels)
 plt.title("AIC")
 plt.legend(loc='upper right', shadow=True,fontsize="smaller")
-plt.savefig('../../images/aic_better_pca.png')
+plt.savefig('../../images/aic_better.png')
 plt.close()
 
 plt.plot(np.arange(6)+1,bic_better[0,:],label="all conditions together")
 plt.plot(np.arange(6)+1,bic_better[1,:],label="individual conditions")
+x=np.arange(6)+1
+labels = names
+plt.xticks(x, labels)
 plt.title("BIC")
 plt.legend(loc='upper right', shadow=True,fontsize="smaller")
-plt.savefig('../../images/bic_better_pca.png')
+plt.savefig('../../images/bic_better.png')
 plt.close()
 
 plt.plot(np.arange(6)+1,adjR2_better[0,:],label="all conditions conditions")
 plt.plot(np.arange(6)+1,adjR2_better[1,:],label="individual conditions")
 plt.title("Adjusted R2")
+x=np.arange(6)+1
+labels = names
+plt.xticks(x, labels)
 plt.legend(loc='upper right', shadow=True,fontsize="smaller")
-plt.savefig('../../images/adjr2_better_pca.png')
+plt.savefig('../../images/adjr2_better.png')
 plt.close()
 
 

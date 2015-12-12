@@ -50,9 +50,9 @@ t_mean = np.zeros((64, 64, 34, 24))
 beta_mean = np.zeros((64, 64, 34, 24))
 
 neighbors = 1
-q = .25	
-prop = .1
-prop_beta = .2
+q = .15
+prop_t = .15
+prop_beta = .15
 
 # assign subjects a number
 
@@ -81,7 +81,7 @@ for i, name in enumerate(sub_list):
 	bh_3d[bh_3d < .5] = 0
 	bh_3d_1_good = 1 - bh_3d
 
-	#bh_final  = neighbor_smoothing_binary(bh_3d_1_good, neighbors)
+	bh_final  = neighbor_smoothing_binary(bh_3d_1_good, neighbors)
 
 	bh_mean[..., i] = bh_3d_1_good
 
@@ -91,7 +91,7 @@ for i, name in enumerate(sub_list):
 	t_3d = np.load("../data/t_stat/" + name + "_tstat.npy")
 
 	#mask = fitted_mask
-	t_group = t_grouping_neighbor(t_3d, mask, prop, neighbors = neighbors,
+	t_group = t_grouping_neighbor(t_3d, mask, prop_t, neighbors = neighbors,
 					prop = True, abs_on = True, binary = True, off_value = 0, masked_value = .5)[0]
 
 	t_mean[..., i] = t_group
@@ -112,11 +112,18 @@ sys.stdout.write("\n")
 
 # mean_across for all the process outputs for each subject
 final_bh = np.mean(bh_mean, axis = 3)
-np.save("../data/final_bh.npy", final_bh)
+np.save("../data/bh_t_beta/bh_all.npy",bh_mean)
+np.save("../data/bh_t_beta/final_bh_average.npy", final_bh)
+
 final_t = np.mean(t_mean, axis = 3)
-np.save("../data/final_t.npy", final_t)
+np.save("../data/bh_t_beta/final_t_average.npy", final_t)
+np.save("../data/bh_t_beta/t_all.npy",t_mean)
+
+
 final_beta = np.mean(beta_mean, axis = 3)
-np.save("../data/final_beta.npy", final_beta)
+np.save("../data/bh_t_beta/final_beta_average.npy", final_beta)
+np.save("../data/bh_t_beta/beta_all.npy",beta_mean)
+
 
 # plot/save the result (BH)
 plt.imshow(present_3d(final_bh), interpolation = 'nearest', cmap = 'seismic')
@@ -138,5 +145,6 @@ plt.title("Mean beta_grouping Value Across 25 Subjects with proportion = .2")
 plt.colorbar()
 plt.savefig("../../images/betagroup_mean_final.png")
 plt.close()
+
 
 
