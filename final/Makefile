@@ -1,27 +1,41 @@
+.PHONY: smooth convolve glm normality conclusion analysis supp figs all clean 
+
+# FIX INDIVIDUAL COMMANDS
 smooth:
-	python scripts/smoothing.py
+	cd scripts && python smoothing.py
 
 convolve:
-	python scripts/convolution.py
+	cd scripts && python convolution.py
 	
 glm:
-	python scripts/glm.py
+	cd scripts && python glm.py
 
 normality:
-	python scripts/normality.py
+	cd scripts && normality.python py
 
 conclusion:
-	python scripts/conclusion.py
+	cd scripts && python conclusion.py
 
-all:
-	python scripts/smoothing.py
+# FIX
+analysis:
+	make smooth
+	make convolve
+	make glm
+	make normality
+	make conclusion
 
-	python scripts/convolution.py
-	
-	python scripts/glm.py
+# FIX
+supp: 
 
-	python scripts/normality.py
+# FIX
+figs: 
+	cd scripts && python FILENAME
+	cd ../code && make figs
 
-	python scripts/conclusion.py
+all: 
+	make analysis
+	make eda
+	make figs
 
 clean:
+	find . -name "*.so" -o -name "*.pyc" -o -name "*.pyx.md5" | xargs rm -f
