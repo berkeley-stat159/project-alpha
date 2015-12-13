@@ -1,6 +1,14 @@
 \subsection{Hierarchical Clustering}
 
-\par Using the across-subject average t-statistics for every voxel in the
+\par Ultimately, the goal of clustering is to have a better understanding of 
+which parts of the brain are related to the signal based on the t-statistics 
+from performing hypothesis tests on the coefficients from linear regression.
+Once we obtain our clusters, we will both measure the within-cluster mean of
+t-statistics as well measure the centroids of the clusters. By doing this, we 
+hope to see the parts of the brain that have the strongest relationship with 
+the signal and compare them to the results of the original research paper.
+
+Using the across-subject average t-statistics for every voxel in the
 brain, we are left with a 3-d array of t-statistics that contain both negative
 and positive values. Instead of manually observing patterns in these images, we
 instead implemented a clustering algorithm to split the entire 3-d images into
