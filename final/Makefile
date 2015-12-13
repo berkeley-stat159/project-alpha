@@ -11,7 +11,7 @@ glm:
 	cd scripts && python glm.py
 
 normality:
-	cd scripts && python py
+	cd scripts && normality.python py
 
 conclusion:
 	cd scripts && python conclusion.py
