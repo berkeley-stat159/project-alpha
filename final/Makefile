@@ -1,4 +1,4 @@
-.PHONY: smooth convolve glm normality conclusion analysis figs all clean 
+.PHONY: smooth convolve glm normality conclusion analysis supp figs all clean 
 
 # FIX INDIVIDUAL COMMANDS
 smooth:
@@ -25,7 +25,7 @@ analysis:
 	make conclusion
 
 # FIX
-eda: 
+supp: 
 
 # FIX
 figs: 
