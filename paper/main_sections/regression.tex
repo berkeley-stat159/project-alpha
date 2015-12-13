@@ -26,7 +26,7 @@ that the errors are independent of $X$. The coefficients $\beta$ can be
 estimated with the closed-form solution:
 
 \begin{equation}
-\hat{\beta} =(X^T X)^{-1} X^T 
+\hat{\beta} =(X^T X)^{-1} Y^T 
 \end{equation}
 
 \par Even when $(X^T X)$ is not invertible, $\hat{\beta}$ can be estimated 
@@ -72,7 +72,8 @@ the masked data's principal components.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=.5\linewidth]{../images/pcacumsumssub010.png}
- 	\caption{Comparing proportion of variance explained by Subject 10's principal components, with and without masking the data.}
+ 	\caption{Comparing proportion of variance explained by Subject 10's 
+principal components, with and without masking the data.}
  	\label{fig:pca10}
 \end{figure}
 
@@ -95,7 +96,10 @@ ramifications on the results.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=.5\linewidth]{../images/pcaBOX.png}
- 	\caption{Boxplots comparing the amount of variance captured by principal components for each subject. The data was masked beforehand. All subjects are able to capture at least 40\% of the variance when using just six principal components.}
+ 	\caption{Boxplots comparing the amount of variance captured by principal 
+components for each subject. The data was masked beforehand. All subjects are 
+able to capture at least 40\% of the variance when using just six principal 
+components.}
  	\label{fig:pcabox}
 \end{figure}
 

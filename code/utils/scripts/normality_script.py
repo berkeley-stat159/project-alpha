@@ -97,9 +97,15 @@ print("Proportion of voxels with p-value above 0.05 (masked): "+str(np.mean(pval
 # Compare the image plots of the brain slices with and without masking. 
 # Colors indicate whether the p-value for the voxel is above or below the 0.05 threshold. 
 plt.imshow(present_3d(sw_pvals), cmap=plt.get_cmap('gray'))
+plt.xticks([])
+plt.yticks([])
+plt.title("p-values above 0.05 for " + i + " (Unmasked Data)")
 plt.savefig(location_of_images+'sub001sw.png')
 plt.close()
 plt.imshow(present_3d(masked_pvals), cmap=plt.get_cmap('gray'))
+plt.xticks([])
+plt.yticks([])
+plt.title("p-values above 0.05 for " + i + " (Masked Data)")
 plt.savefig(location_of_images+'sub001swmasked.png')
 plt.close()
 

@@ -72,11 +72,17 @@ for i in sub_list:
     if (i[-3:]=="010"): 
         # Save image plots of unmasked p-values for subject 10. 
         plt.imshow(present_3d(sw_pvals), cmap=plt.get_cmap('gray'))
+        plt.xticks([])
+        plt.yticks([])
+        plt.title("p-values above 0.05 for " + i + " (Unmasked Data)")
         plt.savefig(location_of_images+i+'sw.png')
         plt.close()
 
         # Save image plots of masked p-values for a single subject. 
         plt.imshow(present_3d(masked_pvals), cmap=plt.get_cmap('gray'))
+        plt.xticks([])
+        plt.yticks([])
+        plt.title("p-values above 0.05 for " + i + " (Masked Data)")
         plt.savefig(location_of_images+i+'swmasked.png')
         plt.close()
      

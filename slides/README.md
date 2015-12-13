@@ -1,6 +1,6 @@
 ## Generating the Slides 
 
-The Makefile contains . 
+The Makefile contains recipes to generate slides. 
 - `make progress`: Generates the PDF of our progress report slides. 
 - `make final`: Generates the PDF of our final slides. 
 
