@@ -43,8 +43,7 @@ for name in sub_list:
     
     # Load image data.
     img = nib.load(path_to_data+ name+ "/BOLD/task001_run001/bold.nii.gz")
-    data = img.get_data()
-    data = data.astype(float) 
+    data = img.get_data().astype(float) 
 
     # Load mask.
     mask = nib.load(path_to_data+ name+'/anatomy/inplane001_brain_mask.nii.gz')
@@ -73,7 +72,7 @@ for name in sub_list:
     masked_data_2d = masked_data_2d - np.mean(masked_data_2d, axis=1)[:, None]
 
     # PCA analysis on MASKED data: 
-    # Do SVD on the time by time matrix and get explained variance.
+    # Do SVD on the time by time matrix and transform into first k principal components.
     U_masked, S_masked, VT_masked = npl.svd(masked_data_2d.T.dot(masked_data_2d))
     pcs.append(masked_data_2d.dot(U_masked[:,:k]))
     
