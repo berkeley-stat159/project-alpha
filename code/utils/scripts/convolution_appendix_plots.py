@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import sys
 
 
-project_location= "../"
+project_location= "../../../"
 functions=project_location +"code/utils/functions/"
 
-location_of_created_images=project_location+"paper/images/"
+location_of_created_images=project_location+"images/"
 
 sys.path.append(functions)
 
