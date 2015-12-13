@@ -1,6 +1,6 @@
 % tex file for clustering 
 
-\subsection{Benjamini-Hochberg Correction}
+\subsubsection{Benjamini-Hochberg Correction}
 
 \par \indent When conducting multiple comparisons, it is important to have an 
 idea of the quantity of Type I errors that may be prevalent in the analysis. 
@@ -28,29 +28,29 @@ grouping with beta values, we noticed that the variability between the subjects
 of the study is different between the Benjamini-Hochberg procedure outputs, and
 the t-statistics and beta value grouping procedure outputs.
 
-\subsection{Hierarchical Clustering}
+\subsubsection{Hierarchical Clustering}
 
-\par Now that we have the across-subject average t-statistics for every voxel 
+\par Now that we have the cross-subject average t-statistics for every voxel 
 in the brain, we are left with a 3-d array of t-statistics that contain both 
 negative and positive values. Instead of manually observing patterns in these 
 images, we instead implemented a clustering algorithm to split the entire 3-d 
-images into clusters based on the voxels' relative location to each other as 
+image into clusters based on the voxels' relative location to each other as 
 well as the values of their t-statistics.
 
 \par In order to find a proper clustering algorithm, we decided to treat this
 problem like a grayscale image segmentation problem and implemented a
 agglomerative hierarchical cluster using Ward's method. Agglomerative means
-that the clusters are built bottom up which each observation starting as its
+that the clusters are built bottom up with each observation starting as its
 own cluster and pairs being moved up the hierarchy. Ward's method creates
-clusters based on a minimum variance criterion that miniizes the total
-within-cluster variances. An example of this implimentation for a 2d image is
+clusters based on a minimum variance criterion that minimizes the total
+within-cluster variances. An example of this implementation for a 2-d image is
 seen here: 
-\url{http://scikit-learn.org/stable/auto_examples/cluster/plot_lena_ward_segment
- ation.html}.
+\url{http://scikit-learn.org/stable/auto_examples/cluster/plot_lena_ward_segmen
+tation.html}.
 
-In our implimentation, we defined a structure to our data using a connectivity
+In our implementation, we defined a structure to our data using a connectivity
 graph in order to ensure that each cluster is spatially constrained. Also,
-since our scenario uses a 3d image, the connectivity graph will also have to
+since our scenario uses a 3-d image, the connectivity graph will also have to
 take into account this extra dimension.
 
 
@@ -58,11 +58,11 @@ take into account this extra dimension.
 which parts of the brain are related to the signal based on the t-statistics 
 from performing hypothesis tests on the coefficients from linear regression.
 Once we obtain our clusters, we will both measure the within-cluster mean of
-t-statistics as well measure the centroids of the clusters. By doing this, we hope
-to see the parts of the brain that have the strongest relationship with the
-signal and compare them to the results of the origin research paper.
+t-statistics as well measure the centroids of the clusters. By doing this, we 
+hope to see the parts of the brain that have the strongest relationship with 
+the signal and compare them to the results of the original research paper.
 
-\subsection{t-Statisics Grouping}
+\subsubsection{t-Statisics Grouping}
 
 \par We use the t-statistics that we found earlier for another type of cutoff
 analysis. The t-statistics measure the size of the difference relative to the 
@@ -96,7 +96,7 @@ experimenting with different values to see which values of cutoff points versus
 false discovery rates (the Q value in the Benjamini-Hochberg function) would 
 deliver similarly focused results.
 
-\subsection{Beta Grouping}
+\subsubsection{Beta Grouping}
 
 \par Using the same function that we created to group a certain subset of the 
 t-statistics, we also looked over the beta-values as a part of our analysis. 
