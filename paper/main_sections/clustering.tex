@@ -56,3 +56,30 @@ t-statistics as well measure the centroids of the clusters. By doing this, we ho
 to see the parts of the brain that have the strongest relationship with the
 signal and compare them to the results of the origin research paper.
 
+\subsection{t-Statisics Grouping}
+
+\par We use the t-statistics that we found earlier for another type of cutoff
+analysis. The t-statistics measure the size of the difference relative to the 
+variation in the data. Although the t-statistics go hand in hand with the 
+Benjamini-Hochberg analysis on the ``p-values'', we ultimately decided that an 
+additional process of selecting t-statistics based on a threshold was 
+necessary because the ``p-values'' assume a normal distribution while the 
+t-statistics do not assume this from the data.
+
+\par Since the magnitude from zero represents how significant the test is for
+t-statistics, we collected the absolute value t-statistics that were above a 
+certain threshold. This was the opposite of the procedure for finding the 
+significant tests in the Benjamini-Hochberg process. The threshold, also called
+the cutoff in the scripts that were written when developing this process, is 
+calculated in a very similar fashion to the Benjamini-Hochberg false discovery 
+rate. This is because the t-values and the ``p-values'' are strongly linked,
+because lower ``p-values'' and higher t-values are associated with significant 
+findings. 
+
+\par Implementing the t-value grouping function was almost trivial because it 
+is the flip side of the Benjamini-Hochberg function that was implemented 
+previously.
+
+\subsection{Beta Grouping}
+
+\par 
