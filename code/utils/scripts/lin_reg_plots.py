@@ -60,18 +60,18 @@ mask_data = mask_data!=0
 mask_data = mask_data.astype(int)
 
 ###PCA SHIT###
-to_2d= masking_reshape_start(data,mask)
-X_pca= to_2d - np.mean(to_2d,0) - np.mean(to_2d,1)[:,None]
-cov = X_pca.T.dot(X_pca)
-U, S, V = npl.svd(cov)
-pca_addition= U[:,:6] # ~40% coverage
+#to_2d= masking_reshape_start(data,mask)
+#X_pca= to_2d - np.mean(to_2d,0) - np.mean(to_2d,1)[:,None]
+#cov = X_pca.T.dot(X_pca)
+#U, S, V = npl.svd(cov)
+#pca_addition= U[:,:6] # ~40% coverage
 
 
 #Create design matrix
 X = np.ones((n_vols,9))
 X[:,1] = convolve[:,j]
 X[:,2]=np.linspace(-1,1,num=X.shape[0]) #drift
-X[:,3:] = pca_addition
+X[:,3:] = fourier_creation(n_vols,3)[:,1:]
 
 beta,t,df,p = t_stat_mult_regression(data_slice, X)
 

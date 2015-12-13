@@ -6,16 +6,19 @@ fMRI data presents a distinct challenge for relating neural stimuli
 to BOLD (blood-oxygen-level dependent) response. fMRI scans record changes 
 in oxygenation levels of hemoglobin in the brain. However, there is a delay 
 between the neural stimulus and the change in blood oxygen levels in a given 
-area. For our data, this delayed response has been modeled using block stimulus. 
-A classic example of this hemodynamic response function (with stimulus at t=0) 
-can be seen in [Figure \ref{fig:hrf}]. The complete hemodynamic response 
-function needs to be modeled in order to better relate stimulation and the BOLD 
-response from the fMRI scan.
+area. In our case, the neural stimulation comes from a event-related style of 
+experiment. A commonly assumed hemodynamic response to a neurological 
+stimulation is the double gamma function that can be seen in Figure \ref{fig:hrf}.
+The complete hemodynamic response function needs to be modeled in order to 
+better relate stimulation and the BOLD response from the fMRI scan. It should be 
+noted that the BOLD response is highly noises and we're really trying to capture 
+the blood oxygenation level change to the stimulation.
 
 \subsection{Mathematics}
 \subsubsection{Convolution Theory and Mathematics}
 
-To relate stimuli to BOLD response, we convolved the time courses. At a basic 
+To relate stimuli to BOLD response, we convolved the time courses of discrete 
+stimulation with the assumed response to a single stimulation.. At a basic 
 level, convolution is a distinct combination of two functions (say $f$ and $g$). 
 This combination is just the ``integral that expresses the amount of overlap of 
 $f$ as it is shifted over another function $g$'' \cite{weissten2015convolution}. 
@@ -24,8 +27,8 @@ expand off of later.
 
 Let us define the function $f$ as a sum of two gamma functions and $g$ as a 
 ``continuous'' specialized step function (we will examine why these functions are 
-valuable later). Graphically, we can see their plots in [Figure \ref{fig:f}, 
-\ref{fig:g}], and mathematically we will define them as in the following 
+valuable later). Graphically, we can see their plots in Figure \ref{fig:f} and 
+\ref{fig:g}, and mathematically we will define them as in the following 
 equations \ref{eq:gamma2} and \ref{eq:step}, respectively.
 
 \begin{equation} \label{eq:gamma2}
@@ -61,14 +64,14 @@ $\theta =1$)
 
 
 As mentioned in the earlier definition, if we move $g$ across $f$ from 
-left to right, we will see something similar to [Figure \ref{fig:math}] for 
+left to right, we will see something similar to Figure \ref{fig:math} for 
 discrete time intervals. If we plot these values (the integration of the 
 differences), we will get a plot very similar to that of $f$ when $f$ is 
 starting at a certain point. (The plot actually ``cheats'' when $f$ is 
-negative, and we would have to alter definitions a little bit.) If we had 
+negative, and we would have to alter definitions a little bit). If we had 
 multiple peaks in our $g$ function (i.e. multiple distinct``zero'' places), we 
 would expect to get multiple non-zero differences between the functions at each 
-time capture. The time capture idea will be needed later.  
+time capture. 
 
 \begin{figure}[ht]
 	\centering
@@ -113,7 +116,7 @@ r(t)= \sum_{i=1}^n f(t-t_i)
 This equation gives a good glimpse into what the hemodynamic response would be 
 after stimulus at time $t_i$ for $i \in {1,...,n}$. Moreover, you could extend 
 the idea to include a ``strength'' value of the stimulus by changing the 
-$g'|t_i$ to values other than 1. If that was the case, we would change 
+$g'(t_i)$ to values other than 1. If that was the case, we would change 
 the response equation to equation \ref{eq:math_discrete_final}. Equation 
 \ref{eq:math_discrete_final} also allows us to include all discrete $t$ into 
 the equation where $g'(t_i)$ is now expected to be zero (so $n$ becomes much 
@@ -156,7 +159,7 @@ their ``convolved'' output [Figure \ref{fig:convolve1}].
 	\label{fig:convolve1}
 \end{figure}
 
-
+\subsection{Approach to our Specific Problem}
 
 \subsubsection{Returning to Our fMRI Data}
 
@@ -164,8 +167,6 @@ We can now apply this discrete approach to convolution between $f$ and $g'$
 to our data. The $f$ is actually a common representation of the hemodynamic 
 response, and the $g'$ is a good representation of the stimuli from an 
 event-related trial \cite{brett2015course}. 
-
-\subsection{Approach to our Specific Problem}
 
 \subsubsection{Naive Approach (using \texttt{np.convolve})}
 
@@ -176,15 +177,18 @@ approach for convolving two functions would use this function directly, but
 \texttt{np.convolve} assumes that the intervals between stimuli mirror the 
 desired intervals between prediction intervals. As such, we can not naively
 apply the \texttt{np.convolve} for our data (though we do for a base model). 
+Even still, exploring this naive approach to convolve the hemodynamic response 
+gives an idea about what not to do, and a high bar for efficiency.
 
 \subsubsection{Needed Improvements: Moving beyond naive \texttt{np.convolve}}
 
 The reason motivating this appendix is the fact that our data fails to meet the 
-assumption that the intervals are in equidistant. Especially in our case, there 
+assumption that the intervals are in equidistant which was required to naively apply 
+\texttt{np.convolve}. Especially in our case, there 
 was not an simple fix, such as performing some basic rounding in order to then 
 correctly utilize \texttt{np.convolve}. All the following approaches improve on 
-the basic \texttt{np.convolve} approach, but ultimately circle back to 
-incorporating \texttt{np.convolve} for speed gains. 
+the basic \texttt{np.convolve} approach's accuracy, but ultimately circle back to 
+incorporating \texttt{np.convolve} to improve the speed of the convolution.
 
 Our condition file (\texttt{cond1}) lists stimulus times for when the 
 individual pumped the balloon but did not pop it. For subject 001, the 
@@ -250,7 +254,8 @@ Equation \ref{eq:code_convolve}, reproduced below
 
 $$r(t)= \sum_{i=1}^n g'_{i} f(t-t_i)$$
 
-can be rewritten as a matrix multiplication problem (thanks to Jane Liang):
+can be rewritten as a matrix multiplication problem (thanks to Jane Liang), 
+and can be seen below:
 
 \begin{equation} \label{eq:matrix_code_convolve}
 r(t)=  g^*(t)^T f^*(t)
@@ -260,8 +265,6 @@ where $g^*$ is a vectorized function of $g'$ of $t$ as a scalar output and
 $f^*$ is the vector of $f$ values (irrespective of location, as the $t^*$ 
 takes that into account). This is a useful representation, since matrix 
 multiplication is faster for Python's numpy arrays. 
-
-
 
 
 \subsubsection{Using FFT with \texttt{np.convolve}}
@@ -314,15 +317,18 @@ between theoretical accuracy and computational efficiency.
 	\end{minipage}
 \end{figure}
 
-The ``np naive approach'' run has the worst approximation and isn't even 
-theoretically correct. As was stated above, this was the large motivating factor 
-behind the rest of the convolution analysis. The ``user 2'' was the first approach to
-matches the theory, but matches the stimulation times and not the scan times.
-The ``user 3'' is the most theoretically sound model (and is our standard for 
-accuracy). ``User 5''  is our matrix version of the theory, and has the same 
-accuracy as ``user 3''. The ``user 4'' models fall under use the grid cut usage of 
-\texttt{np.convolve} with notations for the number of slices between each 
-scan.
+The first method in the table ``np naive approach'' method which blindly plugs in our 
+data into the \texttt{np.convolve} function, provided to showcase potential speed. 
+The ``user 2'' method  was the first approach to matches the theory, but matches the 
+stimulation times and not the scan times. The ``user 3'' method is the most theoretically 
+sound model (and is our standard for accuracy). ``User 5'' model  is our matrix version of 
+the theory, and has the same accuracy as ``user 3'', but is observably faster. The ``user 4'' 
+models fall under use the grid cut usage of \texttt{np.convolve}with notations for the 
+number of slices between each scan. We concluded that "user 4 (15 cuts)" was the 
+best approach gives us speed and very close accuracy to the golden standard - "user 3".
+
+
+
 
 
 
