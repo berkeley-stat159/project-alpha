@@ -90,8 +90,7 @@ of conditions as 3 seperate features we decided to utilize model comparison,
 specificially AIC,BIC, and Adjusted $R^2$ metrics. Using small expressive
 subset of the subjects ($002$,$003$, and $014$) we abused the metric's by
 averaging across all voxels and people.  We visualized values in the Figures
-\ref{fig:AIC},\ref{fig:BIC}, and \ref{fig:adjR2}, where the x axis follows the 
-following structure in Table \ref{tab:plot}.
+\ref{fig:AIC},\ref{fig:BIC}, and \ref{fig:adjr2}.
 
 \par From these plots, you can observe that we don't gain my from adding
 the conditions seperated, and from the BIC, we decided that the fourier
@@ -101,21 +100,21 @@ drift feature, and the first 6 principle components. It is possible that this is
 and even with these features we could have over fit beyond just the noise and into 
 the territory of the hemodyamic response.
 
-\begin{table}
-\centering
-	\begin{tabular}{l ||  l   |  l  |   l    | l  | l  |  l}
-X value & 1 &        2       &             3       &     4         &        5        &         6       \\
-	 \hline
-	 & HRF &   HRF       &  HRF            & HRF         &  HRF        & HRF  \\
-	 &        &   + DRIFT &  + DRIFT      & + DRIFT  &  + DRIFT   & + DRIFT  \\
-	 &        &                 &  + FOURIER &  + PCA 4 &  + PCA 6   & + FOURIER \\
-	 &        &                 &                      &                &                   & +  PCA 6 \\
-	
-
-	\end{tabular}
-\caption{Explaining Plot X values}
-\label{tab:plot}
-\end{table}
+%\begin{table}
+%\centering
+%	\begin{tabular}{l ||  l   |  l  |   l    | l  | l  |  l}
+%X value & 1 &        2       &             3       &     4         &        5        &         6       \\
+%	 \hline
+%	 & HRF &   HRF       &  HRF            & HRF         &  HRF        & HRF  \\
+%	 &        &   + DRIFT &  + DRIFT      & + DRIFT  &  + DRIFT   & + DRIFT  \\
+%	 &        &                 &  + FOURIER &  + PCA 4 &  + PCA 6   & + FOURIER \\
+%	 &        &                 &                      &                &                   & +  PCA 6 \\
+%	
+%
+%	\end{tabular}
+%\caption{Explaining Plot X values}
+%\label{tab:plot}
+%\end{table}
 
 
 %\begin{table}
