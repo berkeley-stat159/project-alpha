@@ -4,28 +4,42 @@
 relationship between impaired and normal self control, as well as 
 similarities and differences across the brain relating to self-control. The 
 paper in its entirety explores multiple studies (of multiple study types), 
-but we will just focus on the third study. The full paper compares four 
+but we will only focus on the third study. The original study compares four 
 different types of self control among healthy adults to see if they are 
 related to each other. Very little relationship was found between these 
 different behavioral tasks, in contrast to the vast majority of existing 
 literature,  which argues for a unified notion of self-control. So, we have 
 decided to narrow our focus and data analysis approaches to just the Balloon 
-Analogue Risk Task (BART) study, which purportedly measures control over risky 
-behavior. fMRI scans from the study show blood flow to the brain, which may 
-be relatable to control over risk-taking behavior during participation.
+Analogue Risk Task (BART) study, which purportedly measures control over 
+risky behavior. fMRI scans from the study show blood flow to the brain, which 
+may be relatable to control over risk-taking behavior during participation.
 
-\par The rest of this report will detail the procedures from the original 
-analysis of the data that we have tried to mimic. We experimented with 
-different procedures to spatially smooth the voxels and the convolve and 
-time-correct the time courses for each subject. After preprocessing the data, we 
-turned to fitting simple and multiple linear regression models to each subject, 
-with the option of including different study conditions. The resulting 
-coefficients from the linear regression models can be used to perform t-tests 
-to examine the significance of activity in different voxels. However, the 
-validity of these tests is highly dependent on the validity of our model 
-assumptions, such as the normality of our errors. Since we are performing a 
-large quantity of tests, multiple comparison corrections are needed to control 
-the false positive rate. We used k-means clustering to further identify regions 
-of the brain across subjects with high activity and compared these results with 
-the results of the original paper. 
+\par We initially strove to reproduce the original analysis as faithfully as 
+possible. Our lack of access to the packaged software used by Cohen to clean 
+the data was one early limitation that led us to developing our own 
+pre-processing pipeline. However, the more we progressed in our analysis, 
+the more we found it difficult to justify pursuing all of the same analytical 
+decisions made by the paper, since many of them involved procedures from 
+``black-box'' software or that we were simply unfamiliar with. More 
+concerning, we identified several steps and assumptions in Cohen's analysis 
+that we found difficult to theoretically justify. Thus, our final analysis 
+actually deviates considerably from Cohen's approach. Our ultimate goal will 
+be to compare the active regions identified by our analysis with those 
+detected by the original paper. 
+
+\par We experimented with different procedures to spatially smooth the voxels 
+and to convolve and time-correct the time courses for each subject. After 
+pre-processing the data, we built linear regression models for each subject's 
+voxel time courses. Several design matrices for the models were explored, and 
+model selection was used to identify an optimal combinations of predictors, 
+such as linear drift as well as Fourier series and principal components of the 
+voxel time courses. The resulting coefficients from the linear regression 
+models can be used to perform t-tests to examine the significance of activity 
+in different voxels. However, the validity of these tests is highly dependent 
+on the validity of our model assumptions, such as the normality of our errors. 
+Since we are performing a large quantity of tests, the Benjamini-Hochberg 
+correction was used to control the false positive rate. Finally, we clustered 
+the raw coefficients, t-statistics, and corresponding ``p-values'' to identify 
+regions of the brain with high activity. We then compared our results with 
+those of the paper. 
 

@@ -91,15 +91,24 @@ mask_data = mask.get_data()
 
 # Get masked p-values. 
 masked_pvals = make_mask(sw_pvals, mask_data, fit=True)
+masked_pvals[masked_pvals>1] = 1
 pvals_in_brain = sw_pvals.ravel()[masked_pvals.ravel() != 0]
 print("Proportion of voxels with p-value above 0.05 (masked): "+str(np.mean(pvals_in_brain > 0.05)))
 
 # Compare the image plots of the brain slices with and without masking. 
 # Colors indicate whether the p-value for the voxel is above or below the 0.05 threshold. 
 plt.imshow(present_3d(sw_pvals), cmap=plt.get_cmap('gray'))
+plt.colorbar()
+plt.xticks([])
+plt.yticks([])
+plt.title("p-values for " + i + " (Unmasked Data)")
 plt.savefig(location_of_images+'sub001sw.png')
 plt.close()
 plt.imshow(present_3d(masked_pvals), cmap=plt.get_cmap('gray'))
+plt.colorbar()
+plt.xticks([])
+plt.yticks([])
+plt.title("p-values for " + i + " (Masked Data)")
 plt.savefig(location_of_images+'sub001swmasked.png')
 plt.close()
 

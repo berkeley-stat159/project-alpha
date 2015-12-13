@@ -48,7 +48,7 @@ from Image_Visualizing import make_mask, present_3d
 
 # Progress bar
 toolbar_width=len(sub_list)
-sys.stdout.write("Normality, :  ")
+sys.stdout.write("Shaprio-Wilk test for normality, :  ")
 sys.stdout.write("[%s]" % (" " * toolbar_width))
 sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
@@ -66,33 +66,35 @@ for i in sub_list:
     mask_data = mask.get_data()
     
     masked_pvals = make_mask(sw_pvals, mask_data, fit=True)
+    masked_pvals[masked_pvals>1] = 1
     pvals_in_brain = sw_pvals.ravel()[masked_pvals.ravel() != 0]
     masked_prop.append(np.mean(pvals_in_brain > 0.05))
+    
+    if (i[-3:]=="010"): 
+        # Save image plots of unmasked p-values for subject 10. 
+        plt.imshow(present_3d(sw_pvals), cmap=plt.get_cmap('gray'))
+        plt.colorbar()
+        plt.xticks([])
+        plt.yticks([])
+        plt.title("p-values for " + i + " (Unmasked Data)")
+        plt.savefig(location_of_images+i+'sw.png')
+        plt.close()
+
+        # Save image plots of masked p-values for a single subject. 
+        plt.imshow(present_3d(masked_pvals), cmap=plt.get_cmap('gray'))
+        plt.colorbar()
+        plt.xticks([])
+        plt.yticks([])
+        plt.title("p-values for " + i + " (Masked Data)")
+        plt.savefig(location_of_images+i+'swmasked.png')
+        plt.close()
      
     sys.stdout.write("-")
     sys.stdout.flush()
 sys.stdout.write("\n")
 
-print("Average proportion of unmasked p-values above 0.05:" + str(np.mean(np.array(unmasked_prop))))
-print("Average proportion of masked p-values above 0.05:" + str(np.mean(np.array(masked_prop))))
-
-plt.close()
-plt.hist(np.array(masked_prop))
-plt.title("Histogram of Proportions for each Subject")
-plt.savefig(location_of_images+'maskedhist.png')
-plt.close()
-
-# Save image plots of unmasked p-values for a single subject. 
-plt.imshow(present_3d(sw_pvals), cmap=plt.get_cmap('gray'))
-plt.savefig(location_of_images+i+'sw.png')
-plt.close()
-
-# Save image plots of masked p-values for a single subject. 
-plt.imshow(present_3d(masked_pvals), cmap=plt.get_cmap('gray'))
-plt.savefig(location_of_images+i+'swmasked.png')
-plt.close()
-
-
+print("Average proportion of p-values above 0.05 (unmasked):" + str(np.mean(np.array(unmasked_prop))))
+print("Average proportion of p-values above 0.05 (masked):" + str(np.mean(np.array(masked_prop))))
     
     
 

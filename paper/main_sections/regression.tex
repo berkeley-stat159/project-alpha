@@ -1,65 +1,125 @@
 % tex file for regression
 
-\par \indent A simple and straightforward way to model the voxel time courses
-is to preform linear regression. Initially, we just used the convoluted predicted
-hemodyamic response (HR) using all the conditions together and each of 
-conditions individually. After realizing that the HRs themselves didn't explain
-enough of the BOLD ratio, attended to add features in order to reduce/ explain
-the noise we observed. Additional features that we examined included a 
-linear drift, a small set the fourier series, and a few principle components.
+\par \indent A simple and straightforward way to model the voxel time courses 
+for each subject is to perform linear regression. Initially, we just used the 
+convolved predicted hemodyamic response (HR) and either all the of the 
+conditions together or each of conditions individually. After realizing that 
+the HRs themselves didn't explain enough of the BOLD ratio, we attempted to 
+add features in order to reduce or explain the noise we observed. Additional 
+features that we examined included a linear drift and some of the time 
+courses' Fourier series and principal components.
 
-Linear regression suggests a linear relationship between an observation's response,
-$y_i$ with it's features $x_i$ (a vector who's first element is $1$ and the rest are
-the values the observation $i$'s features are) in the following manner:
+\par Linear regression assumes a linear relationship between a response 
+vector $y$ and a design matrix of predictors $X$. Each element of $y$ 
+represents a single observed response, and each row of $X$ represents a 
+corresponding vector of predictor values. If including the intercept as a 
+term (as we have elected to do), the first column of the $X$ design matrix 
+should be a vector of $1$s. The linear model can then be expressed as: 
 
 \begin{equation}
-y_i = x_i^T \beta + \epsilon_i
+y = X\beta + \epsilon
 \end{equation}
 
-where $\epsilon_i \sim N(0, \sigma^2)$. Moveover we assume for each observation
-($i$), the $\epsilon_i$ are independent and that the true $\beta$ value is the same.
-As such we can rewrite the relationship we assume is correct in a matrix form:
+\par It is further assumed that the errors $\epsilon_i$ for each observation 
+$i$ are independent and identically distributed with $N(0, \sigma^2)$, and 
+that the errors are independent of $X$. The vector of coefficients $\beta$ 
+with length equal to the number of predictors in $X$ can be estimated with 
+the closed-form solution:
+
+\begin{equation}
+\hat{\beta} =(X^T X)^{-1} y
+\end{equation}
+
+\par In our case, we actually want to fit a linear model to each individual 
+voxel's time course. Matrix algebra provides a convenient solution. Instead of 
+considering the time course for each voxel individually as a single $y$ 
+vector, we can instead consider the voxel $\times$ time matrix $Y$. Our model 
+is then:
 
 \begin{equation}
 Y = X\beta + \epsilon
 \end{equation}
 
-This relationship requires a $X$ feature matrix, which presents each distinct feature
-as a column and sees each observation get a single row to represent it's values.
-Assuming $\epsilon \sim N(0,\sigma^2 I)$ isn't automatic, so we will need to check 
-the validity of this assumptions, as discussed in the \textit{"Normality Assumptions"} 
-section. As might be expected, we do not know the true value of $\beta$ and as such
-need to estimate, using matrix algebra we get a closed from solution:
+and our $\beta$ estimates are then also a matrix: 
 
 \begin{equation}
-\hat{\beta} =(X^T X)^{-1} X^T 
+\hat{\beta} =(X^T X)^{-1} Y^T
 \end{equation}
 
-This equation does require $(X^T X)$ to be invertible, but even when it is not, we
-can use the psuedo inverse, represented  $(X^T X)^{-}$ to get a non-unique value
-for $\hat{\beta}$.
-\par To consider the strength of the effects of these predictors, we looked 
-at t-tests of the corresponding estimated coefficients for each voxel, as 
-discussed under \textit{"Hypothesis Testing"}. The validity of these t-tests and 
-their corresponding "p-values" is largely dependent on how good our assumptions 
-of linearity and normally-distributed errors are. 
+\par Even when $(X^T X)$ is not invertible, $\hat{\beta}$ can be estimated 
+using the pseudo-inverse of $(X^T X)$, represented as $(X^T X)^{-}$ to get a 
+non-unique value for $\hat{\beta}$.
+
+\par To consider the strength of the effects of these predictors, we will use 
+t-tests of the corresponding estimated coefficients for each voxel and 
+subject, as discussed under \textit{"Hypothesis Testing"}. The validity of the 
+model and of the ``p-values'' produced by performing these t-tests is 
+dependent on whether or not the many assumptions of the linear model are 
+actually met. In particular, we will discuss the assumption of normal errors 
+by analyzing the residuals in the \textit{"Normality Assumptions"} section. 
 
 \subsubsection{More about potential features:}
-\par Other than the basic HR feature/features, and a column of $1$s in our feature matrix
-(to account for a ``intercept'' term/ non-zero average value), we experimented with 
-include a few features for the first principle components of a of time $\times$ time 
-matrix and the first few functions of the Fourier series.  As noted above these 
-additional features helped account for the noise in the observed BOLD ratio 
-fluxuation.
+\par Other than the basic HR feature/features and a column of $1$s (to account 
+for an ``intercept'' term or non-zero average value), we experimented with 
+including additional predictors in our design matrix $X$. Among these were the 
+first few principal components of the voxel $\times$ time matrix of voxel time 
+courses and the first few functions of the Fourier series for the time courses. 
+As noted above these, additional features helped account for the noise in the 
+observed BOLD ratio fluctuation.
 
 \vspace{2mm}
 \textbf{Principle Components}
 \vspace{2mm}
-\par This matrix use to obtain the principle components was the correlation between 
-each individual voxel time course with other voxel's time course ($A^TA$ where 
-$A$ is a voxel $time$ time matrix). It should be noted that this matrix $A^TA$ only 
-used the voxels inside the brain. ***Add Jane's Stuff about why we'd need to
-use the first 6 pcs***
+\par One approach for reducing the noise in the linear model is to include 
+principal components of the voxel $\times$ time voxel time course matrix. 
+Instead of using the entire matrix, it may be possible to just include the 
+first few principal components as features that explain a great deal of the 
+variance in the entire matrix. To get the principal components, we obtained 
+the singular value decomposition (SVD) of the time $\time$ time covariance 
+matrix. We tried this with and without masking the voxels first. 
+
+As you can see in Figure \ref{fig:pca10}, which compares the variance 
+explained by including up to ten components, with and without masking the 
+voxels, masking explains more variance at each component. This trend was 
+observed across all subjects. So, between the better performance and the 
+logical rationality of using the masked data (we are not actually interested 
+in the behvavior of voxels outside the brain), we decided to only work with 
+the masked data's principal components. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.5\linewidth]{../images/pcacumsumssub010.png}
+ 	\caption{Comparing proportion of variance explained by Subject 10's 
+principal components, with and without masking the data.}
+ 	\label{fig:pca10}
+\end{figure}
+
+An important issue to consider is how many principal components to include in 
+the design matrix. Figure \ref{fig:pcabox} compares the the amount of variance 
+explained by including successively more principal components across subjects. 
+A few observations should be noted. First, there is considerable variation 
+between subjects in how much variance the early principal components capture. 
+Second, by including only the first six components, it is possible for each 
+subject's voxel time course matrix to capture at least 40\% of the variance. 
+Moving forward, we chose to include six principal components as additional 
+features when considering models that reduce noise. This cutoff of six 
+components or 40\% of the variance explained was somewhat arbitrary, with the 
+idea being we wanted to only include a few components without sacrificing too 
+much of the variance explained and that we wanted to use the same number of 
+components for each subject. It will be seen later that the variation between 
+subjects in how much variance is captured by the first six components has strong 
+ramifications on the results. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.5\linewidth]{../images/pcaBOX.png}
+ 	\caption{Boxplots comparing the amount of variance captured by principal 
+components for each subject. The data was masked beforehand. All subjects are 
+able to capture at least 40\% of the variance when using just six principal 
+components.}
+ 	\label{fig:pcabox}
+\end{figure}
+
 
 \vspace{2mm}
 \textbf{Fourier Series}

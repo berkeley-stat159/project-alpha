@@ -10,7 +10,7 @@ final/data/p-values/
 final/data/residual/
 final/data/smooth/
 final/data/t_stat/
-
+final/data/X/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,19 +1,25 @@
 % tex file for future discussion
-\par \indent We have specified several models for linear regression and 
-considered various methods for hypothesis testing across multiple voxels 
-and subjects. Now our main objective is to distill all of our work into 
-interpretable results that can be used to identify brain regions with 
-high neurological activity during the course of the BART events. 
+\par \indent The implementation of permutation tests, which have few 
+assumptions and are easy to interpret (but computationally intensive), 
+would have been useful for testing the significance of the estimated 
+coefficients from linear modeling as an alternative to t-tests, which make 
+several assumptsion about the data structure. Somewhat relatedly, 
+additional tests and checks for model assumptions would also be valuable 
+for assessing the appropriateness of our existing hypothesis testing. 
 
-\par Additional future work will concern reproducing our analysis on the 
-clean version of the data provided by OpenfMRI and comparing those results 
-with the results from using our own preprocessing techniques. One issue 
-that arises with the addition of the new cleaned data is that the dimension 
-sizes of the scans are different, which will create challenges for 
-comparing the two data sets. 
+\par One major issue that we were unable to fully address is how to 
+appropriately aggregate the results from individual subjects to make more 
+general conclusions about activation regions in general, as opposed to the 
+activation region of a particular subject. Much of this is due to the 
+considerable variety in brain activity and shape observed between different 
+subjects; there is really no such thing as an ``average'' subject. 
 
-\par If we have the time, permutation tests, which have few assumptions and 
-are easy to interpret (but computationally intensive), would be a useful 
-tool for identifying brain regions with significant activity. Additional 
-tests and checks for model assumptions would also be valuable for assessing 
-the appropriateness of our existing hypothesis testing. 
+\par Additional future work could also be concerned with reproducing our 
+approach for identifying actived regions on the pre-cleaned version of the 
+study's data provided by OpenfMRI. Those results could then be compared
+with the results from using our own pre-processing techniques. Since fMRI 
+data is notoriously noisy, the different decisions made when cleaning the 
+data to seperate the signal from the noise can greatly alter the results. 
+So while ideally, both our pre-processed data and the data provided by 
+OpenfMRI would identify the same active regions, we acknowledge that there 
+is a reasonably high chance that this would not be the case. 
