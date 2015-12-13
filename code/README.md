@@ -6,7 +6,7 @@ The Makefile contains recipes to perform the intermediate analysis for the proje
 - `make figs`: Runs only the scripts needed to reproduce figures that are used in the report and slides. Note that these figures is not exhaustive: please navigate to `project-alpha/final` and run `make all` there to reproduce all figures required for the report and slides. 
 - `make misc`: Generates supplementary work. More specifically, it renders an iPython Notebook with early exploratory data analysis into a viewable HTML file in the `utils/misc` subdirectory. 
 
-- `make clean`: Remove all extra files generated when compiling code. Does this recursively for all subdirectories. 
+- `make clean`: Removes all extra files generated when compiling code. Does this recursively for all subdirectories. 
 - `make test`: Tests all user-defined functions associated with analyzing the data. 
 - `make coverage`: Generates a coverage report for all user-defined functions associated with analyzing the data. 
 

@@ -9,7 +9,7 @@ The Makefile contains recipes to perform the final analysis for the project, as 
 
 LIST ALL THE COMMANDS TO RUN THE INDIVIDUAL FILES HERE. 
 
-- `make clean`: Remove all extra files generated when compiling code. Does this recursively for all subdirectories. 
+- `make clean`: Removes all extra files generated when compiling code. Does this recursively for all subdirectories. 
 
 Additional documentation and information on the subdirectories can be found in their respective READMEs. 
 

@@ -9,7 +9,7 @@ Fall 2015
 [![Build Status](https://travis-ci.org/berkeley-stat159/project-alpha.svg?branch=master)](https://travis-ci.org/berkeley-stat159/project-alpha?branch=master)
 [![Coverage Status](https://coveralls.io/repos/berkeley-stat159/project-alpha/badge.svg?branch=master)](https://coveralls.io/r/berkeley-stat159/project-alpha?branch=master)
 
-This repository stores the documentation of our analysis of the balloon-analogue risk task (BART) data included as part of the OpenfMRI ds009 data set [*The generality of self-control*](https://openfmri.org/dataset/ds000009/). The original analysis was conducted in 2009 by Jessica Cohen for her doctoral thesis at UCLA, and was largely focused on comparing different notions of self-control across several fMRI studies. Our original aim was to reproduce the original analysis. However, we were unable to reproduce many of the procedures used in the original analysis, either due to the usage of unavailable pre-packaged software or because we were unable to justify the underlying theory for some methods. So, we chose to develop our own pre-processing pipeline and pursue new approaches to identify activation regions for the BART study. Our ultimate goal is to compare our results with those of Cohen's paper. 
+This repository stores the documentation of our analysis of the balloon-analogue risk task (BART) data included as part of the OpenfMRI ds009 data set [*The generality of self-control*](https://openfmri.org/dataset/ds000009/). The original analysis was conducted in 2009 by Jessica Cohen for her doctoral thesis at UCLA, and was largely focused on comparing different notions of self-control across several fMRI studies. Our original aim was to reproduce the original analysis. However, we were unable to do so for many of the methods used, either due to the utilization of unavailable pre-packaged software or because we could not justify the underlying theory for some approaches. So, we chose to develop our own pre-processing pipeline and pursue new directions for identifying activation regions for the BART study. Our ultimate goal is to compare our results with those of Cohen's paper. 
 
 Many thanks to Jarrod Millman, Matthew Brett, J-B Poline, and Ross Barnowski for their advice and encouragement. 
 
@@ -19,7 +19,7 @@ Many thanks to Jarrod Millman, Matthew Brett, J-B Poline, and Ross Barnowski for
 The Makefile contains recipes to perform all final analysis of the data and test all user-defined functions. 
 
 - `make all`: Downloads and validates the data and then performs all final analysis. 
-- `make clean`: Remove all extra files generated when compiling code. Does this recursively for all subdirectories. 
+- `make clean`: Removes all extra files generated when compiling code. Does this recursively for all subdirectories. 
 - `make test`: Tests the functions located in the `data` and `code` directories, to be used to validate and analyze the data, respectively. 
 - `make verbose`: Performs the same actions as `make test`, but uses the verbose nosetests option. 
 - `make coverage`: Generates a coverage report for the functions located in the `data` and `code` directories. 
