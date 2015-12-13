@@ -4,6 +4,9 @@ all:
 	cd data && make data 
 	cd data && make validate 
 	cd final && make all 
+	cd paper && make all
+	cd paper && make clean
+	make clean
 
 clean:
 	find . -name "*.so" -o -name "*.pyc" -o -name "*.pyx.md5" | xargs rm -f
