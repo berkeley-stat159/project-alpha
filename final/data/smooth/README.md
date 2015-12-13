@@ -1,0 +1,1 @@
+Stores spatially smoothed voxels. 

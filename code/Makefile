@@ -21,8 +21,10 @@ all:
 	cd utils/scripts && python time_shift_script.py
 	cd utils/scripts && python tsa_script.py
 
-# FIX: lin_reg_plots? 
+
 figs: 
+	cd utils/scripts && python convolution_appendix_plots.py
+	cd utils/scripts && python lin_reg_plots.py
 	cd utils/scripts && python tsa_script.py
 
 misc:
