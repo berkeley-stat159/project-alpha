@@ -8,6 +8,10 @@ Run at the project directory with:
 # Loading modules.
 from __future__ import absolute_import, division, print_function
 import numpy as np
+import numpy.linalg as npl
+import matplotlib.pyplot as plt
+import nibabel as nib
+import pandas as pd # new
 import sys 
 import os
 
@@ -41,9 +45,9 @@ def test_noise_correction():
 	assert(all(y_mean2==np.ones(4)))
 	
 	# Test predicting noise with Fourier series. 
-	#fourier_X, fourier_MRSS, fourier_fitted, fourier_residuals = fourier_predict_underlying_noise(y_mean, 10)	
-	#naive_resid = y_mean-y_mean.mean()
-	#assert_not_equals(naive_resid[0], fourier_residuals[0])
+	fourier_X, fourier_MRSS, fourier_fitted, fourier_residuals = fourier_predict_underlying_noise(y_mean, 10)	
+	naive_resid = y_mean-y_mean.mean()
+	assert_not_equals(naive_resid[0], fourier_residuals[0])
 
 
 
