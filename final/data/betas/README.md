@@ -1,1 +1,1 @@
-Stores $\hat{\beta}$ coefficient estimates from the linear models. 
+Stores beta coefficient estimates from the linear models. 

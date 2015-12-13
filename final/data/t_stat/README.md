@@ -1,1 +1,1 @@
-Stores t-statistics corresponding to the $\hat{\beta}$ coefficient estimates from the linear models. 
+Stores t-statistics corresponding to the beta coefficient estimates from the linear models. 
