@@ -1,6 +1,5 @@
 """ Tests functions in outliers module
 Largely lifted straight from the tests provided for diagnostics.py in HW2 and janewliang's diagnosis_script.py
-
 Run at the project directory with:
     nosetests code/utils/tests/test_outliers.py
 """
@@ -129,4 +128,3 @@ def test_compare_outliers():
     meanMRSSvals = compare_outliers(data, convolved, True)
     assert_almost_equal(meanMRSSvals[0], 292.0293742754632262)
     assert_almost_equal(meanMRSSvals[1], 282.7266006127604214)
-
