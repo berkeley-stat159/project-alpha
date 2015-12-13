@@ -22,6 +22,12 @@ desired proportion of significant tests. This will reduce the number of false
 positives returned in the data and extend greater statistical power in later 
 analysis performed on the voxel dataset.
 
+\par The Benjamini-Hochberg procedure was not the only analysis we did over the
+multiple subjects. After completing t-grouping with t-statistics, and value 
+grouping with beta values, we noticed that the variability between the subjects
+of the study is different between the Benjamini-Hochberg procedure outputs, and
+the t-statistics and beta value grouping procedure outputs.
+
 \subsection{Hierarchical Clustering}
 
 \par Now that we have the across-subject average t-statistics for every voxel 
@@ -60,11 +66,17 @@ signal and compare them to the results of the origin research paper.
 
 \par We use the t-statistics that we found earlier for another type of cutoff
 analysis. The t-statistics measure the size of the difference relative to the 
-variation in the data. Although the t-statistics go hand in hand with the 
+variation in the data. Thus, a small ``p-value'' corresponds directly to large
+absolute values of t-statistics. In fact, the ``p-value'' and the t-statistics
+are related by the following statement: More extreme t-statistics will return 
+lower ``p-values'', which increases the chances of the null hypothesis being 
+indicated as false. Although the t-statistics go hand in hand with the 
 Benjamini-Hochberg analysis on the ``p-values'', we ultimately decided that an 
 additional process of selecting t-statistics based on a threshold was 
 necessary because the ``p-values'' assume a normal distribution while the 
-t-statistics do not assume this from the data.
+t-statistics do not assume this from the data. It should be noted that the 
+t-statistics grouping analysis performed as well, if not better, than the 
+``p-value'' analysis using the Benjamini-Hochberg procedure.
 
 \par Since the magnitude from zero represents how significant the test is for
 t-statistics, we collected the absolute value t-statistics that were above a 
@@ -78,7 +90,11 @@ findings.
 
 \par Implementing the t-value grouping function was almost trivial because it 
 is the flip side of the Benjamini-Hochberg function that was implemented 
-previously.
+previously. However, since we do not know if there's a function that relates 
+the absolute values of t-statistics to ``p-values'', there was a lot of 
+experimenting with different values to see which values of cutoff points versus
+false discovery rates (the Q value in the Benjamini-Hochberg function) would 
+deliver similarly focused results.
 
 \subsection{Beta Grouping}
 
