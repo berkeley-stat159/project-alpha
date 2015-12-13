@@ -2,9 +2,7 @@
 
 Statistics 159/259: Reproducible and Collaborative Statistical Data Science
 
-UC Berkeley
-
-Fall 2015 
+UC Berkeley | Fall 2015 
 
 [![Build Status](https://travis-ci.org/berkeley-stat159/project-alpha.svg?branch=master)]
 (https://travis-ci.org/berkeley-stat159/project-alpha?branch=master)
@@ -28,14 +26,15 @@ results with those of Cohen's paper.
 Many thanks to Jarrod Millman, Matthew Brett, J-B Poline, and Ross Barnowski 
 for their advice and encouragement. 
 
-
 ## Navigating the Repository 
 
-The Makefile contains recipes to perform all final analysis of the data and 
-test all user-defined functions. 
+The Makefile contains recipes to perform all final analysis of the data, 
+generate the project report, and test all user-defined functions. 
 
 - `make all`: Downloads and validates the data and then performs all final 
-analysis. 
+analysis. Generates the final report, stored in the `paper` subdirectory. 
+Please be aware that our data is 6 GB, so plan accordingly for download 
+space and time. 
 - `make clean`: Removes all extra files generated when compiling code. Does 
 this recursively for all subdirectories. 
 - `make test`: Tests the functions located in the `data` and `code` 
@@ -45,10 +44,12 @@ verbose nosetests option.
 - `make coverage`: Generates a coverage report for the functions located in 
 the `data` and `code` directories. 
 
-Additional documentation and information on the subdirectories can be found in 
-their respective READMEs. 
+Commands and documentation for generating additional and supplementary work 
+can be found in various subdirectories. Please view their respective READMEs 
+for more information. 
 
-- `code`: Code files for all user-defined functions used for analysis. 
+- `code`: Code files for all user-defined functions used for analysis, the 
+tests files for the functions, and scripts to run intermediate analysis. 
 - `data`: Data used for our analysis and tests can be downloaded and validated 
 here. 
 - `final`: Scripts to run the final analysis. The `make all` recipe in the 
