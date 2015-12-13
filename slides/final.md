@@ -30,7 +30,7 @@
 \centering
 	\begin{minipage}[b]{0.5\linewidth}
 		\centering
-		\includegraphics[width=1\linewidth]{images/convolution_vs_neural_stimulus}  
+		\includegraphics[width=1\linewidth]{../images/convolution_vs_neural_stimulus}  
 		% needs to be from the event_related_HRF_script2.py 
 		\caption{\scriptsize{Different convolution functions vs. the Neural stimulus}}
 		\label{fig:convolution}
@@ -61,7 +61,7 @@
 
 \begin{figure}
   \centering
-  {\includegraphics[scale=0.25]{images/original_slice.png}}{\includegraphics[scale=0.25]{images/smoothed_slice.png}}
+  {\includegraphics[scale=0.25]{../images/original_slice.png}}{\includegraphics[scale=0.25]{../images/smoothed_slice.png}}
 \end{figure}
 
 
@@ -71,14 +71,14 @@
 \centering
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
-	\includegraphics[width=.8\linewidth]{images/Fitted_v_Actual.png} 
+	\includegraphics[width=.8\linewidth]{../images/Fitted_v_Actual.png} 
 	\caption{Fitted vs Actual}
 	\label{fig:fit_vs_act}
 \end{minipage}	
 \quad
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
-		\includegraphics[width=.8\linewidth]{images/Fitted_v_Residuals.png} 
+		\includegraphics[width=.8\linewidth]{../images/Fitted_v_Residuals.png} 
 	\caption{Fitted vs Residual}
 	\label{fig:fit_vs_res}
 \end{minipage}
@@ -93,14 +93,14 @@
 \centering
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
-	\includegraphics[width=.8\linewidth]{images/hypothesis_testing.png} 
+	\includegraphics[width=.8\linewidth]{../images/hypothesis_testing.png} 
 	\caption{Smoothed t-values}
 	\label{fig:t-value}
 \end{minipage}	
 \quad
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
-		\includegraphics[width=.8\linewidth]{images/hypothesis_testing2.png} 
+		\includegraphics[width=.8\linewidth]{../images/hypothesis_testing2.png} 
 	\caption{unsmoothed t-values}
 	\label{fig:t-value2}
 \end{minipage}
@@ -111,7 +111,7 @@
 
 \begin{figure}
   \centering
-  {\includegraphics[scale=0.5]{images/pcasub010.png}}
+  {\includegraphics[scale=0.5]{../images/pcasub010.png}}
 \end{figure}
 
 
@@ -121,7 +121,7 @@
 \centering
 \begin{minipage}[b]{0.6\linewidth}
 	\centering
-	\includegraphics[width=.8\linewidth]{images/clustering1.png} 
+	\includegraphics[width=.8\linewidth]{../images/clustering1.png} 
 	\caption{Clustering 1}
 
 \end{minipage}	
@@ -129,7 +129,7 @@
 \hspace{-30mm}
 \begin{minipage}[b]{0.6\linewidth}
 	\centering
-	\includegraphics[width=.8\linewidth]{images/clustering2.png} 
+	\includegraphics[width=.8\linewidth]{../images/clustering2.png} 
 	\caption{Clustering 2}
 
 \end{minipage}

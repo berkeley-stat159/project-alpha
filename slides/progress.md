@@ -47,7 +47,7 @@
 # Before and After Smoothing
 \begin{figure}
   \centering
-  {\includegraphics[scale=0.25]{images/original_slice.png}}{\includegraphics[scale=0.25]{images/smoothed_slice.png}}
+  {\includegraphics[scale=0.25]{../images/original_slice.png}}{\includegraphics[scale=0.25]{../images/smoothed_slice.png}}
 \end{figure}
 
 
@@ -55,7 +55,7 @@
 # Hypothesis Testing Across Subjects
 \begin{figure}
   \centering
-  {\includegraphics[scale=0.5]{images/hypothesis_testing.png}}
+  {\includegraphics[scale=0.5]{../images/hypothesis_testing.png}}
 \end{figure}
 
 # Our Plan
