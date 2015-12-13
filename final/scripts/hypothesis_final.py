@@ -1,11 +1,19 @@
 """
-Script to run glm
+Script to test the differences in T-values caused by smoothing and 
+simple regression vs full model
 
-Design matrix takes into account conditions, drift, fourier and pca
+Design matrix takes into account conditions, drift, and pca
 
 Also runs slice by slice in order to correct for time
 
-For each subject, this function writes the data files for the t-values, p-values, and residuals
+Creates plots that shows how t-values change based on different models
+
+There are four different models we are going to test:
+1. Smooth Data with full regression model
+2. Un-smooth data with full regression model
+3. Smooth data with simple regression model
+4. Un-smooth data with simple regression model
+
 """
 
 from __future__ import absolute_import, division, print_function
@@ -100,7 +108,7 @@ for i in sub_list:
         t_final2[:,:,j] = t2.reshape(data_smooth_slice.shape[:-1])
         t_final3[:,:,j] = t3.reshape(data_rough_slice.shape[:-1])
         
-
+        
     np.save("../data/t_stat/"+i+"_tstat_rough_full.npy", t_final1)
     np.save("../data/t_stat/"+i+"_tstat_smooth_simple.npy", t_final2)
     np.save("../data/t_stat/"+i+"_tstat_rough_simple.npy", t_final3)

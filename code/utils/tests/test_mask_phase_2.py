@@ -1,4 +1,4 @@
-""" Tests for bh_procedure in benjamini_hochberg module
+""" Tests for mask_phase_2
 
 Run at the project directory with:
     nosetests code/utils/tests/test_mask_phase_2.py
@@ -6,25 +6,15 @@ Run at the project directory with:
 
 # Loading modules.
 import numpy as np
-import itertools
-import scipy.ndimage
-from scipy.ndimage.filters import gaussian_filter
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import nibabel as nib
 import os
 import sys
 
 from numpy.testing import assert_array_almost_equal
-#from numpy.testing import assert_allclose
 from numpy.testing import assert_almost_equal
-#from nose.tools import assert_not_equals
 from nose.tools import assert_equals
-#from nose.tools import assert_array_equal
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
-
 
 from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end, neighbor_smoothing,neighbor_smoothing_binary
 

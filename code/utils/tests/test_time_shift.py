@@ -6,13 +6,10 @@ Run with:
 # Loading modules.
 from __future__ import absolute_import, division, print_function
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import os
 import sys 
+
 from numpy.testing import assert_almost_equal
-import nibabel as nib
 
 # Path to the subject 009 fMRI data used in class. 
 pathtoclassdata = "data/ds114/"
