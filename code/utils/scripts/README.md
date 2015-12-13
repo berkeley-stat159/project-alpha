@@ -1,4 +1,4 @@
-## Scripts to Perform Analysis
+## Scripts to Perform Intermediate Analysis
 
 This repository stores the script files to generate all intermediate analysis. 
 

@@ -10,11 +10,11 @@ The Makefile contains recipes to perform the intermediate analysis for the proje
 - `make test`: Tests all user-defined functions associated with analyzing the data. 
 - `make coverage`: Generates a coverage report for all user-defined functions associated with analyzing the data. 
 
-Additional documentation and information on the subdirectories can be found in their respective READMEs. 
+Additional documentation and information on the subdirectories of `utils` can be found in their respective READMEs. 
 
-- `functions`: Code files for all user-defined functions used for analysis. 
-- `tests`: Test files for the user-defined functions. 
-- `scripts`: Scripts to run the intermediate analysis. 
-- `misc`: Supplementary analysis and documentation. 
+- `utils/functions`: Code files for all user-defined functions used for analysis. 
+- `utils/tests`: Test files for the user-defined functions. 
+- `utils/scripts`: Scripts to run the intermediate analysis. 
+- `utils/misc`: Supplementary analysis and documentation. 
 
 All output figures are saved in `project-alpha/images`, which also caches the figures required for the report and slides. These figures can be reproduced in their entirety by navigating to `project-alpha/final` and running `make all`. The `make figs` recipe in this directory only generates the figures used in the report and slides that are output by scripts in this directory. 
