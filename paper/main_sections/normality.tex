@@ -36,11 +36,11 @@ when looking at the conclusions made by our hypothesis tests, one should
 exercise caution about the validity of those conjectures. 
 
 Figure \ref{fig:sw} compares the spatial distribution of the Shapiro-Wilk 
-``p-values'' above and below 0.05 for Subject 10's masked and unmasked data. 
-The unmasked figure is very difficult to interpret, but the masked figure does 
-suggest that while the spatial distribution of voxels with approximately 
-normal residuals is reasonably uniform in many regions, there are a few areas 
-that consistently have ``p-values'' below the 0.05 threshold. Examples of 
+``p-values'' for Subject 10's masked and unmasked data. The unmasked figure 
+is very difficult to interpret, but the masked figure does suggest that while 
+the spatial distribution of voxels with approximately normal residuals is 
+reasonably uniform in many regions, there are a few areas that consistently 
+have very low ``p-values'' at around or below the 0.05 threshold. Examples of 
 these regions for Subject 10 include a small area between the front and center 
 of the brain and a few spots near the sides. These observations are not 
 consistent across all subjects, however, so much of it may simply be due to 
@@ -59,8 +59,7 @@ noise.
 		\includegraphics[width=.8\linewidth]{../images/sub010swmasked.png} 
 	\caption{Using masked residuals.}
 \end{minipage}
-\caption{Subject 10's brain slices, with voxels colored by whether or not the 
-``p-values'' were above a threshold of 0.05 in the corresponding Shapiro-Wilk 
-test for normality.}
+\caption{Subject 10's brain slices, with voxels colored by the magnitude of the
+``p-value'' in the corresponding Shapiro-Wilk test for normality.}
 \label{fig:sw}
 \end{figure}

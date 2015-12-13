@@ -66,23 +66,26 @@ for i in sub_list:
     mask_data = mask.get_data()
     
     masked_pvals = make_mask(sw_pvals, mask_data, fit=True)
+    masked_pvals[masked_pvals>1] = 1
     pvals_in_brain = sw_pvals.ravel()[masked_pvals.ravel() != 0]
     masked_prop.append(np.mean(pvals_in_brain > 0.05))
     
     if (i[-3:]=="010"): 
         # Save image plots of unmasked p-values for subject 10. 
         plt.imshow(present_3d(sw_pvals), cmap=plt.get_cmap('gray'))
+        plt.colorbar()
         plt.xticks([])
         plt.yticks([])
-        plt.title("p-values above 0.05 for " + i + " (Unmasked Data)")
+        plt.title("p-values for " + i + " (Unmasked Data)")
         plt.savefig(location_of_images+i+'sw.png')
         plt.close()
 
         # Save image plots of masked p-values for a single subject. 
         plt.imshow(present_3d(masked_pvals), cmap=plt.get_cmap('gray'))
+        plt.colorbar()
         plt.xticks([])
         plt.yticks([])
-        plt.title("p-values above 0.05 for " + i + " (Masked Data)")
+        plt.title("p-values for " + i + " (Masked Data)")
         plt.savefig(location_of_images+i+'swmasked.png')
         plt.close()
      

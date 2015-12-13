@@ -10,23 +10,40 @@ features that we examined included a linear drift and some of the time
 courses' Fourier series and principal components.
 
 \par Linear regression assumes a linear relationship between a response 
-variable $Y$ and a design matrix of predictors $X$. Each element of $Y$ 
+vector $y$ and a design matrix of predictors $X$. Each element of $y$ 
 represents a single observed response, and each row of $X$ represents a 
 corresponding vector of predictor values. If including the intercept as a 
 term (as we have elected to do), the first column of the $X$ design matrix 
 should be a vector of $1$s. The linear model can then be expressed as: 
 
 \begin{equation}
-Y = X\beta + \epsilon
+y = X\beta + \epsilon
 \end{equation}
 
 \par It is further assumed that the errors $\epsilon_i$ for each observation 
 $i$ are independent and identically distributed with $N(0, \sigma^2)$, and 
-that the errors are independent of $X$. The coefficients $\beta$ can be 
-estimated with the closed-form solution:
+that the errors are independent of $X$. The vector of coefficients $\beta$ 
+with length equal to the number of predictors in $X$ can be estimated with 
+the closed-form solution:
 
 \begin{equation}
-\hat{\beta} =(X^T X)^{-1} Y^T 
+\hat{\beta} =(X^T X)^{-1} y
+\end{equation}
+
+\par In our case, we actually want to fit a linear model to each individual 
+voxel's time course. Matrix algebra provides a convenient solution. Instead of 
+considering the time course for each voxel individually as a single $y$ 
+vector, we can instead consider the voxel $\times$ time matrix $Y$. Our model 
+is then:
+
+\begin{equation}
+Y = X\beta + \epsilon
+\end{equation}
+
+and our $\beta$ estimates are then also a matrix: 
+
+\begin{equation}
+\hat{\beta} =(X^T X)^{-1} Y^T
 \end{equation}
 
 \par Even when $(X^T X)$ is not invertible, $\hat{\beta}$ can be estimated 
