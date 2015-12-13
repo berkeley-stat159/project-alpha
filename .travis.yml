@@ -10,6 +10,10 @@ python:
   - 3.4
   - 2.7
 
+before_install:
+	- "export_DISPLAY=:99.0"
+	- "sh_-e_/etc/init.d/xvfb_start"
+
 install:
   - source tools/travis_tools.sh
   - virtualenv --python=python venv
