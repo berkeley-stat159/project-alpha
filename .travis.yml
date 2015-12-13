@@ -11,8 +11,8 @@ python:
   - 2.7
 
 before_install:
-  - "export_DISPLAY=:99.0"
-  - "sh_-e_/etc/init.d/xvfb_start"
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
 
 install:
   - source tools/travis_tools.sh
