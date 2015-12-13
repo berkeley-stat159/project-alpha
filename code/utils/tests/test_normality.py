@@ -5,8 +5,6 @@ Run at the project directory with:
 """
 
 import numpy as np
-from scipy.stats import shapiro
-from scipy.stats.mstats import kruskalwallis
 import os
 import sys
 from numpy.testing import assert_almost_equal, assert_array_equal

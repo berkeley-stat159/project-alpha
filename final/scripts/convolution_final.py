@@ -1,5 +1,7 @@
 """
 Script to create convolved hrf 
+
+
 Does the correct method to convolve the condition files for the output as well as time shifting that is required.
 All this is stored in matrices for the specific condition file and the shifts per time.
 
@@ -46,12 +48,12 @@ for i in sub_list:
     behav=pd.read_table(path_to_data+i+behav_suffix,sep=" ")
     num_TR = float(behav["NumTRs"])
     
-
-    # Suppose that TR=2. We know this is not a good assumption.
+    #load each condition file
     cond1=np.loadtxt(path_to_data+ i+ "/model/model001/onsets/task001_run001/cond001.txt")
     cond2=np.loadtxt(path_to_data+ i+ "/model/model001/onsets/task001_run001/cond002.txt")
     cond3=np.loadtxt(path_to_data+ i+ "/model/model001/onsets/task001_run001/cond003.txt")
     
+    # Suppose that TR=2. We know this is not a good assumption.
     TR = 2
     tr_times = np.arange(0, 30, TR)
     hrf_at_trs = np.array([hrf_single(x) for x in tr_times])
@@ -78,10 +80,12 @@ for i in sub_list:
         
     convolve_lambda=make_convolve_lambda(hrf_single,TR,num_TR)
     
+    #create HRF for all condition and each condition individually
     hrf_matrix_all=time_correct(convolve_lambda,shifted_all,num_TR)
     hrf_matrix_1=time_correct(convolve_lambda,shifted_1,num_TR)
     hrf_matrix_2=time_correct(convolve_lambda,shifted_2,num_TR)
     hrf_matrix_3=time_correct(convolve_lambda,shifted_3,num_TR)
+    
     
     np.savetxt("../data/hrf/"+i+"_hrf_all.txt",hrf_matrix_all)
     np.savetxt("../data/hrf/"+i+"_hrf_1.txt",hrf_matrix_1)

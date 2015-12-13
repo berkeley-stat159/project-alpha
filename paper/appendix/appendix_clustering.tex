@@ -1,1 +1,42 @@
-% Clustering appendix. 
+\subsection{Hierarchical Clustering}
+
+\par Using the across-subject average t-statistics for every voxel in the
+brain, we are left with a 3-d array of t-statistics that contain both negative
+and positive values. Instead of manually observing patterns in these images, we
+instead implemented a clustering algorithm to split the entire 3-d images into
+clusters based on the voxels' relative location to each other as well as the
+values of their t-statistics.
+
+\par In order to find a proper clustering algorithm, we decided to treat this
+problem like a grayscale image segmentation problem and implemented a
+agglomerative hierarchical cluster using Ward's method. Agglomerative means
+that the clusters are built bottom up which each observation starting as its
+own cluster and pairs being moved up the hierarchy. Ward's method creates
+clusters based on a minimum variance criterion that miniizes the total
+within-cluster variances. An example of this implimentation for a 2d image is
+seen here:
+\url{http://scikit-learn.org/stable/auto_examples/cluster/plot_lena_ward_segment
+ ation.html}.
+
+In our implimentation, we defined a structure to our data using a connectivity
+graph in order to ensure that each cluster is spatially constrained. Also,
+since our scenario uses a 3d image, the connectivity graph will also have to
+take into account this extra dimension.
+
+\par Ultimately, the goal of clustering is to have a better understanding of
+which parts of the brain are related to the signal based on the t-statistics
+from performing hypothesis tests on the coefficients from linear regression.
+Once we obtain our clusters, we will both measure the within-cluster mean of
+t-statistics as well measure the centroids of the clusters. By doing this, we
+hope to see the parts of the brain that have the strongest relationship with
+the signal and compare them to the results of the origin research paper.
+
+\par Ultimately, we did not use this clustering algorithm in our main paper
+because it did not add any useful information on top of our other clustering
+methods we used (Benjamini-Hochberg Correction). Furthermore, we faced a few
+problems when trying to implement the algorithm. Most significantly, creating
+the 3d connectivity graph was a problem, and we were not able to properly
+implmenet this in z-direction. Furthermore, runtime was an issue when compared
+to our other options. Ultimately, the idea around using a hierarchical
+clustering method was intriguing; however, the same results could be achieved
+using more simple and faster methods.

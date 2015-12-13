@@ -1,9 +1,7 @@
-""" Tests for glm function in glm module
-This checks the glm function with the procedure in the "Basic linear 
-modeling" exercise from Day 14. 
+""" Tests for functions in imaging module
 
 Run at the project directory with:
-    nosetests code/utils/tests/test_glm.py
+    nosetests code/utils/tests/test_imaging.py
 """
 # Loading modules.
 import numpy as np

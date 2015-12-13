@@ -8,14 +8,9 @@ Run at the project directory with:
 # Loading modules.
 from __future__ import absolute_import, division, print_function
 import numpy as np
-import numpy.linalg as npl
-import matplotlib.pyplot as plt
-import nibabel as nib
-import pandas as pd # new
 import sys 
 import os
-import scipy.stats
-from scipy.stats import gamma
+
 from numpy.testing import assert_almost_equal, assert_array_equal
 from nose.tools import assert_not_equals
 
@@ -29,8 +24,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 # Load our noise correction functions. 
 from noise_correction import mean_underlying_noise,fourier_creation,fourier_predict_underlying_noise
-# Load GLM functions. 
-from glm import glm, glm_diagnostics, glm_multiple
 
 def test_noise_correction():
 	# tests mean_underlying_noise

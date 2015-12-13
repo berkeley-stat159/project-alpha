@@ -8,16 +8,9 @@ Run at the project directory with:
 # Loading modules.
 from __future__ import absolute_import, division, print_function
 import numpy as np
-import numpy.linalg as npl
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import nibabel as nib
-import pandas as pd # new
 import sys 
 import os
-import scipy.stats
-from scipy.stats import gamma
 from numpy.testing import assert_almost_equal, assert_array_equal
 
 # Path to the subject 009 fMRI data used in class.

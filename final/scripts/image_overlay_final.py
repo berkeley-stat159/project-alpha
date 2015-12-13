@@ -1,5 +1,7 @@
-#overall plots
+"""
+Creates several images that will be used in our final paper
 
+"""
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -38,7 +40,7 @@ from Image_Visualizing import present_3d, make_mask
 from benjamini_hochberg import bh_procedure
 
 
-
+#load in results from benjamini hochberg, t, and beta analysis
 
 bh_all   = np.load("../data/bh_t_beta/bh_all.npy")
 t_all    = np.load("../data/bh_t_beta/t_all.npy")
@@ -58,7 +60,10 @@ for i, name in enumerate(sub_list):
 	brain=brain.get_data()
 
 
-	# bh
+    ###########################
+    # Benjamini Hochberg Plot #
+    ###########################
+    
 	plt.imshow(present_3d(brain[::2,::2,:]),cmap="gray")
 
 	upper= np.percentile(np.ravel(brain[::2,::2,:]),95)
@@ -72,7 +77,9 @@ for i, name in enumerate(sub_list):
 	plt.close()
 
 
-	# t
+	#################
+    # T-Value Plot  #
+    #################
 	plt.imshow(present_3d(brain[::2,::2,:]),cmap="gray")
 
 	plt.colorbar()
@@ -86,7 +93,10 @@ for i, name in enumerate(sub_list):
 
 
 
-	# beta
+	####################
+    # Beta-value Plot  #
+    ####################
+    
 	plt.imshow(present_3d(brain[::2,::2,:]),cmap="gray")
 
 	plt.colorbar()
