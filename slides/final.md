@@ -111,7 +111,7 @@
 
 \begin{figure}
   \centering
-  {\includegraphics[scale=0.5]{../images/pcasub010.png}}
+  {\includegraphics[scale=0.5]{../images/pcacumsumssub010.png}}
 \end{figure}
 
 

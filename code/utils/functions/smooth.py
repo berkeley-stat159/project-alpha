@@ -19,8 +19,14 @@ def smoothvoxels(data_4d, fwhm, time):
 
     Returns
     -------
-    smooth_results : array of the smoothed data from data_4d (same dimensions but super-voxels will be
-    indicated by the same number) in time slice indicated.
+    smooth_results : array of the smoothed data from data_4d (same dimensions
+        but super-voxels will be indicated by the same number) in time slice 
+        indicated.
+
+    Note: Edges are affected by random noise and non-voxel data, but to a 
+        lesser extent than a filter as aggressive as a mean-filter. However,
+        this type of smoothing was important to the process because a Gaussian
+        is less affected by the spikes in data.
     """
     
     time_slice = data_4d[..., time]

@@ -31,7 +31,7 @@ sub_list = os.listdir(path_to_data)
 sub_list = [i for i in sub_list if 'sub' in i]
 
 # Initialize array to store variance proportions. 
-masked_var_array = np.zeros((50, len(sub_list)))
+masked_var_array = np.zeros((10, len(sub_list)))
 
 # Progress bar
 toolbar_width=len(sub_list)
@@ -49,8 +49,7 @@ for j in range(len(sub_list)):
     
     # Load image data.
     img = nib.load(path_to_data+ name+ "/BOLD/task001_run001/bold.nii.gz")
-    data = img.get_data()
-    data = data.astype(float) 
+    data = img.get_data().astype(float) 
 
     # Load mask.
     mask = nib.load(path_to_data+ name+'/anatomy/inplane001_brain_mask.nii.gz')
@@ -80,18 +79,12 @@ for j in range(len(sub_list)):
     data_2d = data_2d - np.mean(data_2d, axis=1)[:, None]
     masked_data_2d = masked_data_2d - np.mean(masked_data_2d, axis=1)[:, None]
 
-    # PCA analysis on unmasked data: 
-    # Do SVD on the time by time matrix and get explained variance.
-    U, S, VT = npl.svd(data_2d.T.dot(data_2d))
-    exp_var = S / np.sum(S)
-    var_sums = np.cumsum(exp_var)
-
     # PCA analysis on MASKED data: 
     # Do SVD on the time by time matrix and get explained variance.
     U_masked, S_masked, VT_masked = npl.svd(masked_data_2d.T.dot(masked_data_2d))
     exp_var_masked = S_masked / np.sum(S_masked)
     var_sums_masked= np.cumsum(exp_var_masked)
-    masked_var_array[:,j] = exp_var_masked[:50] # Store the first 50 variance proportions.
+    masked_var_array[:,j] = exp_var_masked[:10] # Store the first 10 variance proportions.
 
     if (name[-3:]=="010"):    
         # Setting up legend colors.
@@ -102,12 +95,18 @@ for j in range(len(sub_list)):
         #####################
         # Initial PCA Plots #
         #####################
+        # PCA analysis on unmasked data: 
+        # Do SVD on the time by time matrix and get explained variance.
+        U, S, VT = npl.svd(data_2d.T.dot(data_2d))
+        exp_var = S / np.sum(S)
+        var_sums = np.cumsum(exp_var)
+
         # Compare sum of proportion of variance explained by each component for masked and unmasked data.
         # For just subject 10. 
-        plt.plot(var_sums[np.arange(1,11)], 'b-o')
-        plt.plot(var_sums_masked[np.arange(1,11)], 'r-o')
+        plt.plot(np.arange(1,11), var_sums[:10], 'b-o')
+        plt.plot(np.arange(1,11), var_sums_masked[:10], 'r-o')
         plt.axhline(y=0.4, color='k')
-        plt.legend(handles=[hand_un, hand_mask])
+        plt.legend(handles=[hand_un, hand_mask], loc=4)
         plt.xlabel("Number of Principal Components")
         plt.title("Sum of Proportions of Variance Explained by Components for " + name)
         plt.savefig(location_of_images+'pcacumsums'+name+'.png')
@@ -117,21 +116,18 @@ for j in range(len(sub_list)):
     sys.stdout.flush()
 sys.stdout.write("\n")
 
-# Write array of variance proportions to a text file.
-df = pd.DataFrame(masked_var_array)
-df.to_csv(final_data+'masked_var.txt', sep=' ', index=False, header=sub_list)
-
-masked_var = pd.read_csv(final_data+'masked_var.txt', sep=' ').sort_index(1)
-cumsums = masked_var.cumsum(0)
+masked_cumsums_array = masked_var_array.cumsum(0)
 
 ##########################
 # Boxplots of components #
 ##########################
 
-plt.boxplot(np.array(cumsums[:10]).T)
-plt.scatter(np.ones((24,10))*np.arange(1,11), np.array(cumsums[:10]).T)
+plt.boxplot(masked_cumsums_array.T)
+plt.scatter(np.ones((24,10))*np.arange(1,11), masked_cumsums_array.T)
+
 plt.grid()
 plt.axhline(y=0.4, color='k', linestyle="--")
 plt.xlabel("Principal Components")
 plt.title("Sum of Proportions of Variance Explained by Components")
 plt.savefig(location_of_images+'pcaBOX.png')
+

@@ -206,7 +206,9 @@ for c,d in itertools.product(range(5),range(5)):
 	behind2[(c*64):((c+1)*64),(d*64):((d+1)*64)]=behind_t[...,15]
 
 
-
+#---------------------#
+#   T-analysis Plot   #
+#---------------------#
 
 plt.contour(present_t,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(behind2,interpolation="nearest",cmap="seismic")
@@ -224,7 +226,9 @@ plt.ylabel("Proportion")
 plt.savefig(location_of_images+"_"+name+"_"+"t_compare_15_plus_contours.png")
 plt.close()
 
-
+#---------------------------------------#
+#   Absolute value of T-analysis Plot   #
+#---------------------------------------#
 plt.contour(present_t,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(np.abs(behind2),interpolation="nearest",cmap="Reds")
 plt.clim(0,np.max(abs(behind)))
@@ -254,8 +258,6 @@ plt.yticks(x, labels2)
 plt.ylabel("Proportion")
 plt.savefig(location_of_images+"_"+name+"_"+"t_compare_15.png")
 plt.close()
-
-
 
 
 
@@ -300,6 +302,9 @@ for e,f in itertools.product(range(5),range(5)):
 	behind3[(e*64):((e+1)*64),(f*64):((f+1)*64)]=behind_beta[...,15]
 
 
+#------------------------#
+#     Beta-value Plot    #
+#------------------------#
 
 plt.contour(present_beta,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(behind3,interpolation="nearest",cmap="seismic")
@@ -316,7 +321,9 @@ plt.ylabel("Proportion")
 plt.savefig(location_of_images+"_"+name+"_"+"beta_compare_15_plus_contours.png")
 plt.close()
 
-
+#---------------------------------------#
+#   Absolute value of beta-value Plot   #
+#---------------------------------------#
 plt.contour(present_beta,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(np.abs(behind3),interpolation="nearest",cmap="Reds")
 plt.title("abs(Beta- values) on slice 15 and contours *"+name+"* \n (with varying proportions and # neighbors)")

@@ -30,7 +30,7 @@ sub_list = os.listdir(path_to_data)
 sub_list = [i for i in sub_list if 'sub' in i]
 
 # Initialize array to store variance proportions. 
-masked_var_array = np.zeros((50, len(sub_list)))
+masked_var_array = np.zeros((10, len(sub_list)))
 
 # Loop through all the subjects. 
 for j in range(len(sub_list)):
@@ -83,15 +83,15 @@ for j in range(len(sub_list)):
     U_masked, S_masked, VT_masked = npl.svd(masked_data_2d.T.dot(masked_data_2d))
     exp_var_masked = S_masked / np.sum(S_masked)
     var_sums_masked= np.cumsum(exp_var_masked)
-    masked_var_array[:,j] = exp_var_masked[:50] # Store the first 50 variance proportions.
+    masked_var_array[:,j] = exp_var_masked[:10] # Store the first 10 variance proportions.
     
     # Setting up legend colors.
     hand_un = mlines.Line2D([], [], color='b', label='Not Masked')
     hand_mask = mlines.Line2D([], [], color='r', label='Masked')
 
     # Compare proportion of variance explained by each component for masked and unmasked data.
-    plt.plot(exp_var[np.arange(1,11)], 'b-o')
-    plt.plot(exp_var_masked[np.arange(1,11)], 'r-o')
+    plt.plot(np.arange(1,11), exp_var[:10], 'b-o')
+    plt.plot(np.arange(1,11), exp_var_masked[:10], 'r-o')
     plt.legend(handles=[hand_un, hand_mask])
     plt.xlabel("Principal Components")
     plt.title("Proportion of Variance Explained by Each Component for " + name)
@@ -99,24 +99,22 @@ for j in range(len(sub_list)):
     plt.close()
 
     # Compare sum of proportion of variance explained by each component for masked and unmasked data.
-    plt.plot(var_sums[np.arange(1,11)], 'b-o')
-    plt.plot(var_sums_masked[np.arange(1,11)], 'r-o')
+    plt.plot(np.arange(1,11), var_sums[:10], 'b-o')
+    plt.plot(np.arange(1,11), var_sums_masked[:10], 'r-o')
     plt.axhline(y=0.4, color='k')
-    plt.legend(handles=[hand_un, hand_mask])
+    plt.legend(handles=[hand_un, hand_mask], loc=4)
     plt.xlabel("Number of Principal Components")
     plt.title("Sum of Proportions of Variance Explained by Components for " + name)
     plt.savefig(location_of_images+'pcacumsums'+name+'.png')
     plt.close()
 
-# Write array of variance proportions to a text file.
-masked_var = pd.DataFrame(masked_var_array)
-cumsums = masked_var.cumsum(0)
-
+masked_cumsums_array = masked_var_array.cumsum(0)
 
 #######################
 # Plots of Components #
 #######################
-plt.plot(np.arange(1,11), cumsums.median(1)[:10], 'r-o')
+pd.DataFrame(masked_cumsums_array).plot(x=np.arange(1,11), color=['0.2'], legend=False)
+plt.plot(np.arange(1,11), pd.DataFrame(masked_cumsums_array).median(1), 'r-o')
 plt.grid()
 plt.axhline(y=0.4, color='k', linestyle="--")
 plt.xlabel("Principal Components")
@@ -128,8 +126,8 @@ plt.close()
 ##########################
 # Boxplots of components #
 ##########################
-plt.boxplot(np.array(cumsums[:10]).T)
-plt.scatter(np.ones((24,10))*np.arange(1,11), np.array(cumsums[:10]).T)
+plt.boxplot(masked_cumsums_array.T)
+plt.scatter(np.ones((24,10))*np.arange(1,11), masked_cumsums_array.T)
 plt.grid()
 plt.axhline(y=0.4, color='k', linestyle="--")
 plt.xlabel("Principal Components")

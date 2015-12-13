@@ -1,4 +1,9 @@
-.PHONY: clean test verbose coverage 
+.PHONY: all clean test verbose coverage 
+
+all:
+	cd data && make data 
+	cd data && make validate 
+	cd final && make all 
 
 clean:
 	find . -name "*.so" -o -name "*.pyc" -o -name "*.pyx.md5" | xargs rm -f

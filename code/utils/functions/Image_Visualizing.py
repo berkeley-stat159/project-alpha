@@ -72,3 +72,66 @@ def make_mask(data_3d, mask_data, fit=False):
         return data_3d * new_mask
 
 
+
+def present_3d_options(three_d_image,axis=2):
+  """ Coverts a 3d image into a 2nd image with slices in 3rd dimension varying across the element
+  
+  Input:
+  ------
+  three_d_image: is a 3 dimensional numpy array
+  axis: The axis you'd like to cut at (0,1, or 2)
+
+  Output:
+  -------
+  full: a 2d numpy array
+
+  #####
+  With Results just do:
+  In[0]: full=present_3d(three_d_image)
+  In[1]: plt.imshow(full,cmap="gray",interpolation="nearest")
+  In[2]: plt.colorbar()
+  """
+  assert(axis in [0,1,2])
+  assert(len(three_d_image.shape)==3)
+
+  num_images=three_d_image.shape[axis]  
+
+  if axis==0:
+    image_dim=list(three_d_image.shape[1:])
+    image_dim.reverse()
+  elif axis==1:
+    image_dim=(three_d_image.shape[2],three_d_image.shape[0])
+  else:
+    image_dim=three_d_image.shape[:2]
+
+
+
+  # formating grid
+  length=np.ceil(np.sqrt(num_images))
+  grid_size=[int(x) for x in (length,np.ceil(num_images/length))]
+
+  full=np.zeros((image_dim[0]*grid_size[0],image_dim[1]*grid_size[1]))
+  counter=0
+
+
+  if axis==0:
+    for row in range(int(grid_size[0])):
+      for col in range(int(grid_size[1])):
+        if counter< num_images:
+          full[(row*image_dim[0]):((row+1)*image_dim[0]),(col*image_dim[1]):((col+1)*image_dim[1])]=np.rot90(three_d_image[row*grid_size[1]+col,...],1)
+        counter=counter+1
+    return full
+  elif axis==1:
+    for row in range(int(grid_size[0])):
+      for col in range(int(grid_size[1])):
+          if counter< num_images:
+            full[(row*image_dim[0]):((row+1)*image_dim[0]),(col*image_dim[1]):((col+1)*image_dim[1])]=np.rot90(three_d_image[:,row*grid_size[1]+col,:],2).T
+          counter=counter+1
+    return full
+  else: # regular:
+    for row in range(int(grid_size[0])):
+      for col in range(int(grid_size[1])):
+        if counter< num_images:
+          full[(row*image_dim[0]):((row+1)*image_dim[0]),(col*image_dim[1]):((col+1)*image_dim[1])]=three_d_image[...,row*grid_size[1]+col]
+        counter=counter+1
+    return full
