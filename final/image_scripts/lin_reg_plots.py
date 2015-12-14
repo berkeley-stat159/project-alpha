@@ -16,7 +16,7 @@ import os
 import numpy.linalg as npl
 # Relative path to subject 1 data
 
-project_path          = "../../../"
+project_path          = "../../"
 path_to_data          = project_path+"data/ds009/"
 location_of_images    = project_path+"images/"
 location_of_functions = project_path+"code/utils/functions/" 

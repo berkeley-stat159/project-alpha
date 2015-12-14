@@ -3,24 +3,21 @@ Final script for BH, t-value, beta value analysis
 
 For each subject: collect the p-values, t-values, beta-values. 
 	Compute the bh_procedure, t_grouping, beta grouping (similar to t_grouping idea)
-	Average the 3d outputs (mean_across by Hiro?)
+	Average the 3d outputs (mean_across)
 
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
 import nibabel as nib
 import os
 import sys
-from sklearn.cluster import AgglomerativeClustering
-from sklearn.feature_extraction.image import grid_to_graph
 import pandas as pd
 from scipy.stats import t as t_dist
 
 project_path          = "../../"
-path_to_data          = project_path+"data/ds009/"
-location_of_images    = project_path+"images/"
-location_of_functions = project_path+"code/utils/functions/" 
+path_to_data          = project_path + "data/ds009/"
+location_of_images    = project_path + "images/"
+location_of_functions = project_path + "code/utils/functions/" 
 final_data            = "../data/"
 behav_suffix           = "/behav/task001_run001/behavdata.txt"
 smooth_data           =  final_data + 'smooth/'
@@ -32,11 +29,11 @@ sys.path.append(location_of_functions)
 sub_list = os.listdir(path_to_data)[1:]
 
 # Progress bar
-toolbar_width=len(sub_list)
+toolbar_width = len(sub_list)
 sys.stdout.write("Clustering (BH, t, beta):  ")
 sys.stdout.write("[%s]" % (" " * toolbar_width))
 sys.stdout.flush()
-sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
+sys.stdout.write("\b" * (toolbar_width + 1)) # return to start of line, after '['
 
 from tgrouping import t_grouping_neighbor
 from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end, neighbor_smoothing, neighbor_smoothing_binary
@@ -124,37 +121,4 @@ np.save("../data/bh_t_beta/t_all.npy",t_mean)
 final_beta = np.mean(beta_mean, axis = 3)
 np.save("../data/bh_t_beta/final_beta_average.npy", final_beta)
 np.save("../data/bh_t_beta/beta_all.npy",beta_mean)
-
-
-#####################################
-# Benjamini Hochberg Plots Q = 0.25 #
-#####################################
-
-plt.imshow(present_3d(final_bh), interpolation = 'nearest', cmap = 'seismic')
-plt.title("Mean BH Value Across 25 Subjects with Q = .25")
-plt.colorbar()
-plt.savefig("../../images/bh_mean_final.png")
-plt.close()
-
-######################################
-# T-statistic Plots Proportion = 0.1 #
-######################################
-
-plt.imshow(present_3d(final_t), interpolation = 'nearest', cmap = 'seismic')
-plt.title("Mean t_grouping Value Across 25 Subjects with proportion = .1")
-plt.colorbar()
-plt.savefig("../../images/tgroup_mean_final.png")
-plt.close()
-
-######################################
-# Beta-value Plots Proportion = 0.2  #
-######################################
-
-plt.imshow(present_3d(final_beta), interpolation = 'nearest', cmap = 'seismic')
-plt.title("Mean beta_grouping Value Across 25 Subjects with proportion = .2")
-plt.colorbar()
-plt.savefig("../../images/betagroup_mean_final.png")
-plt.close()
-
-
 

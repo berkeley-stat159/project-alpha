@@ -58,7 +58,7 @@ unmasked_prop = [] # Unmasked (all voxels)
 masked_prop = [] # Masked. 
 
 for i in sub_list:
-    residuals =   np.load(residual_data+i+"_residual_fourier.npy")
+    residuals =   np.load(residual_data+i+"_residual.npy")
     sw_pvals = check_sw(residuals)
     unmasked_prop.append(np.mean(sw_pvals > 0.05))
 

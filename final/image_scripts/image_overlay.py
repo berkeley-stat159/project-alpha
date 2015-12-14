@@ -52,8 +52,11 @@ t_all[t_all!=1]=np.nan
 beta_all[beta_all!=1]=np.nan
 
 
-for i, name in enumerate(sub_list):
+# subjects desired 3,6,7,11
+desired_index=[2,5,6,9]
 
+for i in desired_index:
+    name=sub_list[i]
 	# the mask for each subject
 	path_to_data = project_path + "data/ds009/" + name
 	brain = nib.load(path_to_data + '/anatomy/inplane001_brain.nii.gz')
@@ -72,7 +75,7 @@ for i, name in enumerate(sub_list):
 	overlap=present_3d(bh_all[...,i])
 	overlap[overlap==0]=np.nan
 	overlap[-1,-1]=0 # to make the output correct
-	plt.imshow(overlap,cmap="Blues",alpha=.5)
+	plt.imshow(overlap,cmap="Blues",alpha=.7)
 	plt.savefig("../../images/"+name+"_bh_overlay.png")
 	plt.close()
 
@@ -87,7 +90,7 @@ for i, name in enumerate(sub_list):
 	overlap[overlap==0]=np.nan
 	overlap[-1,-1]=0 # to make the output color correct
 
-	plt.imshow(overlap,cmap="Blues",alpha=.5)
+	plt.imshow(overlap,cmap="Blues",alpha=.7)
 	plt.savefig("../../images/"+name+"_t_overlay.png")
 	plt.close()
 
@@ -104,7 +107,7 @@ for i, name in enumerate(sub_list):
 	overlap[overlap==0]=np.nan
 	overlap[-1,-1]=0 # to make the output color correct
 
-	plt.imshow(overlap,cmap="Blues",alpha=.5)
+	plt.imshow(overlap,cmap="Blues",alpha=.7)
 	plt.savefig("../../images/"+name+"_beta_overlay.png")
 	plt.close()
 
