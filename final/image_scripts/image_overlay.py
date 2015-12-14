@@ -2,15 +2,14 @@
 Creates several images that will be used in our final paper
 
 """
-
-bRIGHT= False # if you'd like to brighten up them charts
-
 from __future__ import absolute_import, division, print_function
 import numpy as np
 import matplotlib.pyplot as plt
 import nibabel as nib
 import os
 import sys
+
+bRIGHT= False # if you'd like to brighten up them charts
 
 project_path          = "../../"
 path_to_data          = project_path+"data/ds009/"
