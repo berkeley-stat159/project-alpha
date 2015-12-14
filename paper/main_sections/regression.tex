@@ -150,20 +150,21 @@ to get a low order sinusoidal fluxucations.
 \subsection{Model Selection}
 
 \par In order to select the best set of features for our $X$ matrix, and also 
-compare the use of a single condition feature vs each of the 3 different types
-of conditions as 3 seperate features we decided to utilize model comparison, 
-specificially AIC,BIC, and Adjusted $R^2$ metrics. Using small expressive
+compare the use of a single condition feature vs. each of the 3 different types
+of conditions as 3 seperate features, we decided to utilize model comparison; 
+specificially, AIC, BIC, and Adjusted $R^2$ metrics. Using small expressive
 subset of the subjects ($002$,$003$, and $014$) we abused the metric's by
 averaging across all voxels and people.  We visualized values in the Figures
 \ref{fig:AIC},\ref{fig:BIC}, and \ref{fig:adjr2}.
 
-\par From these plots, you can observe that we don't gain my from adding
-the conditions seperated, and from the BIC, we decided that the fourier
-features didn't add enough benefit to justify the increase of features, so we'll
-be using the model that includes a single HRF for all the conditions, a linear
-drift feature, and the first 6 principle components. It is possible that this is dangerous, 
-and even with these features we could have over fit beyond just the noise and into 
-the territory of the hemodyamic response.
+\par From these plots, you can observe that we don't gain much from adding
+the conditions seperated, and from the BIC, we decided that the Fourier
+features didn't add enough benefit and justify the increase of features. Thus, 
+we'll be using the model that includes a single HRF for all the conditions, 
+a linear drift feature, and the first 6 principle components. It is possible 
+that this will dangerously overfit, and even with these features we could have
+overfit beyond just the noise and into the territory of the hemodyamic 
+response.
 
 %\begin{table}
 %\centering
