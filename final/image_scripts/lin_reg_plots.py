@@ -84,6 +84,11 @@ MRSS, fitted, residuals = glm_diagnostics(beta, X, data_slice)
 ###########################
 
 plt.scatter(fitted[30,40,:],residuals[30,40,:])
+min_max=(np.min(fitted[30,40,:]),np.max(fitted[30,40,:]))
+
+plt.plot([min_max[0],min_max[1]],[0,0],color="k")
+
+plt.xlim(min_max[0],min_max[1])
 plt.title("Subject 001, voxel: [30,40,15]")
 plt.xlabel("Fitted Values")
 plt.ylabel("Residuals")
