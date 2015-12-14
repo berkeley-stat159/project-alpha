@@ -3,7 +3,7 @@ Final script for BH, t-value, beta value analysis
 
 For each subject: collect the p-values, t-values, beta-values. 
 	Compute the bh_procedure, t_grouping, beta grouping (similar to t_grouping idea)
-	Average the 3d outputs (mean_across by Hiro?)
+	Average the 3d outputs (mean_across)
 
 """
 
@@ -15,9 +15,9 @@ import pandas as pd
 from scipy.stats import t as t_dist
 
 project_path          = "../../"
-path_to_data          = project_path+"data/ds009/"
-location_of_images    = project_path+"images/"
-location_of_functions = project_path+"code/utils/functions/" 
+path_to_data          = project_path + "data/ds009/"
+location_of_images    = project_path + "images/"
+location_of_functions = project_path + "code/utils/functions/" 
 final_data            = "../data/"
 behav_suffix           = "/behav/task001_run001/behavdata.txt"
 smooth_data           =  final_data + 'smooth/'
@@ -29,11 +29,11 @@ sys.path.append(location_of_functions)
 sub_list = os.listdir(path_to_data)[1:]
 
 # Progress bar
-toolbar_width=len(sub_list)
+toolbar_width = len(sub_list)
 sys.stdout.write("Clustering (BH, t, beta):  ")
 sys.stdout.write("[%s]" % (" " * toolbar_width))
 sys.stdout.flush()
-sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
+sys.stdout.write("\b" * (toolbar_width + 1)) # return to start of line, after '['
 
 from tgrouping import t_grouping_neighbor
 from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end, neighbor_smoothing, neighbor_smoothing_binary
