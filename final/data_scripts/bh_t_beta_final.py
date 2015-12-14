@@ -7,6 +7,7 @@ For each subject: collect the p-values, t-values, beta-values.
 
 """
 
+from __future__ import absolute_import, division, print_function
 import numpy as np
 import nibabel as nib
 import os

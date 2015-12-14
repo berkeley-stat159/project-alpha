@@ -2,6 +2,7 @@
 Plot producing scripts for convolution appendix
 """
 
+from __future__ import absolute_import, division, print_function
 import numpy as np
 import matplotlib.pyplot as plt
 import sys

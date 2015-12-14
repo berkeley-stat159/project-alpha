@@ -2,6 +2,7 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
 
+from __future__ import absolute_import, division, print_function
 import time as time
 import numpy as np
 import scipy as sp
