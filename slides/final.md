@@ -57,13 +57,6 @@
 	\end{minipage}
 \end{figure}
 
-# Smoothing: Convolution with a Gaussian filter (scipy module)
-
-\begin{figure}
-  \centering
-  {\includegraphics[scale=0.25]{../images/original_slice.png}}{\includegraphics[scale=0.25]{../images/smoothed_slice.png}}
-\end{figure}
-
 
 # Linear regression: Single and multiple regression with stimulus (all conditions and seperate)
 
@@ -86,26 +79,6 @@
 
 
 
-#  Hypothesis testing: General t-tests on $\beta$ values, and across subject analysis
-
-
-\begin{figure}[ht]
-\centering
-\begin{minipage}[b]{0.45\linewidth}
-	\centering
-	\includegraphics[width=.8\linewidth]{../images/hypothesis_testing.png} 
-	\caption{Smoothed t-values}
-	\label{fig:t-value}
-\end{minipage}	
-\quad
-\begin{minipage}[b]{0.45\linewidth}
-	\centering
-		\includegraphics[width=.8\linewidth]{../images/hypothesis_testing2.png} 
-	\caption{unsmoothed t-values}
-	\label{fig:t-value2}
-\end{minipage}
-\end{figure}
-
 # PCA on the voxel by time covariance matrix.
 
 
@@ -113,27 +86,5 @@
   \centering
   {\includegraphics[scale=0.5]{../images/pcacumsumssub010.png}}
 \end{figure}
-
-
-# Clustering
-
-\begin{figure}[ht]
-\centering
-\begin{minipage}[b]{0.6\linewidth}
-	\centering
-	\includegraphics[width=.8\linewidth]{../images/clustering1.png} 
-	\caption{Clustering 1}
-
-\end{minipage}	
-\quad
-\hspace{-30mm}
-\begin{minipage}[b]{0.6\linewidth}
-	\centering
-	\includegraphics[width=.8\linewidth]{../images/clustering2.png} 
-	\caption{Clustering 2}
-
-\end{minipage}
-\end{figure}
-
 
 
