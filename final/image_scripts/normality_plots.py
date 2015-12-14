@@ -1,5 +1,5 @@
 """
-Script for Normality
+Script to create Normality plots
 
 Runs the Shapiro-Wilks Test for Normality on residuals
 
@@ -12,7 +12,6 @@ from __future__ import absolute_import, division, print_function
 import numpy as np
 import matplotlib.pyplot as plt
 import nibabel as nib
-from scipy.stats import shapiro
 import os
 import sys
 
@@ -32,13 +31,6 @@ sys.path.append(location_of_functions)
 
 sub_list = os.listdir(path_to_data)
 sub_list = [i for i in sub_list if 'sub' in i]
-
-
-from stimuli import events2neural
-from event_related_fMRI_functions import hrf_single, convolution_specialized
-
-# Load our GLM functions. 
-from glm import glm, glm_diagnostics
 
 # Load our normality functions. 
 from normality import check_sw

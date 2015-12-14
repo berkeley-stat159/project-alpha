@@ -28,8 +28,8 @@ sys.path.append(location_of_functions)
 
 #Import functions
 from tgrouping import t_grouping_neighbor
-from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end, neighbor_smoothing,neighbor_smoothing_binary
-from Image_Visualizing import present_3d, make_mask
+from mask_phase_2_dimension_change import masking_reshape_end, neighbor_smoothing_binary
+from Image_Visualizing import make_mask
 from benjamini_hochberg import bh_procedure
 
 
