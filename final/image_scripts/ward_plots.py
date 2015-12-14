@@ -2,7 +2,7 @@
 Script to create plots for Hiearchical clustering using Ward's method
 """
 
-
+from __future__ import absolute_import, division, print_function
 import numpy as np
 import matplotlib.pyplot as plt
 import nibabel as nib
