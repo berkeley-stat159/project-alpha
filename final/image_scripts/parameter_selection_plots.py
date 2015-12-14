@@ -2,18 +2,6 @@
 Parameter selection for Benjamini Hochberg Analysis and T analysis.
 
 """
-# Making a similarity metric for brain analysis.
-
-# we could use a "per voxel" variance sum((v_i-mean(v))^2)
-
-"""
-1,1,1-> 0
-1,1,0-> 1/3    
-1,0,0-> 1/3
-0,0,0-> 0
-"""
-
-# Then just summing this metric up:
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -134,7 +122,7 @@ present_bh[present_bh<.5]=0
 
 
 plt.contour(present_bh,interpolation="nearest",colors="k",alpha=1)
-plt.imshow(behind,interpolation="nearest",cmap="Reds_r")
+plt.imshow(behind,interpolation="nearest",cmap="Blues_r")
 plt.title("Benjamini Hochberg on slice 15 and contours *"+name+"* \n (with varying Q and # neighbors)")
 x=32+64*np.arange(5)
 labels = neighbors1
@@ -146,7 +134,7 @@ y=32+64*np.arange(len(q1))
 plt.yticks(y, labels2)
 plt.ylabel("Q")
 plt.colorbar()
-plt.savefig(location_of_images+"_"+name+"_"+"bh_compare_15_plus_contours.png")
+plt.savefig(location_of_images+name+"_"+"bh_compare_15_plus_contours.png")
 plt.close()
 
 
@@ -161,7 +149,7 @@ labels2 = q1
 y=32+64*np.arange(len(q1))
 plt.yticks(y, labels2)
 plt.ylabel("Q")
-plt.savefig(location_of_images+"_"+name+"_"+"bh_compare_15.png")
+plt.savefig(location_of_images+name+"_"+"bh_compare_15.png")
 plt.close()
 
 ##############
@@ -223,17 +211,17 @@ labels2 = prod2
 plt.clim(-np.max(abs(behind2)),np.max(abs(behind2)))
 plt.yticks(x, labels2)
 plt.ylabel("Proportion")
-plt.savefig(location_of_images+"_"+name+"_"+"t_compare_15_plus_contours.png")
+plt.savefig(location_of_images+name+"_"+"t_compare_15_plus_contours.png")
 plt.close()
 
 #---------------------------------------#
 #   Absolute value of T-analysis Plot   #
 #---------------------------------------#
 plt.contour(present_t,interpolation="nearest",colors="k",alpha=1)
-plt.imshow(np.abs(behind2),interpolation="nearest",cmap="Reds")
+plt.imshow(np.abs(behind2),interpolation="nearest",cmap="Blues")
 plt.clim(0,np.max(abs(behind)))
 plt.colorbar()
-plt.title("abs(T- Analysis) on slice 15 and contours *"+name+"* \n (with varying proportions and # neighbors)")
+plt.title(name+", slice 15: abs(T-statistic) and contours \n (with varying proportions and # neighbors)")
 x=32+64*np.arange(5)
 labels = neighbors2
 plt.xticks(x, labels)
@@ -241,7 +229,7 @@ plt.xlabel("Number of Neighbors")
 labels2 = prod2 
 plt.yticks(x, labels2)
 plt.ylabel("Proportion")
-plt.savefig(location_of_images+"_"+name+"_"+"t_compare_15_abs_plus_contours.png")
+plt.savefig(location_of_images+name+"_"+"t_compare_15_abs_plus_contours.png")
 plt.close()
 
 
@@ -256,7 +244,7 @@ plt.xlabel("Number of Neighbors")
 labels2 = prod2 
 plt.yticks(x, labels2)
 plt.ylabel("Proportion")
-plt.savefig(location_of_images+"_"+name+"_"+"t_compare_15.png")
+plt.savefig(location_of_images+name+"_"+"t_compare_15.png")
 plt.close()
 
 
@@ -318,14 +306,14 @@ plt.xlabel("Number of Neighbors")
 labels2 = prod3 
 plt.yticks(x, labels2)
 plt.ylabel("Proportion")
-plt.savefig(location_of_images+"_"+name+"_"+"beta_compare_15_plus_contours.png")
+plt.savefig(location_of_images+name+"_"+"beta_compare_15_plus_contours.png")
 plt.close()
 
 #---------------------------------------#
 #   Absolute value of beta-value Plot   #
 #---------------------------------------#
 plt.contour(present_beta,interpolation="nearest",colors="k",alpha=1)
-plt.imshow(np.abs(behind3),interpolation="nearest",cmap="Reds")
+plt.imshow(np.abs(behind3),interpolation="nearest",cmap="Blues")
 plt.title("abs(Beta- values) on slice 15 and contours *"+name+"* \n (with varying proportions and # neighbors)")
 plt.colorbar()
 plt.clim(0,np.max(abs(behind3)))
@@ -336,7 +324,7 @@ plt.xlabel("Number of Neighbors")
 labels2 = prod3 
 plt.yticks(x, labels2)
 plt.ylabel("Proportion")
-plt.savefig(location_of_images+"_"+name+"_"+"beta_compare_15_abs_plus_contours.png")
+plt.savefig(location_of_images+name+"_"+"beta_compare_15_abs_plus_contours.png")
 plt.close()
 
 
@@ -352,7 +340,7 @@ plt.xlabel("Number of Neighbors")
 labels2 = prod3 
 plt.yticks(x, labels2)
 plt.ylabel("Proportion")
-plt.savefig(location_of_images+"_"+name+"_"+"beta_compare_15.png")
+plt.savefig(location_of_images+name+"_"+"beta_compare_15.png")
 plt.close()
 
 
