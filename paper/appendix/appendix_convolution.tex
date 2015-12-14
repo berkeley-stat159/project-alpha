@@ -8,27 +8,28 @@ in oxygenation levels of hemoglobin in the brain. However, there is a delay
 between the neural stimulus and the change in blood oxygen levels in a given 
 area. In our case, the neural stimulation comes from a event-related style of 
 experiment. A commonly assumed hemodynamic response to a neurological 
-stimulation is the double gamma function that can be seen in Figure \ref{fig:hrf}.
-The complete hemodynamic response function needs to be modeled in order to 
-better relate stimulation and the BOLD response from the fMRI scan. It should be 
-noted that the BOLD response is highly noises and we're really trying to capture 
-the blood oxygenation level change to the stimulation.
+stimulation is the double gamma function that can be seen in Figure 
+\ref{fig:hrf}. The complete hemodynamic response function needs to be modeled 
+in order to better relate stimulation and the BOLD response from the fMRI scan.
+It should be noted that the BOLD response is highly noises and we're really 
+trying to capture the blood oxygenation level change to the stimulation.
 
 \subsection{Mathematics}
 \subsubsection{Convolution Theory and Mathematics}
 
 To relate stimuli to BOLD response, we convolved the time courses of discrete 
 stimulation with the assumed response to a single stimulation.. At a basic 
-level, convolution is a distinct combination of two functions (say $f$ and $g$). 
-This combination is just the ``integral that expresses the amount of overlap of 
-$f$ as it is shifted over another function $g$'' \cite{weissten2015convolution}. 
+level, convolution is a distinct combination of two functions (say $f$ and 
+$g$). This combination is just the ``integral that expresses the amount of 
+overlap of $f$ as it is shifted over another function $g$'' 
+\cite{weissten2015convolution}. 
 There are many examples of this, but the following is basic idea that we will 
 expand off of later. 
 
 Let us define the function $f$ as a sum of two gamma functions and $g$ as a 
-``continuous'' specialized step function (we will examine why these functions are 
-valuable later). Graphically, we can see their plots in Figure \ref{fig:f} and 
-\ref{fig:g}, and mathematically we will define them as in the following 
+``continuous'' specialized step function (we will examine why these functions 
+are valuable later). Graphically, we can see their plots in Figure \ref{fig:f}
+and \ref{fig:g}, and mathematically we will define them as in the following 
 equations \ref{eq:gamma2} and \ref{eq:step}, respectively.
 
 \begin{equation} \label{eq:gamma2}
@@ -70,8 +71,8 @@ differences), we will get a plot very similar to that of $f$ when $f$ is
 starting at a certain point. (The plot actually ``cheats'' when $f$ is 
 negative, and we would have to alter definitions a little bit). If we had 
 multiple peaks in our $g$ function (i.e. multiple distinct``zero'' places), we 
-would expect to get multiple non-zero differences between the functions at each 
-time capture. 
+would expect to get multiple non-zero differences between the functions at 
+each time capture. 
 
 \begin{figure}[ht]
 	\centering
@@ -183,12 +184,12 @@ gives an idea about what not to do, and a high bar for efficiency.
 \subsubsection{Needed Improvements: Moving beyond naive \texttt{np.convolve}}
 
 The reason motivating this appendix is the fact that our data fails to meet the 
-assumption that the intervals are in equidistant which was required to naively apply 
-\texttt{np.convolve}. Especially in our case, there 
+assumption that the intervals are in equidistant which was required to naively 
+apply \texttt{np.convolve}. Especially in our case, there 
 was not an simple fix, such as performing some basic rounding in order to then 
-correctly utilize \texttt{np.convolve}. All the following approaches improve on 
-the basic \texttt{np.convolve} approach's accuracy, but ultimately circle back to 
-incorporating \texttt{np.convolve} to improve the speed of the convolution.
+correctly utilize \texttt{np.convolve}. All the following approaches improve on
+the basic \texttt{np.convolve} approach's accuracy, but ultimately circle back 
+to incorporating \texttt{np.convolve} to improve the speed of the convolution.
 
 Our condition file (\texttt{cond1}) lists stimulus times for when the 
 individual pumped the balloon but did not pop it. For subject 001, the 
@@ -227,8 +228,8 @@ the entire time course.
 \subsection{Summary of Approaches}
 Our first approach attempts to correctly match the theory underlying our data. 
 Our second approach tries to utilize \texttt{np.convolve} by expanding the 
-grid of desired results (thanks to advice from  Matthew Brett, Jean-Baptiste Poline,
-and Jarrod Millman).
+grid of desired results (thanks to advice from  Matthew Brett, Jean-Baptiste 
+Poline, and Jarrod Millman).
 
 
 \subsubsection{Initial Correction to Represent Theoretical Idea}
@@ -281,15 +282,15 @@ grid.
 
 Now that we have discussed that theoretics of and possible implementations of the 
 convolving event-related stimulation, let's look at a basic example from our data.
-(specifically using subject 001 condition files), and in doing so examine the trade-offs
-between theoretical accuracy and computational efficiency.
+(specifically using subject 001 condition files), and in doing so examine the 
+trade-offs between theoretical accuracy and computational efficiency.
 
 
 \begin{figure}[ht]
 \centering
 	\begin{minipage}[b]{0.45\linewidth}
 		\centering
-		\includegraphics[width=.8\linewidth]{../images/convolution_vs_neural_stimulus}  
+		\includegraphics[width=.8\linewidth]{../images/convolution_vs_neural_stimulus}
 		% needs to be from the event_related_HRF_script2.py 
 		\caption{\scriptsize{Different convolution functions vs. the Neural stimulus}}
 		\label{fig:convolution}
@@ -317,15 +318,17 @@ between theoretical accuracy and computational efficiency.
 	\end{minipage}
 \end{figure}
 
-The first method in the table ``np naive approach'' method which blindly plugs in our 
-data into the \texttt{np.convolve} function, provided to showcase potential speed. 
-The ``user 2'' method  was the first approach to matches the theory, but matches the 
-stimulation times and not the scan times. The ``user 3'' method is the most theoretically 
-sound model (and is our standard for accuracy). ``User 5'' model  is our matrix version of 
-the theory, and has the same accuracy as ``user 3'', but is observably faster. The ``user 4'' 
-models fall under use the grid cut usage of \texttt{np.convolve}with notations for the 
-number of slices between each scan. We concluded that "user 4 (15 cuts)" was the 
-best approach gives us speed and very close accuracy to the golden standard - "user 3".
+The first method in the table ``np naive approach'' method which blindly plugs 
+in our data into the \texttt{np.convolve} function, provided to showcase 
+potential speed. The ``user 2'' method  was the first approach to matches the 
+theory, but matches the stimulation times and not the scan times. The ``user 
+3'' method is the most theoretically sound model (and is our standard for 
+accuracy). ``User 5'' model  is our matrix version of the theory, and has the 
+same accuracy as ``user 3'', but is observably faster. The ``user 4'' models 
+fall under use the grid cut usage of \texttt{np.convolve}with notations for the
+number of slices between each scan. We concluded that "user 4 (15 cuts)" was 
+the best approach gives us speed and very close accuracy to the golden standard
+- "user 3".
 
 
 

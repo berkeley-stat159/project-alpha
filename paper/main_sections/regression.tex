@@ -40,7 +40,7 @@ is then:
 Y = X\beta + \epsilon
 \end{equation}
 
-and our $\beta$ estimates are then also a matrix: 
+\noindent and our $\beta$ estimates are then also a matrix: 
 
 \begin{equation}
 \hat{\beta} =(X^T X)^{-1} Y^T
@@ -68,7 +68,7 @@ As noted above these, additional features helped account for the noise in the
 observed BOLD ratio fluctuation.
 
 \vspace{2mm}
-\textbf{Principle Components}
+\noindent \textbf{Principle Components}
 \vspace{2mm}
 \par One approach for reducing the noise in the linear model is to include 
 principal components of the voxel $\times$ time voxel time course matrix. 
@@ -126,7 +126,7 @@ components.}
 
 
 \vspace{2mm}
-\textbf{Fourier Series}
+\noindent \textbf{Fourier Series}
 \vspace{2mm}
 \par We included 4 features related to the first few functions of the Fourier series.
 The full fourier series is represent as the following:
@@ -135,34 +135,36 @@ The full fourier series is represent as the following:
 f(x) = \frac{1}{2} \cdot a_0 + \sum_{n=1}^{\infty} a_n \cdot cos(n x) + \sum_{n=1}^{\infty} b_n \cdot  sin(n x)
 \end{equation}
 
-but since strength of Fourier series strength comes from orthogonality of the range, 
-and we are looking for a function of the range $(0, \text{num of TR})$, we change it to:
+\noindent but since strength of Fourier series strength comes from 
+orthogonality of the range, and we are looking for a function of the range 
+$(0, \text{num of TR})$, we change it to:
 
 \begin{equation}
 f(x) = \frac{1}{2} \cdot a_0 + \sum_{n=1}^{\infty} a_n \cdot cos(\frac{n}{\text{num of TR}} x) + \sum_{n=1}^{\infty} b_n \cdot sin(\frac{n}{\text{num of TR}} x)
 \end{equation}
 
-We used $ + \sum_{n=1}^{2} a_n \cdot cos(\frac{n}{\text{num of TR}} x) + 
+\noindent We used $ + \sum_{n=1}^{2} a_n \cdot cos(\frac{n}{\text{num of TR}} x) + 
 \sum_{n=1}^{2} b_n \cdot sin(\frac{n}{\text{num of TR}} x)$ to be 4 features to try 
 to get a low order sinusoidal fluxucations.
 
 \subsection{Model Selection}
 
 \par In order to select the best set of features for our $X$ matrix, and also 
-compare the use of a single condition feature vs each of the 3 different types
-of conditions as 3 seperate features we decided to utilize model comparison, 
-specificially AIC,BIC, and Adjusted $R^2$ metrics. Using small expressive
+compare the use of a single condition feature vs. each of the 3 different types
+of conditions as 3 seperate features, we decided to utilize model comparison; 
+specificially, AIC, BIC, and Adjusted $R^2$ metrics. Using small expressive
 subset of the subjects ($002$,$003$, and $014$) we abused the metric's by
 averaging across all voxels and people.  We visualized values in the Figures
 \ref{fig:AIC},\ref{fig:BIC}, and \ref{fig:adjr2}.
 
-\par From these plots, you can observe that we don't gain my from adding
-the conditions seperated, and from the BIC, we decided that the fourier
-features didn't add enough benefit to justify the increase of features, so we'll
-be using the model that includes a single HRF for all the conditions, a linear
-drift feature, and the first 6 principle components. It is possible that this is dangerous, 
-and even with these features we could have over fit beyond just the noise and into 
-the territory of the hemodyamic response.
+\par From these plots, you can observe that we don't gain much from adding
+the conditions seperated, and from the BIC, we decided that the Fourier
+features didn't add enough benefit and justify the increase of features. Thus, 
+we'll be using the model that includes a single HRF for all the conditions, 
+a linear drift feature, and the first 6 principle components. It is possible 
+that this will dangerously overfit, and even with these features we could have
+overfit beyond just the noise and into the territory of the hemodyamic 
+response.
 
 %\begin{table}
 %\centering
