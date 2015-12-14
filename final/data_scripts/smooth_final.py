@@ -11,8 +11,6 @@ Potential variants:
 """
 
 import numpy as np
-import itertools
-import scipy.ndimage
 import nibabel as nib
 import os
 import sys
@@ -21,9 +19,10 @@ import pandas as pd
 
 # Relative path to subject all the subjects
 project_path          = "../../"
-path_to_data          = project_path + "data/ds009/"
-location_of_images    = project_path + "images/"
-location_of_functions = project_path + "code/utils/functions/" 
+path_to_data         = project_path+"data/ds009/"
+location_of_images    = project_path+"images/"
+location_of_functions = project_path+"code/utils/functions/" 
+
 final_data            = "../data/"
 behav_suffix          = "/behav/task001_run001/behavdata.txt"
 
@@ -32,7 +31,6 @@ sys.path.append(location_of_functions)
 
 # Load smoothing function
 from smooth import smoothvoxels
-from Image_Visualizing import present_3d
 
 sub_list = os.listdir(path_to_data)
 sub_list = [i for i in sub_list if 'sub' in i]

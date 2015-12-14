@@ -1,9 +1,5 @@
 """
-Final script for BH, t-value, beta value analysis
-
-For each subject: collect the p-values, t-values, beta-values. 
-	Compute the bh_procedure, t_grouping, beta grouping (similar to t_grouping idea)
-	Average the 3d outputs (mean_across by Hiro?)
+Plot producing script for BH, t-value, beta value analysis
 
 """
 
@@ -18,7 +14,7 @@ location_of_functions = project_path+"code/utils/functions/"
 sys.path.append(location_of_functions)
 
 
-from Image_Visualizing import present_3d, make_mask
+from Image_Visualizing import present_3d
 
 
 
