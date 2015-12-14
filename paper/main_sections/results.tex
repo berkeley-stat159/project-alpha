@@ -10,10 +10,11 @@ success.
 
 \noindent \textbf{Model Selection}
 
-For our linear regression model, we ended up choosing the deisgn matrix model 
+For our linear regression model, we ended up choosing the design matrix model 
 with a single HRF feature with all conditions, a linear drift feature, and 
 three pairs of Fourier features. The dimension of our final feature matrix is 
-time $\times$ 9. 
+time $\times$ 9. As noted previously, this selection of the model was also 
+due to reduce problems with overfitting and collinearity with the HRF features.
 \vspace{5mm}
 
 \noindent \textbf{Normality Test}
@@ -44,7 +45,7 @@ correction.
 
 \noindent \textbf{Multiple Comparison}
 
-The most canonical appraoch we used was Benjamini Hochberg (BH), which 
+The most canonical approach we used was Benjamini Hochberg (BH), which 
 utilized p-statistics. This type of analysis assumes normality of the 
 $\hat{\beta}$ values, which we saw where not always the case. BH also 
 required unique threshold values for each person, which was a large draw-back. 
@@ -84,21 +85,24 @@ accounted by the presence of coefficient variances in the former.
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
 	\includegraphics[width=.8\linewidth]{../images/sub006_t_overlay.png} 
-	\caption{Quantile-based clustering for Subject 6's t-statistics.}
+	\caption{Quantile-based clustering for Subject 6's t-statistics. 
+	(Blue areas denote significant regions)}
 	\label{fig:clustert}
 \end{minipage}	
 
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
 		\includegraphics[width=.8\linewidth]{../images/sub006_beta_overlay.png} 
-	\caption{Quantile-based clustering for Subject 6's $\hat{\beta}$ coefficients.}
+	\caption{Quantile-based clustering for Subject 6's $\hat{\beta}$ coefficients. 
+	(Blue areas denote significant regions)}
 	\label{fig:clusterbeta}
 \end{minipage}
 
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
 		\includegraphics[width=.8\linewidth]{../images/sub006_bh_overlay.png} 
-	\caption{Benjamini-Hochberg clustering for Subject 6.}
+	\caption{Benjamini-Hochberg clustering for Subject 6. 
+	(Blue areas denote significant regions)}
 	\label{fig:clusterBH}
 \end{minipage}
 \end{figure}
@@ -127,20 +131,23 @@ consistent or fully conclusive.
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
 	\includegraphics[width=.8\linewidth]{../images/sub003_t_overlay.png} 
-	\caption{Quantile-based clustering for Subject 3's t-statistics.}
+	\caption{Quantile-based clustering for Subject 3's t-statistics. 
+	(Blue areas denote significant regions)}
 	\label{fig:clustersub3}
 \end{minipage}	
 
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
 		\includegraphics[width=.8\linewidth]{../images/sub011_t_overlay.png} 
-	\caption{Quantile-based clustering for Subject 11's t-statistics.}
+	\caption{Quantile-based clustering for Subject 11's t-statistics. 
+	(Blue areas denote significant regions)}
 	\label{fig:clustersub11}
 \end{minipage}
 
 \begin{minipage}[b]{0.45\linewidth}
 	\centering
-		\includegraphics[width=.8\linewidth]{../images/sub007_t_overlay.png} 
+		\includegraphics[width=.8\linewidth]{../images/sub007_t_overlay.png 
+		(Blue areas denote significant regions)} 
 	\caption{Quantile-based clustering for Subject 7's t-statistics.}
 	\label{fig:clustersub7}
 \end{minipage}

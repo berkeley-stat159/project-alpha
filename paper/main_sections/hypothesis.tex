@@ -17,21 +17,5 @@ take into account the sign of the t-statistic in our analysis. Second, we
 convert this t-statistic into a ``p-value'', in which case the sign of the
 t-value will become irrelevant; we compare across voxels without taking
 into account this sign. Later, we also run a multiple comparison test using a
-Benjamini–Hochberg in order to find the voxels that are most significant.
+Benjamini Hochberg in order to find the voxels that are most significant, and other clustering methods to analysis the $\hat{\beta}$ or t-values.
 
-\par Having implemented a method to compare the voxels within a single subject,
-we next examine our results for the same voxels across subjects. Our initial
-approach was to aggregate the t-statistic data between all subjects for each
-voxel. This allows us to decrease the variability of the fit on each voxel and
-detect a more clear signal.
-
-\par In order to do this, we run the hypothesis test as stated above on all 24
-subjects of the study. Then for each voxel, we take the average of the t-
-statistics across the subjects. An issue with our data is that the presence of
-empty space detected by the scanner is not directly part of the brain. To
-account for this, we take the masked data of the brain and ``cut out'' the
-parts of the images that were not relevant to our analysis. Ultimately, we are
-left with a single 3-D image with each voxel representing the average
-t-statistics across all subjects in the study. This image will later be used in
-our clustering step in order to pinpoint the regions of the brain that have the
-strongest relationship with the convolved time course.
