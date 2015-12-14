@@ -3,6 +3,8 @@ Creates several images that will be used in our final paper
 
 """
 
+bRIGHT= False # if you'd like to brighten up them charts
+
 from __future__ import absolute_import, division, print_function
 import numpy as np
 import matplotlib.pyplot as plt
@@ -24,12 +26,6 @@ sys.path.append(location_of_functions)
 # list of subjects
 sub_list = os.listdir(path_to_data)[1:]
 
-# Progress bar
-toolbar_width=len(sub_list)
-sys.stdout.write("Clustering images:  ")
-sys.stdout.write("[%s]" % (" " * toolbar_width))
-sys.stdout.flush()
-sys.stdout.write("\b" * (toolbar_width+1))
 
 from Image_Visualizing import present_3d
 
@@ -50,6 +46,15 @@ beta_all[beta_all!=1]=np.nan
 # subjects desired 1,3,6,7,11,23
 desired_index=[0,2,5,6,9,18]
 
+
+# Progress bar
+toolbar_width=len(desired_index)
+sys.stdout.write("Clustering images:  ")
+sys.stdout.write("[%s]" % (" " * toolbar_width))
+sys.stdout.flush()
+sys.stdout.write("\b" * (toolbar_width+1))
+
+
 for i in desired_index:
     name=sub_list[i]
     # the mask for each subject
@@ -66,11 +71,15 @@ for i in desired_index:
 
     upper= np.percentile(np.ravel(brain[::2,::2,:]),95)
     plt.colorbar()
-    #plt.clim(0,upper)
+    if bRIGHT:
+    	plt.clim(0,upper)
     overlap=present_3d(bh_all[...,i])
     overlap[overlap==0]=np.nan
     overlap[-1,-1]=0 # to make the output correct
     plt.imshow(overlap,cmap="Blues",alpha=.7)
+    plt.xticks([])
+    plt.yticks([])
+    plt.title(name+ ", Benjamini Hochberg")
     plt.savefig("../../images/"+name+"_bh_overlay.png")
     plt.close()
 
@@ -79,12 +88,15 @@ for i in desired_index:
     # T-Value Plot  #
     #################
     plt.imshow(present_3d(brain[::2,::2,:]),cmap="gray")
-
     plt.colorbar()
     overlap=present_3d(t_all[...,i])
     overlap[overlap==0]=np.nan
     overlap[-1,-1]=0 # to make the output color correct
-
+    if bRIGHT:
+    	plt.clim(0,upper)
+    plt.xticks([])
+    plt.yticks([])
+    plt.title(name+ ", t-clustering")
     plt.imshow(overlap,cmap="Blues",alpha=.7)
     plt.savefig("../../images/"+name+"_t_overlay.png")
     plt.close()
@@ -96,12 +108,15 @@ for i in desired_index:
     ####################
     
     plt.imshow(present_3d(brain[::2,::2,:]),cmap="gray")
-
     plt.colorbar()
     overlap=present_3d(beta_all[...,i])
     overlap[overlap==0]=np.nan
     overlap[-1,-1]=0 # to make the output color correct
-
+    if bRIGHT:
+    	plt.clim(0,upper)
+    plt.xticks([])
+    plt.yticks([])
+    plt.title(name+ ", Beta-clustering")
     plt.imshow(overlap,cmap="Blues",alpha=.7)
     plt.savefig("../../images/"+name+"_beta_overlay.png")
     plt.close()
