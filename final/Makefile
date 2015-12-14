@@ -1,41 +1,29 @@
-.PHONY: smooth convolve glm normality conclusion analysis supp figs all clean 
+.PHONY: data images all clean 
 
-# FIX INDIVIDUAL COMMANDS
-smooth:
-	cd scripts && python smoothing.py
+data:
+	cd data_scripts && python smooth_final.py
+	cd data_scripts && python convolution_final.py
+	cd data_scripts && python selection_final.py
+	cd data_scripts && python glm_final.py
+	cd data_scripts && python hypothesis_final.py
+	cd data_scripts && python bh_t_beta_final.py
 
-convolve:
-	cd scripts && python convolution.py
-	
-glm:
-	cd scripts && python glm.py
-
-normality:
-	cd scripts && normality.python py
-
-conclusion:
-	cd scripts && python conclusion.py
-
-# FIX
-analysis:
-	make smooth
-	make convolve
-	make glm
-	make normality
-	make conclusion
-
-# FIX
-supp: 
-
-# FIX
-figs: 
-	cd scripts && python FILENAME
-	cd ../code && make figs
+images: 
+	cd image_scripts && python ben_final.py 
+	cd image_scripts && python bh_t_beta_plots.py 
+	cd image_scripts && python convolution_appendix_plots.py 
+	cd image_scripts && python image_overlay.py 
+	cd image_scripts && python lin_reg_plots.py 
+	cd image_scripts && python normality_final.py 
+	cd image_scripts && python parameter_selection_plots.py 
+	cd image_scripts && python pca_plots.py 
+	cd image_scripts && python selection_plots.py
+	cd image_scripts && python tsa_script.py
+	cd image_scripts && python ward_plots.py
 
 all: 
-	make analysis
-	make eda
-	make figs
+	make data
+	make images
 
 clean:
 	find . -name "*.so" -o -name "*.pyc" -o -name "*.pyx.md5" | xargs rm -f

@@ -7,8 +7,6 @@ from a linear model. Compares the results with and without masking and
 different levels of neighbor smoothing. 
 - `cluster.py`: Attempts agglomerative clustering on a single subject's 
 t-statistics. 
-- `convolution_appendix_plots.py`: Generates plots for the convolution 
-appendix in the paper. 
 - `event_related_HRF_script.py`: Compares the behavior of several different 
 convolution approaches. 
 - `get_pcs_script.py`: Obtains the principal components for the voxel by time 
@@ -17,12 +15,11 @@ matrix.
 early attempts at convolution. 
 - `hypothesis_script.py`: Performs t-tests on the resulting coefficients from 
 running linear regression on a single subject. 
-- `lin_reg_plots.py`: Generates plots relating to linear regression for the 
-paper. 
 - `mean_across.py`: Averages t-statistics per voxel from linear regression 
 across subjects. 
 - `model_selection.py`: Compares several different linear regression models 
 using AIC, BIC, and adjusted R-squared. 
+- `multiple_ways_imaging_script.py`: Visualizes the other cuts of the brain. 
 - `multi_regression_script.py`: Some earlier comparisons of different linear 
 regression models with different convolution approaches and inclusion of 
 conditions for a single subject. 
@@ -39,7 +36,6 @@ components of the voxel by time matrix for each subject.
 subject's linear regression coefficients. 
 - `time_shift_script.py`: Examines the effects of implementing a time 
 correction in the event-related voxel responses for a single subject. 
-- `tsa_script.py`: Fits a single voxel time course to an ARIMA process. 
 
 Additionally, `cluster.npy` and `cluster_mask.npy` are binary files storing 
 the unmasked and masked clustering data referenced in `cluster.py`.

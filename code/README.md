@@ -11,10 +11,6 @@ recommend looking at our `project-alpha/final` directory instead.
 
 - `make all`: Performs all intermediate data analysis. Does not include the 
 supplementary work rendered by `make misc`. 
-- `make figs`: Runs only the scripts needed to reproduce figures that are used 
-in the report and slides. Note that these figures is not exhaustive: please 
-navigate to `project-alpha/final` and run `make all` there to reproduce all 
-figures required for the report and slides. 
 - `make misc`: Generates supplementary work. More specifically, it renders an 
 iPython Notebook with early exploratory data analysis into a viewable HTML 
 file in the `utils/misc` subdirectory. 
@@ -38,5 +34,3 @@ analysis.
 All output figures are saved in `project-alpha/images`, which also caches the 
 figures required for the report and slides. These figures can be reproduced in 
 their entirety by navigating to `project-alpha/final` and running `make all`. 
-The `make figs` recipe in this directory only generates the figures used in 
-the report and slides that are output by scripts in this directory. 
