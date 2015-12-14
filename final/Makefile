@@ -1,4 +1,4 @@
-.PHONY: data images all clean 
+.PHONY: data images all clean  
 
 data:
 	cd data_scripts && python smooth_final.py
