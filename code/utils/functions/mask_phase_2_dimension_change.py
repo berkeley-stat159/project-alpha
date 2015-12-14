@@ -2,6 +2,7 @@
 # this file provides a way to mask data, then reduce it's dimensions 
 # (and then create the correct output after analysis is done on 1d to 2d data)
 
+from __future__ import absolute_import, division, print_function
 import numpy as np
 
 def masking_reshape_start(data, mask):

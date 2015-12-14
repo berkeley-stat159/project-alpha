@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function
 import numpy as np
 from glm import glm, glm_diagnostics, glm_multiple
 
