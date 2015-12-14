@@ -47,9 +47,9 @@ from benjamini_hochberg import bh_procedure
 
 #load data from regression
 
-p_3d = np.load("../data/p-values/"+name+"_pvalue_fourier.npy")
-t_3d = np.load("../data/t_stat/"+name+"_tstat_fourier.npy")
-beta_3d = np.load("../data/betas/"+name+"_beta_fourier.npy")
+p_3d = np.load("../data/p-values/"+name+"_pvalue.npy")
+t_3d = np.load("../data/t_stat/"+name+"_tstat.npy")
+beta_3d = np.load("../data/betas/"+name+"_beta.npy")
 
 #create mask
 mask = nib.load(path_to_data + '/anatomy/inplane001_brain_mask.nii.gz')

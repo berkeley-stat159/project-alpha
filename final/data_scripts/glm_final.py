@@ -11,7 +11,6 @@ For each subject, this function writes the data files for the t-values, p-values
 from __future__ import absolute_import, division, print_function
 import numpy as np
 import numpy.linalg as npl
-import matplotlib.pyplot as plt
 import nibabel as nib
 import pandas as pd # new
 import sys # instead of os
@@ -60,7 +59,6 @@ for i in sub_list:
     img = nib.load(smooth_data+ i +"_bold_smoothed.nii")
     data = img.get_data()    
         
-        
     n_vols = data.shape[-1]    
     convolve = np.loadtxt(hrf_data+i+"_hrf_all.txt")
     
@@ -92,12 +90,12 @@ for i in sub_list:
         beta,t,df,p = t_stat_mult_regression(data_slice, X)
         
         #take only first coefficient      
-        beta = beta[:,1]
         t = t[1,:]
         p = p[1,:]
         
         MRSS, fitted, residuals = glm_diagnostics(beta, X, data_slice)
 
+        beta = beta[:,1]
         
         #insert into the proper slice
         beta_final[:,:,j] = beta.reshape(data_slice.shape[:-1])
@@ -105,10 +103,10 @@ for i in sub_list:
         p_final[:,:,j] = p.reshape(data_slice.shape[:-1])        
         residual_final[:,:,j,:] = residuals.reshape(data_slice.shape)
         
-    np.save("../data/betas/"+i+"_beta_fourier.npy", beta_final)    
-    np.save("../data/t_stat/"+i+"_tstat_fourier.npy", t_final)
-    np.save("../data/residual/"+i+"_residual_fourier.npy", residual_final)
-    np.save("../data/p-values/"+i+"_pvalue_fourier.npy", p_final)
+    np.save("../data/betas/"+i+"_beta.npy", beta_final)    
+    np.save("../data/t_stat/"+i+"_tstat.npy", t_final)
+    np.save("../data/residual/"+i+"_residual.npy", residual_final)
+    np.save("../data/p-values/"+i+"_pvalue.npy", p_final)
     np.save("../data/X/"+i+"_covX.npy", np.cov(X.T))
 
      
