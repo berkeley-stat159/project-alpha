@@ -1,27 +1,28 @@
 """
-Script to run glm
+Final script to run glm.
 
-Design matrix takes into account conditions, drift, fourier and pca
+For each subject: this function writes the data files for the t-values, 
+    p-values, and residuals. The design matrix takes into account conditions,
+    drift, Fourier and pca.
 
-Also runs slice by slice in order to correct for time
+Note: Also runs slice by slice in order to correct for time.
 
-For each subject, this function writes the data files for the t-values, p-values, and residuals
 """
 
 from __future__ import absolute_import, division, print_function
 import numpy as np
 import nibabel as nib
-import pandas as pd # new
-import sys # instead of os
+import pandas as pd
+import sys
 import os
 
 
 # Relative path to subject all of the subjects
 
 project_path          = "../../"
-path_to_data          = project_path+"data/ds009/"
-location_of_images    = project_path+"images/"
-location_of_functions = project_path+"code/utils/functions/" 
+path_to_data          = project_path + "data/ds009/"
+location_of_images    = project_path + "images/"
+location_of_functions = project_path + "code/utils/functions/" 
 final_data            = "../data/"
 behav_suffix           = "/behav/task001_run001/behavdata.txt"
 smooth_data           =  final_data + 'smooth/'
@@ -41,33 +42,33 @@ from noise_correction import fourier_creation
 from hypothesis import t_stat_mult_regression, t_stat
 
 # Progress bar
-toolbar_width=len(sub_list)
+toolbar_width = len(sub_list)
 sys.stdout.write("GLM, :  ")
 sys.stdout.write("[%s]" % (" " * toolbar_width))
 sys.stdout.flush()
-sys.stdout.write("\b" * (toolbar_width+1))
+sys.stdout.write("\b" * (toolbar_width + 1))
 
 
 #Run GLM for each subject
 for i in sub_list:
     name = i 
-    behav=pd.read_table(path_to_data+name+behav_suffix,sep=" ")
+    behav = pd.read_table(path_to_data + name + behav_suffix, sep = " ")
     num_TR = float(behav["NumTRs"])    
-    img = nib.load(smooth_data+ i +"_bold_smoothed.nii")
+    img = nib.load(smooth_data + i + "_bold_smoothed.nii")
     data = img.get_data()    
         
     n_vols = data.shape[-1]    
-    convolve = np.loadtxt(hrf_data+i+"_hrf_all.txt")
+    convolve = np.loadtxt(hrf_data + i + "_hrf_all.txt")
     
     residual_final = np.zeros((data.shape))
     t_final = np.zeros((data.shape[:-1]))
     p_final = np.zeros((data.shape[:-1]))
     beta_final = np.zeros((data.shape[:-1]))
     
-    mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
+    mask = nib.load(path_to_data + i +'/anatomy/inplane001_brain_mask.nii.gz')
     mask_data = mask.get_data()
-    mask_data = make_mask(np.ones(data.shape[:-1]), mask_data, fit=True)
-    mask_data = mask_data!=0
+    mask_data = make_mask(np.ones(data.shape[:-1]), mask_data, fit = True)
+    mask_data = mask_data != 0
     mask_data = mask_data.astype(int)
 
 
@@ -75,36 +76,36 @@ for i in sub_list:
     #Run per slice in order to correct for time
     for j in range(data.shape[2]):
         
-        data_slice = data[:,:,j,:]
+        data_slice = data[:, :, j, :]
         
         #Create design matrix
-        X = np.ones((n_vols,9))
-        X[:,1] = convolve[:,j]
-        X[:,2] = np.linspace(-1,1,num=X.shape[0]) #drift
-        X[:,3:] = fourier_creation(n_vols,3)[:,1:]
+        X = np.ones((n_vols, 9))
+        X[:, 1] = convolve[:, j]
+        X[:, 2] = np.linspace(-1, 1, num = X.shape[0]) #drift
+        X[:, 3:] = fourier_creation(n_vols, 3)[:, 1:]
         
         
-        beta,t,df,p = t_stat_mult_regression(data_slice, X)
+        beta, t, df, p = t_stat_mult_regression(data_slice, X)
         
         #take only first coefficient      
-        t = t[1,:]
-        p = p[1,:]
+        t = t[1, :]
+        p = p[1, :]
         
         MRSS, fitted, residuals = glm_diagnostics(beta, X, data_slice)
 
-        beta = beta[:,1]
+        beta = beta[:, 1]
         
         #insert into the proper slice
-        beta_final[:,:,j] = beta.reshape(data_slice.shape[:-1])
-        t_final[:,:,j] = t.reshape(data_slice.shape[:-1])
-        p_final[:,:,j] = p.reshape(data_slice.shape[:-1])        
-        residual_final[:,:,j,:] = residuals.reshape(data_slice.shape)
+        beta_final[:, :, j] = beta.reshape(data_slice.shape[:-1])
+        t_final[:, :, j] = t.reshape(data_slice.shape[:-1])
+        p_final[:, :, j] = p.reshape(data_slice.shape[:-1])        
+        residual_final[:, :, j, :] = residuals.reshape(data_slice.shape)
         
-    np.save("../data/betas/"+i+"_beta.npy", beta_final)    
-    np.save("../data/t_stat/"+i+"_tstat.npy", t_final)
-    np.save("../data/residual/"+i+"_residual.npy", residual_final)
-    np.save("../data/p-values/"+i+"_pvalue.npy", p_final)
-    np.save("../data/X/"+i+"_covX.npy", np.cov(X.T))
+    np.save("../data/betas/" + i + "_beta.npy", beta_final)    
+    np.save("../data/t_stat/" + i + "_tstat.npy", t_final)
+    np.save("../data/residual/" + i + "_residual.npy", residual_final)
+    np.save("../data/p-values/" + i + "_pvalue.npy", p_final)
+    np.save("../data/X/" + i + "_covX.npy", np.cov(X.T))
 
      
     sys.stdout.write("-")
