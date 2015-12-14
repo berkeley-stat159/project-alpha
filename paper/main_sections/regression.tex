@@ -12,7 +12,7 @@ courses' Fourier series and principal components.
 \par Linear regression assumes a linear relationship between a response 
 vector $y$ and a design matrix of predictors $X$. Each element of $y$ 
 represents a single observed response, and each row of $X$ represents a 
-corresponding vector of predictor values. If including the intercept as a 
+corresponding vector of predictor values. If one including the intercept as a 
 term (as we have elected to do), the first column of the $X$ design matrix 
 should be a vector of $1$s. The linear model can then be expressed as: 
 
@@ -27,23 +27,7 @@ with length equal to the number of predictors in $X$ can be estimated with
 the closed-form solution:
 
 \begin{equation}
-\hat{\beta} =(X^T X)^{-1} y
-\end{equation}
-
-\par In our case, we actually want to fit a linear model to each individual 
-voxel's time course. Matrix algebra provides a convenient solution. Instead of 
-considering the time course for each voxel individually as a single $y$ 
-vector, we can instead consider the voxel $\times$ time matrix $Y$. Our model 
-is then:
-
-\begin{equation}
-Y = X\beta + \epsilon
-\end{equation}
-
-\noindent and our $\beta$ estimates are then also a matrix: 
-
-\begin{equation}
-\hat{\beta} =(X^T X)^{-1} Y^T
+\hat{\beta} =(X^T X)^{-1} X^T y
 \end{equation}
 
 \par Even when $(X^T X)$ is not invertible, $\hat{\beta}$ can be estimated 
@@ -52,11 +36,10 @@ non-unique value for $\hat{\beta}$.
 
 \par To consider the strength of the effects of these predictors, we will use 
 t-tests of the corresponding estimated coefficients for each voxel and 
-subject, as discussed under \textit{"Hypothesis Testing"}. The validity of the 
-model and of the ``p-values'' produced by performing these t-tests is 
-dependent on whether or not the many assumptions of the linear model are 
-actually met. In particular, we will discuss the assumption of normal errors 
-by analyzing the residuals in the \textit{"Normality Assumptions"} section. 
+subject, as discussed under \textit{"Hypothesis Testing"} \ref{hypothesis_testing}. The validity of the model and of the ``p-values'' produced by performing 
+these t-tests is dependent on whether or not the many assumptions of the 
+linear model are actually met. In particular, we will discuss the assumption 
+of normal errors by analyzing the residuals in the \textit{"Normality Assumptions"} section. 
 
 \subsubsection{More about potential features:}
 \par Other than the basic HR feature/features and a column of $1$s (to account 
@@ -135,36 +118,41 @@ The full fourier series is represent as the following:
 f(x) = \frac{1}{2} \cdot a_0 + \sum_{n=1}^{\infty} a_n \cdot cos(n x) + \sum_{n=1}^{\infty} b_n \cdot  sin(n x)
 \end{equation}
 
-\noindent but since strength of Fourier series strength comes from 
-orthogonality of the range, and we are looking for a function of the range 
-$(0, \text{num of TR})$, we change it to:
+\noindent Wanting to represent low level sinesoidal fluctuations, and since strength 
+of Fourier series strength comes from orthogonality of the range, and we are 
+looking for a function of the range $(0, \text{num of TR})$, we change it to:
 
 \begin{equation}
 f(x) = \frac{1}{2} \cdot a_0 + \sum_{n=1}^{\infty} a_n \cdot cos(\frac{n}{\text{num of TR}} x) + \sum_{n=1}^{\infty} b_n \cdot sin(\frac{n}{\text{num of TR}} x)
 \end{equation}
 
-\noindent We used $ + \sum_{n=1}^{2} a_n \cdot cos(\frac{n}{\text{num of TR}} x) + 
-\sum_{n=1}^{2} b_n \cdot sin(\frac{n}{\text{num of TR}} x)$ to be 4 features to try 
+\noindent We used $ \sum_{n=1}^{3} a_n \cdot cos(\frac{n}{\text{num of TR}} x) + 
+\sum_{n=1}^{3} b_n \cdot sin(\frac{n}{\text{num of TR}} x)$ to be 6 features to try 
 to get a low order sinusoidal fluxucations.
 
-\subsection{Model Selection}
+\subsection{Model Selection} \label{model_selection}
 
 \par In order to select the best set of features for our $X$ matrix, and also 
 compare the use of a single condition feature vs. each of the three different 
 types of conditions as three seperate features, we decided to utilize model 
-comparison; specificially, AIC, BIC, and Adjusted $R^2$ metrics. Using small 
+comparison metric; specificially, AIC, BIC, and Adjusted $R^2$ metrics. Using small 
 expressive subset of the subjects ($002$,$003$, and $014$) we abused the 
 metric's by averaging across all voxels and people.  We visualized values in 
-the Figures \ref{fig:AIC},\ref{fig:BIC}, and \ref{fig:adjr2}.
+the Figures \ref{fig:AIC},\ref{fig:BIC}, and \ref{fig:adjr2}. All these metrics 
+penalize the number of parameters with AIC and BIC better when smaller and 
+Adjusted $R^2$ is better when larger.
 
-\par From these plots, it can be observed that we don't gain much from adding
-the conditions seperated, and from the BIC, we decided that the Fourier
-features didn't add enough benefit to justify the increase of features. Thus, 
-we'll be using the model that includes a single HRF for all the conditions, 
-a linear drift feature, and the first 6 principal components. It is possible 
-that this will dangerously overfit, and even with these features we could have
-overfit beyond just the noise and into the territory of the hemodyamic 
-response.
+\par From these plots we can observe \textbf{(1)} seperating the conditions into
+individual features did not provide much gain in these metrics and \textbf{(2)}
+The inclusion of the 6 principle components tend to create better models than the 
+inclusion of the 6 fourier series features comparably. We initially interpreted 
+this as vote to include the first 6 principle components and not the fourier 
+features. Unfortunately, the 6 principle components for some subjects lead to 
+overfitting and collinearity w/ the HRF features. These problems tended to arise
+when the variance explained by the 6 principle components was a lot greater that .4.
+Overall, we went with the fourier features and we nicely observed similar t-
+statistics for the HRF feature in the models with the 6 principle components vs
+the 6 fourier features when the variance explained was ok ($\leq .4$).
 
 %\begin{table}
 %\centering
