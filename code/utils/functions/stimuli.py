@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function
 import numpy as np
 
 def events2neural(task_fname, tr, n_trs):
