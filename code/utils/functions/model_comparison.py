@@ -33,7 +33,7 @@ def adjR2(MRSS,y_1d,df,rank):
 
 def AIC(MRSS,y_1d,df,rank):
 	"""
-	Computes a single BIC value for a model (low is good) 
+	Computes a single AIC value for a model (low is good) 
 
 	Input:
 	------
@@ -92,7 +92,7 @@ def BIC(MRSS,y_1d,df,rank):
 ##### Second attempt (mult-dimensional)
 def AIC_2(MRSS_vec,y_2d,df,rank):
 	"""
-	Computes a single BIC value for a model (low is good) 
+	Computes a single AIC value for a model in vector form (low is good) 
 
 	Input:
 	------
@@ -118,7 +118,7 @@ def AIC_2(MRSS_vec,y_2d,df,rank):
 
 def BIC_2(MRSS_vec,y_2d,df,rank):
 	"""
-	Computes a single BIC value for a model (low is good) 
+	Computes a single BIC value for a model in vector form (low is good) 
 
 	Input:
 	------

@@ -1,0 +1,50 @@
+# ==== BEGIN Visualization of Masked data over original brain data ==== #
+# ==== No Mask, bh_procedure ==== #
+# ==== END No Mask, bh_procedure ==== #
+# ==== BEGIN varying the Q value = .005 (FDR) ==== #
+**** Oh no. No p-values smaller than upper bound FDR were found. ****
+# ==== END plot with Q = .005 done. ==== #
+# ==== BEGIN varying the Q value = .05 (FDR) ==== #
+**** Oh no. No p-values smaller than upper bound FDR were found. ****
+# ==== END plot with Q = .05 done. ==== #
+# ==== BEGIN varying the Q value = .10 (FDR) ==== #
+# ==== END plot with Q = .10 done. ==== #
+# ==== BEGIN the Q value = .25 (FDR) ==== #
+# ==== END plot with Q = .25 done. ==== #
+# ==== BEGIN the Q value = .5 (FDR) ==== #
+# ==== END plot with Q = .5 done. === #
+# ==== BEGIN mask_phase_2_dimension_change plotting (LOL) ==== #
+# ==== END mask_phase_2_dimension_change plotting ==== #
+# ==== BEGIN smoothed masked p-value plotting ==== #
+# == NEIGHBOR SMOOTHING 5
+# == NEIGHBOR SMOOTHING 10
+# ==== END smoothed masked p-value plotting ==== #
+********
+Timings for %timeit:
+{'testconv_np': '12 mu s (3 ms w/ stimulus)', 'testconv_4_1': '9.52 ms', 'testconv_4_15': '95.8 ms', 'testconv_3': '797 ms', 'testconv_5': '102 ms', 'testconv_4_30': '139 ms', 'testconv_2': '812 ms'}
+********
+********
+Timings for %timeit:
+{'conv_4_30': '185 ms', 'conv_5': '110 ms', 'conv_np': '14.4 mu s (3 ms + w/ stimulus)', 'conv_4_15': '98.3 ms per loop', 'conv_3': '1.15 s', 'conv_2': '972 ms'}
+********
+********
+Go check out those plots :) 
+********
+MRSS using 'my' convolution function: 104.62525582
+MRSS using np convolution function: 104.570947728
+MRSS using 'my' convolution function, 3rd degree polynomial: 122.052375208, but the chart looks better
+'my' convolution single regression (t,p):
+[[ 0.          0.          0.         ...,  1.67528721  0.03605441
+  -0.04166602]] [[ 0.5         0.5         0.5        ...,  0.04759837  0.48563466
+   0.48340001]]
+means of (t,p) for 'my' convolution: (0.03709186625260.258739291764)
+np convolution single regression (t,p):
+[[ 0.          0.          0.         ...,  1.04910614  0.39074063
+   0.2248324 ]] [[ 0.5         0.5         0.5        ...,  0.14759895  0.34816998
+   0.41115169]]
+means of (t,p) for np convolution: (0.044953135810.252542124409)
+[[ 694.16260181  617.56018335  574.62537891  619.00039148  579.86436408]
+ [ 693.41875457  616.25875021  572.75523607  617.5988728   577.72690938]]
+MRSS using multiple regression: 104.74383265
+Proportion of voxels with p-value above 0.05 (unmasked): 0.425257065717
+Proportion of voxels with p-value above 0.05 (masked): 0.684873070972
