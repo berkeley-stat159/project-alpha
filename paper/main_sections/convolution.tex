@@ -21,14 +21,14 @@ r(t)= \sum_{i=1}^n \psi_{i} \phi_{i}(t-t_i)
 in our case), and $\phi_{i}$ is the hemodynamic response started at the $i$th 
 stimulation ($t_i$).
 
-The five approaches we attempted can be divided into 3 subcategories: 
+The five approaches we attempted can be divided into three subcategories: 
 \textbf{(1)} a strict replication of equation \ref{eq:convolve}; \textbf{(2)} 
 a similar function as \textbf{(1)} that utilizes matrix multiplication; and 
-\textbf{(3)} a function that splits the intervals between each scan (2 seconds)
-into a certain number of even slices, then puts the stimulus into the closed 
-split, using \texttt{np.convolve} on this stimulus and a detailed hrf function,
-and then reducing the output back into the 2-second time intervals. Detailed 
-exploration of this matter can be found in the appendix.
+\textbf{(3)} a function that splits the intervals between each scan (two 
+seconds) into a certain number of even slices, then puts the stimulus into the 
+closed split, using \texttt{np.convolve} on this stimulus and a detailed hrf 
+function, and then reducing the output back into the two-second time intervals. 
+Detailed exploration of this matter can be found in the Appendix.
 
 We compared these methods based on accuracy and speed. [Figure 
 \ref{fig:convolution_a}] displaces accuracy comparison, and the table in 
@@ -98,11 +98,11 @@ the scan (assuming that each layer of the scan took 2/34 of a second).
 
 \subsubsection{Multiple Conditions}
 
-\par \indent Originally we used multiple regression to take into account the 3 
-different types of stimulus (pump, explode, cash-out) to see if the separation 
-of these stimuli can better describe the response. We did this by creating 
-separate predicted hemodynamic reponses for each to allow for different 
-amplitudes for each type of condition. As will be noted in the 
+\par \indent Originally we used multiple regression to take into account the 
+three different types of stimulus (pump, explode, cash-out) to see if the 
+separation of these stimuli can better describe the response. We did this by 
+creating separate predicted hemodynamic reponses for each to allow for 
+different amplitudes for each type of condition. As will be noted in the 
 \textit{Model selection} portion below we did not observe a large difference in
 the $\hat{\beta}$ values we got, so we did not continue with this exploration. 
 In figure \ref{fig:all_cond_time}, we can see the different conditions broken 
