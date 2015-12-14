@@ -8,6 +8,23 @@ all:
 	cd paper && make clean
 	make clean
 
+data:
+	cd  && make data 
+
+validate:
+	cd data && make validate 
+
+eda:
+	cd code && make all
+	cd code/utils/scripts && mv eda.txt ../../../
+
+analysis:
+	cd final && make all 
+
+report: 
+	cd paper && make all
+	cd paper && make clean
+
 clean:
 	find . -name "*.so" -o -name "*.pyc" -o -name "*.pyx.md5" | xargs rm -f
 
