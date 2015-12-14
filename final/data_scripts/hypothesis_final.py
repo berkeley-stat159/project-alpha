@@ -19,7 +19,6 @@ There are four different models we are going to test:
 from __future__ import absolute_import, division, print_function
 import numpy as np
 import numpy.linalg as npl
-import matplotlib.pyplot as plt
 import nibabel as nib
 import pandas as pd # new
 import sys # instead of os

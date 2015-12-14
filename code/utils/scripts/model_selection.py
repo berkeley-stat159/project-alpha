@@ -44,7 +44,7 @@ from hypothesis import t_stat_mult_regression
 
 
 #Choose which criteria
-input_var = raw_input("adjR2 or BIC or AIC: ")
+input_var = 'AIC'
 
 ##################################
 # Functions for different models #
@@ -446,4 +446,4 @@ np.mean(model8), np.mean(model9), np.mean(model10)])
 
 final = final.reshape((2,5))
 
-np.savetxt(input_var+'.txt', final)
+print(final)

@@ -21,7 +21,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 data = np.load('cluster_mask.npy')
 
-data_new = data[..., 10:15]
+data_new = data[..., 10:13]
 
 X = np.reshape(data_new, (-1, 1))
 
@@ -50,10 +50,10 @@ for i in range(data_new.shape[-1]):
     for l in range(n_clusters):
         plt.contour(label[...,i] == l, contours=1,
             colors=[plt.cm.spectral(l / float(n_clusters)), ],linewidths= 0.4)
-plt.xticks(())
-plt.yticks(())
-plt.show()
-
+    plt.xticks(())
+    plt.yticks(())
+    plt.savefig(location_of_images+"ward"+str(i)+'.png')
+    
 
 
 
