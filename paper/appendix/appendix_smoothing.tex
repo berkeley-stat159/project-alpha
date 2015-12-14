@@ -4,8 +4,8 @@
 images. At first, we played around with implementing a function similar 
 to a mean filter, where each voxel would be the average of a certain radius 
 of its neighbors. Ultimately, we decided to use a kernel with a Gaussian 
-(bell-like) shape. While it is a linear type of smoothing, like the mean-
-smoothing approach, the Gaussian filter is a stronger choice than the 
+(bell-like) shape. While it is a linear type of smoothing, like the 
+mean-smoothing approach, the Gaussian filter is a stronger choice than the 
 mean-smoothing because it is not as affected by sharp spikes in the data. 
 
 \par The property that makes the Gaussian filter a stronger and more 
@@ -22,13 +22,13 @@ the data. Additionally, Gaussian filters are non-negative for all voxel data.
 Thus, the output of smoothing the voxel data with a Gaussian filter will still 
 be a valid image. 
 
-\par In conclusion, we decided to go with the module for a Gaussian filter for 
-several reasons, the main one being that Gaussian filters can remove noise and 
-yet preserve the high frequency edges in the brain image data. Rather than use 
-a self-implemented mean filter function that would cause issues with high-
-frequency edge cases as well as conglomerating data into thoughtless averages, 
-a Gaussian filter handles these situations better because the smooth, bell-
-shaped curve of the convolution does not have a sharp cutoff at edges. The 
-Gaussian filter also distributes weighted averages across the voxels such that 
-the smoothing keeps high-frequency data points into consideration for the end 
+\par We decided to go with the module for a Gaussian filter for several reasons, 
+the main one being that Gaussian filters can remove noise yet preserve the high 
+frequency edges in the brain image data. Rather than using a self-implemented mean 
+filter function that would cause issues with high-frequency edge cases as well as 
+conglomerating data into thoughtless averages, we used a Gaussian filter which 
+handles these situations better because the smooth, bell-shaped curve of the 
+convolution does not have a sharp cutoff at edges. The Gaussian filter also 
+distributes weighted averages across the voxels such that the smoothing keeps 
+high-frequency data points into consideration for the end 
 product.
