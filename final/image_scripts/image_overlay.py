@@ -52,8 +52,8 @@ t_all[t_all!=1]=np.nan
 beta_all[beta_all!=1]=np.nan
 
 
-# subjects desired 3,6,7,11
-desired_index=[2,5,6,9]
+# subjects desired 1,3,6,7,11,23
+desired_index=[0,2,5,6,9,18]
 
 for i in desired_index:
     name=sub_list[i]
