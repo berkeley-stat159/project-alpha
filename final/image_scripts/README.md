@@ -25,5 +25,5 @@ and beta coefficients.
 - `selection_plots.py`: Generates plots related to selecting predictors for 
 linear models based on AIC, BIC, and adjusted R-squared. 
 - `tsa_script.py`: Fits a single voxel time course to an ARIMA process. 
-
+- `ward_plots.py`: Generates plots for hiearchical clustering using Ward's method. 
 
