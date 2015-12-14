@@ -1,5 +1,5 @@
 % tex file for clustering 
-\par The main part of our analysis comes from the comparisons between different 
+\par The main part of our analysis comes from different 
 implementations of procedures for multiple comparisons between the subjects.
 More specifically, we focused on an implementation of the Benjamini-Hochberg 
 procedure, the grouping of t-statistics, and the grouping of $\hat{\beta}$ 
@@ -7,18 +7,8 @@ values. We found appropriate parameters by observing the images at different
 points of input for each of the three analyses. The parameters that we played 
 around with include the false discovery rate, the cutoff value for significant 
 t-values and $\hat{\beta}$-values, and the number of neighbors that we wanted 
-smooth the data over in the analysis. The figure below illustrates the subtle
-differences between the varying values of parameter inputs:
-
-% Put in an image for playing around with parameters (Ben?)
-\begin{figure}[ht]
-
-	\centering
-	\includegraphics[width=.8\linewidth]{../images/Fitted_v_Actual.png} 
-	\caption{Fitted/Predicted vs Actual fMRI BOLD contrast}
-	\label{fig:fit_vs_act}
-
-\end{figure}
+smooth the data over in the analysis. We also explored hierarchical clustering
+using the ward metric, with a parameter of number of clusters.
 
 \subsubsection{Benjamini-Hochberg Correction}
 
@@ -142,3 +132,23 @@ the analysis that depended on the assumptions of normality. If the results of
 the t-statistics grouping function were to look very similar to the results of
 the $\hat{\beta}$ grouping procedure, then it would validate the normality 
 assumptions that the research paper made. 
+
+\subsubsection{Comparison of Clustering Techniques}
+Generally the clustering techniques for the multiple comparison and the 
+hierarchical clustering produces similar results, which can be seen if a 
+side by side comparison of the hierarchical clustering method using Ward
+against the quantile-based clustering algorithm for T-statistics (we've
+included the actual T-values as well in the center for comparisons) 
+[Figure \ref{fig:cluster_comparison}]
+
+
+
+% Put in an image for playing around with parameters (Ben?)
+\begin{figure}[ht]
+
+	\centering
+	\includegraphics[width=.8\linewidth]{../images/cluster_comparison.png} 
+	\caption{Clustering Comparison between WARD, t-statistics, and t-grouping}
+	\label{fig:cluster_comparison}
+
+\end{figure}
