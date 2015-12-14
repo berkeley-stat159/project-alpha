@@ -24,9 +24,14 @@ analysis performed on the voxel dataset.
 
 \par The Benjamini-Hochberg procedure was not the only analysis we did over the
 multiple subjects. After completing t-grouping with t-statistics, and value 
-grouping with beta values, we noticed that the variability between the subjects
-of the study is different between the Benjamini-Hochberg procedure outputs, and
-the t-statistics and beta value grouping procedure outputs.
+grouping with $\hat{\beta}$ values, we noticed that the variability between the
+subjects of the study is different between the Benjamini-Hochberg procedure 
+outputs, and the t-statistics and $\hat{\beta}$ value grouping procedure 
+outputs. Moreover, when performing the Benjamini-Hochberg procedure, along with
+the t-statistics grouping procedures, we did play around withs smoothing over 
+neighboring voxels. Ultimately, however, we decided to forgo the neighbor 
+smoothing to prevent loss of information in the plots that we generated in the 
+end.
 
 \subsubsection{Hierarchical Clustering}
 
@@ -96,23 +101,23 @@ experimenting with different values to see which values of cutoff points versus
 false discovery rates (the Q value in the Benjamini-Hochberg function) would 
 deliver similarly focused results.
 
-\subsubsection{Beta Grouping}
+\subsubsection{$\hat{\beta}$ Grouping}
 
 \par Using the same function that we created to group a certain subset of the 
-t-statistics, we also looked over the beta-values as a part of our analysis. 
-Much of what we know in statistics tells us that observing beta-values on top 
-of looking at t-statistics would not tell us much since the two variables are 
-not explicitly connected; however, the main reason why we decided it was of 
-utmost importance to look at both the t-statistics and the beta values is that 
-there might be a relationship between the trends in each respective variables'
-output to the cutoff point. 
+t-statistics, we also looked over the $\hat{\beta}$ values as a part of our 
+analysis. Much of what we know in statistics tells us that observing 
+$\hat{\beta}$ values on top of looking at t-statistics would not tell us much 
+since the two variables are not explicitly connected; however, the main reason 
+why we decided it was of utmost importance to look at both the t-statistics 
+and the $\hat{\beta}$ values is that there might be a relationship between the 
+trends in each respective variables' output to the cutoff point. 
 
 \par Granted, it is pretty clear that the t-statistics grouping is very similar
-to the Benjamini-Hochberg procedure. This is why the beta grouping portion of 
-the analysis was added on. Since beta values do not directly use normality 
-assumptions, we thought it would offer either a different angle on how to 
-approach analysis, or confirm the results found in the analysis that depended 
-on the assumptions of normality. If the results of the t-statistics grouping 
-function were to look very similar to the results of the beta grouping 
-procedure, then it would validate the normality assumptions that the research 
-paper made. 
+to the Benjamini-Hochberg procedure. This is why the $\hat{\beta}$ grouping 
+portion of the analysis was added on. Since $\hat{\beta}$ values do not 
+directly use normality assumptions, we thought it would offer either a 
+different angle on how to approach analysis, or confirm the results found in 
+the analysis that depended on the assumptions of normality. If the results of
+the t-statistics grouping function were to look very similar to the results of
+the $\hat{\beta}$ grouping procedure, then it would validate the normality 
+assumptions that the research paper made. 
