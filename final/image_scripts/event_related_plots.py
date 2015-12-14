@@ -18,7 +18,7 @@ import os
 location_of_project="../../"
 location_of_data=location_of_project+"data/ds009/" 
 location_of_subject001=location_of_data+"sub001/" 
-location_of_functions= "../functions/"
+location_of_functions = location_of_project+"code/utils/functions/" 
 location_of_our_data=location_of_project+"data/our_data/"
 condition_location=location_of_subject001+"model/model001/onsets/task001_run001/"
 bold_location=location_of_subject001+"BOLD/task001_run001/"
@@ -60,88 +60,6 @@ cond2=np.loadtxt(condition_location+"cond002.txt")
 cond3=np.loadtxt(condition_location+"cond003.txt")
 cond_all=np.loadtxt(condition_location+"cond_all.txt")
 
-
-
-
-
-##############                ##############
-############################################
-# i. Comparing convolution and np.convolve #
-############################################
-##############                ##############
-
-# i. Can the user-created functions match np.convolve in np.convolve territory
-
-TR = 2.5
-tr_times = np.arange(0, 30, TR)
-hrf_at_trs = np.array([hrf_single(x) for x in tr_times])
-
-n_vols = 173
-neural_prediction = events2neural(location_to_class_data+'ds114_sub009_t2r1_cond.txt',TR,n_vols)
-all_tr_times = np.arange(173) * TR
-
-
-##################
-# a. np.convolve #
-##################
-
-
-testconv_np = np.convolve(neural_prediction, hrf_at_trs) # hrf_at_trs sample data
-N = len(neural_prediction)  # N == n_vols == 173
-M = len(hrf_at_trs)  # M == 12
-testconv_np=testconv_np[:N]
-
-#####################
-# b. user functions #
-#####################
-
-#--------#
-# second #
-
-testconv_2 = convolution(all_tr_times,neural_prediction,hrf_single)
-
-
-#-------#
-# third #
-
-testconv_3 = convolution_specialized(all_tr_times,neural_prediction,
-	hrf_single,all_tr_times)
-
-
-#--------#
-# fourth #
-
-on_off = np.zeros(174)
-real_times,on_off[:-1] = np.linspace(0,432.5,173+1),neural_prediction
-hrf_function,TR,record_cuts= hrf_single, 2.5 ,np.linspace(0,432.5,173+1)
-#
-testconv_4_1 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=1)
-
-testconv_4_15 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=15)
-
-
-testconv_4_30 = np_convolve_30_cuts(real_times,on_off,hrf_function,TR,record_cuts,cuts=30)
-
-
-#-------#
-# fifth #
-
-testconv_5 = fast_convolution(all_tr_times,neural_prediction,fast_hrf,all_tr_times)
-
-
-
-test_names={"testconv_np": "12 mu s (3 ms w/ stimulus)",
-			"testconv_2": "812 ms",
-			"testconv_3": "797 ms",
-			"testconv_4_1": "9.52 ms",
-			"testconv_4_15": "95.8 ms",
-			"testconv_4_30": "139 ms",
-			"testconv_5":"102 ms"}		
-
-print("********")
-print("Timings for %timeit:")
-print(test_names)
-print("********")
 
 
 def create_stimuli_from_all_values(cond1,cond2,cond3):
