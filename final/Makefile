@@ -16,7 +16,7 @@ images:
 	cd image_scripts && python parameter_selection_plots.py 
 	cd image_scripts && python pca_plots.py 
 	cd image_scripts && python selection_plots.py
-	cd image_scripts && python tsa_script.py
+	cd image_scripts && python tsa_plots.py
 	cd image_scripts && python ward_plots.py
 
 all: 
@@ -24,4 +24,4 @@ all:
 	make images
 
 clean:
-	find . -name "*.so" -o -name "*.pyc" -o -name "*.pyx.md5" -o -name "*.npy" -o -name "*.txt" -o -name "*.nii" | xargs rm -f
+	find . -name "*.so" -o -name "*.pyc" -o -name "*.pyx.md5" | xargs rm -f

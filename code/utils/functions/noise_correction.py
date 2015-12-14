@@ -46,8 +46,9 @@ def fourier_creation(n,p):
 	return X
 
 def fourier_predict_underlying_noise(y_mean,p):
-	""" predicts the underlying noise using fourier series and glm
-
+	""" Diagnostics for the fourier creation function
+    Takes advantage of glm_diagnostics
+    
 	Parameters:
 	-----------
 	y_mean: 1 dimensional np.array
