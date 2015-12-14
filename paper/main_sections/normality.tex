@@ -3,12 +3,12 @@
 $\hat{\beta}$ values from the chosen linear regression model are largely 
 dependent on whether we can reasonably assume that the errors in our model 
 are independent and identically distributed from some normal distribution 
-mean zero and constant variance. We focus here on checking the normality 
+with mean zero and constant variance. We focus here on checking the normality 
 assumption. It is generally wise to use visualizations, such as residual vs. 
 fitted values plots and quantile-quantile plots to inspect residuals for 
 patterns and abnormalities. However, considering the sheer quantity of data 
-we are working with--- each of the 24 subjects has 64 $\times$ 64 $\times$ 34 
-voxels that can each in turn be fitted to a model--- visual inspection is 
+we are working with --- each of the 24 subjects has 64 $\times$ 64 $\times$ 34 
+voxels that can each in turn be fitted to a model --- visual inspection is 
 not practical. 
 
 For this reason, we turned to using the Shapiro-Wilk test for normality, 
