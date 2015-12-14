@@ -1,3 +1,7 @@
+"""
+Parameter selection for Benjamini Hochberg Analysis and T analysis.
+
+"""
 # Making a similarity metric for brain analysis.
 
 # we could use a "per voxel" variance sum((v_i-mean(v))^2)
@@ -18,14 +22,10 @@ import itertools
 import nibabel as nib
 import os
 
-# if you want to input the subject in 1 by 1 or randomly
-#sys.stdout.write(str(os.listdir("../../data/ds009")[1:])+"\n")
-#sys.stdout.write("*-----------------------------------------------* \n")
-#name = input("Subject name (like 'sub001'): ")
 
 name="sub001"
 
-
+#set up paths
 project_path          = "../../"
 path_to_data          = project_path+"data/ds009/"+name
 location_of_images    = project_path+"images/"
@@ -38,18 +38,20 @@ hrf_data              = final_data + 'hrf/'
 
 sys.path.append(location_of_functions)
 
-
+#Import functions
 from tgrouping import t_grouping_neighbor
 from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end, neighbor_smoothing,neighbor_smoothing_binary
 from Image_Visualizing import present_3d, make_mask
 from benjamini_hochberg import bh_procedure
 
 
+#load data from regression
+
 p_3d = np.load("../data/p-values/"+name+"_pvalue_fourier.npy")
 t_3d = np.load("../data/t_stat/"+name+"_tstat_fourier.npy")
 beta_3d = np.load("../data/betas/"+name+"_beta_fourier.npy")
 
-
+#create mask
 mask = nib.load(path_to_data + '/anatomy/inplane001_brain_mask.nii.gz')
 mask_data = mask.get_data()
 rachels_ones = np.ones((64, 64, 34))
@@ -57,14 +59,13 @@ fitted_mask = make_mask(rachels_ones, mask_data, fit = True)
 fitted_mask[fitted_mask>0]=1
 
 
-
+#set up parameters to test
 q1         = [.3,.25,.2,.15,.1]
 neighbors1 = [1,3,5,12,20]
 prod2      = [.25,.2,.15,.1,.05]
 neighbors2 = [1,3,5,12,20]
 prod3      = [.25,.2,.15,.1,.05]
 neighbors3 = [1,3,5,12,20]
-
 
 
 
@@ -205,7 +206,9 @@ for c,d in itertools.product(range(5),range(5)):
 	behind2[(c*64):((c+1)*64),(d*64):((d+1)*64)]=behind_t[...,15]
 
 
-
+#---------------------#
+#   T-analysis Plot   #
+#---------------------#
 
 plt.contour(present_t,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(behind2,interpolation="nearest",cmap="seismic")
@@ -223,7 +226,9 @@ plt.ylabel("Proportion")
 plt.savefig(location_of_images+"_"+name+"_"+"t_compare_15_plus_contours.png")
 plt.close()
 
-
+#---------------------------------------#
+#   Absolute value of T-analysis Plot   #
+#---------------------------------------#
 plt.contour(present_t,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(np.abs(behind2),interpolation="nearest",cmap="Reds")
 plt.clim(0,np.max(abs(behind)))
@@ -256,8 +261,6 @@ plt.close()
 
 
 
-
-
 #################
 # Beta Analysis #
 #################
@@ -285,11 +288,10 @@ for e,f in itertools.product(range(5),range(5)):
 		count_e+=1
 sys.stdout.write("\n")
 
+
 #------------------#
 # Image comparison #
 #------------------#
-
-
 
 present_beta = np.ones((5*64,5*64))
 behind3= np.ones((5*64,5*64))
@@ -300,6 +302,9 @@ for e,f in itertools.product(range(5),range(5)):
 	behind3[(e*64):((e+1)*64),(f*64):((f+1)*64)]=behind_beta[...,15]
 
 
+#------------------------#
+#     Beta-value Plot    #
+#------------------------#
 
 plt.contour(present_beta,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(behind3,interpolation="nearest",cmap="seismic")
@@ -316,7 +321,9 @@ plt.ylabel("Proportion")
 plt.savefig(location_of_images+"_"+name+"_"+"beta_compare_15_plus_contours.png")
 plt.close()
 
-
+#---------------------------------------#
+#   Absolute value of beta-value Plot   #
+#---------------------------------------#
 plt.contour(present_beta,interpolation="nearest",colors="k",alpha=1)
 plt.imshow(np.abs(behind3),interpolation="nearest",cmap="Reds")
 plt.title("abs(Beta- values) on slice 15 and contours *"+name+"* \n (with varying proportions and # neighbors)")

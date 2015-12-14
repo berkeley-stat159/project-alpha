@@ -1,3 +1,31 @@
+"""
+Tests 10 different models and selects best one using AIC, BIC and Adjusted R2
+
+Our design matrix includes a subset of the following features:
+hrf (simple): a single HRF for all the conditions
+hrf: 3 HRF for each condition
+drift: linear drift correction
+fourier: time courses' Fourier series
+pca: principal components
+
+Below our the models that we tests:
+
+Model 1: hrf (simple)
+Model 2: hrf (simple) + drift
+Model 3: hrf (simple)  + drift + fourier
+Model 4: hrf (simple)  + drift + pca 6
+Model 4.5: hrf (simple)  + drift + pca 4
+Model 5: hrf (simple)  + drift + pca 6 + fourier
+Model 6: hrf
+Model 7: hrf + drift
+Model 8: hrf + drift + fourier
+Model 9: hrf + drift + pca 6
+Model 9.5: hrf + drift + pca 4
+Model 10: hrf + drift + pca 6 + fourier
+
+Ultimately, we chose model 4 to be the best model.
+"""
+
 from __future__ import absolute_import, division, print_function
 import numpy as np
 import numpy.linalg as npl
@@ -96,7 +124,9 @@ elif input_var == 'AIC':
 
 toolbar_width=34
 
-#LOAD THE DATA In
+#Load data in
+#We compared on subjects 2,3, and 14 as we believed they were represenatative of the entire data set
+
 for i in ['sub002','sub003','sub014']:
 
     sys.stdout.write(i+": "+"[%s]" % (" " * toolbar_width))
@@ -167,7 +197,7 @@ for i in ['sub002','sub003','sub014']:
         ###################
         #   MODEL 1       #
         ###################
-        # 1.1 hrf (simple)
+        # hrf (simple)
 
         beta1,t,df1,p = t_stat_mult_regression(data_slice, X[:,0:2])
     
@@ -194,7 +224,7 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 2       #
         ###################
 
-        # 1.2 hrf + drift
+        # hrf + drift
 
         beta2,t,df2,p = t_stat_mult_regression(data_slice, X[:,0:3])
     
@@ -270,7 +300,7 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 4_5       #
         ###################
 
-        # 1.4 hrf + drift + pca 4
+        #hrf + drift + pca 4
 
         beta4_5,t,df4_5,p = t_stat_mult_regression(data_slice, X[:,[0,1,2,7,10,11,12]])
     
@@ -293,7 +323,7 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 5       #
         ###################
 
-        # 1.5 hrf + drift + pca 6 + fourier
+        #hrf + drift + pca 6 + fourier
 
         beta5,t,df5,p = t_stat_mult_regression(data_slice, X)
     
@@ -319,7 +349,7 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 6       #
         ###################
 
-        # 2.1 hrf
+        #hrf
 
         beta6,t,df6,p = t_stat_mult_regression(data_slice, X_cond[:,0:4])
 
@@ -344,7 +374,7 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 7       #
         ###################
 
-        # 2.2 hrf + drift
+        #hrf + drift
 
         beta7,t,df7,p = t_stat_mult_regression(data_slice, X_cond[:,0:5])
 
@@ -370,7 +400,7 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 8       #
         ###################
 
-        # 2.3 hrf + drift + fourier
+        #hrf + drift + fourier
 
 
         beta8,t,df8,p = t_stat_mult_regression(data_slice, X_cond[:,0:11])
@@ -397,7 +427,7 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 9       #
         ###################
 
-        # 2.4 hrf + drift + pca 6
+        #hrf + drift + pca 6
 
 
         beta9,t,df9,p = t_stat_mult_regression(data_slice, X_cond[:,list(range(5))+list(range(11,17))])
@@ -424,7 +454,7 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 9_5       #
         #####################
 
-        # 2.4 hrf + drift + pca 4
+        #hrf + drift + pca 4
 
 
         beta9_5,t,df9_5,p = t_stat_mult_regression(data_slice, X_cond[:,list(range(5))+list(range(11,15))])
@@ -451,7 +481,7 @@ for i in ['sub002','sub003','sub014']:
         #   MODEL 10       #
         ###################
 
-        # 2.5 hrf + drift + pca 6 + fourier
+        #hrf + drift + pca 6 + fourier
         beta10,t,df10,p = t_stat_mult_regression(data_slice, X_cond)
 
         MRSS10, fitted, residuals = glm_diagnostics(beta10, X_cond, data_slice)
@@ -493,8 +523,6 @@ np.mean(bic_8), np.mean(bic_9),np.mean(bic_9_5), np.mean(bic_10)])
 adjr2_hold = np.array([np.mean(adjr2_1), np.mean(adjr2_2), np.mean(adjr2_3), np.mean(adjr2_4), np.mean(adjr2_4_5), np.mean(adjr2_5), np.mean(adjr2_6), np.mean(adjr2_7),
 np.mean(adjr2_8), np.mean(adjr2_9),np.mean(adjr2_9_5), np.mean(adjr2_10)])  
 
-#np.savetxt('../data/model_comparison/'+ input_var+'.txt', final)
-
 aic_hold=aic_hold.reshape((2,6))
 bic_hold=bic_hold.reshape((2,6))
 adjr2_hold=adjr2_hold.reshape((2,6))
@@ -511,6 +539,12 @@ aic=np.loadtxt("../data/model_comparison/AIC_2.txt")
 bic=np.loadtxt("../data/model_comparison/BIC_2.txt")
 adjR2=np.loadtxt("../data/model_comparison/adjR2_2.txt")
 
+
+
+##################
+# First AIC PLOT #
+##################
+
 plt.plot([1,2,3,4,4.5,5],aic[0,:],label="all conditions together")
 plt.plot([1,2,3,4,4.5,5],aic[1,:],label="individual conditions")
 plt.title("AIC")
@@ -518,12 +552,21 @@ plt.legend(loc='upper right', shadow=True,fontsize="smaller")
 plt.savefig('../../images/aic.png')
 plt.close()
 
+###################
+# First  BIC PLOT #
+###################
+
 plt.plot([1,2,3,4,4.5,5],bic[0,:],label="all conditions together")
 plt.plot([1,2,3,4,4.5,5],bic[1,:],label="individual conditions")
 plt.title("BIC")
 plt.legend(loc='upper right', shadow=True,fontsize="smaller")
 plt.savefig('../../images/bic.png')
 plt.close()
+
+
+##########################
+# First Adjusted R2 Plot #
+##########################
 
 plt.plot([1,2,3,4,4.5,5],adjR2[0,:],label="all conditions conditions")
 plt.plot([1,2,3,4,4.5,5],adjR2[1,:],label="individual conditions")
@@ -548,6 +591,11 @@ aic_better[:,3],aic_better[:,4]     = aic[:,4],aic[:,3]
 bic_better[:,3],bic_better[:,4]     = bic[:,4],bic[:,3]
 adjR2_better[:,3],adjR2_better[:,4] = adjR2[:,4],adjR2[:,3]
 
+
+#####################
+# Improved AIC PLOT #
+#####################
+
 plt.plot(np.arange(6)+1,aic_better[0,:],label="all conditions together",linestyle='-', marker='o')
 plt.plot(np.arange(6)+1,aic_better[1,:],label="individual conditions",linestyle='-', marker='o')
 x=np.arange(6)+1
@@ -560,6 +608,10 @@ plt.legend(loc='upper right', shadow=True,fontsize="smaller")
 plt.savefig('../../images/aic_better.png',bbox_inches='tight')
 plt.close()
 
+#####################
+# Improved BIC PLOT #
+#####################
+
 plt.plot(np.arange(6)+1,bic_better[0,:],label="all conditions together",linestyle='-', marker='o')
 plt.plot(np.arange(6)+1,bic_better[1,:],label="individual conditions",linestyle='-', marker='o')
 x=np.arange(6)+1
@@ -571,6 +623,11 @@ plt.title("BIC")
 plt.legend(loc='upper right', shadow=True,fontsize="smaller")
 plt.savefig('../../images/bic_better.png',bbox_inches='tight')
 plt.close()
+
+
+##########################
+# Improved Adjusted R2 Plot #
+##########################
 
 plt.plot(np.arange(6)+1,adjR2_better[0,:],label="all conditions together",linestyle='-', marker='o')
 plt.plot(np.arange(6)+1,adjR2_better[1,:],label="individual conditions",linestyle='-', marker='o')

@@ -110,6 +110,7 @@ for i, name in enumerate(sub_list):
 
 sys.stdout.write("\n")
 
+
 # mean_across for all the process outputs for each subject
 final_bh = np.mean(bh_mean, axis = 3)
 np.save("../data/bh_t_beta/bh_all.npy",bh_mean)
@@ -125,21 +126,30 @@ np.save("../data/bh_t_beta/final_beta_average.npy", final_beta)
 np.save("../data/bh_t_beta/beta_all.npy",beta_mean)
 
 
-# plot/save the result (BH)
+#####################################
+# Benjamini Hochberg Plots Q = 0.25 #
+#####################################
+
 plt.imshow(present_3d(final_bh), interpolation = 'nearest', cmap = 'seismic')
 plt.title("Mean BH Value Across 25 Subjects with Q = .25")
 plt.colorbar()
 plt.savefig("../../images/bh_mean_final.png")
 plt.close()
 
-# plot/save the result (t)
+######################################
+# T-statistic Plots Proportion = 0.1 #
+######################################
+
 plt.imshow(present_3d(final_t), interpolation = 'nearest', cmap = 'seismic')
 plt.title("Mean t_grouping Value Across 25 Subjects with proportion = .1")
 plt.colorbar()
 plt.savefig("../../images/tgroup_mean_final.png")
 plt.close()
 
-# plot/save the result (beta)
+######################################
+# Beta-value Plots Proportion = 0.2  #
+######################################
+
 plt.imshow(present_3d(final_beta), interpolation = 'nearest', cmap = 'seismic')
 plt.title("Mean beta_grouping Value Across 25 Subjects with proportion = .2")
 plt.colorbar()

@@ -91,20 +91,20 @@ for i in sub_list:
         
         beta,t,df,p = t_stat_mult_regression(data_slice, X)
         
+        #take only first coefficient      
+        beta = beta[:,1]
         t = t[1,:]
         p = p[1,:]
         
         MRSS, fitted, residuals = glm_diagnostics(beta, X, data_slice)
+
         
-
-
-
-        beta = beta[:,1]
-        
+        #insert into the proper slice
         beta_final[:,:,j] = beta.reshape(data_slice.shape[:-1])
         t_final[:,:,j] = t.reshape(data_slice.shape[:-1])
         p_final[:,:,j] = p.reshape(data_slice.shape[:-1])        
         residual_final[:,:,j,:] = residuals.reshape(data_slice.shape)
+        
     np.save("../data/betas/"+i+"_beta_fourier.npy", beta_final)    
     np.save("../data/t_stat/"+i+"_tstat_fourier.npy", t_final)
     np.save("../data/residual/"+i+"_residual_fourier.npy", residual_final)
@@ -114,8 +114,6 @@ for i in sub_list:
      
     sys.stdout.write("-")
     sys.stdout.flush()
-
-
 
 
 

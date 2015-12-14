@@ -13,7 +13,8 @@ should plan accordingly for space and download time.
 - `make testing_data`: Downloads three data files from the ds114 OpenfMRI data 
 set, hosted at jarrodmillman.com. These are the data files that we worked on 
 in class, and will be used in this project strictly for testing functions. All 
-downloaded files will be located in the `ds114` subdirectory. 
+downloaded files will be located in the `ds114` subdirectory. The three data 
+files together use 42.5 MB of space, so download time should be reasonable.
 
 - `make validate`: Validates the ds009 data after downloading it via 
 `make data`. Checks if all files are present and have the correct hash, based 

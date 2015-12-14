@@ -1,3 +1,10 @@
+"""
+Runs PCA analysis for the data.
+
+These principal components will later be used in 
+our design matrix for the final model
+"""
+
 from __future__ import absolute_import, division, print_function
 import numpy as np
 import numpy.linalg as npl
@@ -84,6 +91,10 @@ for j in range(len(sub_list)):
         hand_un = mlines.Line2D([], [], color='b', label='Not Masked')
         hand_mask = mlines.Line2D([], [], color='r', label='Masked')
 
+        
+        #####################
+        # Initial PCA Plots #
+        #####################
         # PCA analysis on unmasked data: 
         # Do SVD on the time by time matrix and get explained variance.
         U, S, VT = npl.svd(data_2d.T.dot(data_2d))
@@ -110,8 +121,10 @@ masked_cumsums_array = masked_var_array.cumsum(0)
 ##########################
 # Boxplots of components #
 ##########################
+
 plt.boxplot(masked_cumsums_array.T)
 plt.scatter(np.ones((24,10))*np.arange(1,11), masked_cumsums_array.T)
+
 plt.grid()
 plt.axhline(y=0.4, color='k', linestyle="--")
 plt.xlabel("Principal Components")
