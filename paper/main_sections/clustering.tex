@@ -1,13 +1,13 @@
 % tex file for clustering 
 \par The main part of our analysis comes from the comparisons between different 
 implementations of procedures for multiple comparisons between the subjects.
-More specifically, we focused on an implementation of the Benjamini-Hochberg 
+More specifically, we focus on an implementation of the Benjamini-Hochberg 
 procedure, the grouping of t-statistics, and the grouping of $\hat{\beta}$ 
-values. We found appropriate parameters by observing the images at different 
-points of input for each of the three analyses. The parameters that we played 
+values. We find appropriate parameters by observing the images at different 
+points of input for each of the three analyses. The parameters that we play 
 around with include the false discovery rate, the cutoff value for significant 
 t-values and $\hat{\beta}$-values, and the number of neighbors that we wanted 
-smooth the data over in the analysis. The figure below illustrates the subtle
+to smooth the data over in the analysis. The figure below illustrates the subtle
 differences between the varying values of parameter inputs:
 
 % Put in an image for playing around with parameters (Ben?)
@@ -23,25 +23,25 @@ number of Type I errors are called FDR-controlling procedures. In the grand
 scheme of things, FDR-controlling procedures give greater statistical power 
 with the cost of more Type I errors that can fall through. 
 
-\par Once we implemented the hypothesis function that would return t-test 
-values and ``p-values'', we implemented the Benjamini-Hochberg procedure to 
+\par Once we implemented the hypothesis function that return t-test 
+values and ``p-values'', we implement the Benjamini-Hochberg procedure to 
 control the proportion of rejected null hypotheses in the data. The Benjamini-
 Hochberg procedure works by multiplying each of the ``p-values'' to a ratio of 
 the number of tests and the chosen false discovery rate -- from these adjusted 
 ``p-values'', only the values that are less than the chosen false discovery 
 rate will be chosen to be returned. This way, we are able to adjust the 
 proportion of null hypotheses that will be rejected and the proportion that 
-will return the desired proportion of significant tests. This will reduce the
+will return the desired proportion of significant tests. This reduces the
 number of false positives returned in the data and extend greater statistical 
 power in later analysis performed on the voxel dataset.
 
-\par The Benjamini-Hochberg procedure was not the only analysis we did over the
+\par The Benjamini-Hochberg procedure is not the only analysis we did over the
 multiple subjects. After completing t-grouping with t-statistics, and value 
 grouping with $\hat{\beta}$ values, we noticed that the variability between the
 subjects of the study is different between the Benjamini-Hochberg procedure 
 outputs, and the t-statistics and $\hat{\beta}$ value grouping procedure 
 outputs. Moreover, when performing the Benjamini-Hochberg procedure, along with
-the t-statistics grouping procedures, we did play around withs smoothing over 
+the t-statistics grouping procedures, we did play around with smoothing over 
 neighboring voxels. Ultimately, however, we decided to forgo the neighbor 
 smoothing to prevent loss of information in the plots that we generated in the 
 end.
@@ -49,9 +49,9 @@ end.
 \subsubsection{Hierarchical Clustering}
 
 \par Now that we have the cross-subject average t-statistics for every voxel 
-in the brain, we are left with a 3-d array of t-statistics that contain both 
+in the brain, we are left with a 3-D array of t-statistics that contain both 
 negative and positive values. Instead of manually observing patterns in these 
-images, we instead implemented a clustering algorithm to split the entire 3-d 
+images, we instead implement a clustering algorithm to split the entire 3-D 
 image into clusters based on the voxels' relative location to each other as 
 well as the values of their t-statistics.
 
@@ -61,7 +61,7 @@ agglomerative hierarchical cluster using Ward's method. Agglomerative means
 that the clusters are built bottom up with each observation starting as its
 own cluster and pairs being moved up the hierarchy. Ward's method creates
 clusters based on a minimum variance criterion that minimizes the total
-within-cluster variances. An example of this implementation for a 2-d image is
+within-cluster variances. An example of this implementation for a 2-D image is
 seen here: 
 \url{http://scikit-learn.org/stable/auto_examples/cluster/plot_lena_ward_segmen
 tation.html}.
@@ -75,8 +75,8 @@ take into account this extra dimension.
 \par Ultimately, the goal of clustering is to have a better understanding of 
 which parts of the brain are related to the signal based on the t-statistics 
 from performing hypothesis tests on the coefficients from linear regression.
-Once we obtain our clusters, we will both measure the inside-cluster mean of
-the t-statistics as well measure the centroids of the clusters. By doing this,
+Once we obtain our clusters, we measure both the inside-cluster mean of
+the t-statistics as well as the centroids of the clusters. By doing this,
 we hope to see the parts of the brain that have the strongest relationship with
 the signal and compare them to the results of the original research paper.
 
@@ -98,7 +98,7 @@ t-statistics grouping analysis performed as well, if not better, than the
 
 \par Since the magnitude from zero represents how significant the test is for
 t-statistics, we collected the absolute value t-statistics that were above a 
-certain threshold. This was the opposite of the procedure for finding the 
+certain threshold. This is the opposite of the procedure for finding the 
 significant tests in the Benjamini-Hochberg process. The threshold, also called
 the cutoff in the scripts that were written when developing this process, is 
 calculated in a very similar fashion to the Benjamini-Hochberg false discovery 
@@ -117,7 +117,7 @@ deliver similarly focused results.
 \subsubsection{$\hat{\beta}$ Grouping}
 
 \par Using the same function that we created to group a certain subset of the 
-t-statistics, we also looked over the $\hat{\beta}$ values as a part of our 
+t-statistics, we also look over the $\hat{\beta}$ values as a part of our 
 analysis. Much of what we know in statistics tells us that observing 
 $\hat{\beta}$ values on top of looking at t-statistics would not tell us much 
 since the two variables are not explicitly connected; however, the main reason 
