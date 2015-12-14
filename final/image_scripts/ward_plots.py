@@ -43,14 +43,19 @@ t_stat = np.load(t_data+i+"_tstat.npy")
 mask = nib.load(path_to_data+i+'/anatomy/inplane001_brain_mask.nii.gz')
 mask_data = mask.get_data()
 
-data_new= make_mask(t_stat, mask_data, fit=True)[...,19:22]
+ones = np.ones((64,64,34))
+fitted_mask = make_mask(ones, mask_data, fit = True)
+fitted_mask[fitted_mask > 0] = 1
+
+data_new= t_stat*fitted_mask
+data_new = data_new[...,19:22]
 
 
 X = np.reshape(data_new, (-1, 1))
 
 connectivity = grid_to_graph(n_x= data_new.shape[0], n_y = data_new.shape[1], n_z = data_new.shape[2])
 
-n_clusters = 3 # number of regions
+n_clusters = 5 # number of regions
 ward = AgglomerativeClustering(n_clusters=n_clusters,
         linkage='ward', connectivity=connectivity).fit(X)
 label = np.reshape(ward.labels_, data_new.shape)
@@ -66,7 +71,7 @@ center = list()
 total=np.zeros((3*64,3*64))
 
 ward = label
-t_stat = t_stat
+t_final = data_new
 
 prop_t = 0.15
 
@@ -76,17 +81,31 @@ fitted_mask[fitted_mask > 0] = 1
 neighbors=1
 t_cluster = t_grouping_neighbor(t_stat, fitted_mask, prop_t, neighbors = neighbors, prop = True, abs_on = True, binary = True, off_value = 0, masked_value = .5)[0]
 t_cluster = t_cluster[...,19:22]
-t_final = t_stat[...,19:22]
+
+
+t_final_abs_max = np.max(abs(t_final))
+
+
+
+
 
 for i in range(ward.shape[-1]):
-    total[(i*64):((i+1)*64),0:64]=ward[...,i]
+    total[(i*64):((i+1)*64),0:64]=ward[...,i]*1/5 - 1/5
     
 for i in range(t_final.shape[-1]):
-    total[(i*64):((i+1)*64),64:128]=t_final[...,i]
+    total[(i*64):((i+1)*64),64:128]=t_final[...,i]*1/t_final_abs_max 
     
 for i in range(t_cluster.shape[-1]):
-    total[(i*64):((i+1)*64),128:192]=t_cluster[...,i]
+    total[(i*64):((i+1)*64),128:192]=t_cluster[...,i] -1/2
 
+plt.close()
+
+plt.imshow(total,cmap="seismic")
+plt.clim(-1,1)
+plt.xticks([32,96,160],["Ward","T statistics","T grouping \n clustering"])
+plt.yticks([32,96,160],["Slice 19","Slice 20","Slice 21"])
+plt.savefig(location_of_images+"cluster_comparison.png")
+plt.close()
 
 
 
