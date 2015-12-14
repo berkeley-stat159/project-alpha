@@ -2,7 +2,7 @@
 Script to create plots for Hiearchical clustering using Ward's method
 """
 
-
+from __future__ import absolute_import, division, print_function
 import numpy as np
 import matplotlib.pyplot as plt
 import nibabel as nib
@@ -68,6 +68,7 @@ center = list()
 ########## Final Output    ##########
 #####################################
 
+#Create final output.
 total=np.zeros((3*64,3*64))
 
 ward = label
@@ -87,8 +88,6 @@ t_final_abs_max = np.max(abs(t_final))
 
 
 
-
-
 for i in range(ward.shape[-1]):
     total[(i*64):((i+1)*64),0:64]=ward[...,i]*1/5 - 1/5
     
@@ -99,6 +98,10 @@ for i in range(t_cluster.shape[-1]):
     total[(i*64):((i+1)*64),128:192]=t_cluster[...,i] -1/2
 
 plt.close()
+
+#####################################
+### Plot for comparing clusters #####
+#####################################
 
 plt.imshow(total,cmap="seismic")
 plt.clim(-1,1)

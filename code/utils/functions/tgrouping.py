@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function
 from mask_phase_2_dimension_change import neighbor_smoothing 
 from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end
 import numpy as np

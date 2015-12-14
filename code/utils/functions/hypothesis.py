@@ -1,4 +1,5 @@
 #hypothesis testing function
+from __future__ import absolute_import, division, print_function
 from scipy.stats import t as t_dist
 from glm import glm, glm_multiple
 import numpy as np
