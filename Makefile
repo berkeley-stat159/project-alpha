@@ -9,7 +9,7 @@ all:
 	make clean
 
 data:
-	cd  && make data 
+	cd data && make data 
 
 validate:
 	cd data && make validate 

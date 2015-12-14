@@ -2,9 +2,9 @@
 
 The Makefile contains recipes to perform the final analysis. 
 
-- `make data`: Performs the all final data analysis that generates data files, 
-which are saved to the `data` subdirectory. Many large data files are created 
-from this command. 
+- `make data`: Performs the all final data analysis that generates data files,
+which are saved to the `data` subdirectory. Approximately 14 GB of data is
+created by this command..
 - `make images`: Performs all the final data analysis that generates images, 
 which are saved to `project-alpha/images`. This includes all figures required 
 for the report and slides. For convenience, images required for the report and 

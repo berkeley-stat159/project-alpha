@@ -5,7 +5,6 @@ data:
 	cd data_scripts && python convolution_final.py
 	cd data_scripts && python selection_final.py
 	cd data_scripts && python glm_final.py
-	cd data_scripts && python hypothesis_final.py
 	cd data_scripts && python bh_t_beta_final.py
 
 images: 
