@@ -8,6 +8,7 @@ Run with:
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
 
+from __future__ import absolute_import, division, print_function
 import numpy as np
 import matplotlib.pyplot as plt
 import nibabel as nib

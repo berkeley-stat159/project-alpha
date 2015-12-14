@@ -3,6 +3,7 @@ Run with:
     python tgrouping_script.py
 """
 # Loading modules.
+from __future__ import absolute_import, division, print_function
 import os
 import numpy as np
 from scipy.stats import gamma

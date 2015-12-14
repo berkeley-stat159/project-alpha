@@ -6,6 +6,7 @@ corresponding file in the functions or tests directories. If writing
 additional functions becomes necessary, I will implement and test them 
 as needed. 
 """
+from __future__ import absolute_import, division, print_function
 import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
