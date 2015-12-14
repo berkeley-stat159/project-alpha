@@ -89,13 +89,13 @@ t_final_abs_max = np.max(abs(t_final))
 
 
 for i in range(ward.shape[-1]):
-    total[(i*64):((i+1)*64),0:64]=ward[...,i]*1/5 - 1/5
+    total[(i*64):((i+1)*64),0:64]=ward[...,i]*1/5 - 2/5 # centering around 0
     
 for i in range(t_final.shape[-1]):
-    total[(i*64):((i+1)*64),64:128]=t_final[...,i]*1/t_final_abs_max 
+    total[(i*64):((i+1)*64),64:128]=t_final[...,i]*1/t_final_abs_max # centering around 0
     
 for i in range(t_cluster.shape[-1]):
-    total[(i*64):((i+1)*64),128:192]=t_cluster[...,i] -1/2
+    total[(i*64):((i+1)*64),128:192]=t_cluster[...,i] -1/2 # centering around 0
 
 plt.close()
 
@@ -105,8 +105,9 @@ plt.close()
 
 plt.imshow(total,cmap="seismic")
 plt.clim(-1,1)
-plt.xticks([32,96,160],["Ward","T statistics","T grouping \n clustering"])
+plt.xticks([32,96,160],["Ward\n(5 clusters)","T statistics","T grouping clustering \n  (.15 cutoff)"])
 plt.yticks([32,96,160],["Slice 19","Slice 20","Slice 21"])
+plt.title("Subject 001")
 plt.savefig(location_of_images+"cluster_comparison.png")
 plt.close()
 
