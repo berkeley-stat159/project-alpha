@@ -1,29 +1,5 @@
 """
-Tests 10 different models and selects best one using AIC, BIC and Adjusted R2
-
-Our design matrix includes a subset of the following features:
-hrf (simple): a single HRF for all the conditions
-hrf: 3 HRF for each condition
-drift: linear drift correction
-fourier: time courses' Fourier series
-pca: principal components
-
-Below our the models that we tests:
-
-Model 1: hrf (simple)
-Model 2: hrf (simple) + drift
-Model 3: hrf (simple)  + drift + fourier
-Model 4: hrf (simple)  + drift + pca 6
-Model 4.5: hrf (simple)  + drift + pca 4
-Model 5: hrf (simple)  + drift + pca 6 + fourier
-Model 6: hrf
-Model 7: hrf + drift
-Model 8: hrf + drift + fourier
-Model 9: hrf + drift + pca 6
-Model 9.5: hrf + drift + pca 4
-Model 10: hrf + drift + pca 6 + fourier
-
-Ultimately, we chose model 4 to be the best model.
+Creates plots from our analysis of model selection script
 """
 
 from __future__ import absolute_import, division, print_function

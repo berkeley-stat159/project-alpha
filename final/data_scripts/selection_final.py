@@ -51,15 +51,11 @@ sys.path.append(location_of_functions)
 sub_list = os.listdir(path_to_data)
 sub_list = [i for i in sub_list if 'sub' in i]
 
-
-
-from event_related_fMRI_functions import hrf_single, np_convolve_30_cuts
-from time_shift import time_shift, make_shift_matrix, time_correct
-from glm import glm_multiple, glm_diagnostics
-from noise_correction import mean_underlying_noise, fourier_predict_underlying_noise,fourier_creation
-from hypothesis import t_stat_mult_regression, t_stat
-from Image_Visualizing import present_3d, make_mask
-from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end
+from glm import glm_diagnostics
+from noise_correction import fourier_creation
+from hypothesis import t_stat_mult_regression
+from Image_Visualizing import make_mask
+from mask_phase_2_dimension_change import masking_reshape_start
 from model_comparison import adjR2, BIC, AIC, BIC_2,AIC_2
 
 # Progress bar
@@ -103,24 +99,6 @@ bic_9_5=[]
 adjr2_10=[]
 aic_10=[]
 bic_10=[]
-
-
-"""
-if input_var == 'adjR2':
-
-    def model(MRSS,y_1d,df, rank):
-	    return adjR2(MRSS,y_1d, df, rank)
-    
-elif input_var == 'BIC': 
-   
-    def model(MRSS,y_1d,df, rank):
-        return BIC(MRSS, y_1d, df, rank)
-    
-elif input_var == 'AIC': 
-   
-    def model(MRSS,y_1d,df, rank):
-        return AIC(MRSS, y_1d, df, rank)
-"""
 
 toolbar_width=34
 

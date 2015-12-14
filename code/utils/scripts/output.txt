@@ -1,0 +1,103 @@
+# ==== BEGIN Visualization of Masked data over original brain data ==== #
+# ==== No Mask, bh_procedure ==== #
+# ==== END No Mask, bh_procedure ==== #
+# ==== BEGIN varying the Q value = .005 (FDR) ==== #
+**** Oh no. No p-values smaller than upper bound FDR were found. ****
+# ==== END plot with Q = .005 done. ==== #
+# ==== BEGIN varying the Q value = .05 (FDR) ==== #
+**** Oh no. No p-values smaller than upper bound FDR were found. ****
+# ==== END plot with Q = .05 done. ==== #
+# ==== BEGIN varying the Q value = .10 (FDR) ==== #
+# ==== END plot with Q = .10 done. ==== #
+# ==== BEGIN the Q value = .25 (FDR) ==== #
+# ==== END plot with Q = .25 done. ==== #
+# ==== BEGIN the Q value = .5 (FDR) ==== #
+# ==== END plot with Q = .5 done. === #
+# ==== BEGIN mask_phase_2_dimension_change plotting (LOL) ==== #
+# ==== END mask_phase_2_dimension_change plotting ==== #
+# ==== BEGIN smoothed masked p-value plotting ==== #
+# == NEIGHBOR SMOOTHING 5
+# == NEIGHBOR SMOOTHING 10
+# ==== END smoothed masked p-value plotting ==== #
+********
+Timings for %timeit:
+{'testconv_np': '12 mu s (3 ms w/ stimulus)', 'testconv_4_1': '9.52 ms', 'testconv_4_15': '95.8 ms', 'testconv_3': '797 ms', 'testconv_5': '102 ms', 'testconv_4_30': '139 ms', 'testconv_2': '812 ms'}
+********
+********
+Timings for %timeit:
+{'conv_4_30': '185 ms', 'conv_5': '110 ms', 'conv_np': '14.4 mu s (3 ms + w/ stimulus)', 'conv_4_15': '98.3 ms per loop', 'conv_3': '1.15 s', 'conv_2': '972 ms'}
+********
+********
+Go check out those plots :) 
+********
+MRSS using 'my' convolution function: 104.62525582
+MRSS using np convolution function: 104.570947728
+MRSS using 'my' convolution function, 3rd degree polynomial: 122.052375208, but the chart looks better
+'my' convolution single regression (t,p):
+(array([[ 0.        ,  0.        ,  0.        , ...,  1.67528721,
+         0.03605441, -0.04166602]]), array([[ 0.5       ,  0.5       ,  0.5       , ...,  0.04759837,
+         0.48563466,  0.48340001]]))
+means of (t,p) for 'my' convolution: (0.03709186625260.258739291764)
+np convolution single regression (t,p):
+(array([[ 0.        ,  0.        ,  0.        , ...,  1.04910614,
+         0.39074063,  0.2248324 ]]), array([[ 0.5       ,  0.5       ,  0.5       , ...,  0.14759895,
+         0.34816998,  0.41115169]]))
+means of (t,p) for np convolution: (0.044953135810.252542124409)
+[[ 694.16260181  617.56018335  687.37616976  619.00039148  619.00039148]
+ [ 693.41875457  616.25875021  616.25875021  617.5988728   617.5988728 ]]
+MRSS using multiple regression: 104.74383265
+Proportion of voxels with p-value above 0.05 (unmasked): 0.425257065717
+Proportion of voxels with p-value above 0.05 (masked): 0.684873070972
+[('sub001', 104.57094772843693, 103.93889491873578), ('sub002', 225.33585800265089, 212.05888075022051), ('sub003', 119.90220894628281, 117.68789361563245), ('sub004', 353.53156410830877, 348.8970237002286), ('sub005', 131.32914206681201, 123.93098399588874), ('sub006', 154.01696476661374, 150.8134110195206), ('sub007', 176.68405599863857, 175.78118480494288), ('sub009', 492.4293000466526, 334.40730954217685), ('sub010', 111.732215697068, 111.68450047367955), ('sub011', 223.46076090696184, 224.15385465940508), ('sub012', 165.70522554264613, 162.82630542848455), ('sub013', 248.33536521773621, 247.42063115058664), ('sub014', 133.1622915320915, 131.73394530565659), ('sub016', 155.26228923200787, 152.52358963358461), ('sub017', 120.65645620535561, 118.42587304363144), ('sub018', 221.41224011792104, 217.38512375088428), ('sub020', 193.51788390841739, 192.05671038039077), ('sub021', 152.51034543545563, 152.51034543545563), ('sub023', 146.18678955730542, 143.38996747014801), ('sub024', 129.63357463323985, 125.73394183525683), ('sub025', 241.83726572209912, 208.3718029956562), ('sub026', 119.37667643695288, 118.93462565430792), ('sub028', 88.808068926258088, 88.415970941370361), ('sub029', 612.671077450089, 567.19259680566438)]
+Shifted time course more closely matches stimuli.
+Log transforming data.
+Using first difference to gain approximate stationarity.
+Suggested model is ARIMA(1,1,1).
+RUNNING THE L-BFGS-B CODE
+
+           * * *
+
+Machine precision = 2.220D-16
+ N =            3     M =           12
+ This problem is unconstrained.
+
+At X0         0 variables are exactly at the bounds
+
+At iterate    0    f= -8.56900D-01    |proj g|=  2.78775D+00
+
+At iterate    5    f= -8.57151D-01    |proj g|=  6.86626D-02
+
+At iterate   10    f= -8.57187D-01    |proj g|=  9.67659D-01
+
+At iterate   15    f= -8.57415D-01    |proj g|=  3.66073D-02
+
+At iterate   20    f= -8.57417D-01    |proj g|=  5.72618D-02
+
+At iterate   25    f= -8.57559D-01    |proj g|=  6.07488D-01
+
+At iterate   30    f= -8.57752D-01    |proj g|=  1.50258D-03
+
+           * * *
+
+Tit   = total number of iterations
+Tnf   = total number of function evaluations
+Tnint = total number of segments explored during Cauchy searches
+Skip  = number of BFGS updates skipped
+Nact  = number of active bounds at final generalized Cauchy point
+Projg = norm of the final projected gradient
+F     = final function value
+
+           * * *
+
+   N    Tit     Tnf  Tnint  Skip  Nact     Projg        F
+    3     33     44      1     0     0   8.105D-07  -8.578D-01
+  F = -0.857751816904415     
+
+CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH             
+
+ Cauchy                time 0.000E+00 seconds.
+ Subspace minimization time 0.000E+00 seconds.
+ Line search           time 0.000E+00 seconds.
+
+ Total User time 0.000E+00 seconds.
+

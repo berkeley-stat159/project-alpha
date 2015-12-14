@@ -9,8 +9,6 @@ All this is stored in matrices for the specific condition file and the shifts pe
 
 
 import numpy as np
-import itertools
-import nibabel as nib
 import os
 import sys
 import pandas as pd
@@ -39,7 +37,7 @@ sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1)) # return to start of line, after '['
     
 from event_related_fMRI_functions import hrf_single, np_convolve_30_cuts
-from time_shift import time_shift, make_shift_matrix, time_correct
+from time_shift import make_shift_matrix, time_correct
 
 
 #Create convolution HRF for each subjects
