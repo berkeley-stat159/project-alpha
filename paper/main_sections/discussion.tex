@@ -1,25 +1,23 @@
 % tex file for discussion
-\par \indent While very much still a work in progress, our analysis thus far 
-includes methods for both data processing and modeling voxel time courses. 
-Prior to doing any serious analysis, we had to smooth the data spatially for 
-each subject. We also generated a reasonable convolved time course with time 
-shift corrections, based on event-related neurological stimuli with 
-non-constant intervals. 
+\par \indent Cohen's paper pointed out sixteen regions of brain activation 
+after the BART experiments on the subjects. Specifically, there were some 
+activation in the dorsal lateral prefrontal cortex and through our analysis
+on the subjects, some parts of activation was shown near the front of the 
+brain. The prefrontal cortex covers the frontal lobe and functions as a 
+storage of the brain's short term memory. Another region of the brain in which 
+activation existed was the bilateral occipital pole and cortex near the rear 
+of the brain. The occipital lobe is responsible for processing of visual 
+information.
 
-\par A basic but nevertheless important model to consider is linear regression. 
-We implemented both simple and multiple regression models at the individual 
-subject level. In addition to the convolved time course, our multiple linear 
-regression models attempt to account for more of the noise in our data by 
-including terms for event conditions, linear drift, and Fourier transforms. 
-We then checked the assumptions for the fitted models and performed hypothesis 
-testing on the resulting coefficients for each voxel. Though the linear 
-regression models were designed to handle each voxel for each subject's data 
-individually, we aggregated the data across the 24 subjects by taking the means 
-of the t-statistics corresponding to each voxel. However, one major concern for 
-hypothesis testing is the issue of multiple comparisons, which we attempted to 
-address using the Benjamini-Hochberg procedure. Finally, we used k-means 
-clustering to further identify areas of the brain with high neurological 
-activity during the events of the BART study. 
-
-
-
+\par In the experiment, the participant relies on short-term memory for 
+self-control. It seems that this action may possibly be activated by the 
+prefrontal cortex. The short-term memory capabilities of the participant is 
+essential as one needs to remember facts from previous trials such as how many 
+pumps until the balloon popped or the decision on when to cash out. These are
+important factors as the longer one holds out, the more risk associated. On the 
+otherhand, it appears that the activation in the occipital lobe may be as a 
+result of a side effect of the experiment. Though processing visual information 
+is not a direct conclusion of the experiment, the brain can potentially be 
+activated because of the nature of the activity of viewing the balloons, an 
+indirect consequence of the BART experiment. 
+ 
