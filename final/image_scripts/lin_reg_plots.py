@@ -10,10 +10,8 @@ from __future__ import absolute_import, division, print_function
 import numpy as np
 import matplotlib.pyplot as plt
 import nibabel as nib
-import pandas as pd # new
 import sys # instead of os
 import os
-import numpy.linalg as npl
 # Relative path to subject 1 data
 
 project_path          = "../../"
@@ -29,12 +27,10 @@ sys.path.append(location_of_functions)
 sub_list = os.listdir(path_to_data)[1:]
 sub_list = [i for i in sub_list if 'sub' in i]
 
-from glm import glm_multiple, glm_diagnostics
-from Image_Visualizing import present_3d, make_mask
-from noise_correction import mean_underlying_noise, fourier_predict_underlying_noise,fourier_creation
+from glm import  glm_diagnostics
+from Image_Visualizing import make_mask
+from noise_correction import fourier_creation
 from hypothesis import t_stat_mult_regression
-from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end
-
 
 #Choose only first subject
 i=sub_list[0]
@@ -58,13 +54,6 @@ mask_data = mask.get_data()
 mask_data = make_mask(np.ones(data.shape[:-1]), mask_data, fit=True)
 mask_data = mask_data!=0
 mask_data = mask_data.astype(int)
-
-###PCA SHIT###
-#to_2d= masking_reshape_start(data,mask)
-#X_pca= to_2d - np.mean(to_2d,0) - np.mean(to_2d,1)[:,None]
-#cov = X_pca.T.dot(X_pca)
-#U, S, V = npl.svd(cov)
-#pca_addition= U[:,:6] # ~40% coverage
 
 
 #Create design matrix
