@@ -1,5 +1,5 @@
 % tex file for clustering 
-The main part of our analysis comes from the comparisons between different 
+\par The main part of our analysis comes from the comparisons between different 
 implementations of procedures for multiple comparisons between the subjects.
 More specifically, we focused on an implementation of the Benjamini-Hochberg 
 procedure, the grouping of t-statistics, and the grouping of $\hat{\beta}$ 
@@ -15,7 +15,7 @@ differences between the varying values of parameter inputs:
 
 \subsubsection{Benjamini-Hochberg Correction}
 
-\par \indent When conducting multiple comparisons, it is important to have an 
+\par When conducting multiple comparisons, it is important to have an 
 idea of the quantity of Type I errors that may be prevalent in the analysis. 
 In our analysis of voxel data, we decided that limiting/controlling the number 
 of Type I errors is important to the process. The processes of limiting the 
@@ -28,12 +28,12 @@ values and ``p-values'', we implemented the Benjamini-Hochberg procedure to
 control the proportion of rejected null hypotheses in the data. The Benjamini-
 Hochberg procedure works by multiplying each of the ``p-values'' to a ratio of 
 the number of tests and the chosen false discovery rate -- from these adjusted 
-``p-values'', only the values that are less than the chosen false discovery rate 
-will be chosen to be returned. This way, we are able to adjust the proportion of 
-null hypotheses that will be rejected and the proportion that will return the 
-desired proportion of significant tests. This will reduce the number of false 
-positives returned in the data and extend greater statistical power in later 
-analysis performed on the voxel dataset.
+``p-values'', only the values that are less than the chosen false discovery 
+rate will be chosen to be returned. This way, we are able to adjust the 
+proportion of null hypotheses that will be rejected and the proportion that 
+will return the desired proportion of significant tests. This will reduce the
+number of false positives returned in the data and extend greater statistical 
+power in later analysis performed on the voxel dataset.
 
 \par The Benjamini-Hochberg procedure was not the only analysis we did over the
 multiple subjects. After completing t-grouping with t-statistics, and value 
@@ -75,12 +75,12 @@ take into account this extra dimension.
 \par Ultimately, the goal of clustering is to have a better understanding of 
 which parts of the brain are related to the signal based on the t-statistics 
 from performing hypothesis tests on the coefficients from linear regression.
-Once we obtain our clusters, we will both measure the within-cluster mean of
-t-statistics as well measure the centroids of the clusters. By doing this, we 
-hope to see the parts of the brain that have the strongest relationship with 
+Once we obtain our clusters, we will both measure the inside-cluster mean of
+the t-statistics as well measure the centroids of the clusters. By doing this,
+we hope to see the parts of the brain that have the strongest relationship with
 the signal and compare them to the results of the original research paper.
 
-\subsubsection{t-Statisics Grouping}
+\subsubsection{t-Statistics Grouping}
 
 \par We use the t-statistics that we found earlier for another type of cutoff
 analysis. The t-statistics measure the size of the difference relative to the 
