@@ -1,4 +1,4 @@
-.PHONY: data images all clean 
+.PHONY: data images all clean  
 
 data:
 	cd data_scripts && python smooth_final.py
@@ -10,6 +10,7 @@ data:
 images: 
 	cd image_scripts && python bh_t_beta_plots.py 
 	cd image_scripts && python convolution_appendix_plots.py 
+	cd image_scripts && python event_related_plots.py
 	cd image_scripts && python image_overlay.py 
 	cd image_scripts && python lin_reg_plots.py 
 	cd image_scripts && python normality_plots.py 
