@@ -13,6 +13,7 @@ corrected "p-values" and t-statistics and beta coefficient estimates above and
 below certain thresholds.
 - `convolution_appendix_plots.py`: Generates plots for the convolution 
 appendix in the paper. 
+- `event_related_plots.py`: Generates convolution plots. 
 - `image_overlay.py`: Generates images for clustering. 
 - `lin_reg_plots.py`: Generates plots relating to linear regression for the 
 paper. 
