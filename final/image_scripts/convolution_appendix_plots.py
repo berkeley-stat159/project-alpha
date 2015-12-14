@@ -1,4 +1,6 @@
-# displays for the convolution appendix
+"""
+Plot producing scripts for convolution appendix
+"""
 
 import numpy as np
 import matplotlib.pyplot as plt

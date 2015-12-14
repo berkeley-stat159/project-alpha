@@ -1,5 +1,5 @@
 """
-Runs PCA analysis for the data.
+Creates plots of  PCA analysis for the data.
 
 These principal components will later be used in 
 our design matrix for the final model

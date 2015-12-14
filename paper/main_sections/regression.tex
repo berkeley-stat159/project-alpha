@@ -61,7 +61,7 @@ by analyzing the residuals in the \textit{"Normality Assumptions"} section.
 \subsubsection{More about potential features:}
 \par Other than the basic HR feature/features and a column of $1$s (to account 
 for an ``intercept'' term or non-zero average value), we experimented with 
-including additional predictors in our design matrix $X$. Among these were the 
+additional predictors in our design matrix $X$. Among these were the 
 first few principal components of the voxel $\times$ time matrix of voxel time 
 courses and the first few functions of the Fourier series for the time courses. 
 As noted above these, additional features helped account for the noise in the 
@@ -75,7 +75,7 @@ principal components of the voxel $\times$ time voxel time course matrix.
 Instead of using the entire matrix, it may be possible to just include the 
 first few principal components as features that explain a great deal of the 
 variance in the entire matrix. To get the principal components, we obtained 
-the singular value decomposition (SVD) of the time $\time$ time covariance 
+the singular value decomposition (SVD) of the time $\times$ time covariance 
 matrix. We tried this with and without first masking the voxels. To 
 standardize the voxels, we subtracted the column means (mean across voxels) 
 from the voxel by time matrix. There is also a very strong effect of mean 
@@ -150,18 +150,18 @@ to get a low order sinusoidal fluxucations.
 \subsection{Model Selection}
 
 \par In order to select the best set of features for our $X$ matrix, and also 
-compare the use of a single condition feature vs. each of the 3 different types
-of conditions as 3 seperate features, we decided to utilize model comparison; 
-specificially, AIC, BIC, and Adjusted $R^2$ metrics. Using small expressive
-subset of the subjects ($002$,$003$, and $014$) we abused the metric's by
-averaging across all voxels and people.  We visualized values in the Figures
-\ref{fig:AIC},\ref{fig:BIC}, and \ref{fig:adjr2}.
+compare the use of a single condition feature vs. each of the three different 
+types of conditions as three seperate features, we decided to utilize model 
+comparison; specificially, AIC, BIC, and Adjusted $R^2$ metrics. Using small 
+expressive subset of the subjects ($002$,$003$, and $014$) we abused the 
+metric's by averaging across all voxels and people.  We visualized values in 
+the Figures \ref{fig:AIC},\ref{fig:BIC}, and \ref{fig:adjr2}.
 
-\par From these plots, you can observe that we don't gain much from adding
+\par From these plots, it can be observed that we don't gain much from adding
 the conditions seperated, and from the BIC, we decided that the Fourier
-features didn't add enough benefit and justify the increase of features. Thus, 
+features didn't add enough benefit to justify the increase of features. Thus, 
 we'll be using the model that includes a single HRF for all the conditions, 
-a linear drift feature, and the first 6 principle components. It is possible 
+a linear drift feature, and the first 6 principal components. It is possible 
 that this will dangerously overfit, and even with these features we could have
 overfit beyond just the noise and into the territory of the hemodyamic 
 response.

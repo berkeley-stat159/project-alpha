@@ -11,7 +11,6 @@ Note: Also runs slice by slice in order to correct for time.
 
 from __future__ import absolute_import, division, print_function
 import numpy as np
-import numpy.linalg as npl
 import nibabel as nib
 import pandas as pd
 import sys
@@ -37,12 +36,10 @@ sub_list = [i for i in sub_list if 'sub' in i]
 
 
 #Import our functions
-from glm import glm_multiple, glm_diagnostics
-from Image_Visualizing import present_3d, make_mask
-from noise_correction import mean_underlying_noise, fourier_predict_underlying_noise, fourier_creation
+from glm import glm_diagnostics
+from Image_Visualizing import make_mask
+from noise_correction import fourier_creation
 from hypothesis import t_stat_mult_regression, t_stat
-from mask_phase_2_dimension_change import masking_reshape_start, masking_reshape_end
-
 
 # Progress bar
 toolbar_width = len(sub_list)

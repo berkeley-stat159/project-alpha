@@ -16,7 +16,6 @@ There are four different models we are going to test:
 
 from __future__ import absolute_import, division, print_function
 import numpy as np
-import numpy.linalg as npl
 import nibabel as nib
 import pandas as pd
 import sys
@@ -42,9 +41,7 @@ sub_list = [i for i in sub_list if 'sub' in i]
 
 
 #Import our functions
-from glm import glm_multiple, glm_diagnostics
-from Image_Visualizing import present_3d
-from noise_correction import mean_underlying_noise, fourier_predict_underlying_noise,fourier_creation
+from noise_correction import fourier_creation
 from hypothesis import t_stat_mult_regression, t_stat
 
 # Progress bar

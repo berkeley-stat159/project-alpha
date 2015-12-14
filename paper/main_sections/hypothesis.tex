@@ -3,35 +3,35 @@
 \par \indent We now have chosen our linear model and tested the normality
 assumptions by analyzing the residuals from our model. Next, in order to
 measure the strength of the association between the voxel time coures and the
-HRF, we ran a hypothesis test on the coefficients of the linear regression
+HRF, we run a hypothesis test on the coefficients of the linear regression
 model for each subject.
 
 \par There is an individual linear model associated with each voxel in a
 subject’s image (and a total of $64 \times 64 \times 34$ voxels per subject).
-Thus we ran a t-test on each voxel's $\beta_1$ coefficient, which is associated
-with the HRF response. The null hypothesis for each test was that $ \beta_1=
-0$, with the alternative hypothesis that $\beta_1 \neq 0$. Once we had obtained
-each t-statistic, we compared this value across voxels in two ways. First, we
-simply compared the t-values with voxels within a subject. In this case, we
-took into account the sign of the t-statistic in our analysis. Second, we
-converted this t-statistic into a ``p-value'', in which case the sign of the
-t-value will become irrelevant; we compared across voxels without taking
+Thus we run a t-test on each voxel's $\beta_1$ coefficient, which is associated
+with the HRF response. The null hypothesis for each test is that $ \beta_1=
+0$, with the alternative hypothesis that $\beta_1 \neq 0$. Once we obtain
+each t-statistic, we compare this value across voxels in two ways. First, we
+simply compare the t-values with voxels within a subject. In this case, we
+take into account the sign of the t-statistic in our analysis. Second, we
+convert this t-statistic into a ``p-value'', in which case the sign of the
+t-value will become irrelevant; we compare across voxels without taking
 into account this sign. Later, we also run a multiple comparison test using a
 Benjamini–Hochberg in order to find the voxels that are most significant.
 
 \par Having implemented a method to compare the voxels within a single subject,
-we next examined our results for the same voxels across subjects. Our initial
+we next examine our results for the same voxels across subjects. Our initial
 approach was to aggregate the t-statistic data between all subjects for each
-voxel. This allowed us to decrease the variability of the fit on each voxel and
+voxel. This allows us to decrease the variability of the fit on each voxel and
 detect a more clear signal.
 
-\par In order to do this, we ran the hypothesis test as stated above on all 24
-subjects of the study. Then for each voxel, we took the average of the t-
-statistics across the subjects. An issue with our data was the presence of
-empty space detected by the scanner that is not directly part of the brain. To
-account for this, we took the masked data of the brain and ``cut out'' the
-parts of the images that were not relevant to our analysis. Ultimately, we were
-left with a single 3-d image with each voxel representing the average
+\par In order to do this, we run the hypothesis test as stated above on all 24
+subjects of the study. Then for each voxel, we take the average of the t-
+statistics across the subjects. An issue with our data is that the presence of
+empty space detected by the scanner is not directly part of the brain. To
+account for this, we take the masked data of the brain and ``cut out'' the
+parts of the images that were not relevant to our analysis. Ultimately, we are
+left with a single 3-D image with each voxel representing the average
 t-statistics across all subjects in the study. This image will later be used in
 our clustering step in order to pinpoint the regions of the brain that have the
 strongest relationship with the convolved time course.
