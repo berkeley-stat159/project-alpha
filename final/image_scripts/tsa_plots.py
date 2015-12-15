@@ -17,9 +17,9 @@ from statsmodels.graphics.api import qqplot
 import nibabel as nib
 
 # Relative path to subject 1 data
-pathtodata = "../../../data/ds009/sub001/"
+pathtodata = "../../data/ds009/sub001/"
 # Path to directory to save images. 
-location_of_images="../../../images/"
+location_of_images="../../images/"
 
 # Load in the image for Subject 1. 
 img = nib.load(pathtodata+"BOLD/task001_run001/bold.nii.gz")
@@ -83,7 +83,7 @@ res
 # Both AIC and BIC suggest ARIMA(1,1,1).
 
 # Fit an ARIMA(1,1,1).
-arima111 = sm.tsa.ARIMA(lvoxel, (1,1,1)).fit()
+arima111 = sm.tsa.ARIMA(lvoxel, (1,1,1)).fit(disp=0)
 arima111.params
 
 # Fitted values look reasonable compared to first difference.

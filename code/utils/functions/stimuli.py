@@ -18,6 +18,7 @@ def events2neural(task_fname, tr, n_trs):
     time_course : array shape (n_trs,)
         Predicted neural time course, one value per TR
     """
+    
     task = np.loadtxt(task_fname)
     # Check that the file is plausibly a task file
     if task.ndim != 2 or task.shape[1] != 3:

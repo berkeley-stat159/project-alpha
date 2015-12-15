@@ -17,7 +17,7 @@ images:
 	cd image_scripts && python parameter_selection_plots.py 
 	cd image_scripts && python pca_plots.py 
 	cd image_scripts && python selection_plots.py
-	cd image_scripts && python tsa_script.py
+	cd image_scripts && python tsa_plots.py
 	cd image_scripts && python ward_plots.py
 
 all: 

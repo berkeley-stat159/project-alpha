@@ -4,11 +4,10 @@ This function is used later for our final scripts
 Run with: 
     python mean_across.py
 """
-
+from __future__ import absolute_import, division, print_function
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "functions"))
 
-from __future__ import absolute_import, division, print_function
 import numpy as np
 import matplotlib.pyplot as plt
 import nibabel as nib
