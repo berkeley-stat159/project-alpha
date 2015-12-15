@@ -3,8 +3,8 @@
 behavior by presenting participants with a computerized balloon. The 
 participant can earn money incrementally by pumping up the balloon, but after 
 an unknown threshold, the balloon will explode. At any time, the participant 
-elect to cash out his or her earnings, but doing so eliminates the potential 
-to gain additional money through pumps. If the balloon explodes, the 
+may elect to cash out his or her earnings, but doing so eliminates the 
+potential to gain additional money through pumps. If the balloon explodes, the 
 participant loses all of the money for the trial. For this study, BART and 
 fMRI data for 24 subjects were collected and deemed to be of good quality. 
 The mean age of the subjects was 20.8, and ten of the subjects were female. 
@@ -13,26 +13,23 @@ of pumps for each balloon, the average amount of money earned across runs, the
 number of exploded balloons, and the number of trials. There were also three 
 model conditions: events for inflating the balloon (excluding the very last 
 inflation of each trial), the last inflation before an explosion, and the 
-event of cashing out (the balloon explosion was not included as an event). Of 
-interest for our work is the blood-oxygen-level dependent (BOLD) imaging data 
+event of cashing out (the balloon explosion was not included as an event). We 
+are interested in the blood-oxygen-level dependent (BOLD) imaging data 
 recorded for each subject during the course of task. Each subject's BOLD data 
-was recorded as 64 by 64 image matrices in 34 slices, with a variable number 
+was recorded in 64 by 64 image matrices in 34 slices, with a variable number 
 of time points. 
 
-\par Much of our analysis focuses on creating our own procedure for cleaning 
-and preprocessing the raw BOLD data so that the true signal can be readily 
-captured by our analyses. However, a cleaned version of the data was later 
-made available by Ross Poldrack and the OpenfMRI project. The cleaned scans 
-had receieved motion correction, high-pass filtering in time, and registration 
-to the standard MNI anatomical template. Although we did not have the time to 
-heavily investigate the pre-cleaned version of the data, it would have been 
-interesting to compare the results from using our cleaning procedure versus 
-the provided procedures.
+\par Much of our analysis focuses on developing our own procedure for cleaning 
+and preprocessing the raw BOLD data so that the singal (about 5\%) can be more 
+readily seperated from the noise (95\%). However, a cleaned version of the 
+data was later made available by Ross Poldrack and the OpenfMRI project. The 
+cleaned scans had receieved motion correction, high-pass filtering in time, 
+and registration to the standard MNI anatomical template. Although we did not 
+have the time to heavily investigate the pre-cleaned version of the data, it 
+would have been interesting to compare the results from using our cleaning 
+procedure versus the provided procedures.
 
 \par It should also be noted that neither set of preprocessed data uses the 
 exact same cleaning procedure as that used in \textit{The Development and 
 Generality of Self-Control} \cite{CohenSelfControl}, which describes using 
-various software and black-box methods that may not be available for our use. 
-Additionally, while the paper is mostly concerned with comparing the areas of 
-neural activity across different types of self control, we focused only on a 
-single study on a single type of self control, for feasibility reasons. 
+various software and black-box methods that were not be available for our use. 
