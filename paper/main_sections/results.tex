@@ -27,32 +27,24 @@ alternatives for analyzing the coefficients.
 \vspace{5mm}
 
 \noindent \textbf{Clustering}
-
-Our end goal was to identify regions of the brain that are associated with the 
-neurological stimulus by way of the hemodynamic response. In pursuing this 
-goal, we utilized the $\hat{\beta}$ and t-statistics corresponding to the HRF 
-coefficient of the chosen linear model design matrix. Based on the fact that 
-the normality assumptions did not hold for a large proportion of the voxels, 
-we utilized analyses that both relied and did not rely on the normality 
-assumption.
-
 We used two perspectives to cluster, one based of multiple correction and 
 another based on hierarchical clustering using Ward's method. Hierarchical 
 clustering was computationally costly against the large number of voxels and 
 was not feasible. We used 3 different approaches to multiple comparison 
 correction. 
+
+The most canonical approach to multiple correction we used was Benjamini Hochberg
+method, which utilizes p-statistics (with the underlying assumption of normality).
+Based on the fact that the normality assumptions did not hold for a large 
+proportion of the voxels, we also utilized analyses that did not rely on such 
+assumptions. Our other methods that mirrored our clustering approach to Benjamini
+Hochberg, where we utilized the $\hat{\beta}$ and t-statistics corresponding to the HRF 
+coefficient of the chosen linear model design matrix. We created active region 
+clusters when the $\hat{\beta}$ and t-statistics values for just absolute values of 
+these statistics that were higher that 85\% of the rest.
 \vspace{5mm}
 
-\noindent \textbf{Multiple Comparison}
 
-The most canonical approach we used was Benjamini Hochberg (BH), which 
-utilized p-statistics. This type of analysis assumes normality of the 
-$\hat{\beta}$ values, which we saw where not always the case. BH also 
-required unique threshold values for each person, which was a large draw-back. 
-We additionally utilized a quantile-based clustering of the t-stat values and 
-$\hat{\beta}$ values. These provided more interpretable clusters across 
-subjects and produced similar results indicating consistency.
-\vspace{5mm}
 
 \noindent \textbf{Identifying Active Regions}
 
@@ -69,8 +61,9 @@ favorable approach than the t-statistic and $\hat{\beta}$ quantile-based
 clustering. 
 
 These observations are visualized in Figures \ref{fig:clustert}, 
-\ref{fig:clusterbeta}, and \ref{fig:clusterBH}, which compare the t-statistic, 
-$\hat{\beta}$, and Benjamini-Hochberg clustering results, respectively, for a 
+\ref{fig:clusterbeta}, and \ref{fig:clusterBH} (at the end of the paper, 
+before the appendix), which compare the t-statistic, $\hat{\beta}$, and 
+Benjamini-Hochberg clustering results, respectively, for a 
 single subject (Subject 6). In the former two approaches, distinct active 
 regions can be readily identified, whereas the Benjamini-Hochberg seems 
 largely unable to pull out spatially grouped significant voxels. While some 
@@ -80,78 +73,25 @@ two methods were highly consistent with each other within the same subject.
 Small differences in the t-statistic and $\hat{\beta}$ results can largely be 
 accounted by the presence of coefficient variances in the former. 
 
-\begin{figure}[ht]
-\centering
-\begin{minipage}[b]{0.45\linewidth}
-	\centering
-	\includegraphics[width=.8\linewidth]{../images/sub006_t_overlay.png} 
-	\caption{Quantile-based clustering for Subject 6's t-statistics. 
-	(Blue areas denote significant regions)}
-	\label{fig:clustert}
-\end{minipage}	
-
-\begin{minipage}[b]{0.45\linewidth}
-	\centering
-		\includegraphics[width=.8\linewidth]{../images/sub006_beta_overlay.png} 
-	\caption{Quantile-based clustering for Subject 6's $\hat{\beta}$ coefficients. 
-	(Blue areas denote significant regions)}
-	\label{fig:clusterbeta}
-\end{minipage}
-
-\begin{minipage}[b]{0.45\linewidth}
-	\centering
-		\includegraphics[width=.8\linewidth]{../images/sub006_bh_overlay.png} 
-	\caption{Benjamini-Hochberg clustering for Subject 6. 
-	(Blue areas denote significant regions)}
-	\label{fig:clusterBH}
-\end{minipage}
-\end{figure}
 
 A region frequently identified with high HRF activity across subjects for the 
-t-statistic and $\hat{\beta}$ approaches was the front area of the brain. 
+t-statistic and $\hat{\beta}$ approaches was the occipital area of the brain. 
 Other areas with potentially high activity include a small region toward the 
-center and back and some areas on the left edge. In Figures 
+center and front and some areas on the left edge. In Figures 
 \ref{fig:clustersub3} and \ref{fig:clustersub11}, which show the 
 quantile-based clustering results for the t-statistics, one can see the strong 
 similarities in active regions for Subjects 3 and 11, particularly in the 
-front of the brain. There are some noticeable differences. The slices in which 
-the front active regions are most prominent are shifted down for Subject 11 
+occipital area of the brain. There are some noticeable differences. The slices in which 
+the occipital active regions are most prominent are shifted down for Subject 11 
 compared to Subject 3. 
 
 However, not all subjects behaved in this similar fasion, with the main active 
-region being the front of the brain. Among them were subjects with 
+region being the occipital area of the brain. Among them were subjects with 
 unusually-shaped brains, as well as other subjects like Subject 7 Figure 
 \ref{fig:clustersub7}. Curiously, Subject 7's active regions seem almost 
-backwards, with the highly active regions in the back of the brain and very 
-little in the front. So the identified active regions are not always 
+backwards, with the highly active regions in the front of the brain and very 
+little in the back. So the identified active regions are not always 
 consistent or fully conclusive. 
-
-\begin{figure}[ht]
-\centering
-\begin{minipage}[b]{0.45\linewidth}
-	\centering
-	\includegraphics[width=.8\linewidth]{../images/sub003_t_overlay.png} 
-	\caption{Quantile-based clustering for Subject 3's t-statistics. 
-	(Blue areas denote significant regions)}
-	\label{fig:clustersub3}
-\end{minipage}	
-
-\begin{minipage}[b]{0.45\linewidth}
-	\centering
-		\includegraphics[width=.8\linewidth]{../images/sub011_t_overlay.png} 
-	\caption{Quantile-based clustering for Subject 11's t-statistics. 
-	(Blue areas denote significant regions)}
-	\label{fig:clustersub11}
-\end{minipage}
-
-\begin{minipage}[b]{0.45\linewidth}
-	\centering
-		\includegraphics[width=.8\linewidth]{../images/sub007_t_overlay.png 
-		(Blue areas denote significant regions)} 
-	\caption{Quantile-based clustering for Subject 7's t-statistics.}
-	\label{fig:clustersub7}
-\end{minipage}
-\end{figure}
 
 
 
