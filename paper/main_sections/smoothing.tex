@@ -7,13 +7,11 @@ represented by a measure of blood flow intensity, so a series of steps must
 be taken so that the data is correctly convolved to most closely and 
 accurately depict what was happening at a certain point in the brain at a 
 certain time. We decided to use smoothing via a Gaussian kernel in order to 
-reduce noise the three dimensional data. Originally, we were going to try and 
-write a smoothing function from scratch, by implementing a rudimentary 
+reduce noise in the three dimensional data. Originally, we were going to try 
+and write a smoothing function from scratch, by implementing a rudimentary 
 average-over-neighbors method. However, discussion with mentors lead us to the 
 scipy module \texttt{ndimage.filters} that has a function to perform a
-Gaussian filter on n-dimensional data. 
-
-\par \indent A more detailed discussion about our approach and theory behind 
-smoothing of the hemodynamic response with the neurological response can be
-found in Appendix \ref{app_smoothing}.
+Gaussian filter on n-dimensional data. A more detailed discussion about our 
+approach and the theory behind the smoothing of the hemodynamic response can 
+be found in Appendix \ref{app_smoothing}.
 

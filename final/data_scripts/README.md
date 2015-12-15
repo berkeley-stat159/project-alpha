@@ -11,8 +11,6 @@ subject's voxel time courses.
 BIC, and adjusted R-squared. 
 - `glm_final.py`: Runs linear regression models with linear drift, Fourier, 
 and PCA terms. 
-- `hypothesis_final.py`: Performs t-tests on the coefficients from linear 
-regression. 
 - `bh_t_beta_final.py`: Analysis of Benjamini-Hochberg corrected "p-values" 
 and t-statistics and beta coefficient estimates above and below certain 
 thresholds.

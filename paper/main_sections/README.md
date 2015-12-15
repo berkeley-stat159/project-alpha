@@ -24,3 +24,5 @@ regions using the results of linear modeling.
 - `discussion.tex`: Compares the conclusions drawn from our analysis and the 
 original paper. 
 - `discussion_future.tex`: Discussion of future work. 
+
+- `final_plots.tex`: Some additional plots for the results section. 

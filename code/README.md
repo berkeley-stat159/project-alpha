@@ -14,7 +14,8 @@ you will need to download the data for analysis and the testing data. Please
 see the `project-alpha/data` directory for more details. 
 
 - `make all`: Performs all intermediate data analysis. Does not include the 
-supplementary work rendered by `make misc`. 
+supplementary work rendered by `make misc`. Console output is written to 
+`eda.txt` in the current working directory. 
 - `make misc`: Generates supplementary work. More specifically, it renders an 
 iPython Notebook with early exploratory data analysis into a viewable HTML 
 file in the `utils/misc` subdirectory. 

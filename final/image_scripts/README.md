@@ -16,25 +16,17 @@ below certain thresholds.
 appendix in the paper. 
 
 - `event_related_plots.py`: Generates convolution plots for paper.
-
 - `image_overlay.py`: Generates images for clustering. 
-
 - `lin_reg_plots.py`: Generates plots relating to linear regression for the 
 paper. 
-
 - `normality_final.py`: Tests the assumption of normality by running a 
 Shaprio-Wilks test on each voxel's residuals for each subject. 
-
 - `parameter_selection_plots.py`: Generates the plots for tuning the 
 parameters for clustering with Benjamini-Hochberg "p-values", t-statistics, 
 and beta coefficients. 
-
 - `pca_plots.py`: Generates PCA-related plots for the paper. 
-
 - `selection_plots.py`: Generates plots related to selecting predictors for 
 linear models based on AIC, BIC, and adjusted R-squared. 
-
-- `tsa_script.py`: Fits a single voxel time course to an ARIMA process. 
-
+- `tsa_plots.py`: Plots forecast from fitting a voxel to an ARIMA process. 
 - `ward_plots.py`: Generates plots for hiearchical clustering using Ward's method. 
 

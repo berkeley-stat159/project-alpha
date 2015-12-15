@@ -6,19 +6,19 @@ fMRI data presents a distinct challenge for relating neural stimuli
 to BOLD (blood-oxygen-level dependent) response. fMRI scans record changes 
 in oxygenation levels of hemoglobin in the brain. However, there is a delay 
 between the neural stimulus and the change in blood oxygen levels in a given 
-area. In our case, the neural stimulation comes from a event-related style of 
-experiment. A commonly assumed hemodynamic response to a neurological 
-stimulation is the double gamma function that can be seen in Figure 
+area. In our case, the neural stimulation comes from a event-related 
+experimental design. A commonly assumed hemodynamic response to a neurological 
+stimulus is the double gamma function that can be seen in Figure 
 \ref{fig:hrf}. The complete hemodynamic response function needs to be modeled 
 in order to better relate stimulation and the BOLD response from the fMRI scan.
-It should be noted that the BOLD response is highly noisy and we're really 
+It should be noted that the BOLD response is highly noisy and we are really 
 trying to capture the blood oxygenation level change to the stimulation.
 
 \subsection{Mathematics}
 \subsubsection{Convolution Theory and Mathematics}
 
 To relate stimuli to BOLD response, we convolved the time courses of discrete 
-stimulation with the assumed response to a single stimulation.. At a basic 
+stimuli with the assumed response to a single stimulus. At a basic 
 level, convolution is a distinct combination of two functions (say $f$ and 
 $g$). This combination is just the ``integral that expresses the amount of 
 overlap of $f$ as it is shifted over another function $g$'' 
@@ -175,18 +175,18 @@ fast Fourier transforms for efficiency (it boils down to fewer computations
 using roots of unity) is commonly used to do discrete convolution. A naive 
 approach for convolving two functions would use this function directly, but
 \texttt{np.convolve} assumes that the intervals between stimuli mirror the 
-desired intervals between prediction intervals. As such, we can not naively
-apply the \texttt{np.convolve} for our data (though we do for a base model). 
-Even still, exploring this naive approach to convolve the hemodynamic response 
-gives an idea about what not to do, and sets a higher bar for efficiency.
+desired intervals between prediction intervals. As such, we should not naively 
+apply \texttt{np.convolve} to our data (though we do for a base model). 
+Even so, exploring this naive approach for convolving the hemodynamic response 
+gives an idea about what not to do, and sets a higher bar for accuracy.
 
 \subsubsection{Needed Improvements: Moving beyond naive \texttt{np.convolve}}
 
-Our data fails to meet the assumption that the intervals are in equidistant 
-which was required to naively apply \texttt{np.convolve}. Especially in our 
+Our data fails to meet the assumption that the intervals are equidistant, 
+which is required to naively apply \texttt{np.convolve}. Especially in our 
 case, there was not an simple fix, such as performing some basic rounding in 
 order to then correctly utilize \texttt{np.convolve}. All the following 
-approaches improve onthe basic \texttt{np.convolve} approach's accuracy, but 
+approaches improve on the basic \texttt{np.convolve} approach's accuracy, but 
 ultimately circle back to incorporating \texttt{np.convolve} to improve the 
 speed of the convolution.
 
@@ -237,7 +237,7 @@ between when a stimulus was recorded and when our scans occurred (on the
 order of every 2 seconds), we went back to the theory of convolution and 
 implemented code to recreate equation \ref{eq:math_discrete_final} directly. 
 To do so, we also had to create a function that works with all discrete points 
-of $f$, the stimulus response as potential starts of the hemodyamic response, 
+of $f$, the stimulus response as potential starts of the hemodynamic response, 
 multiplied by the actual value of $f$, as seen in equation 
 \ref{eq:code_convolve}:
 
@@ -254,8 +254,7 @@ Equation \ref{eq:code_convolve}, reproduced below
 
 $$r(t)= \sum_{i=1}^n g'_{i} f(t-t_i)$$
 
-can be rewritten as a matrix multiplication problem (thanks to Jane Liang), 
-and can be seen below:
+can be rewritten as a matrix multiplication problem and can be seen below:
 
 \begin{equation} \label{eq:matrix_code_convolve}
 r(t)=  g^*(t)^T f^*(t)
@@ -273,17 +272,17 @@ considerable speed improvements from matrix multiplication), so we also
 approached the problem by creating a denser grid between each scan (two seconds 
 apart). Then we rounded the actual times of the stimulus to meet this more 
 finely scaled grid. This allowed us to utilize \texttt{np.convolve} with its 
-faster algorithms (thanks to FFT), before reducing back down to our two second 
+faster, FFT-based algorithms, before reducing back down to our two-second 
 grid. 
 
 
 \subsection{Example}
 
-Now that we have discussed the theoretics of and possible implementations of 
-the convolving event-related stimulation, let's look at a basic example from 
-our data.(specifically using subject 001 condition files). In doing so, we 
-examine the trade-offs between theoretical accuracy and computational 
-efficiency.
+Now that we have discussed the theory and possible implementations 
+for convolving event-related stimulation, we will look at a basic example from 
+our data. In doing so, we examine the trade-offs between theoretical accuracy 
+and computational efficiency. We will consider just subject 001's condition 
+files. 
 
 
 \begin{figure}[ht]
@@ -319,16 +318,16 @@ efficiency.
 \end{figure}
 
 The first method in the table ``np naive approach'' method blindly plugs 
-in our data into the \texttt{np.convolve} function, provided to showcase 
+our data into the \texttt{np.convolve} function and is provided to showcase 
 potential speed. The ``user 2'' method  was the first approach to match the 
 theory, though it matches the stimulation times instead of the scan times. 
 The ``user 3'' method is the most theoretically sound model (and is our 
-standard for accuracy). ``User 5'' model  is our matrix version of the theory, 
-and has the same accuracy as ``user 3'', but is observably faster. The 
-``user 4'' models fall under use the grid cut usage of \texttt{np.convolve}
+standard for accuracy). The ``user 5'' model  is our matrix version of  
+``user 3'' and has the same accuracy, but is observably faster. The 
+``user 4'' methods involve the grid cut usage of \texttt{np.convolve}
 with notations for the number of slices between each scan. We concluded that 
 "user 4 (15 cuts)" was the best approach since it gives us speed and very 
-close accuracy to the golden standard - "user 3".
+close accuracy to the golden standard --- "user 3".
 
 
 

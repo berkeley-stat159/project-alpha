@@ -55,10 +55,10 @@ on the hashes stored in the `data/ds009_hashes.json file`.
 - `make analysis`: Generate final figures and results. Please note that in 
 order to generate our results, 14 GB of data will be produced. 
 - `make report`: Generates the PDF of our report, including appendices. 
-- `make eda`: Generate figures from exploratory analysis and outputs the 
-results as eda.txt in the home directory. Please be aware that the output 
+- `make eda`: Generate figures from exploratory analysis and sends console 
+output to `eda.txt` in the current directory. Please be aware that the output 
 from this script could perhaps be better described as all of our supplementary 
-data analysis that was not directly referenced in our aper. 
+data analysis that was not directly referenced in our paper. 
 
 - `make clean`: Removes all extra files generated when compiling code. Does
 this recursively for all subdirectories
@@ -66,8 +66,9 @@ this recursively for all subdirectories
 - `make test`: Tests the functions located in the `data` and `code`
 directories, to be used to validate and analyze the data, respectively.
 - `make verbose`: Performs the same actions as `make test`, but uses the
-verbose nosetests option. - `make coverage`: Generates a coverage report for
-the functions located in the `data` and `code` directories.
+verbose nosetests option. 
+- `make coverage`: Generates a coverage report for the functions located in 
+the `data` and `code` directories.
 
 Commands and documentation for generating additional and supplementary work 
 can be found in various subdirectories. Please view their respective READMEs 

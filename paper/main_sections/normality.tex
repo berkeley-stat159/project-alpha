@@ -1,5 +1,5 @@
 % tex file for normality
-\par \indent The validity of our hypothesis tests of the estimated 
+\par \indent The validity of our hypothesis tests for the estimated 
 $\hat{\beta}$ values from the chosen linear regression model are largely 
 dependent on whether we can reasonably assume that the errors in our model 
 are independent and identically distributed from some normal distribution 
@@ -11,10 +11,10 @@ we are working with --- each of the 24 subjects has 64 $\times$ 64 $\times$ 34
 voxels that can each in turn be fitted to a model --- visual inspection is 
 not practical. 
 
-For this reason, we use the Shapiro-Wilk test for normality, 
+For this reason, we used the Shapiro-Wilk test for normality, 
 which tests the null hypothesis that the data in question is normally 
-distributed. A Shapiro-Wilk test is performed for each set of residuals 
-corresponding to a single voxel's time course. That is, each test uses around 
+distributed. A Shapiro-Wilk test was performed for each set of residuals 
+corresponding to a single voxel's time course. That is, each test used around 
 200 observations, or the number of time points for that particular subject. 
 200 observations is not an especially large sample size, and for this reason, 
 we express some concern because normality tests have low power for small 
@@ -35,7 +35,7 @@ discussing our models and especially when looking at the conclusions made by
 our hypothesis tests, one should exercise caution about the validity of those 
 conjectures. 
 
-Figures \ref{fig:sw} and \ref{fig:sw_masked} compares the spatial distribution 
+Figures \ref{fig:sw} and \ref{fig:sw_masked} compare the spatial distribution 
 of the Shapiro-Wilk ``p-values'' for Subject 10's masked and unmasked data. 
 The unmasked figure is very difficult to interpret, but the masked figure does 
 suggest that while the spatial distribution of voxels with approximately 

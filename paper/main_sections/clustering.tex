@@ -1,45 +1,46 @@
 % tex file for clustering 
-\par The main part of our analysis comes from different 
-implementations of procedures for multiple comparisons between the subjects.
-More specifically, we focused on an implementation of the Benjamini-Hochberg 
+\par The heart of our analysis consists of different implementations of 
+procedures for multiple comparisons between the 24 subjects. More 
+specifically, we focused on an implementation of the Benjamini-Hochberg 
 procedure, the grouping of t-statistics, and the grouping of $\hat{\beta}$ 
-values. We also explored clustering with hierarchical clustering. We found 
-appropriate parameters to be used for all subjects by observing the images 
-from a few subjects at different 
-points of input for each of the three analyses. The parameters that we played 
-around with include the false discovery rate, the cutoff value for significant 
-t-values and $\hat{\beta}$-values, and the number of neighbors that we wanted 
-smooth the data over in the analysis. For hierarchical clustering using the 
-ward metric, we compared different parameter selections of number of clusters.
+values. For each of the three cases, we found appropriate parameters to be 
+used for all subjects by observing the images from a few subjects at different 
+points of input. The parameters that we played around with include the false 
+discovery rate, the cutoff value for significant t-values and $\hat{\beta}$-
+values, and the number of neighbors to use when smoothing data. We also 
+considered hierarchical clustering. For hierarchical clustering using the 
+ward metric, we compared different parameter selections for the number of 
+clusters.
 
 \subsubsection{Benjamini-Hochberg Correction}
 
 \par When conducting multiple comparisons, it is important to have an 
 idea of the quantity of Type I errors that may be prevalent in the analysis. 
-In our analysis of voxel data, we decided that limiting/controlling the number 
-of Type I errors is important to the process. The processes of limiting the 
-number of Type I errors are called FDR-controlling procedures. In the grand 
-scheme of things, FDR-controlling procedures give greater statistical power 
-with the cost of more Type I errors that can fall through. 
+In our analysis of the voxel time course data, we decided that limiting and 
+controlling the number of Type I errors is important to the process of 
+identifying active regions. The processes of limiting the number of Type I 
+errors are called FDR-controlling procedures. In the grand scheme of things, 
+FDR-controlling procedures give greater statistical power at the cost of 
+producing more Type I errors.  
 
-\par Once we implemented the hypothesis function that would return t-test 
+\par Once we coded the hypothesis function that will return t-test 
 values and ``p-values'', we implemented the Benjamini-Hochberg procedure to 
 control the proportion of rejected null hypotheses in the data. The Benjamini-
 Hochberg procedure works by multiplying each of the ``p-values'' to a ratio of 
 the number of tests times the rank of the ``p-value'' in the ordered set, 
-and the chosen false discovery rate -- from these adjusted 
-``p-values'', only the values that are less than the chosen false discovery 
-rate will be chosen to be returned. This way, we are able to adjust the 
-proportion of null hypotheses that will be rejected and the proportion that 
-will return the desired proportion of significant tests. This will reduce the
+and the chosen false discovery rate --- from these adjusted ``p-values'', only 
+the values that are less than the chosen false discovery rate will be chosen 
+to be returned. This way, we are able to adjust the proportion of null 
+hypotheses that will be rejected and the proportion that will return the 
+desired proportion of significant tests. This will reduce the
 number of false positives returned in the data and extend greater statistical 
 power in later analysis performed on the voxel dataset.
 
-\par The Benjamini-Hochberg procedure was not the only analysis we did over the
-multiple subjects. After completing t-grouping with t-statistics, and value 
-grouping with $\hat{\beta}$ values, we noticed that the variability between the
-subjects of the study is different between the Benjamini-Hochberg procedure 
-outputs, and the t-statistics and $\hat{\beta}$ value grouping procedure 
+\par The Benjamini-Hochberg procedure was not the only analysis we performed 
+over multiple subjects. After completing grouping of the t-statistics and 
+$\hat{\beta}$ values. we noticed that the variability between the subjects 
+of the study is different between the Benjamini-Hochberg procedure outputs, 
+but that the t-statistics and $\hat{\beta}$ value grouping procedure 
 outputs. Moreover, when performing the Benjamini-Hochberg procedure, along with
 the t-statistics grouping procedures, we did play around with smoothing over 
 neighboring voxels. Ultimately, however, we decided to forgo the neighbor 
@@ -150,7 +151,6 @@ very different or very similar.
 
 
 
-% Put in an image for playing around with parameters (Ben?)
 \begin{figure}[ht]
 
 	\centering
