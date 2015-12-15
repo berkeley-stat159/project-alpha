@@ -9,6 +9,10 @@ serve as illustrative examples on how to utilize certain functions for a
 single subject. For those strictly interested in our final analysis, we 
 recommend looking at our `project-alpha/final` directory instead. 
 
+Please note that to perform the analysis and/or run the function test files, 
+you will need to download the data for analysis and the testing data. Please 
+see the `project-alpha/data` directory for more details. 
+
 - `make all`: Performs all intermediate data analysis. Does not include the 
 supplementary work rendered by `make misc`. 
 - `make misc`: Generates supplementary work. More specifically, it renders an 

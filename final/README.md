@@ -2,6 +2,10 @@
 
 The Makefile contains recipes to perform the final analysis. 
 
+Please note that to perform the final analysis, you will need to download the 
+data for analysis. Please go to the `project-alpha/data` directory and call 
+`make data` and see its README for more information. 
+
 - `make data`: Performs the all final data analysis that generates data files,
 which are saved to the `data` subdirectory. Approximately 14 GB of data is
 created by this command.

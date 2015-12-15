@@ -33,6 +33,10 @@ for their advice and encouragement.
 The Makefile contains recipes to perform all final analysis of the data, 
 generate the project report, and test all user-defined functions. 
 
+Please note that to perform the analysis and/or run the function test files, 
+you will need to download the data for analysis and the testing data. Please 
+see the `project-alpha/data` directory for more details. 
+
 - `make all`: Downloads and validates the data and then performs all final 
 analysis. Generates the final report, stored in the `paper` subdirectory. 
 Please be aware that the raw data is 6 GB and that we also generate 14 GB of 
