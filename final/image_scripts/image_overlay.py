@@ -9,7 +9,7 @@ import nibabel as nib
 import os
 import sys
 
-bRIGHT= False # if you'd like to brighten up them charts
+bRIGHT= True # if you'd like to brighten up them charts
 
 project_path          = "../../"
 path_to_data          = project_path+"data/ds009/"
@@ -75,7 +75,7 @@ for i in desired_index:
     overlap=present_3d(bh_all[...,i])
     overlap[overlap==0]=np.nan
     overlap[-1,-1]=0 # to make the output correct
-    plt.imshow(overlap,cmap="Blues",alpha=.7)
+    plt.imshow(overlap,cmap="bwr",alpha=.7)
     plt.xticks([])
     plt.yticks([])
     plt.title(name+ ", Benjamini Hochberg")
@@ -96,7 +96,7 @@ for i in desired_index:
     plt.xticks([])
     plt.yticks([])
     plt.title(name+ ", t-clustering")
-    plt.imshow(overlap,cmap="Blues",alpha=.7)
+    plt.imshow(overlap,cmap="bwr",alpha=.7)
     plt.savefig("../../images/"+name+"_t_overlay.png")
     plt.close()
 
@@ -116,7 +116,7 @@ for i in desired_index:
     plt.xticks([])
     plt.yticks([])
     plt.title(name+ ", Beta-clustering")
-    plt.imshow(overlap,cmap="Blues",alpha=.7)
+    plt.imshow(overlap,cmap="bwr",alpha=.7)
     plt.savefig("../../images/"+name+"_beta_overlay.png")
     plt.close()
 
