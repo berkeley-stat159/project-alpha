@@ -27,7 +27,8 @@ hrf_data              = final_data + 'hrf/'
 sys.path.append(location_of_functions)
 
 # list of subjects
-sub_list = os.listdir(path_to_data)[1:]
+sub_list = os.listdir(path_to_data)
+sub_list = [i for i in sub_list if 'sub' in i]
 
 # Progress bar
 toolbar_width = len(sub_list)
