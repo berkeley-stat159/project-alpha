@@ -2,72 +2,93 @@
 
 Statistics 159/259: Reproducible and Collaborative Statistical Data Science
 
-UC Berkeley | Fall 2015 
+UC Berkeley | Fall 2015
 
-[![Build Status](https://travis-ci.org/berkeley-stat159/project-alpha.svg?branch=master)]
-(https://travis-ci.org/berkeley-stat159/project-alpha?branch=master)
-[![Coverage Status](https://coveralls.io/repos/berkeley-stat159/project-alpha/badge.svg?branch=master)]
+[![Build
+Status](https://travis-ci.org/berkeley-stat159/project-alpha.svg?branch=master)]
+ (https://travis-ci.org/berkeley-stat159/project-alpha?branch=master)
+[![Coverage
+Status](https://coveralls.io/repos/berkeley-stat159/project-alpha/badge.svg?bran
+ch=master)]
 (https://coveralls.io/r/berkeley-stat159/project-alpha?branch=master)
 
 This repository stores the documentation of our analysis of the balloon-
-analogue risk task (BART) data included as part of the OpenfMRI ds009 data 
-set [*The generality of self-control*]
-(https://openfmri.org/dataset/ds000009/). The original analysis was conducted 
-in 2009 by Jessica Cohen for her doctoral thesis at UCLA, and was largely 
-focused on comparing different notions of self-control across several fMRI 
-studies. Our original aim was to reproduce the original analysis. However, we 
-were unable to do so for many of the methods used, either due to the 
-utilization of unavailable pre-packaged software or because we could not 
-justify the underlying theory for some approaches. So, we chose to develop 
-our own pre-processing pipeline and pursue new directions for identifying 
-activation regions for the BART study. Our ultimate goal is to compare our 
-results with those of Cohen's paper. 
+analogue risk task (BART) data included as part of the OpenfMRI ds009 data set
+[*The generality of self-control*] (https://openfmri.org/dataset/ds000009/).
+The original analysis was conducted in 2009 by Jessica Cohen for her doctoral
+thesis at UCLA, and was largely focused on comparing different notions of
+self-control across several fMRI studies. Our original aim was to reproduce the
+original analysis. However, we were unable to do so for many of the methods
+used, either due to the utilization of unavailable pre-packaged software or
+because we could not justify the underlying theory for some approaches. So, we
+chose to develop our own pre-processing pipeline and pursue new directions for
+identifying activation regions for the BART study. Our ultimate goal is to
+compare our results with those of Cohen's paper.
 
-Many thanks to Jarrod Millman, Matthew Brett, J-B Poline, and Ross Barnowski 
-for their advice and encouragement. 
+Many thanks to Jarrod Millman, Matthew Brett, J-B Poline, and Ross Barnowski
+for their advice and encouragement.
 
-## Navigating the Repository 
+## Navigating the Repository
 
-The Makefile contains recipes to perform all final analysis of the data, 
-generate the project report, and test all user-defined functions. 
+The Makefile contains recipes to perform all final analysis of the data,
+generate the project report, and test all user-defined functions.
 
-- `make all`: Downloads and validates the data and then performs all final 
-analysis. Generates the final report, stored in the `paper` subdirectory. 
-Please be aware that our data is 6 GB, so plan accordingly for download 
-space and time. All images needed for the report are also reproduced. Many 
-large data files are created from this command. 
-- `make clean`: Removes all extra files generated when compiling code. Does 
-this recursively for all subdirectories. 
-- `make test`: Tests the functions located in the `data` and `code` 
-directories, to be used to validate and analyze the data, respectively. 
-- `make verbose`: Performs the same actions as `make test`, but uses the 
-verbose nosetests option. 
-- `make coverage`: Generates a coverage report for the functions located in 
-the `data` and `code` directories. 
+- `make all`: Downloads and validates the data and then performs all final
+  analysis. Generates the final report, stored in the `paper` subdirectory.
+  Please be aware that the raw data is 6 GB and we also genrate 14 GB of data
+  in our analysis, so plan accordingly for download space and time. All images
+  needed for the report are also reproduced. Many large data files are created
+  from this command.
+  
+- `make data`: downloads the data. Please note that the raw data is 6 GB.
 
-Commands and documentation for generating additional and supplementary work 
-can be found in various subdirectories. Please view their respective READMEs 
-for more information. 
+- `make validate`: ensure the data is not corrupted
 
-- `code`: Code files for all user-defined functions used for analysis, the 
-tests files for the functions, and scripts to run intermediate analysis. 
-- `data`: Data used for our analysis and tests can be downloaded and validated 
-here. 
-- `final`: Scripts to run the final analysis and generate all figures required 
-for the report and slides. The `make all` recipe in the present directory 
+- `make eda`: generate figures from exploratory analysis and outputs the
+  results as eda.txt in the home directory. Please be aware that the output
+  from this script is not only eda but all of our supplmentary data analysis
+  that did not make it into the final paper.
+
+- `make analysis`: generate figures and results. Please note that in order to 
+generate our results, 14 GB of data will be produced. 
+
+- `make report`: build final report
+
+- `make clean`: Removes all extra files generated when compiling code. Does
+this recursively for all subdirectories
+
+- `make test`: Tests the functions located in the `data` and `code`
+directories, to be used to validate and analyze the data, respectively.
+
+- `make verbose`: Performs the same actions as `make test`, but uses the
+verbose nosetests option. - `make coverage`: Generates a coverage report for
+the functions located in the `data` and `code` directories.
+
+Commands and documentation for generating additional and supplementary work can
+be found in various subdirectories. Please view their respective READMEs for
+more information.
+
+- `code`: Code files for all user-defined functions used for analysis, the
+tests files for the functions, and scripts to run intermediate analysis.
+
+- `data`: Data used for our analysis and tests can be downloaded and validated
+here.
+
+- `final`: Scripts to run the final analysis and generate all figures required
+for the report and slides. The `make all` recipe in the present directory
 essentially runs all the scripts in `final`.
-- `images`: Stores all output figures generated by the analysis scripts. 
-Figures required for the report and slides are cached for convenience, but may 
-also be reproduced. 
-- `paper`: Files and instructions to generate the report. 
-- `proposal`: Files and instructions to generate the proposal. 
-- `slides`: Files and instructions to generate the progress report and final 
-slides. 
 
-## Contributors 
+- `images`: Stores all output figures generated by the analysis scripts.
+Figures required for the report and slides are cached for convenience, but may
+also be reproduced. - `paper`: Files and instructions to generate the report. 
 
-- Kent Chen ([`kentschen`](https://github.com/kentschen))
-- Rachel Lee ([`reychil`](https://github.com/reychil))
-- Benjamin LeRoy ([`benjaminleroy`](https://github.com/benjaminleroy))
-- Jane Liang ([`janewliang`](https://github.com/janewliang))
-- Hiroto Udagawa ([`hiroto-udagawa`](https://github.com/hiroto-udagawa))
+- `proposal`: Files and instructions to generate the proposal. - `slides`: Files
+and instructions to generate the progress report and final slides.
+
+## Contributors
+
+- Kent Chen ([`kentschen`](https://github.com/kentschen)) - Rachel Lee
+([`reychil`](https://github.com/reychil)) - Benjamin LeRoy
+([`benjaminleroy`](https://github.com/benjaminleroy)) - Jane Liang
+([`janewliang`](https://github.com/janewliang)) - Hiroto Udagawa
+([`hiroto-udagawa`](https://github.com/hiroto-udagawa))

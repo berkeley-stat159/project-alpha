@@ -1,13 +1,13 @@
+"""
+Script to create "convolution_vs_neural_stimulus.png" 
+
+"""
 # event_related_HRF_script.py
 from __future__ import absolute_import, division, print_function
 import numpy as np
-import numpy.linalg as npl
 import matplotlib.pyplot as plt
 import nibabel as nib
-import pandas as pd # new
 import sys # instead of os
-import scipy.stats
-from scipy.stats import gamma
 import os
 
 
@@ -102,7 +102,7 @@ x_s_array, gap_between, colors =create_stimuli_from_all_values(cond1,cond2,cond3
 
 
 ##################
-# b. np.convolve #
+#    np.convolve #
 ##################
 
 # initial needed values
@@ -132,7 +132,7 @@ scaled_np=(conv_np-np.mean(conv_np))/(2*np.std(conv_np)) +.4
 
 
 #######################
-# c. user convolution #
+#    user convolution #
 #######################
 
 # note: np.linspace(0,239*2-2,239) ==all_tr_times
@@ -141,6 +141,7 @@ cond_all=np.array(sorted(list(cond2[:,0])+list(cond3[:,0])+list(cond1[:,0]))) # 
 
 #--------#
 # second #
+#--------#
 
 conv_2 = convolution(cond_all,np.ones(len(cond_all)),hrf_single)
 scaled_2=(conv_2-np.mean(conv_2))/(2*np.std(conv_2)) +.4
@@ -148,6 +149,7 @@ scaled_2=(conv_2-np.mean(conv_2))/(2*np.std(conv_2)) +.4
 
 #-------#
 # third #
+#-------#
 
 conv_3 = convolution_specialized(cond_all,np.ones(len(cond_all)),hrf_single,np.linspace(0,239*2-2,239))
 scaled_3=(conv_3-np.mean(conv_3))/(2*np.std(conv_3)) +.4
@@ -155,6 +157,7 @@ scaled_3=(conv_3-np.mean(conv_3))/(2*np.std(conv_3)) +.4
 
 #--------#
 # fourth #
+#--------#
 
 
 real_times,on_off = cond_all,np.ones(len(cond_all))
@@ -168,6 +171,7 @@ scaled_4_30=(conv_4_30-np.mean(conv_4_30))/(2*np.std(conv_4_30)) +.4
 
 #-------#
 # fifth #
+#-------#
 
 conv_5 = fast_convolution(cond_all,np.ones(len(cond_all)),fast_hrf,np.linspace(0,239*2-2,239))
 scaled_5=(conv_5-np.mean(conv_5))/(2*np.std(conv_5)) +.4
@@ -176,7 +180,7 @@ scaled_5=(conv_5-np.mean(conv_5))/(2*np.std(conv_5)) +.4
 
 
 ############################
-# d. Plot for comparisions #
+#    Plot for comparisions #
 ############################
 
 plt.scatter(cond_all,np.zeros(len(cond_all)),color=colors,label="stimuli instances")
@@ -191,7 +195,6 @@ plt.xlabel("time")
 plt.ylabel("Hemoglobin response")
 plt.title("HR functions vs neural stimulus")
 plt.legend(loc='lower right', shadow=True,fontsize="smaller")
-# zoom: if you're exploring this yourself, don't run this (zoom in yourself silly :)  )
 plt.xlim(0,50)
 plt.ylim(-1,1.5)
 plt.savefig(location_of_images+"convolution_vs_neural_stimulus.png")

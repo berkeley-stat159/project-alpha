@@ -83,7 +83,7 @@ res
 # Both AIC and BIC suggest ARIMA(1,1,1).
 
 # Fit an ARIMA(1,1,1).
-arima111 = sm.tsa.ARIMA(lvoxel, (1,1,1)).fit()
+arima111 = sm.tsa.ARIMA(lvoxel, (1,1,1)).fit(disp=0)
 arima111.params
 
 # Fitted values look reasonable compared to first difference.
