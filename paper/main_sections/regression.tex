@@ -1,8 +1,7 @@
 % tex file for regression
-
 \par \indent A simple and straightforward way to model the voxel time courses 
 for each subject is to perform linear regression. Initially, we just used the 
-convolved predicted hemodyamic response (HR) and either all the of the 
+convolved predicted hemodyamic response (HR) and either all of the 
 conditions together or each of conditions individually. After realizing that 
 the HRs themselves didn't explain enough of the BOLD ratio, we attempted to 
 add features in order to reduce or explain the noise we observed. Additional 
@@ -36,15 +35,16 @@ non-unique value for $\hat{\beta}$.
 
 \par To consider the strength of the effects of these predictors, we will use 
 t-tests of the corresponding estimated coefficients for each voxel and 
-subject, as discussed under \textit{"Hypothesis Testing"} \ref{hypothesis_testing}. The validity of the model and of the ``p-values'' produced by performing 
-these t-tests is dependent on whether or not the many assumptions of the 
-linear model are actually met. In particular, we will discuss the assumption 
-of normal errors by analyzing the residuals in the \textit{"Normality Assumptions"} section. 
+subject, as discussed under Section \ref{hypothesis_testing}. The validity of 
+the model and of the ``p-values'' produced by performing these t-tests is d
+ependent on whether or not the many assumptions of the linear model are 
+actually met. In particular, we will discuss the assumption of normal errors 
+by analyzing the residuals in Section \ref{normality}. 
 
 \subsubsection{More about potential features:}
-\par Other than the basic HR feature/features and a column of $1$s (to account 
+\par Other than the basic HR feature(s) and a column of $1$s (to account 
 for an ``intercept'' term or non-zero average value), we experimented with 
-additional predictors in our design matrix $X$. Among these were the 
+additional predictors for our design matrix $X$. Among these were the 
 first few principal components of the voxel $\times$ time matrix of voxel time 
 courses and the first few functions of the Fourier series for the time courses. 
 As noted above these, additional features helped account for the noise in the 
@@ -86,8 +86,8 @@ the design matrix. Figure \ref{fig:pcabox} compares the the amount of variance
 explained by including successively more principal components across subjects. 
 A few observations should be noted. First, there is considerable variation 
 between subjects in how much variance the early principal components capture. 
-Second, by including only the first six components, it is possible for each 
-subject's voxel time course matrix to capture at least 40\% of the variance. 
+Second, by including only the first six components, it is possible for most 
+subjects' voxel time course matrix to capture at least 40\% of the variance. 
 Moving forward, we chose to include six principal components as additional 
 features when considering models that reduce noise. This cutoff of six 
 components or 40\% of the variance explained was somewhat arbitrary, with the 
@@ -111,16 +111,16 @@ components.}
 \vspace{2mm}
 \noindent \textbf{Fourier Series}
 \vspace{2mm}
-\par We included 4 features related to the first few functions of the Fourier series.
-The full fourier series is represent as the following:
+\par We included 6 features related to the first few functions of the Fourier series.
+A full Fourier series is represented as the following:
 
 \begin{equation}
 f(x) = \frac{1}{2} \cdot a_0 + \sum_{n=1}^{\infty} a_n \cdot cos(n x) + \sum_{n=1}^{\infty} b_n \cdot  sin(n x)
 \end{equation}
 
-\noindent Wanting to represent low level sinesoidal fluctuations, and since strength 
-of Fourier series strength comes from orthogonality of the range, and we are 
-looking for a function of the range $(0, \text{num of TR})$, we change it to:
+\noindent We wanted to represent low level sinesoidal fluctuations, which required a 
+few periods over the full range of the time course $(0, \text{num of TR})$, as such 
+we changed the Fourier series to:
 
 \begin{equation}
 f(x) = \frac{1}{2} \cdot a_0 + \sum_{n=1}^{\infty} a_n \cdot cos(\frac{n}{\text{num of TR}} x) + \sum_{n=1}^{\infty} b_n \cdot sin(\frac{n}{\text{num of TR}} x)
@@ -132,95 +132,23 @@ to get a low order sinusoidal fluxucations.
 
 \subsection{Model Selection} \label{model_selection}
 
-\par In order to select the best set of features for our $X$ matrix, and also 
+\par In order to select the best set of features for our $X$ matrix, and also to 
 compare the use of a single condition feature vs. each of the three different 
 types of conditions as three seperate features, we decided to utilize model 
-comparison metric; specificially, AIC, BIC, and Adjusted $R^2$ metrics. Using small 
-expressive subset of the subjects ($002$,$003$, and $014$) we abused the 
-metric's by averaging across all voxels and people.  We visualized values in 
-the Figures \ref{fig:AIC},\ref{fig:BIC}, and \ref{fig:adjr2}. All these metrics 
-penalize the number of parameters with AIC and BIC better when smaller and 
-Adjusted $R^2$ is better when larger.
+comparison metric; specificially, AIC, BIC, and adjusted $R^2$ metrics. Using a small but  
+expressive subset of the subjects ($002$,$003$, and $014$) we averaged the metrics across all voxels and people, a not-especially theoretically sound approach. We visualized values in Figures \ref{fig:AIC},\ref{fig:BIC}, and \ref{fig:adjr2}. 
 
-\par From these plots we can observe \textbf{(1)} seperating the conditions into
+\par From these plots we can observe that \textbf{(1)} seperating the conditions into
 individual features did not provide much gain in these metrics and \textbf{(2)}
-The inclusion of the 6 principle components tend to create better models than the 
-inclusion of the 6 fourier series features comparably. We initially interpreted 
-this as vote to include the first 6 principle components and not the fourier 
-features. Unfortunately, the 6 principle components for some subjects lead to 
-overfitting and collinearity w/ the HRF features. These problems tended to arise
-when the variance explained by the 6 principle components was a lot greater that .4.
-Overall, we went with the fourier features and we nicely observed similar t-
-statistics for the HRF feature in the models with the 6 principle components vs
-the 6 fourier features when the variance explained was ok ($\leq .4$).
-
-%\begin{table}
-%\centering
-%	\begin{tabular}{l ||  l   |  l  |   l    | l  | l  |  l}
-%X value & 1 &        2       &             3       &     4         &        5        &         6       \\
-%	 \hline
-%	 & HRF &   HRF       &  HRF            & HRF         &  HRF        & HRF  \\
-%	 &        &   + DRIFT &  + DRIFT      & + DRIFT  &  + DRIFT   & + DRIFT  \\
-%	 &        &                 &  + FOURIER &  + PCA 4 &  + PCA 6   & + FOURIER \\
-%	 &        &                 &                      &                &                   & +  PCA 6 \\
-%	
-%
-%	\end{tabular}
-%\caption{Explaining Plot X values}
-%\label{tab:plot}
-%\end{table}
-
-
-%\begin{table}
-%
-%\begin{minipage}[b]{1\linewidth}
-%	\centering
-%	\scriptsize{\begin{tabular}{l ||   l  |  l  | l  | l  |l   |  l}
-%	 & HRF &   HRF     &  HRF       & HRF      &  HRF       & HRF  \\
-%	 &     &   + DRIFT &  + DRIFT   & + DRIFT  &  + DRIFT   & + DRIFT  \\
-%	 &     &           &  + FOURIER &  + PCA 4 &  + PCA 6   & + FOURIER \\
-%	 &     &           &            &          &            & +  PCA 6 \\
-%	\hline
-%	All conditions together   &  589.313 &  503.388 &  452.366 & 337.296 & 288.452 &   266.126 \\
-%	All conditions seperately & 587.824 &  501.184 &  449.337 &   331.995 & 286.85 &   264.756 \\
-%	\end{tabular}}
-%	\label{tab:AIC}
-%	\center{\caption{AIC}}
-%\end{minipage}	
-%
-%\begin{minipage}[b]{1\linewidth}
-%	\centering
-%	\scriptsize{\begin{tabular}{l ||   l  |  l  | l  | l  |l   |  l}
-%	 & HRF &   HRF     &  HRF       & HRF      &  HRF       & HRF  \\
-%	 &     &   + DRIFT &  + DRIFT   & + DRIFT  &  + DRIFT   & + DRIFT  \\
-%	 &     &           &  + FOURIER &  + PCA 4 &  + PCA 6   & + FOURIER \\
-%	 &     &           &            &          &            & +  PCA 6 \\
-%	\hline
-%	All conditions together    &  596.409 &  514.032 &  477.202 &    365.68 &316.835&  308.702\\
-%	All conditions seperately & 602.016 &  518.924 &  481.269  360.379 & &  322.33 & 314.427 \\
-%	\end{tabular}}
-%	\label{tab:BIC}
-%	\caption{BIC}
-%\end{minipage}	
-%
-%
-%\begin{minipage}[b]{1\linewidth}
-%	\centering
-%	\scriptsize{\begin{tabular}{l ||   l  |  l  | l  | l  |l   |  l}
-%	 & HRF &   HRF     &  HRF       & HRF      &  HRF       & HRF  \\
-%	 &     &   + DRIFT &  + DRIFT   & + DRIFT  &  + DRIFT   & + DRIFT  \\
-%	 &     &           &  + FOURIER &  + PCA 4 &  + PCA 6   & + FOURIER \\
-%	 &     &           &            &          &            & +  PCA 6 \\
-%	\hline
-%	All conditions together    & 0.007  &  0.198  &  0.323  &  0.527   &  0.596  & 0.631 \\
-%	All conditions seperately & 0.02   &  0.211  &  0.337  &    0.536  & 0.601  & 0.635\\
-%	\end{tabular}}
-%	\label{tab:adjR2}
-%	\caption{Adjusted $R^2$}
-%\end{minipage}
-%
-%\end{table}
-
+the inclusion of the 6 principal components comparably tends to create better models than the 
+inclusion of the 6 Fourier series features. We initially interpreted 
+this as a vote to include the first 6 principal components and not the Fourier 
+features. Unfortunately, including the 6 principal components lead to 
+overfitting and collinearity with the HRF features for some subjects. These problems tended to arise
+when the proportion of variance explained by the 6 principal components was much greater that 40 \%.
+Overall, we went with the Fourier features and observed similar t-
+statistics for the HRF feature in the models with the 6 principal components vs
+the 6 Fourier features when the variance explained was $\leq$ 40 \%.
 
 
 \begin{figure}
