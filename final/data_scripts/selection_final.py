@@ -497,6 +497,6 @@ adjr2_hold = adjr2_hold.reshape((2, 6))
 
 np.savetxt('../data/model_comparison/' + "AIC_2" + '.txt', aic_hold)
 np.savetxt('../data/model_comparison/' + "BIC_2" + '.txt', bic_hold)
-np.savetxt('../data/model_comparison/' + "AdjR2_2" + '.txt', adjr2_hold)
+np.savetxt('../data/model_comparison/' + "adjR2_2" + '.txt', adjr2_hold)
 
 
