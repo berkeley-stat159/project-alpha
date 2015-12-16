@@ -16,6 +16,9 @@ import statsmodels.api as sm
 from statsmodels.graphics.api import qqplot
 import nibabel as nib
 
+import warnings 
+warnings.filterwarnings("ignore")
+
 # Relative path to subject 1 data
 pathtodata = "../../data/ds009/sub001/"
 # Path to directory to save images. 
