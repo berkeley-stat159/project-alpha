@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 aic=np.loadtxt("../data/model_comparison/AIC_2.txt")
 bic=np.loadtxt("../data/model_comparison/BIC_2.txt")
-adjR2=np.loadtxt("../data/model_comparison/AdjR2_2.txt")
+adjR2=np.loadtxt("../data/model_comparison/adjR2_2.txt")
 
 
 
