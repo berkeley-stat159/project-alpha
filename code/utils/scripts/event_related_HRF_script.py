@@ -150,7 +150,7 @@ from stimuli import events2neural
 
 
 # 1. load in subject001's BOLD data:
-img=nib.load(location_of_subject001+"BOLD/task001_run001/"+"bold.nii")
+img=nib.load(location_of_subject001+"BOLD/task001_run001/"+"bold.nii.gz")
 data=img.get_data()
 data=data[...,6:]
 #data.shape
@@ -160,6 +160,9 @@ data=data[...,6:]
 cond1=np.loadtxt(condition_location+"cond001.txt")
 cond2=np.loadtxt(condition_location+"cond002.txt")
 cond3=np.loadtxt(condition_location+"cond003.txt")
+cond_all=np.row_stack((cond1,cond2,cond3))
+cond_all=sorted(cond_all,key= lambda x:x[0])
+np.savetxt(condition_location+"cond_all.txt",cond_all)
 cond_all=np.loadtxt(condition_location+"cond_all.txt")
 
 
