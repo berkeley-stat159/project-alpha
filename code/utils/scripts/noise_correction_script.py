@@ -75,7 +75,12 @@ n_vols = data.shape[-1]
 TR = 2
 all_tr_times = np.arange(n_vols) * TR
 
-
+# Load condition files. 
+cond1=np.loadtxt(condition_location+"cond001.txt")
+cond2=np.loadtxt(condition_location+"cond002.txt")
+cond3=np.loadtxt(condition_location+"cond003.txt")
+cond_all=sorted(cond_all,key= lambda x:x[0])
+np.savetxt(condition_location+"cond_all.txt",cond_all)
 cond_all=np.loadtxt(condition_location+"cond_all.txt")
 
 
