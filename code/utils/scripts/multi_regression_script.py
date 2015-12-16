@@ -55,7 +55,7 @@ from Image_Visualizing import present_3d
 
 
 # load in subject001's BOLD data:
-img=nib.load(location_of_subject001+"BOLD/task001_run001/"+"bold.nii")
+img=nib.load(location_of_subject001+"BOLD/task001_run001/"+"bold.nii.gz")
 data=img.get_data()
 data=data[...,6:]
 num_voxels=np.prod(data.shape[:-1])
